@@ -1,9 +1,14 @@
 {
-  "name": "Robert Westenberger's experiment / portfolio site.",
+  "name": "RobertWestenberger",
   "version": "0.0.1",
+  "engines": {
+    "node": ">=5.0 <7",
+    "npm": ">=3.3 <4"
+  },
   "description": "Universal React application.",
   "main": "index.js",
   "scripts": {
+    "start": "babel-node tools/run start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -27,6 +32,8 @@
   "devDependencies": {
     "babel-cli": "^6.10.1",
     "babel-preset-es2015": "^6.9.0",
-    "babel-preset-react": "^6.11.1"
+    "babel-preset-node5": "^11.1.0",
+    "babel-preset-react": "^6.11.1",
+    "babel-preset-stage-3": "^6.11.0"
   }
 }
