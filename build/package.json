@@ -1,0 +1,18 @@
+{
+  "private": true,
+  "engines": {
+    "node": ">=5.0 <7",
+    "npm": ">=3.3 <4"
+  },
+  "dependencies": {
+    "bluebird": "^3.4.1",
+    "express": "^4.14.0",
+    "pug": "^2.0.0-beta3",
+    "react": "^15.2.0",
+    "react-dom": "^15.2.0",
+    "react-router": "^2.5.2"
+  },
+  "scripts": {
+    "start": "node server.js"
+  }
+}
