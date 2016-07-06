@@ -87,13 +87,14 @@ function run() {
       query: location.query,
       state: location.state,
       context,
-      render: render.bind(undefined, container, location.state),
+      render: render.bind(undefined, container, location.state) // eslint-disable-line react/jsx-no-bind, max-len
     }).catch(err => console.error(err)); // eslint-disable-line no-console
   });
 
     // Save the page scroll position into the current location's state
   const supportPageOffset = window.pageXOffset !== undefined;
   const isCSS1Compat = ((document.compatMode || '') === 'CSS1Compat');
+  /* eslint-disable complexity */
   const setPageOffset = () => {
     currentLocation.state = currentLocation.state || Object.create(null);
     if (supportPageOffset) {
@@ -106,7 +107,7 @@ function run() {
           document.documentElement.scrollTop : document.body.scrollTop;
     }
   };
-
+  /* eslint-enable complexity */
   addEventListener(window, 'scroll', setPageOffset);
   addEventListener(window, 'pagehide', () => {
     removeEventListener(window, 'scroll', setPageOffset);
