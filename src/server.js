@@ -36,9 +36,9 @@ app.use(bodyParser.json());
 // -----------------------------------------------------------------------------
 app.get('*', async (req, res, next) => {
   try {
-    let css = [];
+      let css = [];
     let statusCode = 200;
-    const template = require('./views/index.jade'); // eslint-disable-line global-require
+    const template = require('./views/index.jade');
     const data = { title: '', description: '', css: '', body: '', entry: assets.main.js };
     if (process.env.NODE_ENV === 'production') {
       data.trackingId = analytics.google.trackingId;

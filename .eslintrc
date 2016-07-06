@@ -6,10 +6,9 @@
   },
   "rules": {
     "react/no-multi-comp": 0,
-    "import/default": 0,
-    "import/no-duplicates": 0,
-    "import/named": 0,
-    "import/namespace": 0,
+    "import/no-duplicates": 2,
+    "import/named": 2,
+    "import/namespace": 2,
     "import/no-unresolved": 0,
     "import/no-named-as-default": 2,
     "comma-dangle": 0,  // not sure why airbnb turned this on. gross!
@@ -18,6 +17,7 @@
     "no-alert": 0,
     "no-confusing-arrow": 0,
     "react/jsx-quotes": 0,
+    "complexity": ["error", 2],
     "jsx-quotes": [
       2,
       "prefer-double"
