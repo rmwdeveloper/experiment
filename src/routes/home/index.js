@@ -1,8 +1,9 @@
-/**
- * Created by rob on 7/4/2016.
- */
+import React from 'react';
+import Home from './Home';
 
 export default {
   path: '/',
-  
+  async action() {
+    return <Home />;
+  },
 }

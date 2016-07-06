@@ -121,8 +121,8 @@ const config = {
                 },
             },
             {
-                test: /\.pug$/,
-                loader: 'pug-loader',
+                test: /\.jade$/,
+                loader: 'jade-loader',
             },
         ],
     },

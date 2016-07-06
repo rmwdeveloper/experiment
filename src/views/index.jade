@@ -1,5 +1,5 @@
 doctype html
-html(lang="en")
+html(class="no-js", lang="")
     head
         meta(charset="utf-8")
         meta(http-equiv="x-ua-compatible", content="ie=edge")
@@ -9,4 +9,5 @@ html(lang="en")
         link(rel="apple-touch-icon", href="apple-touch-icon.png")
         style#css!= css
     body
-       div#appRoot
+        #app!= body
+        script#source(src=entry, data-initial-state=state)
