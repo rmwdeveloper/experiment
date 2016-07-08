@@ -86,11 +86,11 @@ module.exports =
   
   var _routes2 = _interopRequireDefault(_routes);
   
-  var _universalRouter = __webpack_require__(21);
+  var _universalRouter = __webpack_require__(14);
   
-  var _config = __webpack_require__(22);
+  var _config = __webpack_require__(15);
   
-  var _assets = __webpack_require__(23);
+  var _assets = __webpack_require__(16);
   
   var _assets2 = _interopRequireDefault(_assets);
   
@@ -134,8 +134,7 @@ module.exports =
                       case 0:
                         css = [];
                         statusCode = 200;
-                        template = __webpack_require__(24); // eslint-disable-line global-require
-  
+                        template = __webpack_require__(17);
                         data = { title: '', description: '', css: '', body: '', entry: _assets2.default.main.js };
   
                         if (false) {
@@ -227,7 +226,7 @@ module.exports =
   app.use(function (err, req, res, next) {
     // eslint-disable-line no-unused-vars
     console.log(pe.render(err)); // eslint-disable-line no-console
-    var template = __webpack_require__(27); // eslint-disable-line global-require
+    var template = __webpack_require__(20); // eslint-disable-line global-require
     var statusCode = err.status || 500;
     res.status(statusCode);
     res.send(template({
@@ -332,7 +331,7 @@ module.exports =
   
   var _home2 = _interopRequireDefault(_home);
   
-  var _containers = __webpack_require__(14);
+  var _containers = __webpack_require__(21);
   
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
   
@@ -447,7 +446,7 @@ module.exports =
   'use strict';
   
   Object.defineProperty(exports, "__esModule", {
-      value: true
+    value: true
   });
   
   var _react = __webpack_require__(11);
@@ -459,14 +458,14 @@ module.exports =
   var title = 'React Starter Kit';
   
   function Home(_ref, context) {
-      var news = _ref.news;
+    var news = _ref.news;
   
-      context.setTitle(title);
-      return _react2.default.createElement(
-          'div',
-          null,
-          ' Hello World'
-      );
+    context.setTitle(title);
+    return _react2.default.createElement(
+      'div',
+      null,
+      ' Hello World'
+    );
   }
   
   Home.contextTypes = { setTitle: _react.PropTypes.func.isRequired };
@@ -475,122 +474,12 @@ module.exports =
 
 /***/ },
 /* 14 */
-/***/ function(module, exports, __webpack_require__) {
-
-  'use strict';
-  
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.App = undefined;
-  
-  var _App2 = __webpack_require__(15);
-  
-  var _App3 = _interopRequireDefault(_App2);
-  
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-  
-  exports.App = _App3.default; /**
-                                * Created by rob on 7/4/2016.
-                                */
-
-/***/ },
-/* 15 */
-/***/ function(module, exports, __webpack_require__) {
-
-  'use strict';
-  
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  
-  var _getPrototypeOf = __webpack_require__(16);
-  
-  var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
-  
-  var _classCallCheck2 = __webpack_require__(17);
-  
-  var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-  
-  var _createClass2 = __webpack_require__(18);
-  
-  var _createClass3 = _interopRequireDefault(_createClass2);
-  
-  var _possibleConstructorReturn2 = __webpack_require__(19);
-  
-  var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-  
-  var _inherits2 = __webpack_require__(20);
-  
-  var _inherits3 = _interopRequireDefault(_inherits2);
-  
-  var _react = __webpack_require__(11);
-  
-  var _react2 = _interopRequireDefault(_react);
-  
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-  
-  var App = function (_Component) {
-    (0, _inherits3.default)(App, _Component);
-  
-    function App() {
-      (0, _classCallCheck3.default)(this, App);
-      return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(App).apply(this, arguments));
-    }
-  
-    (0, _createClass3.default)(App, [{
-      key: 'render',
-      value: function render() {
-        return _react2.default.createElement(
-          'h1',
-          null,
-          ' HEllo World!'
-        );
-      }
-    }]);
-    return App;
-  }(_react.Component);
-  
-  exports.default = App;
-
-/***/ },
-/* 16 */
-/***/ function(module, exports) {
-
-  module.exports = require("babel-runtime/core-js/object/get-prototype-of");
-
-/***/ },
-/* 17 */
-/***/ function(module, exports) {
-
-  module.exports = require("babel-runtime/helpers/classCallCheck");
-
-/***/ },
-/* 18 */
-/***/ function(module, exports) {
-
-  module.exports = require("babel-runtime/helpers/createClass");
-
-/***/ },
-/* 19 */
-/***/ function(module, exports) {
-
-  module.exports = require("babel-runtime/helpers/possibleConstructorReturn");
-
-/***/ },
-/* 20 */
-/***/ function(module, exports) {
-
-  module.exports = require("babel-runtime/helpers/inherits");
-
-/***/ },
-/* 21 */
 /***/ function(module, exports) {
 
   module.exports = require("universal-router");
 
 /***/ },
-/* 22 */
+/* 15 */
 /***/ function(module, exports) {
 
   "use strict";
@@ -601,16 +490,16 @@ module.exports =
   var port = exports.port = process.env.PORT || 3000;
 
 /***/ },
-/* 23 */
+/* 16 */
 /***/ function(module, exports) {
 
   module.exports = require("./assets");
 
 /***/ },
-/* 24 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
-  var jade = __webpack_require__(25);
+  var jade = __webpack_require__(18);
   
   module.exports = function template(locals) {
   var jade_debug = [ new jade.DebugItem( 1, "C:\\Users\\rob\\experiment\\src\\views\\index.jade" ) ];
@@ -687,7 +576,7 @@ module.exports =
   }
 
 /***/ },
-/* 25 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
   'use strict';
@@ -907,7 +796,7 @@ module.exports =
       throw err;
     }
     try {
-      str = str || __webpack_require__(26).readFileSync(filename, 'utf8')
+      str = str || __webpack_require__(19).readFileSync(filename, 'utf8')
     } catch (ex) {
       rethrow(err, null, lineno)
     }
@@ -939,16 +828,16 @@ module.exports =
 
 
 /***/ },
-/* 26 */
+/* 19 */
 /***/ function(module, exports) {
 
   module.exports = require("fs");
 
 /***/ },
-/* 27 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
-  var jade = __webpack_require__(25);
+  var jade = __webpack_require__(18);
   
   module.exports = function template(locals) {
   var jade_debug = [ new jade.DebugItem( 1, "C:\\Users\\rob\\experiment\\src\\views\\error.jade" ) ];
@@ -1227,6 +1116,124 @@ module.exports =
     jade.rethrow(err, jade_debug[0].filename, jade_debug[0].lineno, "doctype html\r\nhtml(lang=\"en\")\r\n  head\r\n    meta(charset=\"utf-8\")\r\n    title Internal Server Error\r\n    meta(name=\"viewport\", content=\"width=device-width, initial-scale=1\")\r\n    style.\r\n      * {\r\n        line-height: 1.2;\r\n        margin: 0;\r\n      }\r\n\r\n      html {\r\n        color: #888;\r\n        display: table;\r\n        font-family: sans-serif;\r\n        height: 100%;\r\n        text-align: center;\r\n        width: 100%;\r\n      }\r\n\r\n      body {\r\n        display: table-cell;\r\n        vertical-align: middle;\r\n        margin: 2em auto;\r\n      }\r\n\r\n      h1 {\r\n        color: #555;\r\n        font-size: 2em;\r\n        font-weight: 400;\r\n      }\r\n\r\n      p {\r\n        margin: 0 auto;\r\n        width: 280px;\r\n      }\r\n\r\n      pre {\r\n        text-align: left;\r\n        margin-top: 2rem;\r\n      }\r\n\r\n      @media only screen and (max-width: 280px) {\r\n\r\n        body, p {\r\n          width: 95%;\r\n        }\r\n\r\n        h1 {\r\n          font-size: 1.5em;\r\n          margin: 0 0 0.3em;\r\n        }\r\n\r\n      }\r\n\r\n  body\r\n    h1 Internal Server Error\r\n    p Sorry, something went wrong.\r\n    pre= stack\r\n// IE needs 512+ bytes: http://blogs.msdn.com/b/ieinternals/archive/2010/08/19/http-error-pages-in-internet-explorer.aspx\r\n");
   }
   }
+
+/***/ },
+/* 21 */
+/***/ function(module, exports, __webpack_require__) {
+
+  'use strict';
+  
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.App = undefined;
+  
+  var _App2 = __webpack_require__(22);
+  
+  var _App3 = _interopRequireDefault(_App2);
+  
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+  
+  exports.App = _App3.default;
+
+/***/ },
+/* 22 */
+/***/ function(module, exports, __webpack_require__) {
+
+  'use strict';
+  
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  
+  var _getPrototypeOf = __webpack_require__(23);
+  
+  var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+  
+  var _classCallCheck2 = __webpack_require__(24);
+  
+  var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+  
+  var _createClass2 = __webpack_require__(25);
+  
+  var _createClass3 = _interopRequireDefault(_createClass2);
+  
+  var _possibleConstructorReturn2 = __webpack_require__(26);
+  
+  var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+  
+  var _inherits2 = __webpack_require__(27);
+  
+  var _inherits3 = _interopRequireDefault(_inherits2);
+  
+  var _react = __webpack_require__(11);
+  
+  var _react2 = _interopRequireDefault(_react);
+  
+  var _emptyFunction = __webpack_require__(28);
+  
+  var _emptyFunction2 = _interopRequireDefault(_emptyFunction);
+  
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+  
+  var App = function (_Component) {
+    (0, _inherits3.default)(App, _Component);
+  
+    function App() {
+      (0, _classCallCheck3.default)(this, App);
+      return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(App).apply(this, arguments));
+    }
+  
+    (0, _createClass3.default)(App, [{
+      key: 'render',
+      value: function render() {
+        return _react2.default.createElement(
+          'h1',
+          null,
+          ' HEllo World!'
+        );
+      }
+    }]);
+    return App;
+  }(_react.Component);
+  
+  exports.default = App;
+
+/***/ },
+/* 23 */
+/***/ function(module, exports) {
+
+  module.exports = require("babel-runtime/core-js/object/get-prototype-of");
+
+/***/ },
+/* 24 */
+/***/ function(module, exports) {
+
+  module.exports = require("babel-runtime/helpers/classCallCheck");
+
+/***/ },
+/* 25 */
+/***/ function(module, exports) {
+
+  module.exports = require("babel-runtime/helpers/createClass");
+
+/***/ },
+/* 26 */
+/***/ function(module, exports) {
+
+  module.exports = require("babel-runtime/helpers/possibleConstructorReturn");
+
+/***/ },
+/* 27 */
+/***/ function(module, exports) {
+
+  module.exports = require("babel-runtime/helpers/inherits");
+
+/***/ },
+/* 28 */
+/***/ function(module, exports) {
+
+  module.exports = require("fbjs/lib/emptyFunction");
 
 /***/ }
 /******/ ]);

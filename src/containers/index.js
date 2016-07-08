@@ -1,3 +1,1 @@
-/**
- * Created by rob on 7/8/2016.
- */
+export App from './App/App';
