@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import emptyFunction from 'fbjs/lib/emptyFunction';
+import styles from './App.css';
 
 class App extends Component {
   render() {
