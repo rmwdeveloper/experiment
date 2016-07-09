@@ -56,41 +56,41 @@ module.exports =
   
   var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
   
-  __webpack_require__(3);
+  __webpack_require__(37);
   
-  var _path = __webpack_require__(4);
+  var _path = __webpack_require__(3);
   
   var _path2 = _interopRequireDefault(_path);
   
-  var _express = __webpack_require__(5);
+  var _express = __webpack_require__(4);
   
   var _express2 = _interopRequireDefault(_express);
   
-  var _cookieParser = __webpack_require__(6);
+  var _cookieParser = __webpack_require__(5);
   
   var _cookieParser2 = _interopRequireDefault(_cookieParser);
   
-  var _bodyParser = __webpack_require__(7);
+  var _bodyParser = __webpack_require__(6);
   
   var _bodyParser2 = _interopRequireDefault(_bodyParser);
   
-  var _prettyError = __webpack_require__(8);
+  var _prettyError = __webpack_require__(7);
   
   var _prettyError2 = _interopRequireDefault(_prettyError);
   
-  var _server = __webpack_require__(9);
+  var _server = __webpack_require__(8);
   
   var _server2 = _interopRequireDefault(_server);
   
-  var _routes = __webpack_require__(10);
+  var _routes = __webpack_require__(9);
   
   var _routes2 = _interopRequireDefault(_routes);
   
-  var _universalRouter = __webpack_require__(21);
+  var _universalRouter = __webpack_require__(30);
   
-  var _config = __webpack_require__(22);
+  var _config = __webpack_require__(31);
   
-  var _assets = __webpack_require__(23);
+  var _assets = __webpack_require__(32);
   
   var _assets2 = _interopRequireDefault(_assets);
   
@@ -134,8 +134,7 @@ module.exports =
                       case 0:
                         css = [];
                         statusCode = 200;
-                        template = __webpack_require__(24); // eslint-disable-line global-require
-  
+                        template = __webpack_require__(33);
                         data = { title: '', description: '', css: '', body: '', entry: _assets2.default.main.js };
   
                         if (false) {
@@ -227,7 +226,7 @@ module.exports =
   app.use(function (err, req, res, next) {
     // eslint-disable-line no-unused-vars
     console.log(pe.render(err)); // eslint-disable-line no-console
-    var template = __webpack_require__(27); // eslint-disable-line global-require
+    var template = __webpack_require__(36); // eslint-disable-line global-require
     var statusCode = err.status || 500;
     res.status(statusCode);
     res.send(template({
@@ -268,46 +267,40 @@ module.exports =
 /* 3 */
 /***/ function(module, exports) {
 
-  module.exports = require("babel-polyfill");
+  module.exports = require("path");
 
 /***/ },
 /* 4 */
 /***/ function(module, exports) {
 
-  module.exports = require("path");
+  module.exports = require("express");
 
 /***/ },
 /* 5 */
 /***/ function(module, exports) {
 
-  module.exports = require("express");
+  module.exports = require("cookie-parser");
 
 /***/ },
 /* 6 */
 /***/ function(module, exports) {
 
-  module.exports = require("cookie-parser");
+  module.exports = require("body-parser");
 
 /***/ },
 /* 7 */
 /***/ function(module, exports) {
 
-  module.exports = require("body-parser");
+  module.exports = require("pretty-error");
 
 /***/ },
 /* 8 */
 /***/ function(module, exports) {
 
-  module.exports = require("pretty-error");
-
-/***/ },
-/* 9 */
-/***/ function(module, exports) {
-
   module.exports = require("react-dom/server");
 
 /***/ },
-/* 10 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
   'use strict';
@@ -324,15 +317,15 @@ module.exports =
   
   var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
   
-  var _react = __webpack_require__(11);
+  var _react = __webpack_require__(10);
   
   var _react2 = _interopRequireDefault(_react);
   
-  var _home = __webpack_require__(12);
+  var _home = __webpack_require__(11);
   
   var _home2 = _interopRequireDefault(_home);
   
-  var _containers = __webpack_require__(14);
+  var _containers = __webpack_require__(13);
   
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
   
@@ -385,13 +378,13 @@ module.exports =
   }; // Child Routes
 
 /***/ },
-/* 11 */
+/* 10 */
 /***/ function(module, exports) {
 
   module.exports = require("react");
 
 /***/ },
-/* 12 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
   'use strict';
@@ -408,11 +401,11 @@ module.exports =
   
   var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
   
-  var _react = __webpack_require__(11);
+  var _react = __webpack_require__(10);
   
   var _react2 = _interopRequireDefault(_react);
   
-  var _Home = __webpack_require__(13);
+  var _Home = __webpack_require__(12);
   
   var _Home2 = _interopRequireDefault(_Home);
   
@@ -441,16 +434,16 @@ module.exports =
   };
 
 /***/ },
-/* 13 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
   'use strict';
   
   Object.defineProperty(exports, "__esModule", {
-      value: true
+    value: true
   });
   
-  var _react = __webpack_require__(11);
+  var _react = __webpack_require__(10);
   
   var _react2 = _interopRequireDefault(_react);
   
@@ -459,19 +452,43 @@ module.exports =
   var title = 'React Starter Kit';
   
   function Home(_ref, context) {
-      var news = _ref.news;
+    var news = _ref.news;
   
-      context.setTitle(title);
-      return _react2.default.createElement(
-          'div',
-          null,
-          ' Hello World'
-      );
+    context.setTitle(title);
+    return _react2.default.createElement(
+      'div',
+      null,
+      ' Hello World'
+    );
   }
   
   Home.contextTypes = { setTitle: _react.PropTypes.func.isRequired };
   
   exports.default = Home;
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+  'use strict';
+  
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.Home = exports.App = undefined;
+  
+  var _App2 = __webpack_require__(14);
+  
+  var _App3 = _interopRequireDefault(_App2);
+  
+  var _Home2 = __webpack_require__(29);
+  
+  var _Home3 = _interopRequireDefault(_Home2);
+  
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+  
+  exports.App = _App3.default;
+  exports.Home = _Home3.default;
 
 /***/ },
 /* 14 */
@@ -482,51 +499,38 @@ module.exports =
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.App = undefined;
   
-  var _App2 = __webpack_require__(15);
-  
-  var _App3 = _interopRequireDefault(_App2);
-  
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-  
-  exports.App = _App3.default; /**
-                                * Created by rob on 7/4/2016.
-                                */
-
-/***/ },
-/* 15 */
-/***/ function(module, exports, __webpack_require__) {
-
-  'use strict';
-  
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  
-  var _getPrototypeOf = __webpack_require__(16);
+  var _getPrototypeOf = __webpack_require__(15);
   
   var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
   
-  var _classCallCheck2 = __webpack_require__(17);
+  var _classCallCheck2 = __webpack_require__(16);
   
   var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
   
-  var _createClass2 = __webpack_require__(18);
+  var _createClass2 = __webpack_require__(17);
   
   var _createClass3 = _interopRequireDefault(_createClass2);
   
-  var _possibleConstructorReturn2 = __webpack_require__(19);
+  var _possibleConstructorReturn2 = __webpack_require__(18);
   
   var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
   
-  var _inherits2 = __webpack_require__(20);
+  var _inherits2 = __webpack_require__(19);
   
   var _inherits3 = _interopRequireDefault(_inherits2);
   
-  var _react = __webpack_require__(11);
+  var _react = __webpack_require__(10);
   
   var _react2 = _interopRequireDefault(_react);
+  
+  var _emptyFunction = __webpack_require__(20);
+  
+  var _emptyFunction2 = _interopRequireDefault(_emptyFunction);
+  
+  var _App = __webpack_require__(21);
+  
+  var _App2 = _interopRequireDefault(_App);
   
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
   
@@ -539,58 +543,404 @@ module.exports =
     }
   
     (0, _createClass3.default)(App, [{
+      key: 'getChildContext',
+      value: function getChildContext() {
+        var context = this.props.context;
+        return {
+          insertCss: context.insertCss || _emptyFunction2.default,
+          setTitle: context.setTitle || _emptyFunction2.default,
+          setMeta: context.setMeta || _emptyFunction2.default
+        };
+      }
+    }, {
+      key: 'componentWillMount',
+      value: function componentWillMount() {
+        var insertCss = this.props.context.insertCss;
+  
+        this.removeCss = insertCss(_App2.default);
+      }
+    }, {
+      key: 'componentWillUnmount',
+      value: function componentWillUnmount() {
+        this.removeCss();
+      }
+    }, {
       key: 'render',
       value: function render() {
+        if (this.props.error) {
+          return this.props.children;
+        }
         return _react2.default.createElement(
-          'h1',
+          'div',
           null,
-          ' HEllo World!'
+          this.props.children
         );
       }
     }]);
     return App;
   }(_react.Component);
   
+  // export default App;
+  
+  
+  App.propTypes = {
+    context: _react.PropTypes.shape({
+      insertCss: _react.PropTypes.func,
+      setTitle: _react.PropTypes.func,
+      setMeta: _react.PropTypes.func
+    }).isRequired,
+    children: _react.PropTypes.element.isRequired,
+    error: _react.PropTypes.object
+  };
+  App.childContextTypes = {
+    insertCss: _react.PropTypes.func.isRequired,
+    setTitle: _react.PropTypes.func.isRequired,
+    setMeta: _react.PropTypes.func.isRequired
+  };
   exports.default = App;
 
 /***/ },
-/* 16 */
+/* 15 */
 /***/ function(module, exports) {
 
   module.exports = require("babel-runtime/core-js/object/get-prototype-of");
 
 /***/ },
-/* 17 */
+/* 16 */
 /***/ function(module, exports) {
 
   module.exports = require("babel-runtime/helpers/classCallCheck");
 
 /***/ },
-/* 18 */
+/* 17 */
 /***/ function(module, exports) {
 
   module.exports = require("babel-runtime/helpers/createClass");
 
 /***/ },
-/* 19 */
+/* 18 */
 /***/ function(module, exports) {
 
   module.exports = require("babel-runtime/helpers/possibleConstructorReturn");
 
 /***/ },
-/* 20 */
+/* 19 */
 /***/ function(module, exports) {
 
   module.exports = require("babel-runtime/helpers/inherits");
 
 /***/ },
+/* 20 */
+/***/ function(module, exports) {
+
+  module.exports = require("fbjs/lib/emptyFunction");
+
+/***/ },
 /* 21 */
+/***/ function(module, exports, __webpack_require__) {
+
+  
+      var content = __webpack_require__(22);
+      var insertCss = __webpack_require__(24);
+  
+      if (typeof content === 'string') {
+        content = [[module.id, content, '']];
+      }
+  
+      module.exports = content.locals || {};
+      module.exports._getCss = function() { return content.toString(); };
+      module.exports._insertCss = function(options) { return insertCss(content, options) };
+    
+      // Hot Module Replacement
+      // https://webpack.github.io/docs/hot-module-replacement
+      // Only activated in browser context
+      if (false) {
+        var removeCss = function() {};
+        module.hot.accept("!!./../../../node_modules/css-loader/index.js?{\"sourceMap\":true,\"modules\":true,\"localIdentName\":\"[name]_[local]_[hash:base64:3]\",\"minimize\":false}!./../../../node_modules/postcss-loader/index.js?pack=default!./App.css", function() {
+          content = require("!!./../../../node_modules/css-loader/index.js?{\"sourceMap\":true,\"modules\":true,\"localIdentName\":\"[name]_[local]_[hash:base64:3]\",\"minimize\":false}!./../../../node_modules/postcss-loader/index.js?pack=default!./App.css");
+  
+          if (typeof content === 'string') {
+            content = [[module.id, content, '']];
+          }
+  
+          removeCss = insertCss(content, { replace: true });
+        });
+        module.hot.dispose(function() { removeCss(); });
+      }
+    
+
+/***/ },
+/* 22 */
+/***/ function(module, exports, __webpack_require__) {
+
+  exports = module.exports = __webpack_require__(23)();
+  // imports
+  
+  
+  // module
+  exports.push([module.id, "/*! normalize.css v2.1.3 | MIT License | git.io/normalize */\n\n/* ==========================================================================\n   HTML5 display definitions\n   ========================================================================== */\n\n/**\n * Correct `block` display not defined in IE 8/9.\n */\n\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmain,\nnav,\nsection,\nsummary {\n    display: block;\n}\n\n/**\n * Correct `inline-block` display not defined in IE 8/9.\n */\n\naudio,\ncanvas,\nvideo {\n    display: inline-block;\n}\n\n/**\n * Prevent modern browsers from displaying `audio` without controls.\n * Remove excess height in iOS 5 devices.\n */\n\naudio:not([controls]) {\n    display: none;\n    height: 0;\n}\n\n/**\n * Address `[hidden]` styling not present in IE 8/9.\n * Hide the `template` element in IE, Safari, and Firefox < 22.\n */\n\n[hidden],\ntemplate {\n    display: none;\n}\n\n/* ==========================================================================\n   Base\n   ========================================================================== */\n\n/**\n * 1. Set default font family to sans-serif.\n * 2. Prevent iOS text size adjust after orientation change, without disabling\n *    user zoom.\n */\n\nhtml {\n    font-family: sans-serif; /* 1 */\n    -ms-text-size-adjust: 100%; /* 2 */\n    -webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/**\n * Remove default margin.\n */\n\nbody {\n    margin: 0;\n}\n\n/* ==========================================================================\n   Links\n   ========================================================================== */\n\n/**\n * Remove the gray background color from active links in IE 10.\n */\n\na {\n    background: transparent;\n}\n\n/**\n * Address `outline` inconsistency between Chrome and other browsers.\n */\n\na:focus {\n    outline: thin dotted;\n}\n\n/**\n * Improve readability when focused and also mouse hovered in all browsers.\n */\n\na:active,\na:hover {\n    outline: 0;\n}\n\n/* ==========================================================================\n   Typography\n   ========================================================================== */\n\n/**\n * Address variable `h1` font-size and margin within `section` and `article`\n * contexts in Firefox 4+, Safari 5, and Chrome.\n */\n\nh1 {\n    font-size: 2em;\n    margin: 0.67em 0;\n}\n\n/**\n * Address styling not present in IE 8/9, Safari 5, and Chrome.\n */\n\nabbr[title] {\n    border-bottom: 1px dotted;\n}\n\n/**\n * Address style set to `bolder` in Firefox 4+, Safari 5, and Chrome.\n */\n\nb,\nstrong {\n    font-weight: bold;\n}\n\n/**\n * Address styling not present in Safari 5 and Chrome.\n */\n\ndfn {\n    font-style: italic;\n}\n\n/**\n * Address differences between Firefox and other browsers.\n */\n\nhr {\n    -webkit-box-sizing: content-box;\n            box-sizing: content-box;\n    height: 0;\n}\n\n/**\n * Address styling not present in IE 8/9.\n */\n\nmark {\n    background: #ff0;\n    color: #000;\n}\n\n/**\n * Correct font family set oddly in Safari 5 and Chrome.\n */\n\ncode,\nkbd,\npre,\nsamp {\n    font-family: monospace, serif;\n    font-size: 1em;\n}\n\n/**\n * Improve readability of pre-formatted text in all browsers.\n */\n\npre {\n    white-space: pre-wrap;\n}\n\n/**\n * Set consistent quote types.\n */\n\nq {\n    quotes: \"\\201C\" \"\\201D\" \"\\2018\" \"\\2019\";\n}\n\n/**\n * Address inconsistent and variable font size in all browsers.\n */\n\nsmall {\n    font-size: 80%;\n}\n\n/**\n * Prevent `sub` and `sup` affecting `line-height` in all browsers.\n */\n\nsub,\nsup {\n    font-size: 75%;\n    line-height: 0;\n    position: relative;\n    vertical-align: baseline;\n}\n\nsup {\n    top: -0.5em;\n}\n\nsub {\n    bottom: -0.25em;\n}\n\n/* ==========================================================================\n   Embedded content\n   ========================================================================== */\n\n/**\n * Remove border when inside `a` element in IE 8/9.\n */\n\nimg {\n    border: 0;\n}\n\n/**\n * Correct overflow displayed oddly in IE 9.\n */\n\nsvg:not(:root) {\n    overflow: hidden;\n}\n\n/* ==========================================================================\n   Figures\n   ========================================================================== */\n\n/**\n * Address margin not present in IE 8/9 and Safari 5.\n */\n\nfigure {\n    margin: 0;\n}\n\n/* ==========================================================================\n   Forms\n   ========================================================================== */\n\n/**\n * Define consistent border, margin, and padding.\n */\n\nfieldset {\n    border: 1px solid #c0c0c0;\n    margin: 0 2px;\n    padding: 0.35em 0.625em 0.75em;\n}\n\n/**\n * 1. Correct `color` not being inherited in IE 8/9.\n * 2. Remove padding so people aren't caught out if they zero out fieldsets.\n */\n\nlegend {\n    border: 0; /* 1 */\n    padding: 0; /* 2 */\n}\n\n/**\n * 1. Correct font family not being inherited in all browsers.\n * 2. Correct font size not being inherited in all browsers.\n * 3. Address margins set differently in Firefox 4+, Safari 5, and Chrome.\n */\n\nbutton,\ninput,\nselect,\ntextarea {\n    font-family: inherit; /* 1 */\n    font-size: 100%; /* 2 */\n    margin: 0; /* 3 */\n}\n\n/**\n * Address Firefox 4+ setting `line-height` on `input` using `!important` in\n * the UA stylesheet.\n */\n\nbutton,\ninput {\n    line-height: normal;\n}\n\n/**\n * Address inconsistent `text-transform` inheritance for `button` and `select`.\n * All other form control elements do not inherit `text-transform` values.\n * Correct `button` style inheritance in Chrome, Safari 5+, and IE 8+.\n * Correct `select` style inheritance in Firefox 4+ and Opera.\n */\n\nbutton,\nselect {\n    text-transform: none;\n}\n\n/**\n * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`\n *    and `video` controls.\n * 2. Correct inability to style clickable `input` types in iOS.\n * 3. Improve usability and consistency of cursor style between image-type\n *    `input` and others.\n */\n\nbutton,\nhtml input[type=\"button\"], /* 1 */\ninput[type=\"reset\"],\ninput[type=\"submit\"] {\n    -webkit-appearance: button; /* 2 */\n    cursor: pointer; /* 3 */\n}\n\n/**\n * Re-set default cursor for disabled elements.\n */\n\nbutton[disabled],\nhtml input[disabled] {\n    cursor: default;\n}\n\n/**\n * 1. Address box sizing set to `content-box` in IE 8/9/10.\n * 2. Remove excess padding in IE 8/9/10.\n */\n\ninput[type=\"checkbox\"],\ninput[type=\"radio\"] {\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box; /* 1 */\n    padding: 0; /* 2 */\n}\n\n/**\n * 1. Address `appearance` set to `searchfield` in Safari 5 and Chrome.\n * 2. Address `box-sizing` set to `border-box` in Safari 5 and Chrome\n *    (include `-moz` to future-proof).\n */\n\ninput[type=\"search\"] {\n    -webkit-appearance: textfield; /* 1 */\n    -webkit-box-sizing: content-box; /* 2 */\n    box-sizing: content-box;\n}\n\n/**\n * Remove inner padding and search cancel button in Safari 5 and Chrome\n * on OS X.\n */\n\ninput[type=\"search\"]::-webkit-search-cancel-button,\ninput[type=\"search\"]::-webkit-search-decoration {\n    -webkit-appearance: none;\n}\n\n/**\n * Remove inner padding and border in Firefox 4+.\n */\n\nbutton::-moz-focus-inner,\ninput::-moz-focus-inner {\n    border: 0;\n    padding: 0;\n}\n\n/**\n * 1. Remove default vertical scrollbar in IE 8/9.\n * 2. Improve readability and alignment in all browsers.\n */\n\ntextarea {\n    overflow: auto; /* 1 */\n    vertical-align: top; /* 2 */\n}\n\n/* ==========================================================================\n   Tables\n   ========================================================================== */\n\n/**\n * Remove most spacing between table cells.\n */\n\ntable {\n    border-collapse: collapse;\n    border-spacing: 0;\n}\r\n\r\n\r\n\r\n", "", {"version":3,"sources":["/../node_modules/normalize-css/normalize.css"],"names":[],"mappings":"AAAA,4DAA4D;;AAE5D;;gFAEgF;;AAEhF;;GAEG;;AAEH;;;;;;;;;;;;IAYI,eAAe;CAClB;;AAED;;GAEG;;AAEH;;;IAGI,sBAAsB;CACzB;;AAED;;;GAGG;;AAEH;IACI,cAAc;IACd,UAAU;CACb;;AAED;;;GAGG;;AAEH;;IAEI,cAAc;CACjB;;AAED;;gFAEgF;;AAEhF;;;;GAIG;;AAEH;IACI,wBAAwB,CAAC,OAAO;IAChC,2BAA2B,CAAC,OAAO;IACnC,+BAA+B,CAAC,OAAO;CAC1C;;AAED;;GAEG;;AAEH;IACI,UAAU;CACb;;AAED;;gFAEgF;;AAEhF;;GAEG;;AAEH;IACI,wBAAwB;CAC3B;;AAED;;GAEG;;AAEH;IACI,qBAAqB;CACxB;;AAED;;GAEG;;AAEH;;IAEI,WAAW;CACd;;AAED;;gFAEgF;;AAEhF;;;GAGG;;AAEH;IACI,eAAe;IACf,iBAAiB;CACpB;;AAED;;GAEG;;AAEH;IACI,0BAA0B;CAC7B;;AAED;;GAEG;;AAEH;;IAEI,kBAAkB;CACrB;;AAED;;GAEG;;AAEH;IACI,mBAAmB;CACtB;;AAED;;GAEG;;AAEH;IAEI,gCAAwB;YAAxB,wBAAwB;IACxB,UAAU;CACb;;AAED;;GAEG;;AAEH;IACI,iBAAiB;IACjB,YAAY;CACf;;AAED;;GAEG;;AAEH;;;;IAII,8BAA8B;IAC9B,eAAe;CAClB;;AAED;;GAEG;;AAEH;IACI,sBAAsB;CACzB;;AAED;;GAEG;;AAEH;IACI,wCAAwC;CAC3C;;AAED;;GAEG;;AAEH;IACI,eAAe;CAClB;;AAED;;GAEG;;AAEH;;IAEI,eAAe;IACf,eAAe;IACf,mBAAmB;IACnB,yBAAyB;CAC5B;;AAED;IACI,YAAY;CACf;;AAED;IACI,gBAAgB;CACnB;;AAED;;gFAEgF;;AAEhF;;GAEG;;AAEH;IACI,UAAU;CACb;;AAED;;GAEG;;AAEH;IACI,iBAAiB;CACpB;;AAED;;gFAEgF;;AAEhF;;GAEG;;AAEH;IACI,UAAU;CACb;;AAED;;gFAEgF;;AAEhF;;GAEG;;AAEH;IACI,0BAA0B;IAC1B,cAAc;IACd,+BAA+B;CAClC;;AAED;;;GAGG;;AAEH;IACI,UAAU,CAAC,OAAO;IAClB,WAAW,CAAC,OAAO;CACtB;;AAED;;;;GAIG;;AAEH;;;;IAII,qBAAqB,CAAC,OAAO;IAC7B,gBAAgB,CAAC,OAAO;IACxB,UAAU,CAAC,OAAO;CACrB;;AAED;;;GAGG;;AAEH;;IAEI,oBAAoB;CACvB;;AAED;;;;;GAKG;;AAEH;;IAEI,qBAAqB;CACxB;;AAED;;;;;;GAMG;;AAEH;;;;IAII,2BAA2B,CAAC,OAAO;IACnC,gBAAgB,CAAC,OAAO;CAC3B;;AAED;;GAEG;;AAEH;;IAEI,gBAAgB;CACnB;;AAED;;;GAGG;;AAEH;;IAEI,+BAAuB;YAAvB,uBAAuB,CAAC,OAAO;IAC/B,WAAW,CAAC,OAAO;CACtB;;AAED;;;;GAIG;;AAEH;IACI,8BAA8B,CAAC,OAAO;IAEtC,gCAAgC,CAAC,OAAO;IACxC,wBAAwB;CAC3B;;AAED;;;GAGG;;AAEH;;IAEI,yBAAyB;CAC5B;;AAED;;GAEG;;AAEH;;IAEI,UAAU;IACV,WAAW;CACd;;AAED;;;GAGG;;AAEH;IACI,eAAe,CAAC,OAAO;IACvB,oBAAoB,CAAC,OAAO;CAC/B;;AAED;;gFAEgF;;AAEhF;;GAEG;;AAEH;IACI,0BAA0B;IAC1B,kBAAkB;CACrB","file":"App.css","sourcesContent":["/*! normalize.css v2.1.3 | MIT License | git.io/normalize */\n\n/* ==========================================================================\n   HTML5 display definitions\n   ========================================================================== */\n\n/**\n * Correct `block` display not defined in IE 8/9.\n */\n\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmain,\nnav,\nsection,\nsummary {\n    display: block;\n}\n\n/**\n * Correct `inline-block` display not defined in IE 8/9.\n */\n\naudio,\ncanvas,\nvideo {\n    display: inline-block;\n}\n\n/**\n * Prevent modern browsers from displaying `audio` without controls.\n * Remove excess height in iOS 5 devices.\n */\n\naudio:not([controls]) {\n    display: none;\n    height: 0;\n}\n\n/**\n * Address `[hidden]` styling not present in IE 8/9.\n * Hide the `template` element in IE, Safari, and Firefox < 22.\n */\n\n[hidden],\ntemplate {\n    display: none;\n}\n\n/* ==========================================================================\n   Base\n   ========================================================================== */\n\n/**\n * 1. Set default font family to sans-serif.\n * 2. Prevent iOS text size adjust after orientation change, without disabling\n *    user zoom.\n */\n\nhtml {\n    font-family: sans-serif; /* 1 */\n    -ms-text-size-adjust: 100%; /* 2 */\n    -webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/**\n * Remove default margin.\n */\n\nbody {\n    margin: 0;\n}\n\n/* ==========================================================================\n   Links\n   ========================================================================== */\n\n/**\n * Remove the gray background color from active links in IE 10.\n */\n\na {\n    background: transparent;\n}\n\n/**\n * Address `outline` inconsistency between Chrome and other browsers.\n */\n\na:focus {\n    outline: thin dotted;\n}\n\n/**\n * Improve readability when focused and also mouse hovered in all browsers.\n */\n\na:active,\na:hover {\n    outline: 0;\n}\n\n/* ==========================================================================\n   Typography\n   ========================================================================== */\n\n/**\n * Address variable `h1` font-size and margin within `section` and `article`\n * contexts in Firefox 4+, Safari 5, and Chrome.\n */\n\nh1 {\n    font-size: 2em;\n    margin: 0.67em 0;\n}\n\n/**\n * Address styling not present in IE 8/9, Safari 5, and Chrome.\n */\n\nabbr[title] {\n    border-bottom: 1px dotted;\n}\n\n/**\n * Address style set to `bolder` in Firefox 4+, Safari 5, and Chrome.\n */\n\nb,\nstrong {\n    font-weight: bold;\n}\n\n/**\n * Address styling not present in Safari 5 and Chrome.\n */\n\ndfn {\n    font-style: italic;\n}\n\n/**\n * Address differences between Firefox and other browsers.\n */\n\nhr {\n    -moz-box-sizing: content-box;\n    box-sizing: content-box;\n    height: 0;\n}\n\n/**\n * Address styling not present in IE 8/9.\n */\n\nmark {\n    background: #ff0;\n    color: #000;\n}\n\n/**\n * Correct font family set oddly in Safari 5 and Chrome.\n */\n\ncode,\nkbd,\npre,\nsamp {\n    font-family: monospace, serif;\n    font-size: 1em;\n}\n\n/**\n * Improve readability of pre-formatted text in all browsers.\n */\n\npre {\n    white-space: pre-wrap;\n}\n\n/**\n * Set consistent quote types.\n */\n\nq {\n    quotes: \"\\201C\" \"\\201D\" \"\\2018\" \"\\2019\";\n}\n\n/**\n * Address inconsistent and variable font size in all browsers.\n */\n\nsmall {\n    font-size: 80%;\n}\n\n/**\n * Prevent `sub` and `sup` affecting `line-height` in all browsers.\n */\n\nsub,\nsup {\n    font-size: 75%;\n    line-height: 0;\n    position: relative;\n    vertical-align: baseline;\n}\n\nsup {\n    top: -0.5em;\n}\n\nsub {\n    bottom: -0.25em;\n}\n\n/* ==========================================================================\n   Embedded content\n   ========================================================================== */\n\n/**\n * Remove border when inside `a` element in IE 8/9.\n */\n\nimg {\n    border: 0;\n}\n\n/**\n * Correct overflow displayed oddly in IE 9.\n */\n\nsvg:not(:root) {\n    overflow: hidden;\n}\n\n/* ==========================================================================\n   Figures\n   ========================================================================== */\n\n/**\n * Address margin not present in IE 8/9 and Safari 5.\n */\n\nfigure {\n    margin: 0;\n}\n\n/* ==========================================================================\n   Forms\n   ========================================================================== */\n\n/**\n * Define consistent border, margin, and padding.\n */\n\nfieldset {\n    border: 1px solid #c0c0c0;\n    margin: 0 2px;\n    padding: 0.35em 0.625em 0.75em;\n}\n\n/**\n * 1. Correct `color` not being inherited in IE 8/9.\n * 2. Remove padding so people aren't caught out if they zero out fieldsets.\n */\n\nlegend {\n    border: 0; /* 1 */\n    padding: 0; /* 2 */\n}\n\n/**\n * 1. Correct font family not being inherited in all browsers.\n * 2. Correct font size not being inherited in all browsers.\n * 3. Address margins set differently in Firefox 4+, Safari 5, and Chrome.\n */\n\nbutton,\ninput,\nselect,\ntextarea {\n    font-family: inherit; /* 1 */\n    font-size: 100%; /* 2 */\n    margin: 0; /* 3 */\n}\n\n/**\n * Address Firefox 4+ setting `line-height` on `input` using `!important` in\n * the UA stylesheet.\n */\n\nbutton,\ninput {\n    line-height: normal;\n}\n\n/**\n * Address inconsistent `text-transform` inheritance for `button` and `select`.\n * All other form control elements do not inherit `text-transform` values.\n * Correct `button` style inheritance in Chrome, Safari 5+, and IE 8+.\n * Correct `select` style inheritance in Firefox 4+ and Opera.\n */\n\nbutton,\nselect {\n    text-transform: none;\n}\n\n/**\n * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`\n *    and `video` controls.\n * 2. Correct inability to style clickable `input` types in iOS.\n * 3. Improve usability and consistency of cursor style between image-type\n *    `input` and others.\n */\n\nbutton,\nhtml input[type=\"button\"], /* 1 */\ninput[type=\"reset\"],\ninput[type=\"submit\"] {\n    -webkit-appearance: button; /* 2 */\n    cursor: pointer; /* 3 */\n}\n\n/**\n * Re-set default cursor for disabled elements.\n */\n\nbutton[disabled],\nhtml input[disabled] {\n    cursor: default;\n}\n\n/**\n * 1. Address box sizing set to `content-box` in IE 8/9/10.\n * 2. Remove excess padding in IE 8/9/10.\n */\n\ninput[type=\"checkbox\"],\ninput[type=\"radio\"] {\n    box-sizing: border-box; /* 1 */\n    padding: 0; /* 2 */\n}\n\n/**\n * 1. Address `appearance` set to `searchfield` in Safari 5 and Chrome.\n * 2. Address `box-sizing` set to `border-box` in Safari 5 and Chrome\n *    (include `-moz` to future-proof).\n */\n\ninput[type=\"search\"] {\n    -webkit-appearance: textfield; /* 1 */\n    -moz-box-sizing: content-box;\n    -webkit-box-sizing: content-box; /* 2 */\n    box-sizing: content-box;\n}\n\n/**\n * Remove inner padding and search cancel button in Safari 5 and Chrome\n * on OS X.\n */\n\ninput[type=\"search\"]::-webkit-search-cancel-button,\ninput[type=\"search\"]::-webkit-search-decoration {\n    -webkit-appearance: none;\n}\n\n/**\n * Remove inner padding and border in Firefox 4+.\n */\n\nbutton::-moz-focus-inner,\ninput::-moz-focus-inner {\n    border: 0;\n    padding: 0;\n}\n\n/**\n * 1. Remove default vertical scrollbar in IE 8/9.\n * 2. Improve readability and alignment in all browsers.\n */\n\ntextarea {\n    overflow: auto; /* 1 */\n    vertical-align: top; /* 2 */\n}\n\n/* ==========================================================================\n   Tables\n   ========================================================================== */\n\n/**\n * Remove most spacing between table cells.\n */\n\ntable {\n    border-collapse: collapse;\n    border-spacing: 0;\n}\n"],"sourceRoot":"webpack://"}]);
+  
+  // exports
+
+
+/***/ },
+/* 23 */
+/***/ function(module, exports) {
+
+  /*
+  	MIT License http://www.opensource.org/licenses/mit-license.php
+  	Author Tobias Koppers @sokra
+  */
+  // css base code, injected by the css-loader
+  module.exports = function() {
+  	var list = [];
+  
+  	// return the list of modules as css string
+  	list.toString = function toString() {
+  		var result = [];
+  		for(var i = 0; i < this.length; i++) {
+  			var item = this[i];
+  			if(item[2]) {
+  				result.push("@media " + item[2] + "{" + item[1] + "}");
+  			} else {
+  				result.push(item[1]);
+  			}
+  		}
+  		return result.join("");
+  	};
+  
+  	// import a list of modules into the list
+  	list.i = function(modules, mediaQuery) {
+  		if(typeof modules === "string")
+  			modules = [[null, modules, ""]];
+  		var alreadyImportedModules = {};
+  		for(var i = 0; i < this.length; i++) {
+  			var id = this[i][0];
+  			if(typeof id === "number")
+  				alreadyImportedModules[id] = true;
+  		}
+  		for(i = 0; i < modules.length; i++) {
+  			var item = modules[i];
+  			// skip already imported module
+  			// this implementation is not 100% perfect for weird media query combinations
+  			//  when a module is imported multiple times with different media queries.
+  			//  I hope this will never occur (Hey this way we have smaller bundles)
+  			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+  				if(mediaQuery && !item[2]) {
+  					item[2] = mediaQuery;
+  				} else if(mediaQuery) {
+  					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+  				}
+  				list.push(item);
+  			}
+  		}
+  	};
+  	return list;
+  };
+
+
+/***/ },
+/* 24 */
+/***/ function(module, exports, __webpack_require__) {
+
+  'use strict';
+  
+  var _assign = __webpack_require__(25);
+  
+  var _assign2 = _interopRequireDefault(_assign);
+  
+  var _stringify = __webpack_require__(26);
+  
+  var _stringify2 = _interopRequireDefault(_stringify);
+  
+  var _slicedToArray2 = __webpack_require__(27);
+  
+  var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
+  
+  var _getIterator2 = __webpack_require__(28);
+  
+  var _getIterator3 = _interopRequireDefault(_getIterator2);
+  
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+  
+  /**
+   * Isomorphic CSS style loader for Webpack
+   *
+   * Copyright © 2015-2016 Kriasoft, LLC. All rights reserved.
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE.txt file in the root directory of this source tree.
+   */
+  
+  var prefix = 's';
+  var inserted = {};
+  
+  // Base64 encoding and decoding - The "Unicode Problem"
+  // https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/Base64_encoding_and_decoding#The_Unicode_Problem
+  function b64EncodeUnicode(str) {
+    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function (match, p1) {
+      return String.fromCharCode('0x' + p1);
+    }));
+  }
+  
+  /**
+   * Remove style/link elements for specified node IDs
+   * if they are no longer referenced by UI components.
+   */
+  function removeCss(ids) {
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+  
+    try {
+      for (var _iterator = (0, _getIterator3.default)(ids), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var id = _step.value;
+  
+        if (--inserted[id] <= 0) {
+          var elem = document.getElementById(prefix + id);
+          if (elem) {
+            elem.parentNode.removeChild(elem);
+          }
+        }
+      }
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion && _iterator.return) {
+          _iterator.return();
+        }
+      } finally {
+        if (_didIteratorError) {
+          throw _iteratorError;
+        }
+      }
+    }
+  }
+  
+  /**
+   * Example:
+   *   // Insert CSS styles object generated by `css-loader` into DOM
+   *   var removeCss = insertCss([[1, 'body { color: red; }']]);
+   *
+   *   // Remove it from the DOM
+   *   removeCss();
+   */
+  function insertCss(styles, options) {
+    var _Object$assign = (0, _assign2.default)({
+      replace: false,
+      prepend: false
+    }, options);
+  
+    var replace = _Object$assign.replace;
+    var prepend = _Object$assign.prepend;
+  
+  
+    var ids = [];
+    for (var i = 0; i < styles.length; i++) {
+      var _styles$i = (0, _slicedToArray3.default)(styles[i], 4);
+  
+      var moduleId = _styles$i[0];
+      var css = _styles$i[1];
+      var media = _styles$i[2];
+      var sourceMap = _styles$i[3];
+  
+      var id = moduleId + '-' + i;
+  
+      ids.push(id);
+  
+      if (inserted[id]) {
+        if (!replace) {
+          inserted[id]++;
+          continue;
+        }
+      }
+  
+      inserted[id] = 1;
+  
+      var elem = document.getElementById(prefix + id);
+      var create = false;
+  
+      if (!elem) {
+        create = true;
+  
+        elem = document.createElement('style');
+        elem.setAttribute('type', 'text/css');
+        elem.id = prefix + id;
+  
+        if (media) {
+          elem.setAttribute('media', media);
+        }
+      }
+  
+      var cssText = css;
+      if (sourceMap) {
+        cssText += '\n/*# sourceMappingURL=data:application/json;base64,' + b64EncodeUnicode((0, _stringify2.default)(sourceMap)) + '*/';
+        cssText += '\n/*# sourceURL=' + sourceMap.file + '*/';
+      }
+  
+      if ('textContent' in elem) {
+        elem.textContent = cssText;
+      } else {
+        elem.styleSheet.cssText = cssText;
+      }
+  
+      if (create) {
+        if (prepend) {
+          document.head.insertBefore(elem, document.head.childNodes[0]);
+        } else {
+          document.head.appendChild(elem);
+        }
+      }
+    }
+  
+    return removeCss.bind(null, ids);
+  }
+  
+  module.exports = insertCss;
+
+/***/ },
+/* 25 */
+/***/ function(module, exports) {
+
+  module.exports = require("babel-runtime/core-js/object/assign");
+
+/***/ },
+/* 26 */
+/***/ function(module, exports) {
+
+  module.exports = require("babel-runtime/core-js/json/stringify");
+
+/***/ },
+/* 27 */
+/***/ function(module, exports) {
+
+  module.exports = require("babel-runtime/helpers/slicedToArray");
+
+/***/ },
+/* 28 */
+/***/ function(module, exports) {
+
+  module.exports = require("babel-runtime/core-js/get-iterator");
+
+/***/ },
+/* 29 */
+/***/ function(module, exports) {
+
+  /**
+   * Created by rob on 7/9/2016.
+   */
+  "use strict";
+
+/***/ },
+/* 30 */
 /***/ function(module, exports) {
 
   module.exports = require("universal-router");
 
 /***/ },
-/* 22 */
+/* 31 */
 /***/ function(module, exports) {
 
   "use strict";
@@ -601,16 +951,16 @@ module.exports =
   var port = exports.port = process.env.PORT || 3000;
 
 /***/ },
-/* 23 */
+/* 32 */
 /***/ function(module, exports) {
 
   module.exports = require("./assets");
 
 /***/ },
-/* 24 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
-  var jade = __webpack_require__(25);
+  var jade = __webpack_require__(34);
   
   module.exports = function template(locals) {
   var jade_debug = [ new jade.DebugItem( 1, "C:\\Users\\rob\\experiment\\src\\views\\index.jade" ) ];
@@ -687,7 +1037,7 @@ module.exports =
   }
 
 /***/ },
-/* 25 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
   'use strict';
@@ -907,7 +1257,7 @@ module.exports =
       throw err;
     }
     try {
-      str = str || __webpack_require__(26).readFileSync(filename, 'utf8')
+      str = str || __webpack_require__(35).readFileSync(filename, 'utf8')
     } catch (ex) {
       rethrow(err, null, lineno)
     }
@@ -939,16 +1289,16 @@ module.exports =
 
 
 /***/ },
-/* 26 */
+/* 35 */
 /***/ function(module, exports) {
 
   module.exports = require("fs");
 
 /***/ },
-/* 27 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
-  var jade = __webpack_require__(25);
+  var jade = __webpack_require__(34);
   
   module.exports = function template(locals) {
   var jade_debug = [ new jade.DebugItem( 1, "C:\\Users\\rob\\experiment\\src\\views\\error.jade" ) ];
@@ -1227,6 +1577,12 @@ module.exports =
     jade.rethrow(err, jade_debug[0].filename, jade_debug[0].lineno, "doctype html\r\nhtml(lang=\"en\")\r\n  head\r\n    meta(charset=\"utf-8\")\r\n    title Internal Server Error\r\n    meta(name=\"viewport\", content=\"width=device-width, initial-scale=1\")\r\n    style.\r\n      * {\r\n        line-height: 1.2;\r\n        margin: 0;\r\n      }\r\n\r\n      html {\r\n        color: #888;\r\n        display: table;\r\n        font-family: sans-serif;\r\n        height: 100%;\r\n        text-align: center;\r\n        width: 100%;\r\n      }\r\n\r\n      body {\r\n        display: table-cell;\r\n        vertical-align: middle;\r\n        margin: 2em auto;\r\n      }\r\n\r\n      h1 {\r\n        color: #555;\r\n        font-size: 2em;\r\n        font-weight: 400;\r\n      }\r\n\r\n      p {\r\n        margin: 0 auto;\r\n        width: 280px;\r\n      }\r\n\r\n      pre {\r\n        text-align: left;\r\n        margin-top: 2rem;\r\n      }\r\n\r\n      @media only screen and (max-width: 280px) {\r\n\r\n        body, p {\r\n          width: 95%;\r\n        }\r\n\r\n        h1 {\r\n          font-size: 1.5em;\r\n          margin: 0 0 0.3em;\r\n        }\r\n\r\n      }\r\n\r\n  body\r\n    h1 Internal Server Error\r\n    p Sorry, something went wrong.\r\n    pre= stack\r\n// IE needs 512+ bytes: http://blogs.msdn.com/b/ieinternals/archive/2010/08/19/http-error-pages-in-internet-explorer.aspx\r\n");
   }
   }
+
+/***/ },
+/* 37 */
+/***/ function(module, exports) {
+
+  module.exports = require("babel-polyfill");
 
 /***/ }
 /******/ ]);
