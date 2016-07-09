@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import emptyFunction from 'fbjs/lib/emptyFunction';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './App.css';
+import { Provider } from 'react-redux';
+import { Navigation } from '../../components';
 
 export default class App extends Component {
 
@@ -44,8 +45,14 @@ export default class App extends Component {
     if (this.props.error) {
       return this.props.children;
     }
+    const store = this.props.context.store;
     return (
-        <div>{this.props.children}</div>
+      <Provider store={store}>
+        <div>
+          <Navigation />
+          {this.props.children}
+        </div>
+      </Provider>
     )
   }
 }

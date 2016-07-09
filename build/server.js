@@ -90,19 +90,19 @@ module.exports =
   
   var _routes2 = _interopRequireDefault(_routes);
   
-  var _universalRouter = __webpack_require__(32);
+  var _universalRouter = __webpack_require__(35);
   
-  var _config = __webpack_require__(33);
+  var _config = __webpack_require__(36);
   
-  var _assets = __webpack_require__(34);
+  var _assets = __webpack_require__(37);
   
   var _assets2 = _interopRequireDefault(_assets);
   
-  var _configureStore = __webpack_require__(35);
+  var _configureStore = __webpack_require__(38);
   
   var _configureStore2 = _interopRequireDefault(_configureStore);
   
-  var _runtime = __webpack_require__(44);
+  var _runtime = __webpack_require__(50);
   
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
   
@@ -144,7 +144,7 @@ module.exports =
                       case 0:
                         css = [];
                         statusCode = 200;
-                        template = __webpack_require__(46);
+                        template = __webpack_require__(51);
                         data = { title: '', description: '', css: '', body: '', entry: _assets2.default.main.js };
   
                         if (false) {
@@ -236,7 +236,7 @@ module.exports =
   app.use(function (err, req, res, next) {
     // eslint-disable-line no-unused-vars
     console.log(pe.render(err)); // eslint-disable-line no-console
-    var template = __webpack_require__(49); // eslint-disable-line global-require
+    var template = __webpack_require__(54); // eslint-disable-line global-require
     var statusCode = err.status || 500;
     res.status(statusCode);
     res.send(template({
@@ -491,7 +491,7 @@ module.exports =
           _react2.default.createElement(
               'div',
               { className: _Home2.default.container },
-              'Hey!'
+              'Hello World'
           )
       );
   }
@@ -830,13 +830,13 @@ module.exports =
   
   var _emptyFunction2 = _interopRequireDefault(_emptyFunction);
   
-  var _withStyles = __webpack_require__(15);
-  
-  var _withStyles2 = _interopRequireDefault(_withStyles);
-  
   var _App = __webpack_require__(30);
   
   var _App2 = _interopRequireDefault(_App);
+  
+  var _reactRedux = __webpack_require__(32);
+  
+  var _components = __webpack_require__(33);
   
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
   
@@ -876,10 +876,16 @@ module.exports =
         if (this.props.error) {
           return this.props.children;
         }
+        var store = this.props.context.store;
         return _react2.default.createElement(
-          'div',
-          null,
-          this.props.children
+          _reactRedux.Provider,
+          { store: store },
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(_components.Navigation, null),
+            this.props.children
+          )
         );
       }
     }]);
@@ -1134,10 +1140,69 @@ module.exports =
 /* 32 */
 /***/ function(module, exports) {
 
-  module.exports = require("universal-router");
+  module.exports = require("react-redux");
 
 /***/ },
 /* 33 */
+/***/ function(module, exports, __webpack_require__) {
+
+  'use strict';
+  
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.Navigation = undefined;
+  
+  var _Navigation2 = __webpack_require__(34);
+  
+  var _Navigation3 = _interopRequireDefault(_Navigation2);
+  
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+  
+  exports.Navigation = _Navigation3.default;
+
+/***/ },
+/* 34 */
+/***/ function(module, exports, __webpack_require__) {
+
+  'use strict';
+  
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  
+  var _react = __webpack_require__(12);
+  
+  var _react2 = _interopRequireDefault(_react);
+  
+  var _withStyles = __webpack_require__(15);
+  
+  var _withStyles2 = _interopRequireDefault(_withStyles);
+  
+  var _Navigation = __webpack_require__(55);
+  
+  var _Navigation2 = _interopRequireDefault(_Navigation);
+  
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+  
+  function Navigation() {
+    return _react2.default.createElement(
+      'div',
+      null,
+      'Nav'
+    );
+  }
+  
+  exports.default = (0, _withStyles2.default)(_Navigation2.default)(Navigation);
+
+/***/ },
+/* 35 */
+/***/ function(module, exports) {
+
+  module.exports = require("universal-router");
+
+/***/ },
+/* 36 */
 /***/ function(module, exports) {
 
   "use strict";
@@ -1148,13 +1213,13 @@ module.exports =
   var port = exports.port = process.env.PORT || 3000;
 
 /***/ },
-/* 34 */
+/* 37 */
 /***/ function(module, exports) {
 
   module.exports = require("./assets");
 
 /***/ },
-/* 35 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
   'use strict';
@@ -1169,17 +1234,17 @@ module.exports =
   
   exports.default = configureStore;
   
-  var _redux = __webpack_require__(36);
+  var _redux = __webpack_require__(39);
   
-  var _reduxThunk = __webpack_require__(37);
+  var _reduxThunk = __webpack_require__(40);
   
   var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
   
-  var _reducers = __webpack_require__(38);
+  var _reducers = __webpack_require__(41);
   
   var _reducers2 = _interopRequireDefault(_reducers);
   
-  var _createHelpers = __webpack_require__(39);
+  var _createHelpers = __webpack_require__(46);
   
   var _createHelpers2 = _interopRequireDefault(_createHelpers);
   
@@ -1239,19 +1304,19 @@ module.exports =
   }
 
 /***/ },
-/* 36 */
+/* 39 */
 /***/ function(module, exports) {
 
   module.exports = require("redux");
 
 /***/ },
-/* 37 */
+/* 40 */
 /***/ function(module, exports) {
 
   module.exports = require("redux-thunk");
 
 /***/ },
-/* 38 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
   'use strict';
@@ -1260,9 +1325,9 @@ module.exports =
     value: true
   });
   
-  var _redux = __webpack_require__(36);
+  var _redux = __webpack_require__(39);
   
-  var _runtime = __webpack_require__(50);
+  var _runtime = __webpack_require__(42);
   
   var _runtime2 = _interopRequireDefault(_runtime);
   
@@ -1273,7 +1338,7 @@ module.exports =
   });
 
 /***/ },
-/* 39 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
   'use strict';
@@ -1282,7 +1347,66 @@ module.exports =
       value: true
   });
   
-  var _extends2 = __webpack_require__(40);
+  var _defineProperty2 = __webpack_require__(43);
+  
+  var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+  
+  var _extends3 = __webpack_require__(44);
+  
+  var _extends4 = _interopRequireDefault(_extends3);
+  
+  exports.default = runtime;
+  
+  var _constants = __webpack_require__(45);
+  
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+  
+  function runtime() {
+      var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+      var action = arguments[1];
+  
+      switch (action.type) {
+          case _constants.SET_RUNTIME_VARIABLE:
+              return (0, _extends4.default)({}, state, (0, _defineProperty3.default)({}, action.payload.name, action.payload.value));
+          default:
+              return state;
+      }
+  }
+
+/***/ },
+/* 43 */
+/***/ function(module, exports) {
+
+  module.exports = require("babel-runtime/helpers/defineProperty");
+
+/***/ },
+/* 44 */
+/***/ function(module, exports) {
+
+  module.exports = require("babel-runtime/helpers/extends");
+
+/***/ },
+/* 45 */
+/***/ function(module, exports) {
+
+  'use strict';
+  
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  var SET_RUNTIME_VARIABLE = exports.SET_RUNTIME_VARIABLE = 'SET_RUNTIME_VARIABLE';
+
+/***/ },
+/* 46 */
+/***/ function(module, exports, __webpack_require__) {
+
+  'use strict';
+  
+  Object.defineProperty(exports, "__esModule", {
+      value: true
+  });
+  
+  var _extends2 = __webpack_require__(44);
   
   var _extends3 = _interopRequireDefault(_extends2);
   
@@ -1300,7 +1424,7 @@ module.exports =
   
   exports.default = createHelpers;
   
-  var _fetch = __webpack_require__(41);
+  var _fetch = __webpack_require__(47);
   
   var _fetch2 = _interopRequireDefault(_fetch);
   
@@ -1395,13 +1519,7 @@ module.exports =
   }
 
 /***/ },
-/* 40 */
-/***/ function(module, exports) {
-
-  module.exports = require("babel-runtime/helpers/extends");
-
-/***/ },
-/* 41 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
   'use strict';
@@ -1411,15 +1529,15 @@ module.exports =
   });
   exports.Response = exports.Headers = exports.Request = exports.default = undefined;
   
-  var _bluebird = __webpack_require__(42);
+  var _bluebird = __webpack_require__(48);
   
   var _bluebird2 = _interopRequireDefault(_bluebird);
   
-  var _nodeFetch = __webpack_require__(43);
+  var _nodeFetch = __webpack_require__(49);
   
   var _nodeFetch2 = _interopRequireDefault(_nodeFetch);
   
-  var _config = __webpack_require__(33);
+  var _config = __webpack_require__(36);
   
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
   
@@ -1456,19 +1574,19 @@ module.exports =
   exports.Response = _nodeFetch.Response;
 
 /***/ },
-/* 42 */
+/* 48 */
 /***/ function(module, exports) {
 
   module.exports = require("bluebird");
 
 /***/ },
-/* 43 */
+/* 49 */
 /***/ function(module, exports) {
 
   module.exports = require("node-fetch");
 
 /***/ },
-/* 44 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
   'use strict';
@@ -1494,21 +1612,10 @@ module.exports =
   }
 
 /***/ },
-/* 45 */
-/***/ function(module, exports) {
-
-  'use strict';
-  
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  var SET_RUNTIME_VARIABLE = exports.SET_RUNTIME_VARIABLE = 'SET_RUNTIME_VARIABLE';
-
-/***/ },
-/* 46 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
-  var jade = __webpack_require__(47);
+  var jade = __webpack_require__(52);
   
   module.exports = function template(locals) {
   var jade_debug = [ new jade.DebugItem( 1, "C:\\Users\\rob\\experiment\\src\\views\\index.jade" ) ];
@@ -1585,7 +1692,7 @@ module.exports =
   }
 
 /***/ },
-/* 47 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
   'use strict';
@@ -1805,7 +1912,7 @@ module.exports =
       throw err;
     }
     try {
-      str = str || __webpack_require__(48).readFileSync(filename, 'utf8')
+      str = str || __webpack_require__(53).readFileSync(filename, 'utf8')
     } catch (ex) {
       rethrow(err, null, lineno)
     }
@@ -1837,16 +1944,16 @@ module.exports =
 
 
 /***/ },
-/* 48 */
+/* 53 */
 /***/ function(module, exports) {
 
   module.exports = require("fs");
 
 /***/ },
-/* 49 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
-  var jade = __webpack_require__(47);
+  var jade = __webpack_require__(52);
   
   module.exports = function template(locals) {
   var jade_debug = [ new jade.DebugItem( 1, "C:\\Users\\rob\\experiment\\src\\views\\error.jade" ) ];
@@ -2127,46 +2234,52 @@ module.exports =
   }
 
 /***/ },
-/* 50 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
-  'use strict';
   
-  Object.defineProperty(exports, "__esModule", {
-      value: true
-  });
+      var content = __webpack_require__(56);
+      var insertCss = __webpack_require__(19);
   
-  var _defineProperty2 = __webpack_require__(51);
-  
-  var _defineProperty3 = _interopRequireDefault(_defineProperty2);
-  
-  var _extends3 = __webpack_require__(40);
-  
-  var _extends4 = _interopRequireDefault(_extends3);
-  
-  exports.default = runtime;
-  
-  var _constants = __webpack_require__(45);
-  
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-  
-  function runtime() {
-      var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-      var action = arguments[1];
-  
-      switch (action.type) {
-          case _constants.SET_RUNTIME_VARIABLE:
-              return (0, _extends4.default)({}, state, (0, _defineProperty3.default)({}, action.payload.name, action.payload.value));
-          default:
-              return state;
+      if (typeof content === 'string') {
+        content = [[module.id, content, '']];
       }
-  }
+  
+      module.exports = content.locals || {};
+      module.exports._getCss = function() { return content.toString(); };
+      module.exports._insertCss = function(options) { return insertCss(content, options) };
+    
+      // Hot Module Replacement
+      // https://webpack.github.io/docs/hot-module-replacement
+      // Only activated in browser context
+      if (false) {
+        var removeCss = function() {};
+        module.hot.accept("!!./../../../node_modules/css-loader/index.js?{\"sourceMap\":true,\"modules\":true,\"localIdentName\":\"[name]_[local]_[hash:base64:3]\",\"minimize\":false}!./../../../node_modules/postcss-loader/index.js?pack=default!./Navigation.css", function() {
+          content = require("!!./../../../node_modules/css-loader/index.js?{\"sourceMap\":true,\"modules\":true,\"localIdentName\":\"[name]_[local]_[hash:base64:3]\",\"minimize\":false}!./../../../node_modules/postcss-loader/index.js?pack=default!./Navigation.css");
+  
+          if (typeof content === 'string') {
+            content = [[module.id, content, '']];
+          }
+  
+          removeCss = insertCss(content, { replace: true });
+        });
+        module.hot.dispose(function() { removeCss(); });
+      }
+    
 
 /***/ },
-/* 51 */
-/***/ function(module, exports) {
+/* 56 */
+/***/ function(module, exports, __webpack_require__) {
 
-  module.exports = require("babel-runtime/helpers/defineProperty");
+  exports = module.exports = __webpack_require__(18)();
+  // imports
+  
+  
+  // module
+  exports.push([module.id, "", "", {"version":3,"sources":[],"names":[],"mappings":"","file":"Navigation.css","sourceRoot":"webpack://"}]);
+  
+  // exports
+
 
 /***/ }
 /******/ ]);
