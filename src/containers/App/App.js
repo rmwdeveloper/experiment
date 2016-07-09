@@ -1,11 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import emptyFunction from 'fbjs/lib/emptyFunction';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './App.css';
 
 export default class App extends Component {
 
    static propTypes = {
     context: PropTypes.shape({
+      store: PropTypes.object,
       insertCss: PropTypes.func,
       setTitle: PropTypes.func,
       setMeta: PropTypes.func
@@ -48,4 +50,4 @@ export default class App extends Component {
   }
 }
 
-// export default App;
+export default App;

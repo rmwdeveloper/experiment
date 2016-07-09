@@ -1,4 +1,4 @@
-
+import 'babel-polyfill';
 import path from 'path';
 import express from 'express';
 import cookieParser from 'cookie-parser';
@@ -10,6 +10,8 @@ import { renderToString } from 'react-dom/server';
 import { resolve } from 'universal-router';
 import { port } from './config';
 import assets from './assets';
+import configureStore from './store/configureStore';
+import { setRuntimeVariable } from './actions/runtime';
 
 const app = express();
 
@@ -43,19 +45,18 @@ app.get('*', async (req, res, next) => {
     if (process.env.NODE_ENV === 'production') {
       data.trackingId = analytics.google.trackingId;
     }
-    // const store = configureStore({}, {
-    //   cookie: req.headers.cookie,
-    // });
-    //
-    // store.dispatch(setRuntimeVariable({
-    //   name: 'initialNow',
-    //   value: Date.now(),
-    // }));
+    const store = configureStore({}, {
+      cookie: req.headers.cookie,
+    });
+
+    store.dispatch(setRuntimeVariable({
+      name: 'initialNow',
+      value: Date.now(),
+    }));
 
     /*
      *
      */
-
     await resolve(routes, {
       path: req.path,
       query: req.query,
@@ -67,7 +68,7 @@ app.get('*', async (req, res, next) => {
       render(component, status = 200) {
         css = [];
         statusCode = status;
-        // data.state = JSON.stringify(store.getState());
+        data.state = JSON.stringify(store.getState());
         data.state = {};
         data.body = ReactDOM.renderToString(component);
         data.css = css.join('');

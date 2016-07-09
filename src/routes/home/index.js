@@ -1,9 +1,11 @@
 import React from 'react';
-import Home from './Home';
+import Home from '../../containers/Home';
 
 export default {
   path: '/',
+
   async action() {
     return <Home />;
-  },
+  }
+
 }
