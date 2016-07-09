@@ -56,8 +56,6 @@ module.exports =
   
   var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
   
-  __webpack_require__(37);
-  
   var _path = __webpack_require__(3);
   
   var _path2 = _interopRequireDefault(_path);
@@ -1577,12 +1575,6 @@ module.exports =
     jade.rethrow(err, jade_debug[0].filename, jade_debug[0].lineno, "doctype html\r\nhtml(lang=\"en\")\r\n  head\r\n    meta(charset=\"utf-8\")\r\n    title Internal Server Error\r\n    meta(name=\"viewport\", content=\"width=device-width, initial-scale=1\")\r\n    style.\r\n      * {\r\n        line-height: 1.2;\r\n        margin: 0;\r\n      }\r\n\r\n      html {\r\n        color: #888;\r\n        display: table;\r\n        font-family: sans-serif;\r\n        height: 100%;\r\n        text-align: center;\r\n        width: 100%;\r\n      }\r\n\r\n      body {\r\n        display: table-cell;\r\n        vertical-align: middle;\r\n        margin: 2em auto;\r\n      }\r\n\r\n      h1 {\r\n        color: #555;\r\n        font-size: 2em;\r\n        font-weight: 400;\r\n      }\r\n\r\n      p {\r\n        margin: 0 auto;\r\n        width: 280px;\r\n      }\r\n\r\n      pre {\r\n        text-align: left;\r\n        margin-top: 2rem;\r\n      }\r\n\r\n      @media only screen and (max-width: 280px) {\r\n\r\n        body, p {\r\n          width: 95%;\r\n        }\r\n\r\n        h1 {\r\n          font-size: 1.5em;\r\n          margin: 0 0 0.3em;\r\n        }\r\n\r\n      }\r\n\r\n  body\r\n    h1 Internal Server Error\r\n    p Sorry, something went wrong.\r\n    pre= stack\r\n// IE needs 512+ bytes: http://blogs.msdn.com/b/ieinternals/archive/2010/08/19/http-error-pages-in-internet-explorer.aspx\r\n");
   }
   }
-
-/***/ },
-/* 37 */
-/***/ function(module, exports) {
-
-  module.exports = require("babel-polyfill");
 
 /***/ }
 /******/ ]);

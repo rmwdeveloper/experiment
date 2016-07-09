@@ -38,3 +38,7 @@ jspm_packages
 
 # Webstorm specific files
 .idea
+
+#build files
+build
+/build
