@@ -8,4 +8,11 @@
     background-color: var(--console-background);
     border: var(--console-background);
     outline: none;
+    color: var(--console-font-color);
+    font-family: var(--font-family-console);
+    font-size: 32px;
+}
+
+.root:before {
+  content: '|';
 }
