@@ -9,7 +9,7 @@ function Home(props, context) {
   return (
     <div className={styles.root}>
       <div className={styles.container}>
-        home container
+        
       </div>
     </div>
   );

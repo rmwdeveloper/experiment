@@ -1,6 +1,9 @@
+@import '../../components/variables.css';
+
 .root {
 
 }
 .container {
-
+  height: 95vh;
+    background-color: var(--primary-color);
 }
