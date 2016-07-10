@@ -1,0 +1,11 @@
+@import '../variables.css';
+
+.root,
+.root:focus{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: var(--console-background);
+    border: var(--console-background);
+    outline: none;
+}

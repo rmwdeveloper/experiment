@@ -8,7 +8,7 @@ function Console(props, context) {
   context.setTitle(title);
   return (
     <div className={styles.root}>
-        <ConsoleInput />
+      <ConsoleInput className={styles.consoleInput} />
     </div>
   );
 }

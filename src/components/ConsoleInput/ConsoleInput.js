@@ -3,10 +3,8 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './ConsoleInput.css';
 
 
-function ConsoleInput() {
-    return (
-        <h2>ConsoleInput</h2>
-    );
+function ConsoleInput(props) {
+  return <input className={`${styles.root} ${props.className}`} type="text" />;
 }
 
 export default withStyles(styles)(ConsoleInput);
