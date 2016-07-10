@@ -10,14 +10,18 @@
 import path from 'path';
 import cp from 'child_process';
 import webpackConfig from './webpack.config';
-
+import process from 'process';
 // Should match the text string used in `src/server.js/server.listen(...)`
 const RUNNING_REGEXP = /The server is running at http:\/\/(.*?)\//;
 
 let server;
 const { output } = webpackConfig.find(x => x.target === 'node'); // webpack configuration for server
 const serverPath = path.join(output.path, output.filename); // build/server.js
+const cpArgs = [serverPath];
 
+if ('--DEBUG' in process.argv) {
+  cpArgs.push('--debug');
+}
 // Launch or restart the Node.js server
 function runServer(cb) {
     function onStdOut(data) {
@@ -40,7 +44,7 @@ function runServer(cb) {
         server.kill('SIGTERM');
     }
 
-    server = cp.spawn('node', [serverPath, '--debug'], {
+    server = cp.spawn('node', cpArgs, {
         env: Object.assign({ NODE_ENV: 'development' }, process.env),
         silent: false,
     });

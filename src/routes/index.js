@@ -1,14 +1,20 @@
 // Child Routes
 import React from 'react';
-import home from './home';
+import Home from './home/Home';
 import App from '../components/App';
+
 
 export default {
 
   path: '/',
 
   children: [
-    home,
+    {
+      path: '/',
+      action() {
+        return <Home />;
+      }
+    }
   ],
 
   async action({ next, render, context }) {

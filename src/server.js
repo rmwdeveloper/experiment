@@ -58,9 +58,10 @@ app.get('*', async (req, res, next) => {
      *
      */
     await resolve(routes, {
-      path: req.path,
+      path: req.url,
       query: req.query,
       context: {
+        store,
         insertCss: styles => css.push(styles._getCss()), // eslint-disable-line no-underscore-dangle
         setTitle: value => (data.title = value),
         setMeta: (key, value) => (data[key] = value),

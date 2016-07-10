@@ -10,6 +10,7 @@
   "scripts": {
     "server": "babel-node src\\server",
     "start": "babel-node tools/run start",
+    "debug": "node --debug build/server.js",
     "eslint": "eslint src tools",
     "stylelint": "stylelint \"src/**/*.css\"",
     "lint": "npm run eslint && npm run stylelint",
