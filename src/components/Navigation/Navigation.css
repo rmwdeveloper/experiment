@@ -1,3 +1,9 @@
 .root {
+  margin: 15px;
+}
 
+.link,
+.link:active,
+.link:visited {
+  color: rgba(0,0,0, 0.6);
 }
