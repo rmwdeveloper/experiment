@@ -9,8 +9,7 @@ function Navigation() {
     <header className={`${styles.root} row start-lg center-md center-xs`} role="navigation">
       <div className={`${styles.linkContainer} col-lg-12 around-lg`}>
         <Link className={styles.link} to="/"> Robert Westenberger </Link>
-        <Link className={styles.link} to="/contact"> Animations </Link>
-        <Link className={styles.link} to="/about"> Algorithms </Link>
+        <Link className={styles.link} to="/console">Console</Link>
       </div>
     </header>
   );

@@ -1,6 +1,7 @@
 // Child Routes
 import React from 'react';
 import home from './home';
+import console from './console';
 import App from '../components/App';
 
 
@@ -9,7 +10,8 @@ export default {
   path: '/',
 
   children: [
-    home
+    home,
+    console
   ],
 
   async action({ next, render, context }) {
