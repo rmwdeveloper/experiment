@@ -6,13 +6,13 @@ import Link from '../Link';
 
 function Navigation() {
   return (
-    <div className={`${styles.root} row center-md col-lg-4`} role="navigation">
-      <div className="col-md-12">
+    <header className={`${styles.root} row start-lg center-md center-xs`} role="navigation">
+      <div className={`${styles.linkContainer} col-lg-12 around-lg`}>
         <Link className={styles.link} to="/"> Robert Westenberger </Link>
         <Link className={styles.link} to="/contact"> Animations </Link>
         <Link className={styles.link} to="/about"> Algorithms </Link>
       </div>
-    </div>
+    </header>
   );
 }
 
