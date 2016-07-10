@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import emptyFunction from 'fbjs/lib/emptyFunction';
 import styles from './App.css';
 import { Provider } from 'react-redux';
-import { Navigation } from '../../components';
+import { Navigation } from '../Navigation';
 
 export default class App extends Component {
 
