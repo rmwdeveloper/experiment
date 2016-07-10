@@ -38,7 +38,7 @@ app.use(bodyParser.json());
 // -----------------------------------------------------------------------------
 app.get('*', async (req, res, next) => {
   try {
-      let css = [];
+    let css = [];
     let statusCode = 200;
     const template = require('./views/index.jade');
     const data = { title: '', description: '', css: '', body: '', entry: assets.main.js };

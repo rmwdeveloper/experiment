@@ -1,7 +1,7 @@
 // Child Routes
 import React from 'react';
 import home from './home';
-import App from '../containers/App';
+import App from '../components/App';
 
 export default {
 

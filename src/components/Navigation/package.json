@@ -1,6 +1,6 @@
 {
-  "name": "Package",
+  "name": "Navigation",
   "version": "0.0.0",
   "private": true,
-  "main": "./Package.js"
+  "main": "./Navigation.js"
 }

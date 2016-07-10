@@ -4,7 +4,7 @@ import FastClick from 'fastclick';
 import { match } from 'universal-router';
 import routesDirectory from './routes';
 import history from './core/history';
-// import configureStore from './store/configureStore';
+import configureStore from './store/configureStore';
 import { addEventListener, removeEventListener } from './core/DOMUtils';
 
 const context = {
@@ -77,7 +77,7 @@ function run() {
     // Make taps on links and buttons work fast on mobiles
   FastClick.attach(document.body);
 
-    // context.store = configureStore(initialState, {});
+  context.store = configureStore(initialState, {});
 
     // Re-render the app when window.location changes
   const removeHistoryListener = history.listen(location => {
