@@ -9,6 +9,8 @@ function Navigation() {
     <div className={`${styles.root} row center-md`} role="navigation">
       <div className="col-md-12">
         <Link to="/"> Robert Westenberger </Link>
+        <Link to="/contact"> Robert Westenberger </Link>
+        <Link to="/about"> Robert Westenberger </Link>
       </div>
     </div>
   );

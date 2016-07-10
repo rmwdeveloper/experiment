@@ -3,7 +3,7 @@ import React from 'react';
 import home from './home';
 import App from '../components/App';
 
-console.log('home is..', home);
+
 export default {
 
   path: '/',
