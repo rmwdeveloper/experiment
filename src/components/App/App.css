@@ -2,6 +2,9 @@
 
 @import '../variables.css';
 
+#app {
+  overflow: hidden;
+}
 html {
     color: #222;
     font-weight: 100;
