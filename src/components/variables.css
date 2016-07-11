@@ -8,36 +8,37 @@
  */
 
 :root {
-    /*
-     * Typography
-     * ======================================================================== */
+  /*
+   * Typography
+   * ======================================================================== */
 
-    --font-family-base: 'Open Sans', 'HelveticaNeue-Light', sans-serif;
-    --font-family-console: 'VT323', 'monospace';
+  --font-family-base: 'Open Sans', 'HelveticaNeue-Light', sans-serif;
+  --font-family-console: 'VT323', 'monospace';
 
-    /*
-     * Layout
-     * ======================================================================== */
+  /*
+   * Layout
+   * ======================================================================== */
 
-    --max-content-width: 1000px;
+  --max-content-width: 1000px;
 
-    /*
-    * Color Scheme
-    * ======================================================================== */
-    --primary-color: #5caad1;
-    --secondary-color: #a36764;
-    --tertiary-color: #2baab1;
-    --quaternary-color: #383f48;
+  /*
+  * Color Scheme
+  * ======================================================================== */
+  --primary-color: #5caad1;
+  --secondary-color: #a36764;
+  --tertiary-color: #2baab1;
+  --quaternary-color: #383f48;
 
-    --console-background: #211D1A;
-    --console-font-color: #DDAA2D;
-    /*
-     * Media queries breakpoints
-     * ======================================================================== */
+  --console-background: #211d1a;
+  --console-font-color: #ddaa2d;
 
-    --screen-xs-min: 480px; /* Extra small screen / phone */
-    --screen-sm-min: 768px; /* Small screen / tablet */
-    --screen-md-min: 992px; /* Medium screen / desktop */
-    --screen-lg-min: 1200px; /* Large screen / wide desktop */
+  /*
+   * Media queries breakpoints
+   * ======================================================================== */
+
+  --screen-xs-min: 480px; /* Extra small screen / phone */
+  --screen-sm-min: 768px; /* Small screen / tablet */
+  --screen-md-min: 992px; /* Medium screen / desktop */
+  --screen-lg-min: 1200px; /* Large screen / wide desktop */
 
 }
