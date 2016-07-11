@@ -1,11 +1,11 @@
 import 'babel-polyfill';
 import ReactDOM from 'react-dom';
 import FastClick from 'fastclick';
-import { match } from 'universal-router';
+import {match} from 'universal-router';
 import routes from './routes';
 import history from './core/history';
 import configureStore from './store/configureStore';
-import { addEventListener, removeEventListener } from './core/DOMUtils';
+import {addEventListener, removeEventListener} from './core/DOMUtils';
 
 const context = {
   store: null,
@@ -24,8 +24,8 @@ const context = {
     meta.setAttribute('name', name);
     meta.setAttribute('content', content);
     document
-    .getElementsByTagName('head')[0]
-    .appendChild(meta);
+      .getElementsByTagName('head')[0]
+      .appendChild(meta);
   },
 };
 
@@ -44,8 +44,8 @@ let renderComplete = (state, callback) => {
   callback(true);
   renderComplete = (s) => {
     restoreScrollPosition(s);
-        // Google Analytics tracking. Don't send 'pageview' event after
-        // the initial rendering, as it was already sent
+    // Google Analytics tracking. Don't send 'pageview' event after
+    // the initial rendering, as it was already sent
     window.ga('send', 'pageview');
     callback(true);
   };
@@ -69,17 +69,15 @@ function run() {
   let currentLocation = null;
   const container = document.getElementById('app');
   const initialState = JSON.parse(
-    document.
-    getElementById('source').
-    getAttribute('data-initial-state')
+    document.getElementById('source').getAttribute('data-initial-state')
   );
 
-    // Make taps on links and buttons work fast on mobiles
+  // Make taps on links and buttons work fast on mobiles
   FastClick.attach(document.body);
 
   context.store = configureStore(initialState, {});
 
-    // Re-render the app when window.location changes
+  // Re-render the app when window.location changes
   const removeHistoryListener = history.listen(location => {
     currentLocation = location;
     match(routes, {
@@ -91,7 +89,7 @@ function run() {
     }).catch(err => console.error(err)); // eslint-disable-line no-console
   });
 
-    // Save the page scroll position into the current location's state
+  // Save the page scroll position into the current location's state
   const supportPageOffset = window.pageXOffset !== undefined;
   const isCSS1Compat = ((document.compatMode || '') === 'CSS1Compat');
   /* eslint-disable complexity */
@@ -102,9 +100,9 @@ function run() {
       currentLocation.state.scrollY = window.pageYOffset;
     } else {
       currentLocation.state.scrollX = isCSS1Compat ?
-          document.documentElement.scrollLeft : document.body.scrollLeft;
+        document.documentElement.scrollLeft : document.body.scrollLeft;
       currentLocation.state.scrollY = isCSS1Compat ?
-          document.documentElement.scrollTop : document.body.scrollTop;
+        document.documentElement.scrollTop : document.body.scrollTop;
     }
   };
   /* eslint-enable complexity */

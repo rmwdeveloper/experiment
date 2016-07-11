@@ -9,7 +9,7 @@
 
 import Browsersync from 'browser-sync';
 import webpack from 'webpack';
-import webpackMiddleware from 'webpack-middleware'; //supports mixed web/node.js bundle
+import webpackMiddleware from 'webpack-middleware'; // supports mixed web/node.js bundle
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import run from './run';
 import runServer from './runServer';

@@ -1,7 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, {Component, PropTypes} from 'react';
 import emptyFunction from 'fbjs/lib/emptyFunction';
 import styles from './App.css';
-import { Provider } from 'react-redux';
+import {Provider} from 'react-redux';
 import Navigation from '../Navigation';
 
 export default class App extends Component {
@@ -51,7 +51,7 @@ export default class App extends Component {
       <Provider store={store}>
         <div>
           <Navigation />
-           {this.props.children}
+          {this.props.children}
         </div>
       </Provider>
     );

@@ -18,7 +18,7 @@ const routes = {
     const component = await next();
     if (component === undefined) return component;
     return render(
-        <App context={context}>{component}</App>
+      <App context={context}>{component}</App>
     );
   },
 

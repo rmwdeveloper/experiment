@@ -3,7 +3,8 @@
 .root {
 
 }
+
 .container {
-  height: 95vh;
+    height: 95vh;
     background-color: var(--primary-color);
 }

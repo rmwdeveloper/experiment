@@ -19,7 +19,7 @@ import pkg from '../package.json'; // eslint-disable-line
  * it over to the build folder.
  */
 async function copy({ watch } = {}) {
-  const ncp = Promise.promisify(require('ncp')); // eslint-disable-line global-import
+  const ncp = Promise.promisify(require('ncp')); // eslint-disable-line global-require
 
   await Promise.all([
     ncp('src/public', 'build/public'),
