@@ -19,38 +19,38 @@ import pkg from '../package.json';
  * it over to the build folder.
  */
 async function copy({ watch } = {}) {
-    const ncp = Promise.promisify(require('ncp')); // Asynchronous recursive file copy utility. Promisified by bluebird to run asynchronously.
+  const ncp = Promise.promisify(require('ncp')); // Asynchronous recursive file copy utility. Promisified by bluebird to run asynchronously.
 
-    await Promise.all([
-        ncp('src/public', 'build/public'),
-        ncp('src/content', 'build/content'),
-    ]);
+  await Promise.all([
+    ncp('src/public', 'build/public'),
+    ncp('src/content', 'build/content'),
+  ]);
 
-    await fs.writeFile('./build/package.json', JSON.stringify({ // Write package.json to build folder..
-        private: true,
-        engines: pkg.engines,
-        dependencies: pkg.dependencies,
-        scripts: {
-            start: 'node server.js',
-        },
-    }, null, 2));
+  await fs.writeFile('./build/package.json', JSON.stringify({ // Write package.json to build folder..
+    private: true,
+    engines: pkg.engines,
+    dependencies: pkg.dependencies,
+    scripts: {
+      start: 'node server.js',
+    },
+  }, null, 2));
 
-    if (watch) { // Watch all files in src/content. If error, reject, else resolve it.
-        const watcher = await new Promise((resolve, reject) => {
-            gaze('src/content/**/*.*', (err, val) => err ? reject(err) : resolve(val));
-        });
+  if (watch) { // Watch all files in src/content. If error, reject, else resolve it.
+    const watcher = await new Promise((resolve, reject) => {
+      gaze('src/content/**/*.*', (err, val) => err ? reject(err) : resolve(val));
+    });
 
-        const cp = async (file) => { // Recursively copy content to build.
-            const relPath = file.substr(path.join(__dirname, '../src/content/').length);
-            await ncp(`src/content/${relPath}`, `build/content/${relPath}`);
-        };
+    const cp = async(file) => { // Recursively copy content to build.
+      const relPath = file.substr(path.join(__dirname, '../src/content/').length);
+      await ncp(`src/content/${relPath}`, `build/content/${relPath}`);
+    };
 
-        /*
-         * Whenever a file is changed or added, asynchronously copy it recursiviely to the build folder.
-         */
-        watcher.on('changed', cp);
-        watcher.on('added', cp);
-    }
+    /*
+     * Whenever a file is changed or added, asynchronously copy it recursiviely to the build folder.
+     */
+    watcher.on('changed', cp);
+    watcher.on('added', cp);
+  }
 }
 
 export default copy;
