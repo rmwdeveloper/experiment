@@ -1,9 +1,9 @@
 .root {
-  margin: 0px;
+  margin: 0;
   height: 5vh;
 }
 
-.linkContainer .link{
+.linkContainer .link {
   margin: 15px 0;
 }
 
@@ -11,14 +11,17 @@
   display: inline-block;
   margin-left: 15px;
 }
-.link:first-child{
+
+.link:first-child {
   margin-left: 30px;
 }
-.link:not(:first-child){
+
+.link:not(:first-child) {
   margin-left: 15px;
 }
+
 .link,
 .link:active,
 .link:visited {
-  color: rgba(0,0,0, 0.6);
+  color: rgba(0, 0, 0, 0.6);
 }

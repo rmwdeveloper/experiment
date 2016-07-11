@@ -17,7 +17,6 @@
     "no-alert": 0,
     "no-confusing-arrow": 0,
     "react/jsx-quotes": 0,
-    "complexity": ["error", 2],
     "jsx-quotes": [
       2,
       "prefer-double"
@@ -26,6 +25,7 @@
   "plugins": [
     "react", "import"
   ],
+  "parser": "babel-eslint",
   "settings": {
     "import/parser": "babel-eslint",
     "import/resolve": {

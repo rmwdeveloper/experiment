@@ -1,31 +1,29 @@
 @import '../variables.css';
 
 .root input,
-.root input:focus{
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background-color: var(--console-background);
-    border: var(--console-background);
-    outline: none;
-    color: var(--console-font-color);
-    font-family: var(--font-family-console);
-    font-size: 32px;
-    text-shadow: 0 0 0 #000;
-    -webkit-text-fill-color: transparent;
+.root input:focus {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: var(--console-background);
+  border: var(--console-background);
+  outline: none;
+  color: var(--console-font-color);
+  font-family: var(--font-family-console);
+  font-size: 32px;
+  text-shadow: 0 0 0 #000;
+  -webkit-text-fill-color: transparent;
 }
 
-.root input::-webkit-input-placeholder{
-    color: green;
-    text-shadow: none;
-    -webkit-text-fill-color: initial;
+.root input::-webkit-input-placeholder {
+  color: green;
+  text-shadow: none;
+  -webkit-text-fill-color: initial;
 }
-.root:before {
+
+.root::before {
   content: '|';
   font-size: 32px;
   color: var(--console-font-color);
   font-family: var(--font-family-console);
-}
-.symbol{
-
 }

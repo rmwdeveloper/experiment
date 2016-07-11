@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import styles from './ConsoleInput.css';
+import styles from './ConsoleInput.css'; //eslint-disable-line
 import cx from 'classnames';
 
 function ConsoleInput(props) {
@@ -11,4 +11,7 @@ function ConsoleInput(props) {
   );
 }
 
+ConsoleInput.propTypes = {
+  className: PropTypes.string
+};
 export default withStyles(styles)(ConsoleInput);

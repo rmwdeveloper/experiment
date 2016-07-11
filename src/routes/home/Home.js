@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import styles from './Home.css';
+import styles from './Home.css'; // eslint-disable-line 
 
 const title = 'Robert Westenberger Portfolio';
 function Home(props, context) {
@@ -8,7 +8,7 @@ function Home(props, context) {
   return (
     <div className={styles.root}>
       <div className={styles.container}>
-        
+
       </div>
     </div>
   );

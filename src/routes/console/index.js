@@ -3,10 +3,10 @@ import Console from './Console';
 
 
 export default {
-    path: '/console',
+  path: '/console',
 
-    async action() {
-        return <Console />;
-    }
+  async action() {
+    return <Console />;
+  }
 
-}
+};

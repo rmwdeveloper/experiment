@@ -1,12 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import emptyFunction from 'fbjs/lib/emptyFunction';
-import styles from './App.css';
+import styles from './App.css'; //eslint-disable-line
 import { Provider } from 'react-redux';
-import Navigation  from '../Navigation';
+import Navigation from '../Navigation';
 
 export default class App extends Component {
 
-   static propTypes = {
+  static propTypes = {
     context: PropTypes.shape({
       store: PropTypes.object.isRequired,
       insertCss: PropTypes.func,
@@ -33,7 +33,7 @@ export default class App extends Component {
   }
 
   componentWillMount() {
-    const {insertCss} = this.props.context;
+    const { insertCss } = this.props.context;
     this.removeCss = insertCss(styles);
   }
 
@@ -50,12 +50,11 @@ export default class App extends Component {
     return (
       <Provider store={store}>
         <div>
-            <Navigation />
-           {this.props.children}
+          <Navigation />
+          {this.props.children}
         </div>
       </Provider>
-    )
+    );
   }
 }
 
-export default App;

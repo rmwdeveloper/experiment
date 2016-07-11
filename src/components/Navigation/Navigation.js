@@ -1,6 +1,6 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import styles from './Navigation.css';
+import styles from './Navigation.css'; //eslint-disable-line
 import Link from '../Link';
 
 

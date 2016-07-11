@@ -5,7 +5,7 @@ import console from './console';
 import App from '../components/App';
 
 
-export default {
+const routes = {
 
   path: '/',
 
@@ -18,8 +18,10 @@ export default {
     const component = await next();
     if (component === undefined) return component;
     return render(
-        <App context={context}>{component}</App>
+      <App context={context}>{component}</App>
     );
   },
 
 };
+
+export default routes;

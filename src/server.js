@@ -6,9 +6,8 @@ import bodyParser from 'body-parser';
 import PrettyError from 'pretty-error';
 import ReactDOM from 'react-dom/server';
 import routes from './routes';
-import { renderToString } from 'react-dom/server';
 import { resolve } from 'universal-router';
-import { port } from './config';
+import { port, analytics } from './config';
 import assets from './assets';
 import configureStore from './store/configureStore';
 import { setRuntimeVariable } from './actions/runtime';
@@ -26,7 +25,7 @@ global.navigator.userAgent = global.navigator.userAgent || 'all';
 // Register Node.js middleware
 // -----------------------------------------------------------------------------
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cookieParser()); // parse cookie header and populate req.cookies with an object keyed by cookie names
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -36,11 +35,11 @@ app.use(bodyParser.json());
 //
 // Register server-side rendering middleware
 // -----------------------------------------------------------------------------
-app.get('*', async (req, res, next) => {
+app.get('*', async(req, res, next) => {
   try {
     let css = [];
     let statusCode = 200;
-    const template = require('./views/index.jade');
+    const template = require('./views/index.jade'); // eslint-disable-line global-require
     const data = { title: '', description: '', css: '', body: '', entry: assets.main.js };
     if (process.env.NODE_ENV === 'production') {
       data.trackingId = analytics.google.trackingId;

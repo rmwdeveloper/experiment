@@ -1,8 +1,8 @@
 @import '../../components/variables.css';
 
 .root {
-    height: 95vh;
-    background-color: var(--console-background);
+  height: 95vh;
+  background-color: var(--console-background);
 }
 
 .consoleInput {
@@ -11,7 +11,8 @@
   left: 0;
   width: 100%;
 }
-.consoleInput:before{
+
+.consoleInput::before {
   content: ':';
   color: white;
 }
