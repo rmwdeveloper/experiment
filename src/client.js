@@ -1,11 +1,11 @@
 import 'babel-polyfill';
 import ReactDOM from 'react-dom';
 import FastClick from 'fastclick';
-import {match} from 'universal-router';
+import { match } from 'universal-router';
 import routes from './routes';
 import history from './core/history';
 import configureStore from './store/configureStore';
-import {addEventListener, removeEventListener} from './core/DOMUtils';
+import { addEventListener, removeEventListener } from './core/DOMUtils';
 
 const context = {
   store: null,

@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import history from '../../core/history';
 
 function isLeftClickEvent(event) {
@@ -47,7 +47,7 @@ class Link extends Component { // eslint-disable-line react/prefer-stateless-fun
 
   render() {
     const { to, ...props } = this.props; // eslint-disable-line no-use-before-define
-    return <a href={history.createHref(to)} {...props} onClick={this.handleClick}/>;
+    return <a href={history.createHref(to)} {...props} onClick={this.handleClick} />;
   }
 
 }

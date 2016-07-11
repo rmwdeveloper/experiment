@@ -30,4 +30,4 @@ function localFetch(url, options) {
   return fetch(localUrl(url), options);
 }
 
-export {localFetch as default, Request, Headers, Response};
+export { localFetch as default, Request, Headers, Response };
