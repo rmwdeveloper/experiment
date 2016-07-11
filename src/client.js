@@ -2,7 +2,7 @@ import 'babel-polyfill';
 import ReactDOM from 'react-dom';
 import FastClick from 'fastclick';
 import { match } from 'universal-router';
-import routesDirectory from './routes';
+import routes from './routes';
 import history from './core/history';
 import configureStore from './store/configureStore';
 import { addEventListener, removeEventListener } from './core/DOMUtils';
@@ -82,7 +82,7 @@ function run() {
     // Re-render the app when window.location changes
   const removeHistoryListener = history.listen(location => {
     currentLocation = location;
-    match(routesDirectory, {
+    match(routes, {
       path: location.pathname,
       query: location.query,
       state: location.state,

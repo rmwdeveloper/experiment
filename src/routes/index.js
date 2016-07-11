@@ -5,7 +5,7 @@ import console from './console';
 import App from '../components/App';
 
 
-export default {
+const routes = {
 
   path: '/',
 
@@ -23,3 +23,5 @@ export default {
   },
 
 };
+
+export default routes;
