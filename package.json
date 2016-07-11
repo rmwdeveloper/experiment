@@ -30,6 +30,12 @@
   "bugs": {
     "url": "https://github.com/rmwdeveloper/experiment/issues"
   },
+  "stylelint": {
+    "extends": "stylelint-config-standard",
+    "rules": {
+      "string-quotes": "single"
+    }
+  },
   "homepage": "https://github.com/rmwdeveloper/experiment#readme",
   "dependencies": {
     "bluebird": "^3.4.1",
