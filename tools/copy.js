@@ -8,10 +8,10 @@
  */
 
 import path from 'path';
-import gaze from 'gaze'; //Globbing fs.watch wrapper
+import gaze from 'gaze'; // Globbing fs.watch wrapper
 import Promise from 'bluebird';
 import fs from './lib/fs';
-import pkg from '../package.json';
+import pkg from '../package.json'; // eslint-disable-line
 /**
  * Copies static files such as robots.txt, favicon.ico to the
  * output (build) folder.
@@ -19,14 +19,14 @@ import pkg from '../package.json';
  * it over to the build folder.
  */
 async function copy({ watch } = {}) {
-  const ncp = Promise.promisify(require('ncp')); // Asynchronous recursive file copy utility. Promisified by bluebird to run asynchronously.
+  const ncp = Promise.promisify(require('ncp')); // eslint-disable-line global-import
 
   await Promise.all([
     ncp('src/public', 'build/public'),
     ncp('src/content', 'build/content'),
   ]);
 
-  await fs.writeFile('./build/package.json', JSON.stringify({ // Write package.json to build folder..
+  await fs.writeFile('./build/package.json', JSON.stringify({
     private: true,
     engines: pkg.engines,
     dependencies: pkg.dependencies,
