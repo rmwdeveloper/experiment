@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Home.css';
 
-
 const title = 'Robert Westenberger Portfolio';
 function Home(props, context) {
   context.setTitle(title);

@@ -13,6 +13,7 @@
      * ======================================================================== */
 
     --font-family-base: 'Open Sans', 'HelveticaNeue-Light', sans-serif;
+    --font-family-console: 'VT323', 'monospace';
 
     /*
      * Layout
@@ -28,7 +29,8 @@
     --tertiary-color: #2baab1;
     --quaternary-color: #383f48;
 
-
+    --console-background: #211D1A;
+    --console-font-color: #DDAA2D;
     /*
      * Media queries breakpoints
      * ======================================================================== */
