@@ -1,13 +1,12 @@
 import React from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import styles from './StockDashboardNavigation.css'; //eslint-disable-line
-import Link from '../Link';
+import styles from './StockHomepage.css'; //eslint-disable-line
 
 
-function StockDashboardNavigation() {
+function StockHomepage() {
   return (
     <div>Stock Homepage</div>
   );
 }
 
-export default withStyles(styles)(StockDashboardNavigation);
+export default withStyles(styles)(StockHomepage);
