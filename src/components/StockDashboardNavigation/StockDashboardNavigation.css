@@ -2,6 +2,7 @@
 
 .root {
   margin: 0;
+  background-color: var(--quaternary-color);
 }
 
 .linkContainer .link {
@@ -10,7 +11,7 @@
 
 .link {
   display: inline-block;
-  margin-left: 15px;
+  color: white;
 }
 
 .link:first-child {
@@ -18,11 +19,9 @@
 }
 
 .link:not(:first-child) {
-  margin-left: 15px;
+  margin-left: 30px;
 }
 
-.link,
-.link:active,
-.link:visited {
-  color: rgba(0, 0, 0, 0.6);
+.link:active {
+  color: #07a3ee;
 }

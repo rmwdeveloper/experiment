@@ -12,14 +12,11 @@ class StockDashboard extends Component {
   static contextTypes = {
     setTitle: PropTypes.func.isRequired
   };
-  componentWillMount() {
-    console.log('dashboard mounting');
-  }
   render() {
     const { context } = this;
     context.setTitle(title);
 
-    return (<div className="container-fluid">
+    return (<div>
       <StockDashboardNavigation />
       {this.props.children}
     </div>);
