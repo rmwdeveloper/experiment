@@ -10,6 +10,7 @@ function Navigation() {
       <div className={`${styles.linkContainer} col-lg-12 around-lg`}>
         <Link className={styles.link} to="/"> Robert Westenberger </Link>
         <Link className={styles.link} to="/console">Console</Link>
+        <Link className={styles.link} to="/stocks">Stock Dashboard</Link>
       </div>
     </header>
   );
