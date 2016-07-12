@@ -25,3 +25,19 @@
 .link:active {
   color: #07a3ee;
 }
+
+.mobile, .desktop {
+  display: none;
+}
+
+@media(max-width: 767px) {
+  .mobile {
+    display: block;
+  }
+}
+@media (min-width: 768px) {
+  .desktop{
+    display: block;
+  }
+}
+
