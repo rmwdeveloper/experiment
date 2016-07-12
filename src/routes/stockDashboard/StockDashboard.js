@@ -5,6 +5,7 @@ import StockDashboardNavigation from '../../components/StockDashboardNavigation'
 
 const title = 'Stock Dashboard';
 
+
 class StockDashboard extends Component {
   static propTypes = {
     children: PropTypes.element.isRequired,
