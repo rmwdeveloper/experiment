@@ -46,7 +46,7 @@ let renderComplete = (state, callback) => {
     restoreScrollPosition(s);
     // Google Analytics tracking. Don't send 'pageview' event after
     // the initial rendering, as it was already sent
-    // window.ga('send', 'pageview');
+    window.ga('send', 'pageview');
     callback(true);
   };
 };
