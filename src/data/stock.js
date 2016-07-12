@@ -1,6 +1,6 @@
-import { GraphQLList as List } from 'graphql';
+/* 7 / 12 / 2016 At the time of writing this, don't really know what graphQL is*/
 import fetch from '../../core/fetch';
-import NewsItemType from '../types/stockType';
+
 
 const baseURL = 'https://ems.tradingticket.com/api/v1/';
 const oAuthURL = `${baseURL}user/oAuthlink`;
