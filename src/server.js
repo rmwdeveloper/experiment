@@ -1,6 +1,7 @@
 import 'babel-polyfill';
 import path from 'path';
 import express from 'express';
+import expressGraphQL from 'express-graphql';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import PrettyError from 'pretty-error';
@@ -31,6 +32,16 @@ app.use(bodyParser.json());
 
 // app.set('views', path.join(__dirname, 'views') );
 // app.set('view engine', 'jade');
+
+//
+// Register API middleware
+// -----------------------------------------------------------------------------
+app.use('/graphql', expressGraphQL(req => ({
+  schema,
+  graphiql: true,
+  rootValue: { request: req },
+  pretty: process.env.NODE_ENV !== 'production',
+})));
 
 //
 // Register server-side rendering middleware
