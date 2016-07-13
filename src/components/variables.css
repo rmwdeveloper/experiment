@@ -37,8 +37,19 @@
    * ======================================================================== */
 
   --screen-xs-min: 480px; /* Extra small screen / phone */
+  --screen-xs-max: 767px;
+
   --screen-sm-min: 768px; /* Small screen / tablet */
+  --screen-sm-max: 991px;
+
   --screen-md-min: 992px; /* Medium screen / desktop */
+  --screen-md-max: 1119px;
+
   --screen-lg-min: 1200px; /* Large screen / wide desktop */
+
+  @custom-media --phone (width <= --screen-xs-max);
+  @custom-media --tablet (width >= --screen-sm-min) and (width <= --screen-sm-max);
+  @custom-media --desktop (width >= --screen-md-max) and (width <= --screen-md-max);
+  @custom-media --widescreen (width >= --screen-lg-min);
 
 }
