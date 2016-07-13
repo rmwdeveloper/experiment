@@ -14,20 +14,23 @@ class StockDashboard extends Component { //eslint-disable-line
   static propTypes = {
     children: PropTypes.element.isRequired,
     watchedStocks: PropTypes.array,
-    loadStocks: PropTypes.func
+    loadStocks: PropTypes.func,
+    searchStocks: PropTypes.func
   };
   static contextTypes = {
     setTitle: PropTypes.func.isRequired
   };
-  componentWillMount() {
-    // this.props.loadStocks();
-  }
+
   render() {
-    const { context } = this;
-    context.setTitle(title);
+    const { searchStocks } = this.props;
     return (<div>
       <StockDashboardNavigation />
-      {this.props.children}
+      {
+        React.Children.map(this.props.children, child => {
+
+          return React.cloneElement(child, {searchStocks});
+        })
+      }
     </div>);
   }
 }

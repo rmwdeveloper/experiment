@@ -26,7 +26,6 @@ export default {
   async action({ next, render, context }) {
     const component = await next();
     if (component === undefined) return component;
-    // authenticateTradeIt();
     return (<StockDashboard>
       {component}
     </StockDashboard>);
