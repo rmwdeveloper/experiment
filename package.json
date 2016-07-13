@@ -39,6 +39,7 @@
   },
   "homepage": "https://github.com/rmwdeveloper/experiment#readme",
   "dependencies": {
+    "axios": "^0.13.0",
     "bluebird": "^3.4.1",
     "body-parser": "^1.15.2",
     "cookie-parser": "^1.4.3",
