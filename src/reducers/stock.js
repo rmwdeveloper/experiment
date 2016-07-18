@@ -6,16 +6,16 @@ const initialState = {
   autosave: false,
   columns: 3,
   layout: [
-    [{ id: 0, column: 0, row: 0 }, { id: 1, column: 0, row: 1 }],
-    [{ id: 2, column: 1, row: 0 }],
-    [{ id: 3, column: 2, row: 0 }]
+    [{ id: 0, column: 0, row: 0, widget: 0 }, { id: 1, column: 0, row: 1, widget: 1 }],
+    [{ id: 2, column: 1, row: 0, widget: 2 }],
+    [{ id: 3, column: 2, row: 0, widget: 3 }]
   ],
-  widgets: [
-    { id: 0, type: 'userblock', cell: 0 },
-    { id: 1, type: 'ratings', cell: 1 },
-    { id: 2, type: 'posteditor', cell: 2 },
-    { id: 3, type: 'watchlist', cell: 3 }
-  ]
+  widgets: {
+    0: { type: 'userblock' },
+    1: { type: 'ratings' },
+    2: { type: 'posteditor' },
+    3: { type: 'watchlist' }
+  }
 };
 export default function stock(state = initialState, action) {
   switch (action.type) {
