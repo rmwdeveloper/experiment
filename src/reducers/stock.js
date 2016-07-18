@@ -5,7 +5,11 @@ const initialState = {
   watchedStocks: [],
   mode: 'layout',
   autosave: false,
-  columns: 3,
+  columns: {
+    0: { className: 'col-lg-2 col-md-2 col-sm-12 col-xs-12' },
+    1: { className: 'col-lg-8 col-md-8 col-sm-12 col-xs-12' },
+    2: { className: 'col-lg-2 col-md-2 col-sm-12 col-xs-12' },
+  },
   layout: [
     [{ id: 0, column: 0, row: 0, widget: 0 }, { id: 1, column: 0, row: 1, widget: 1 }],
     [{ id: 2, column: 1, row: 0, widget: 2 }],

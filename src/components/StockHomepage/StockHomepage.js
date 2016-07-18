@@ -11,6 +11,7 @@ import widgetRegistry from '../widgetRegistry';
 class StockHomepage extends Component {
   static propTypes = {
     widgets: PropTypes.object,
+    columns: PropTypes.object,
     cells: PropTypes.array,
     layout: PropTypes.array,
     swapWidgetPosition: PropTypes.func,
@@ -25,14 +26,15 @@ class StockHomepage extends Component {
     };
   }
   render() {
-    const { widgets, layout, swapWidgetPosition, first, last, handle } = this.props;
+    const { widgets, layout, swapWidgetPosition, first, last, handle, columns } = this.props;
 
     return (
       <div className="row">
         {
           layout.map((column, index, array) => {
+
             return React.createElement(LayoutColumn,
-              { className: 'col-lg-4 col-md-4 col-sm-6 col-xs-12', key: index },
+              { className: columns[index].className , key: index },
               column.map((cell, index) => {
                 return React.createElement(widgetRegistry[widgets[cell.widget].type], { key: index,
                   swapWidgetPosition, cell, first, last, handle });

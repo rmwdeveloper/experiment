@@ -13,6 +13,7 @@ const title = 'Stock Dashboard';
   mode: state.stock.mode,
   autosave: state.stock.autosave,
   widgets: state.stock.widgets,
+  columns: state.stock.columns,
   cells: state.stock.cells,
   layout: state.stock.layout,
   first: state.auth.first,
@@ -29,6 +30,7 @@ class StockDashboard extends Component { //eslint-disable-line
     mode: PropTypes.string,
     autosave: PropTypes.bool,
     widgets: PropTypes.object,
+    columns: PropTypes.object,
     cells: PropTypes.array,
     layout: PropTypes.array,
     swapWidgetPosition: PropTypes.func,
@@ -42,12 +44,12 @@ class StockDashboard extends Component { //eslint-disable-line
 
   render() {
     const { searchStocks, toggleMode, mode, autosave, widgets, cells, layout, swapWidgetPosition,
-      first, last, handle } = this.props;
+      first, last, handle, columns } = this.props;
     return (<div>
       <StockDashboardNavigation toggleMode={toggleMode} mode={mode} autosave={autosave} />
       {
         React.Children.map(this.props.children, child => {
-          return React.cloneElement(child, { searchStocks, mode, first, last, handle,
+          return React.cloneElement(child, { searchStocks, mode, first, last, handle, columns,
             autosave, widgets, cells, layout, swapWidgetPosition });
         })
       }
