@@ -2,6 +2,9 @@ import React from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './StockHomepage.css'; //eslint-disable-line
 
+import LayoutColumn from '../LayoutColumn';
+import LayoutCell from '../LayoutCell';
+
 
 function StockHomepage() {
   return (
