@@ -5,10 +5,11 @@ const initialState = {
   mode: 'layout',
   autosave: false,
   columns: 3,
-  cells: [{ id: 0, column: 0, row: 0 },
-          { id: 1, column: 0, row: 1 },
-          { id: 2, column: 1, row: 0 },
-          { id: 3, column: 2, row: 0 }],
+  layout: [
+    [{ id: 0, column: 0, row: 0 }, { id: 1, column: 0, row: 1 }],
+    [{ id: 2, column: 1, row: 0 }],
+    [{ id: 3, column: 2, row: 0 }]
+  ],
   widgets: [
     { id: 0, type: 'userblock', cell: 0 },
     { id: 1, type: 'ratings', cell: 1 },
