@@ -3,12 +3,12 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './LayoutCell.css'; //eslint-disable-line
 import cx from 'classnames';
 
-function LayoutColumn() {
+function LayoutCell() {
   return (
       <div>
-        
+        Layout Cell
       </div>
   );
 }
 
-export default withStyles(styles)(LayoutColumn);
+export default LayoutCell;

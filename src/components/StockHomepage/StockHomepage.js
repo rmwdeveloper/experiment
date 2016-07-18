@@ -41,4 +41,4 @@ class StockHomepage extends Component {
 }
 
 
-export default dragDropContext(HTML5Backend)(withStyles(styles)(StockHomepage));
+export default dragDropContext(HTML5Backend)(StockHomepage);
