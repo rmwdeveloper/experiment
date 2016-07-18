@@ -15,7 +15,7 @@ export default function stock(state = initialState, action) {
     case SEARCH_STOCKS_FAILURE:
       return state;
     case TOGGLE_MODE:
-      return state;
+      return { ...state, mode: action.mode };
     default:
       return state;
   }

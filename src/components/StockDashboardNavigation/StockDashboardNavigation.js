@@ -1,18 +1,18 @@
 import React from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './StockDashboardNavigation.css'; //eslint-disable-line
-import Link from '../Link';
-import cx from 'classnames';
+import classNames from 'classnames/bind';
 
-function StockDashboardNavigation({toggleMode}) {
+function StockDashboardNavigation({toggleMode, mode}) {
+  let cx = classNames.bind(styles);
   return (
     <header className={`${styles.root}  row center-xs`} role="navigation">
       <div className={`${styles.linkContainer} col-xs`}>
-        <a onClick={() => toggleMode('layout')} className={styles.link}>
+        <a onClick={() => toggleMode('layout')} className={cx({ link: true, active: mode === 'layout' })}>
           <span className={styles.desktop}>Layout Mode</span>
           <i className={cx('fa fa-2x fa-search', styles.mobile)} />
         </a>
-        <a onClick={() => toggleMode('preview')} className={styles.link}>
+        <a onClick={() => toggleMode('preview')} className={cx(styles.link, { link: true, active: mode === 'preview' })}>
           <span className={styles.desktop}>Preview Mode</span>
           <i className={cx('fa fa-2x fa-compass', styles.mobile)} />
         </a>
