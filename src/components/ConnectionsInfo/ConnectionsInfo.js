@@ -6,7 +6,7 @@ import cx from 'classnames';
 function ConnectionsInfo() {
   return (
     <div>
-      ConnectionsInfo
+      connections
     </div>
   );
 }

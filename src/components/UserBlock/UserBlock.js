@@ -4,6 +4,7 @@ import styles from './UserBlock.css'; //eslint-disable-line
 import cx from 'classnames';
 
 import PersonalInfo from '../PersonalInfo/PersonalInfo';
+import ConnectionsInfo from '../ConnectionsInfo/ConnectionsInfo';
 
 function UserBlock() {
   return (
