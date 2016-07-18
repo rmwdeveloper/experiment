@@ -4,6 +4,8 @@ const initialState = {
   watchedStocks: [],
   mode: 'layout',
   autosave: false,
+  columns: 3,
+  cells: [],
   widgets: [
     { type: 'userblock', column: 0, cell: 0 },
     { type: 'ratings', column: 0, cell: 1 },

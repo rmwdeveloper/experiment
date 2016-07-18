@@ -1,12 +1,11 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './StockHomepage.css'; //eslint-disable-line
 
 import LayoutColumn from '../LayoutColumn';
 
 
-
-function StockHomepage({ widgets }) {
+function StockHomepage({ widgets, cells, columns }) {
   return (
     <div className="row">
       <LayoutColumn id={0} className="col-lg-4 col-md-4 col-sm-6 col-xs-12" />
@@ -17,7 +16,9 @@ function StockHomepage({ widgets }) {
 }
 
 StockHomepage.propTypes = {
-  widgets: PropTypes.array
+  widgets: PropTypes.array,
+  cells: PropTypes.array,
+  columns: PropTypes.array
 };
 
 export default withStyles(styles)(StockHomepage);
