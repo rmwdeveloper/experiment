@@ -5,8 +5,17 @@ import cx from 'classnames';
 
 function PersonalInfo({first, last, handle}) {
   return (
-    <div>
-      personal
+    <div className={styles.root}>
+      <a href="#" className={styles.image} >
+        <img src="http://placehold.it/65x65.png" alt="user placeholder" />
+      </a>
+      <div className={styles.username}>
+        <a href="#" className={styles.image}>
+          {first} {last}
+          <br />
+          <span className={styles.handle}>{handle}</span>
+        </a>
+      </div>
     </div>
   );
 }

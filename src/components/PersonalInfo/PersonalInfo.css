@@ -1,2 +1,19 @@
 @import '../variables.css';
 
+.root{
+  border-radius: 3px 3px 0px 0px;
+  padding: 15px;
+  background-color: #E5E2E2;
+}
+.image {
+  display: block;
+  margin-right: 10px;
+  position: relative;
+  float: left;
+  width: 65px;
+  text-align: center;
+}
+.handle{
+  font-size: 13px;
+  color: #1E6DC0;
+}
