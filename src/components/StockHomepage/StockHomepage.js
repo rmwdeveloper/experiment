@@ -13,6 +13,7 @@ class StockHomepage extends Component {
     widgets: PropTypes.object,
     cells: PropTypes.array,
     layout: PropTypes.array,
+    swapWidgetPosition: PropTypes.func
   };
   constructor() {
     super();
@@ -21,7 +22,7 @@ class StockHomepage extends Component {
     };
   }
   render() {
-    const { widgets, cells, layout } = this.props;
+    const { widgets, layout, swapWidgetPosition } = this.props;
 
     return (
       <div className="row">
@@ -30,7 +31,7 @@ class StockHomepage extends Component {
             return React.createElement(LayoutColumn,
               { className: 'col-lg-4 col-md-4 col-sm-6 col-xs-12', key: index },
               column.map((cell, index) => {
-                return React.createElement(widgetRegistry[widgets[cell.widget].type], { key: index });
+                return React.createElement(widgetRegistry[widgets[cell.widget].type], { key: index, swapWidgetPosition });
               })
             );
           })

@@ -6,6 +6,7 @@ import flow from 'lodash.flow';
 
 const widgetSource = {
   beginDrag(props) {
+    console.log(props);
     const { id, order, index } = props;
     return { id, order, index };
   },
@@ -33,6 +34,7 @@ function collectSource(connect, monitor) {
 }
 const widgetTarget = {
   drop(props) {
+    console.log(props);
     const { id, order, index } = props;
     return { id, order, index };
   }
@@ -46,7 +48,7 @@ function collectTarget(connect, monitor) {
   };
 }
 
-function dragSourceTarget(ComposedComponent) {
+function dragSourceTarget(ComposedComponent, props) {
   return flow(
     dragSource('widget', widgetSource, collectSource),
     dropTarget('widget', widgetTarget, collectTarget)
@@ -59,7 +61,7 @@ function dragSourceTarget(ComposedComponent) {
 
       render() {
         const { connectDragSource, connectDropTarget } = this.props;
-
+        console.log(this.props);
         return (
           connectDragSource(connectDropTarget(
             <div>
