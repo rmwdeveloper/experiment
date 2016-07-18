@@ -14,7 +14,10 @@ const title = 'Stock Dashboard';
   autosave: state.stock.autosave,
   widgets: state.stock.widgets,
   cells: state.stock.cells,
-  layout: state.stock.layout
+  layout: state.stock.layout,
+  first: state.auth.first,
+  last: state.auth.last,
+  handle: state.auth.handle,
 }), { ...stockActions })
 class StockDashboard extends Component { //eslint-disable-line
   static propTypes = {
@@ -28,7 +31,10 @@ class StockDashboard extends Component { //eslint-disable-line
     widgets: PropTypes.object,
     cells: PropTypes.array,
     layout: PropTypes.array,
-    swapWidgetPosition: PropTypes.func
+    swapWidgetPosition: PropTypes.func,
+    first: PropTypes.string,
+    last: PropTypes.string,
+    handle: PropTypes.string
   };
   static contextTypes = {
     setTitle: PropTypes.func.isRequired
