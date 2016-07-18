@@ -16,19 +16,20 @@ class StockDashboard extends Component { //eslint-disable-line
     children: PropTypes.element.isRequired,
     watchedStocks: PropTypes.array,
     loadStocks: PropTypes.func,
-    searchStocks: PropTypes.func
+    searchStocks: PropTypes.func,
+    toggleMode: PropTypes.func
   };
   static contextTypes = {
     setTitle: PropTypes.func.isRequired
   };
 
   render() {
-    const { searchStocks } = this.props;
+    const { searchStocks, toggleMode } = this.props;
     return (<div>
-      <StockDashboardNavigation />
+      <StockDashboardNavigation toggleMode={toggleMode} />
       {
 
-        
+
         React.Children.map(this.props.children, child => {
 
           return React.cloneElement(child, {searchStocks});

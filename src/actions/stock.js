@@ -1,4 +1,4 @@
-import { LOAD_STOCKS, SEARCH_STOCKS, SEARCH_STOCKS_SUCCESS, SEARCH_STOCKS_FAILURE } from '../constants';
+import { LOAD_STOCKS, SEARCH_STOCKS, SEARCH_STOCKS_SUCCESS, SEARCH_STOCKS_FAILURE, TOGGLE_MODE } from '../constants';
 import { lookupStock } from '../core/apis/markit';
 
 
@@ -18,5 +18,11 @@ export function searchStocks(query) {
         dispatch({ type: SEARCH_STOCKS_SUCCESS, data });
       }
     });
-  }
+  };
+}
+
+export function toggleMode(mode) {
+  return (dispatch) => {
+    dispatch({ type: TOGGLE_MODE, mode });
+  };
 }
