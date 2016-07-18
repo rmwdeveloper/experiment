@@ -27,7 +27,7 @@ class StockHomepage extends Component {
             return React.createElement(LayoutColumn,
               { className: 'col-lg-4 col-md-4 col-sm-6 col-xs-12' },
               column.map(cell => {
-                return React.createElement(widgetRegistry[widgets[cell.widget.type]]);
+                return React.createElement(widgetRegistry[widgets[cell.widget].type]);
               })
             );
           })
