@@ -3,11 +3,11 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './LayoutColumn.css'; //eslint-disable-line
 import cx from 'classnames';
 
-function LayoutColumn() {
+function LayoutColumn({ className, children }) {
   return (
-      <div>
-        
-      </div>
+    <div className={className}>
+      {children}
+    </div>
   );
 }
 
