@@ -10,10 +10,10 @@ const initialState = {
           { id: 2, column: 1, row: 0 },
           { id: 3, column: 2, row: 0 }],
   widgets: [
-    { type: 'userblock', cell: 0 },
-    { type: 'ratings', cell: 1 },
-    { type: 'posteditor', cell: 2 },
-    { type: 'watchlist', cell: 3 }
+    { id: 0, type: 'userblock', cell: 0 },
+    { id: 1, type: 'ratings', cell: 1 },
+    { id: 2, type: 'posteditor', cell: 2 },
+    { id: 3, type: 'watchlist', cell: 3 }
   ]
 };
 export default function stock(state = initialState, action) {
