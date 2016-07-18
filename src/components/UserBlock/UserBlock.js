@@ -5,8 +5,10 @@ import cx from 'classnames';
 
 function UserBlock() {
   return (
-    <div>
-      userblock
+    <div className={cx(styles.root, 'row')}>
+      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      user block
+      </div>
     </div>
   );
 }
