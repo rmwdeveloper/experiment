@@ -34,8 +34,8 @@ export function toggleAutosave() {
   };
 }
 
-export function swapWidgetPosition() {
+export function swapWidgetPosition(source, target) {
   return (dispatch) => {
-    dispatch({ type: SWAP_WIDGET_POSITION });
+    dispatch({ type: SWAP_WIDGET_POSITION, source, target });
   };
 }

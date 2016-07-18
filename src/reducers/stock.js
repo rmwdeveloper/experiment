@@ -33,7 +33,16 @@ export default function stock(state = initialState, action) {
     case TOGGLE_AUTOSAVE:
       return { ...state, autosave: !state.autosave };
     case SWAP_WIDGET_POSITION:
-      return state;
+      const { layout } = state;
+      // const indexOfSource = state.layout[action.source.column][action.source.row];
+      // const indexOfTarget = state.layout[action.target.column][action.target.row];
+      // const newLayout = layout.concat()
+      const newLayout = layout.slice(0, layout.length);
+      const targetWidget = action.target.widget;
+      const sourceWidget = action.source.widget;
+      newLayout[action.source.column][action.source.row].widget = targetWidget;
+      newLayout[action.target.column][action.target.row].widget = sourceWidget;
+      return { ...state, layout: newLayout };
     default:
       return state;
   }
