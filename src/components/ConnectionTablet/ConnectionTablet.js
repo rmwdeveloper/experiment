@@ -1,11 +1,11 @@
 import React from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import styles from './ConnectionsTablet.css'; //eslint-disable-line
+import styles from './ConnectionTablet.css'; //eslint-disable-line
 import cx from 'classnames';
 
-function ConnectionsTablet({title, amount}) {
+function ConnectionsTablet({title, amount, className}) {
   return (
-    <div className={styles.root}>
+    <div className={cx(styles.root, className)}>
       <div className={styles.title}>
         <a href="#">{title}</a>
       </div>

@@ -17,3 +17,11 @@
   font-size: 13px;
   color: #1E6DC0;
 }
+.timezone {
+  font-size: 10px;
+  color: #000;
+
+}
+.timezone > span {
+  color: #AA0000;
+}

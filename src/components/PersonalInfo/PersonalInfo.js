@@ -15,6 +15,10 @@ function PersonalInfo({first, last, handle}) {
           <br />
           <span className={styles.handle}>{handle}</span>
         </a>
+        <br />
+        <span className={styles.timezone}>
+          (GMT-04:00)   America/New_York
+        </span>
       </div>
     </div>
   );
