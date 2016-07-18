@@ -57,6 +57,7 @@
     "pretty-error": "^2.0.0",
     "pug": "^2.0.0-beta3",
     "react": "^15.2.0",
+    "react-dnd": "^2.1.4",
     "react-dom": "^15.2.0",
     "react-redux": "^4.4.5",
     "react-router": "^2.5.2",

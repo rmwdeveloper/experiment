@@ -8,7 +8,8 @@ import * as stockActions from '../../actions/stock';
 const title = 'Stock Dashboard';
 
 @connect(state => ({
-  watchedStocks: state.stock.watchedStocks
+  watchedStocks: state.stock.watchedStocks,
+  searchedStocks: state.stock.searchedStocks
 }), { ...stockActions })
 class StockDashboard extends Component { //eslint-disable-line
   static propTypes = {
@@ -26,6 +27,8 @@ class StockDashboard extends Component { //eslint-disable-line
     return (<div>
       <StockDashboardNavigation />
       {
+
+        
         React.Children.map(this.props.children, child => {
 
           return React.cloneElement(child, {searchStocks});
