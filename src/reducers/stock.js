@@ -4,7 +4,12 @@ const initialState = {
   watchedStocks: [],
   mode: 'layout',
   autosave: false,
-  widgets: ['userblock']
+  widgets: [
+    { type: 'userblock', column: 0, cell: 0 },
+    { type: 'ratings', column: 0, cell: 1 },
+    { type: 'posteditor', column: 1, cell: 0 },
+    { type: 'watchlist', column: 2, cell: 0 },
+  ]
 };
 export default function stock(state = initialState, action) {
   switch (action.type) {
