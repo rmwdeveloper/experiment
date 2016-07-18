@@ -25,7 +25,7 @@ class StockDashboard extends Component { //eslint-disable-line
     toggleMode: PropTypes.func,
     mode: PropTypes.string,
     autosave: PropTypes.bool,
-    widgets: PropTypes.array,
+    widgets: PropTypes.object,
     cells: PropTypes.array,
     layout: PropTypes.array,
   };
