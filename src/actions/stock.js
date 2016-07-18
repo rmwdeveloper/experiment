@@ -1,4 +1,4 @@
-import { LOAD_STOCKS, SEARCH_STOCKS, SEARCH_STOCKS_SUCCESS, SEARCH_STOCKS_FAILURE, TOGGLE_MODE } from '../constants';
+import { LOAD_STOCKS, SEARCH_STOCKS, SEARCH_STOCKS_SUCCESS, SEARCH_STOCKS_FAILURE, TOGGLE_MODE, TOGGLE_AUTOSAVE } from '../constants';
 import { lookupStock } from '../core/apis/markit';
 
 
@@ -24,5 +24,11 @@ export function searchStocks(query) {
 export function toggleMode(mode) {
   return (dispatch) => {
     dispatch({ type: TOGGLE_MODE, mode });
+  };
+}
+
+export function toggleAutosave() {
+  return (dispatch) => {
+    dispatch({ type: TOGGLE_AUTOSAVE });
   };
 }

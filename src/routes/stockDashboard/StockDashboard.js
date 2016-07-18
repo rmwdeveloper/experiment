@@ -10,7 +10,8 @@ const title = 'Stock Dashboard';
 @connect(state => ({
   watchedStocks: state.stock.watchedStocks,
   searchedStocks: state.stock.searchedStocks,
-  mode: state.stock.mode
+  mode: state.stock.mode,
+  autosave: state.stock.autosave
 }), { ...stockActions })
 class StockDashboard extends Component { //eslint-disable-line
   static propTypes = {
@@ -19,19 +20,20 @@ class StockDashboard extends Component { //eslint-disable-line
     loadStocks: PropTypes.func,
     searchStocks: PropTypes.func,
     toggleMode: PropTypes.func,
-    mode: PropTypes.string
+    mode: PropTypes.string,
+    autosave: PropTypes.bool
   };
   static contextTypes = {
     setTitle: PropTypes.func.isRequired
   };
 
   render() {
-    const { searchStocks, toggleMode, mode } = this.props;
+    const { searchStocks, toggleMode, mode, autosave } = this.props;
     return (<div>
-      <StockDashboardNavigation toggleMode={toggleMode} mode={mode} />
+      <StockDashboardNavigation toggleMode={toggleMode} mode={mode} autosave={autosave} />
       {
         React.Children.map(this.props.children, child => {
-          return React.cloneElement(child, { searchStocks, mode });
+          return React.cloneElement(child, { searchStocks, mode, autosave });
         })
       }
     </div>);

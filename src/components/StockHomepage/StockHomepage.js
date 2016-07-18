@@ -7,8 +7,7 @@ import StockListingBlock from '../StockListingBlock';
 function StockHomepage() {
   return (
     <div>
-      <StockSearch />
-      <StockListingBlock />
+      
     </div>
   );
 }
