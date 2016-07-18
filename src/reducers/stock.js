@@ -3,7 +3,8 @@ import { LOAD_STOCKS, SEARCH_STOCKS, SEARCH_STOCKS_SUCCESS, SEARCH_STOCKS_FAILUR
 const initialState = {
   watchedStocks: [],
   mode: 'layout',
-  autosave: false
+  autosave: false,
+  widgets: ['userblock']
 };
 export default function stock(state = initialState, action) {
   switch (action.type) {
