@@ -15,7 +15,7 @@ const widgetSource = {
     const item = monitor.getItem();
     const dropResult = monitor.getDropResult();
     if (item !== dropResult) {
-      props.swapWidgetPosition();
+      props.swapWidgetPosition(item, dropResult);
     }
 
 
