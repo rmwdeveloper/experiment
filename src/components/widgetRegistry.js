@@ -3,6 +3,7 @@ import Ratings from './Ratings/Ratings';
 import PostEditor from './PostEditor/PostEditor';
 import Watchlist from './Watchlist/Watchlist';
 
+import DragSourceTarget from './DragSourceTarget/DragSourceTarget';
 
 const widgetRegistry = {};
 

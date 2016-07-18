@@ -1,9 +1,9 @@
 import React from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import styles from './WatchList.css'; //eslint-disable-line
+import styles from './DragSourceTarget.css'; //eslint-disable-line
 import cx from 'classnames';
 
-function WatchList() {
+function DragSourceTarget() {
   return (
       <div>
         watchlist
@@ -11,4 +11,4 @@ function WatchList() {
   );
 }
 
-export default withStyles(styles)(WatchList);
+export default withStyles(styles)(DragSourceTarget);
