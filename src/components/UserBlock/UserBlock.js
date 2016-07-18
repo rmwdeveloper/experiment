@@ -4,7 +4,7 @@ import styles from './UserBlock.css'; //eslint-disable-line
 import cx from 'classnames';
 
 function UserBlock() {
-  console.log(arguments);
+  // console.log(arguments);
   return (
       <div>
         userblock

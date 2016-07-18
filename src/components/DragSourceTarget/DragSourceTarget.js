@@ -5,10 +5,8 @@ import flow from 'lodash.flow';
 // import styles from './DragSourceTarget.css'; //eslint-disable-line
 
 const widgetSource = {
-  beginDrag(props) {
-    console.log(props);
-    const { id, order, index } = props;
-    return { id, order, index };
+  beginDrag({ cell }) {
+    return cell;
   },
   endDrag(props, monitor, component) {
     if (!monitor.didDrop()) {
@@ -17,7 +15,7 @@ const widgetSource = {
     const item = monitor.getItem();
     const dropResult = monitor.getDropResult();
     if (item !== dropResult) {
-      console.log(props);
+      props.swapWidgetPosition();
     }
 
 
@@ -33,12 +31,9 @@ function collectSource(connect, monitor) {
   };
 }
 const widgetTarget = {
-  drop(props) {
-    console.log(props);
-    const { id, order, index } = props;
-    return { id, order, index };
+  drop({ cell }) {
+    return cell;
   }
-
 };
 
 function collectTarget(connect, monitor) {
@@ -61,7 +56,6 @@ function dragSourceTarget(ComposedComponent, props) {
 
       render() {
         const { connectDragSource, connectDropTarget } = this.props;
-        console.log(this.props);
         return (
           connectDragSource(connectDropTarget(
             <div>
