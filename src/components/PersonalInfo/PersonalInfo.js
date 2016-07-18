@@ -3,7 +3,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './PersonalInfo.css'; //eslint-disable-line
 import cx from 'classnames';
 
-function PersonalInfo() {
+function PersonalInfo({first, last, handle}) {
   return (
     <div>
       personal
