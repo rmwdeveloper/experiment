@@ -1,4 +1,5 @@
-import { LOAD_STOCKS, SEARCH_STOCKS, SEARCH_STOCKS_SUCCESS, SEARCH_STOCKS_FAILURE, TOGGLE_MODE, TOGGLE_AUTOSAVE } from '../constants';
+import { LOAD_STOCKS, SEARCH_STOCKS, SEARCH_STOCKS_SUCCESS, SEARCH_STOCKS_FAILURE,
+  TOGGLE_MODE, TOGGLE_AUTOSAVE, SWAP_WIDGET_POSITION } from '../constants';
 
 const initialState = {
   watchedStocks: [],
@@ -31,6 +32,8 @@ export default function stock(state = initialState, action) {
       return { ...state, mode: action.mode };
     case TOGGLE_AUTOSAVE:
       return { ...state, autosave: !state.autosave };
+    case SWAP_WIDGET_POSITION:
+      return state;
     default:
       return state;
   }

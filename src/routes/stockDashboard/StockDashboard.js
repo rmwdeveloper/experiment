@@ -28,6 +28,7 @@ class StockDashboard extends Component { //eslint-disable-line
     widgets: PropTypes.object,
     cells: PropTypes.array,
     layout: PropTypes.array,
+    swapWidgetPosition: PropTypes.func
   };
   static contextTypes = {
     setTitle: PropTypes.func.isRequired

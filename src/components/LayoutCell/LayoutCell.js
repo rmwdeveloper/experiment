@@ -6,7 +6,7 @@ import cx from 'classnames';
 function LayoutCell({ children }) {
   return (
     <div>
-      {this.props.children}
+      {children}
     </div>
   );
 }

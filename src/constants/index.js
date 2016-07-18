@@ -5,4 +5,5 @@ export const SEARCH_STOCKS = 'stock/SEARCH_STOCKS';
 export const SEARCH_STOCKS_SUCCESS = 'stock/SEARCH_STOCKS_SUCCESS';
 export const SEARCH_STOCKS_FAILURE = 'stock/SEARCH_STOCKS_FAILURE';
 export const TOGGLE_MODE = 'stock/TOGGLE_MODE';
-export const TOGGLE_AUTOSAVE = 'stock/TOGGAUTOSAVE';
+export const TOGGLE_AUTOSAVE = 'stock/TOGGLE_AUTOSAVE';
+export const SWAP_WIDGET_POSITION = 'stock/SWAP_WIDGET_POSITION';
