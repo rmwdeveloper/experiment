@@ -5,18 +5,13 @@ const baseURL = 'http://dev.markitondemand.com/Api/v2/';
 const lookupURL = `${baseURL}Lookup/`;
 
 function formatURL(url, parameters) {
-  return `${url}/json?${querystring.encode(parameters)}`;
+  return `${url}/jsonp?${querystring.encode(parameters)}/`;
 }
-export async function lookupStock() {
+export function lookupStock(query, callback) {
   const parameters = {
-    input: 'aa'
+    input: query,
+    timeout: 10000
   };
-  jsonp(formatURL(lookupURL, parameters), (err, data) => {
-    if (err) {
-      console.log('error', err.message);
-    } else {
-      console.log(data);
-    }
-  });
+  jsonp(formatURL(lookupURL, parameters), null, callback);
 }
 
