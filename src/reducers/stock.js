@@ -5,12 +5,15 @@ const initialState = {
   mode: 'layout',
   autosave: false,
   columns: 3,
-  cells: [],
+  cells: [{ id: 0, column: 0, row: 0 },
+          { id: 1, column: 0, row: 1 },
+          { id: 2, column: 1, row: 0 },
+          { id: 3, column: 2, row: 0 }],
   widgets: [
-    { type: 'userblock', column: 0, cell: 0 },
-    { type: 'ratings', column: 0, cell: 1 },
-    { type: 'posteditor', column: 1, cell: 0 },
-    { type: 'watchlist', column: 2, cell: 0 },
+    { type: 'userblock', cell: 0 },
+    { type: 'ratings', cell: 1 },
+    { type: 'posteditor', cell: 2 },
+    { type: 'watchlist', cell: 3 }
   ]
 };
 export default function stock(state = initialState, action) {
