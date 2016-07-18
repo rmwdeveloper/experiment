@@ -1,2 +1,26 @@
 @import '../variables.css';
 
+.root {
+  float: left;
+  display: inline;
+  margin-left: 0;
+}
+.title {
+  padding-top: 5px;
+  text-align: center;
+}
+.title a {
+  font-size: 9px;
+  color: #999999;
+  text-decoration: none;
+  text-align: center;
+  text-transform: uppercase;
+}
+.amount, .amount a {
+  padding-bottom: 10px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+  color: #2180C0;
+  text-decoration: none;
+}
