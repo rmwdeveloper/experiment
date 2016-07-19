@@ -3,7 +3,8 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './WatchTable.css'; //eslint-disable-line
 import cx from 'classnames';
 
-function WatchTable({ className }) {
+function WatchTable({ className, watchedStocks }) {
+  console.log(watchedStocks);
   return (
     <div className={cx(styles.root, className)}>
       <table id={styles.watch}>

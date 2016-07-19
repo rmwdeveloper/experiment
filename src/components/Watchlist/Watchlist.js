@@ -21,6 +21,8 @@ function WatchList({ searchStocks, searches, watchStock, watchedStocks }) {
 
 WatchList.propTypes = {
   searchStocks: PropTypes.func,
-  searches: PropTypes.object
+  searches: PropTypes.object,
+  watchStocks: PropTypes.func,
+  watchedStocks: PropTypes.array
 };
 export default withStyles(styles)(WatchList);

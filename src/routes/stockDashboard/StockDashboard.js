@@ -47,13 +47,13 @@ class StockDashboard extends Component { //eslint-disable-line
 
   render() {
     const { searchStocks, toggleMode, mode, autosave, widgets, cells, layout, searches, swapWidgetPosition,
-      first, last, handle, columns, watchStock } = this.props;
+      first, last, handle, columns, watchStock, watchedStocks } = this.props;
     return (<div>
       <StockDashboardNavigation toggleMode={toggleMode} mode={mode} autosave={autosave} />
       {
         React.Children.map(this.props.children, child => {
           return React.cloneElement(child, { searchStocks, mode, first, last, handle, columns,
-            autosave, widgets, cells, layout, searches, swapWidgetPosition, watchStock });
+            autosave, widgets, cells, layout, searches, swapWidgetPosition, watchStock, watchedStocks });
         })
       }
     </div>);
