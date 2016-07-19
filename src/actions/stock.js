@@ -1,8 +1,9 @@
 import {
   LOAD_STOCKS, SEARCH_STOCKS, SEARCH_STOCKS_SUCCESS, SEARCH_STOCKS_FAILURE, TOGGLE_MODE,
-  TOGGLE_AUTOSAVE, SWAP_WIDGET_POSITION, CACHED_SEARCH, WATCH_STOCK
+  TOGGLE_AUTOSAVE, SWAP_WIDGET_POSITION, CACHED_SEARCH, WATCH_STOCK, GET_QUOTE, GET_QUOTE_SUCCESS,
+  GET_QUOTE_FAILURE
 } from '../constants';
-import { lookupStock } from '../core/apis/markit';
+import { lookupStock, getQuote as gq } from '../core/apis/markit';
 
 
 export function loadStocks() {
@@ -30,6 +31,24 @@ export function searchStocks(query) {
   };
 }
 
+export function getQuote(symbol) {
+  return (dispatch, getState) => {
+    const { stock: { quotes } } = getState();
+
+    if (quotes.hasOwnProperty(symbol)) {
+      dispatch({ type: CACHED_SEARCH, symbol });
+      return null;
+    }
+    dispatch({ type: GET_QUOTE });
+    gq(symbol, (err, data) => {
+      if (err) {
+        dispatch({ type: GET_QUOTE_FAILURE, err });
+      } else {
+        dispatch({ type: GET_QUOTE_SUCCESS, symbol, data });
+      }
+    });
+  };
+}
 export function watchStock(stock) {
   return (dispatch) => {
     dispatch({ type: WATCH_STOCK, stock });

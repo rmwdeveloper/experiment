@@ -20,7 +20,7 @@ const initialState = {
   widgets: {
     0: { type: 'userblock' },
     1: { type: 'ratings' },
-    2: { type: 'posteditor' },
+    2: { type: 'stockinfotable' },
     3: { type: 'watchlist' }
   },
   searches: {},

@@ -44,7 +44,8 @@ class StockDashboard extends Component { //eslint-disable-line
     first: PropTypes.string,
     last: PropTypes.string,
     handle: PropTypes.string,
-    watchStock: PropTypes.func
+    watchStock: PropTypes.func,
+    getQuote: PropTypes.func
   };
   static contextTypes = {
     setTitle: PropTypes.func.isRequired
@@ -53,7 +54,7 @@ class StockDashboard extends Component { //eslint-disable-line
   render() {
     const {
       searchStocks, toggleMode, mode, autosave, widgets, cells, layout, searches, swapWidgetPosition,
-      first, last, handle, columns, watchStock, watchedStocks
+      first, last, handle, columns, watchStock, watchedStocks, getQuote
     } = this.props;
     return (<div className={cx('row', 'center-lg center-md center-sm center-xs', styles.root)}>
       <StockDashboardNavigation toggleMode={toggleMode} mode={mode} autosave={autosave}/>
