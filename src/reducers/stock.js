@@ -1,6 +1,6 @@
 import {
   LOAD_STOCKS, SEARCH_STOCKS, SEARCH_STOCKS_SUCCESS, SEARCH_STOCKS_FAILURE,
-  TOGGLE_MODE, TOGGLE_AUTOSAVE, SWAP_WIDGET_POSITION, CACHED_SEARCH
+  TOGGLE_MODE, TOGGLE_AUTOSAVE, SWAP_WIDGET_POSITION, CACHED_SEARCH, WATCH_STOCK
 } from '../constants';
 
 const initialState = {
@@ -43,6 +43,8 @@ export default function stock(state = initialState, action) {
       return { ...state, mode: action.mode };
     case TOGGLE_AUTOSAVE:
       return { ...state, autosave: !state.autosave };
+    case WATCH_STOCK:
+      return { ...state, watchedStocks: [...state.watchedStocks, action.stock]};
     case SWAP_WIDGET_POSITION:
       const { layout } = state;
       const newLayout = layout.slice(0, layout.length);

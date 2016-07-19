@@ -1,6 +1,6 @@
 import {
   LOAD_STOCKS, SEARCH_STOCKS, SEARCH_STOCKS_SUCCESS, SEARCH_STOCKS_FAILURE, TOGGLE_MODE,
-  TOGGLE_AUTOSAVE, SWAP_WIDGET_POSITION, CACHED_SEARCH
+  TOGGLE_AUTOSAVE, SWAP_WIDGET_POSITION, CACHED_SEARCH, WATCH_STOCK
 } from '../constants';
 import { lookupStock } from '../core/apis/markit';
 
@@ -27,6 +27,12 @@ export function searchStocks(query) {
         dispatch({ type: SEARCH_STOCKS_SUCCESS, query, data });
       }
     });
+  };
+}
+
+export function watchStock(stock) {
+  return (dispatch) => {
+    dispatch({ type: WATCH_STOCK, stock });
   };
 }
 

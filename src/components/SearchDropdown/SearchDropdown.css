@@ -1,6 +1,6 @@
 @import '../variables.css';
 
-.root {
+.root ol {
   list-style: none;
   position: absolute;
   margin: 0;

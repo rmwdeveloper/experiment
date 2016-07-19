@@ -3,13 +3,15 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './SearchDropdown.css'; //eslint-disable-line
 import SearchDropdownRow from '../SearchDropdownRow';
 
-function SearchDropdown({ results }) {
+function SearchDropdown({ results, closeDropdown }) {
   return (
-    <ol className={styles.root}>
-      {results.map((searchResult, index) => {
-        return <SearchDropdownRow searchResult={searchResult} key={index} />
-      })}
-    </ol>
+    <div className={styles.root}>
+      <ol>
+        {results.map((searchResult, index) => {
+          return <SearchDropdownRow closeDropdown={closeDropdown} searchResult={searchResult} key={index} />
+        })}
+      </ol>
+    </div>
   );
 }
 

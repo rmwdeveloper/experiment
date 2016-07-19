@@ -8,16 +8,22 @@ class StockSearch extends Component {
   static propTypes = {
     searchStocks: PropTypes.func,
     className: PropTypes.string,
-    searches: PropTypes.object
+    searches: PropTypes.object,
+    watchStock: PropTypes.func
   };
 
   constructor() {
     super();
     this.lookupStock = this.lookupStock.bind(this);
     this.search = this.search.bind(this);
+    this.closeDropdown = this.closeDropdown.bind(this);
+    this.openDropdown = this.openDropdown.bind(this);
+    this.watchStock = this.watchStock.bind(this);
+
     this.state = {
       timeSinceLastInputChange: null,
-      query: null
+      query: null,
+      dropdownVisible: true
     };
   }
 
@@ -30,13 +36,24 @@ class StockSearch extends Component {
 
   search(query) {
     this.props.searchStocks(query);
-    this.setState({query});
+    this.setState({ query });
+    this.openDropdown();
     clearInterval(this.timeout);
   }
 
+  openDropdown() {
+    this.setState({ dropdownVisible: open });
+  }
+
+  closeDropdown() {
+    this.setState({ dropdownVisible: false });
+  }
+  watchStock() {
+    this.props.watchStock();
+  }
   render() {
     const { className, searches } = this.props;
-    const { query } = this.state;
+    const { query, dropdownVisible } = this.state;
 
     return (
       <div className={cx(styles.root, className)}>
@@ -45,7 +62,7 @@ class StockSearch extends Component {
           type="search" placeholder="Search By Company Name or Ticker"
         />
         {
-          searches[query] ? <SearchDropdown results={searches[query]} /> : null
+          searches[query] && dropdownVisible ? <SearchDropdown closeDropdown={this.closeDropdown} results={searches[query]} /> : null
         }
       </div>
     );
