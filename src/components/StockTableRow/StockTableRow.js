@@ -8,7 +8,7 @@ function StockTableRow({ stock }) {
   return (
     <tr className={styles.root} data-ticker={Symbol}>
       <td className={styles.tickerColumn}>
-        <span className="symbol">
+        <span className={styles.symbol}>
           <a href="#">{Symbol}</a>
         </span>
         <br />
