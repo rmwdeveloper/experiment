@@ -8,27 +8,24 @@ import StockDetail from '../../components/StockDetail';
 
 export default {
   path: '/stocks',
-  children: [
-    {
-      path: '/',
-      async action() { return <StockHomepage />; }
-    },
-    {
-      path: '/search',
-      async action() { return <StockSearch />; }
-    },
-    {
-      path: '/stocks/:identifier',
-      async action() { return <StockDetail />; }
-
-    }
-  ],
+  // children: [
+  //   {
+  //     path: '/',
+  //     async action() { return <StockHomepage />; }
+  //   },
+  //   {
+  //     path: '/search',
+  //     async action() { return <StockSearch />; }
+  //   },
+  //   {
+  //     path: '/stocks/:identifier',
+  //     async action() { return <StockDetail />; }
+  //
+  //   }
+  // ],
   async action({ next, render, context }) {
-    const component = await next();
-    if (component === undefined) return component;
-    return (<StockDashboard>
-      {component}
-    </StockDashboard>);
+
+    return <StockDashboard />;
   }
 
 };

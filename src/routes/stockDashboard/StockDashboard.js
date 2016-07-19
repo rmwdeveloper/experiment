@@ -5,6 +5,12 @@ import { connect } from 'react-redux';
 import StockDashboardNavigation from '../../components/StockDashboardNavigation';
 import * as stockActions from '../../actions/stock';
 
+import { DragDropContext as dragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+
+import LayoutColumn from '../../components/LayoutColumn';
+import widgetRegistry from '../../components/widgetRegistry';
+
 const title = 'Stock Dashboard';
 
 @connect(state => ({
@@ -23,7 +29,6 @@ const title = 'Stock Dashboard';
 }), { ...stockActions })
 class StockDashboard extends Component { //eslint-disable-line
   static propTypes = {
-    children: PropTypes.element.isRequired,
     watchedStocks: PropTypes.array,
     loadStocks: PropTypes.func,
     searchStocks: PropTypes.func,
@@ -46,19 +51,30 @@ class StockDashboard extends Component { //eslint-disable-line
   };
 
   render() {
-    const { searchStocks, toggleMode, mode, autosave, widgets, cells, layout, searches, swapWidgetPosition,
-      first, last, handle, columns, watchStock, watchedStocks } = this.props;
+    const {
+      searchStocks, toggleMode, mode, autosave, widgets, cells, layout, searches, swapWidgetPosition,
+      first, last, handle, columns, watchStock, watchedStocks
+    } = this.props;
+    console.log('test');
     return (<div>
-      <StockDashboardNavigation toggleMode={toggleMode} mode={mode} autosave={autosave} />
+      <StockDashboardNavigation toggleMode={toggleMode} mode={mode} autosave={autosave}/>
       {
-        React.Children.map(this.props.children, child => {
-          return React.cloneElement(child, { searchStocks, mode, first, last, handle, columns,
-            autosave, widgets, cells, layout, searches, swapWidgetPosition, watchStock, watchedStocks });
+        layout.map((column, index, array) => {
+
+          return React.createElement(LayoutColumn,
+            { className: columns[index].className, key: index },
+            column.map((cell, index) => {
+              return React.createElement(widgetRegistry[widgets[cell.widget].type], {
+                key: index,
+                swapWidgetPosition, cell, first, last, handle, searchStocks, searches, watchStock,
+                watchedStocks
+              });
+            })
+          );
         })
       }
     </div>);
   }
 }
 
-
-export default withStyles(styles)(StockDashboard);
+export default dragDropContext(HTML5Backend)(withStyles(styles)(StockDashboard))
