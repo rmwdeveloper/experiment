@@ -8,9 +8,9 @@ function SearchDropdownRow({searchResult}) {
   console.log(searchResult);
   return (
     <li>
-      <span>{symbol}</span>
-      <span>{name}</span>
-      <span>{exchange}</span>
+      <span>{Symbol}</span>
+      <span>{Name}</span>
+      <span>{Exchange}</span>
     </li>
   );
 }
