@@ -19,8 +19,8 @@ function StockTableRow({ stock, quote }) {
         <span className={styles.price}>{LastPrice}</span>
         <br />
         <span className={styles.change}>
-          <font color="#008800">{Change}</font>
-          <font color="#008800">{ChangePercentYTD}</font>
+          <font color="#008800">{Math.abs(parseFloat(ChangePercentYTD).toPrecision(2))}</font>
+          <font color="#008800">({parseFloat(Change).toPrecision(2)})</font>
         </span>
       </td>
     </tr>
