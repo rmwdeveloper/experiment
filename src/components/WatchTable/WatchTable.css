@@ -1,0 +1,15 @@
+@import '../variables.css';
+
+#watch {
+  table-layout: fixed;
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  color: #3B3B3B;
+  font-size: 13px;
+  line-height: 14px;
+}
+#sortSymbol {
+
+}

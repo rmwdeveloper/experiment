@@ -1,6 +1,0 @@
-{
-  "name": "WatchedStockList",
-  "version": "0.0.0",
-  "private": true,
-  "main": "./WatchedStockList.js"
-}
