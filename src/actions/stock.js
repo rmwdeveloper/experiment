@@ -49,7 +49,7 @@ function getQuote(symbol, dispatch, getState) {
 export function watchStock(stock) {
   return (dispatch, getState) => {
     dispatch({ type: WATCH_STOCK, stock });
-    getQuote(stock.symbol, dispatch, getState);
+    getQuote(stock.Symbol, dispatch, getState);
   };
 }
 
