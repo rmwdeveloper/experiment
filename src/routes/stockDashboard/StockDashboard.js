@@ -23,6 +23,7 @@ const title = 'Stock Dashboard';
   cells: state.stock.cells,
   layout: state.stock.layout,
   searches: state.stock.searches,
+  quotes: state.stock.quotes,
   first: state.auth.first,
   last: state.auth.last,
   handle: state.auth.handle,
@@ -45,7 +46,7 @@ class StockDashboard extends Component { //eslint-disable-line
     last: PropTypes.string,
     handle: PropTypes.string,
     watchStock: PropTypes.func,
-    getQuote: PropTypes.func
+    quotes: PropTypes.object
   };
   static contextTypes = {
     setTitle: PropTypes.func.isRequired
@@ -54,7 +55,7 @@ class StockDashboard extends Component { //eslint-disable-line
   render() {
     const {
       searchStocks, toggleMode, mode, autosave, widgets, cells, layout, searches, swapWidgetPosition,
-      first, last, handle, columns, watchStock, watchedStocks, getQuote
+      first, last, handle, columns, watchStock, watchedStocks, quotes
     } = this.props;
     return (<div className={cx('row', 'center-lg center-md center-sm center-xs', styles.root)}>
       <StockDashboardNavigation toggleMode={toggleMode} mode={mode} autosave={autosave}/>
@@ -68,7 +69,7 @@ class StockDashboard extends Component { //eslint-disable-line
                 return React.createElement(widgetRegistry[widgets[cell.widget].type], {
                   key: index,
                   swapWidgetPosition, cell, first, last, handle, searchStocks, searches, watchStock,
-                  watchedStocks
+                  watchedStocks, quotes
                 });
               })
             );

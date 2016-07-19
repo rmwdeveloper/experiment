@@ -3,7 +3,8 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './StockInfoTable.css'; //eslint-disable-line
 
 
-function StockInfoTable() {
+function StockInfoTable({quotes}) {
+  // console.log(quotes);
   return (
     <div>Stock Info Table</div>
   );

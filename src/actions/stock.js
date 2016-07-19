@@ -31,27 +31,25 @@ export function searchStocks(query) {
   };
 }
 
-export function getQuote(symbol) {
-  return (dispatch, getState) => {
-    const { stock: { quotes } } = getState();
-
-    if (quotes.hasOwnProperty(symbol)) {
-      dispatch({ type: CACHED_SEARCH, symbol });
-      return null;
+function getQuote(symbol, dispatch, getState) {
+  const { stock: { quotes } } = getState();
+  if (quotes.hasOwnProperty(symbol)) {
+    dispatch({ type: CACHED_SEARCH, symbol });
+    return null;
+  }
+  dispatch({ type: GET_QUOTE });
+  gq(symbol, (err, data) => {
+    if (err) {
+      dispatch({ type: GET_QUOTE_FAILURE, err });
+    } else {
+      dispatch({ type: GET_QUOTE_SUCCESS, symbol, data });
     }
-    dispatch({ type: GET_QUOTE });
-    gq(symbol, (err, data) => {
-      if (err) {
-        dispatch({ type: GET_QUOTE_FAILURE, err });
-      } else {
-        dispatch({ type: GET_QUOTE_SUCCESS, symbol, data });
-      }
-    });
-  };
+  });
 }
 export function watchStock(stock) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch({ type: WATCH_STOCK, stock });
+    getQuote(stock.symbol, dispatch, getState);
   };
 }
 
