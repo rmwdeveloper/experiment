@@ -26,7 +26,7 @@ class StockSearch extends Component {
   }
 
   search(query) {
-    this.props.searchStocks(event.target.value);
+    this.props.searchStocks(query);
     clearInterval(this.timeout);
   }
 

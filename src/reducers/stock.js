@@ -1,5 +1,5 @@
 import { LOAD_STOCKS, SEARCH_STOCKS, SEARCH_STOCKS_SUCCESS, SEARCH_STOCKS_FAILURE,
-  TOGGLE_MODE, TOGGLE_AUTOSAVE, SWAP_WIDGET_POSITION } from '../constants';
+  TOGGLE_MODE, TOGGLE_AUTOSAVE, SWAP_WIDGET_POSITION, CACHED_SEARCH, CACHE_SEARCH } from '../constants';
 
 const initialState = {
   watchedStocks: [],
@@ -21,7 +21,7 @@ const initialState = {
     2: { type: 'posteditor' },
     3: { type: 'watchlist' }
   },
-
+  searches: {},
 };
 export default function stock(state = initialState, action) {
   switch (action.type) {
