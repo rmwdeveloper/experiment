@@ -1,2 +1,20 @@
 @import '../variables.css';
 
+.root {
+  text-align: left;
+}
+.root span {
+  display: inline-block;
+  font-size: 13px;
+}
+
+.symbol{
+  color: red;
+  padding-right: 5px;
+}
+.name{
+  padding-right: 5px;
+}
+.exchange{
+  color: #1E6DC0;
+}

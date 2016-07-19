@@ -5,11 +5,11 @@ import SearchDropdownRow from '../SearchDropdownRow';
 
 function SearchDropdown({ results }) {
   return (
-    <div>
+    <ol className={styles.root}>
       {results.map((searchResult, index) => {
         return <SearchDropdownRow searchResult={searchResult} key={index} />
       })}
-    </div>
+    </ol>
   );
 }
 

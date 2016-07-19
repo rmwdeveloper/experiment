@@ -7,10 +7,10 @@ function SearchDropdownRow({searchResult}) {
   const { Symbol, Name, Exchange } = searchResult;
   console.log(searchResult);
   return (
-    <li>
-      <span>{Symbol}</span>
-      <span>{Name}</span>
-      <span>{Exchange}</span>
+    <li className={styles.root}>
+      <span className={styles.symbol}>{Symbol}</span>
+      <span className={styles.name}>{Name}</span>
+      <span className={styles.exchange}>{Exchange}</span>
     </li>
   );
 }

@@ -25,7 +25,7 @@ class StockSearch extends Component {
     if (this.timeout) {
       clearInterval(this.timeout);
     }
-    this.timeout = setInterval(this.search, 1000, event.target.value);
+    this.timeout = setInterval(this.search, 500, event.target.value);
   }
 
   search(query) {
