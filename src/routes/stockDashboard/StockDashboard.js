@@ -34,6 +34,7 @@ class StockDashboard extends Component { //eslint-disable-line
     columns: PropTypes.object,
     cells: PropTypes.array,
     layout: PropTypes.array,
+    searches: PropTypes.object,
     swapWidgetPosition: PropTypes.func,
     first: PropTypes.string,
     last: PropTypes.string,
@@ -44,14 +45,14 @@ class StockDashboard extends Component { //eslint-disable-line
   };
 
   render() {
-    const { searchStocks, toggleMode, mode, autosave, widgets, cells, layout, swapWidgetPosition,
+    const { searchStocks, toggleMode, mode, autosave, widgets, cells, layout, searches, swapWidgetPosition,
       first, last, handle, columns } = this.props;
     return (<div>
       <StockDashboardNavigation toggleMode={toggleMode} mode={mode} autosave={autosave} />
       {
         React.Children.map(this.props.children, child => {
           return React.cloneElement(child, { searchStocks, mode, first, last, handle, columns,
-            autosave, widgets, cells, layout, swapWidgetPosition });
+            autosave, widgets, cells, layout, searches, swapWidgetPosition });
         })
       }
     </div>);
