@@ -5,8 +5,10 @@ import cx from 'classnames';
 
 class StockSearch extends Component {
   static propTypes = {
-    searchStocks: PropTypes.func
+    searchStocks: PropTypes.func,
+    className: PropTypes.string
   };
+
   constructor() {
     super();
     this.lookupStock = this.lookupStock.bind(this);
@@ -14,6 +16,7 @@ class StockSearch extends Component {
       timeSinceLastInputChange: null
     };
   }
+
   lookupStock() {
     const now = Date.now();
 
@@ -23,12 +26,12 @@ class StockSearch extends Component {
 
     this.setState({ timeSinceLastInputChange: now });
   }
+
   render() {
+    const { className } = this.props;
     return (
-      <div className={cx(styles.root, 'row center-lg center-md center-sm center-xs')}>
-        <div className="col-lg">
-          <input onChange={this.lookupStock} type="search" placeholder="Search By Company Name or Ticker" />
-        </div>
+      <div className={cx(styles.root, className)}>
+        <input onChange={this.lookupStock} type="search" placeholder="Search By Company Name or Ticker"/>
       </div>
     );
   }

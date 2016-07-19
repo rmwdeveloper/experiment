@@ -1,13 +1,16 @@
 import React from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './WatchList.css'; //eslint-disable-line
+import StockSearch from '../StockSearch/StockSearch';
+import WatchedStockList from '../WatchedStockList';
 import cx from 'classnames';
 
 function WatchList() {
   return (
-      <div>
-        watchlist
-      </div>
+    <div className={cx(styles.root, 'row')}>
+      <StockSearch className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+      <WatchedStockList className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+    </div>
   );
 }
 
