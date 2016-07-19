@@ -18,21 +18,14 @@ class StockSearch extends Component {
     };
   }
 
-  lookupStock() {
+  lookupStock(event) {
     if (this.timeout) {
       clearInterval(this.timeout);
     }
-    this.timeout = setInterval(this.search, 1000);
-    // const now = Date.now();
-    //
-    // if ((now - this.state.timeSinceLastInputChange) > 2000) {
-    //   this.props.searchStocks(event.target.value);
-    // }
-    //
-    // this.setState({ timeSinceLastInputChange: now });
+    this.timeout = setInterval(this.search, 1000, event.target.value);
   }
-  search() {
-    console.log('Search!');
+  search(query) {
+    this.props.searchStocks(query);
     clearInterval(this.timeout);
   }
   render() {
