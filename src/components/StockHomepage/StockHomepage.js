@@ -17,7 +17,8 @@ class StockHomepage extends Component {
     swapWidgetPosition: PropTypes.func,
     first: PropTypes.string,
     last: PropTypes.string,
-    handle: PropTypes.string
+    handle: PropTypes.string,
+    searchStocks: PropTypes.func
   };
   constructor() {
     super();
@@ -26,7 +27,7 @@ class StockHomepage extends Component {
     };
   }
   render() {
-    const { widgets, layout, swapWidgetPosition, first, last, handle, columns } = this.props;
+    const { widgets, layout, swapWidgetPosition, first, last, handle, columns, searchStocks } = this.props;
 
     return (
       <div className={cx('row', styles.root)}>
@@ -37,7 +38,7 @@ class StockHomepage extends Component {
               { className: columns[index].className , key: index },
               column.map((cell, index) => {
                 return React.createElement(widgetRegistry[widgets[cell.widget].type], { key: index,
-                  swapWidgetPosition, cell, first, last, handle });
+                  swapWidgetPosition, cell, first, last, handle, searchStocks });
               })
             );
           })
