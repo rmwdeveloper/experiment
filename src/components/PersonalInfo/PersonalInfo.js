@@ -6,10 +6,10 @@ import cx from 'classnames';
 function PersonalInfo({first, last, handle}) {
   return (
     <div className={cx(styles.root, 'row middle-lg middle-md middle-xs middle-sm')}>
-      <a href="#" className={cx(styles.image, 'col-lg-6')} >
+      <a href="#" className={cx(styles.image, 'col-lg-6 col-md-6 col-sm-6 col-xs-6')} >
         <img src="http://placehold.it/130x130.png" alt="user placeholder" />
       </a>
-      <div className={cx(styles.username, 'col-lg-6')}>
+      <div className={cx(styles.username, 'col-lg-6 col-md-6 col-sm-6 col-xs-6')}>
         <a href="#" className={styles.name}>
           {first} {last}
           <br />
