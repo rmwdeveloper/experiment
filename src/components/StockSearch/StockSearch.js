@@ -37,6 +37,7 @@ class StockSearch extends Component {
   render() {
     const { className, searches } = this.props;
     const { query } = this.state;
+
     return (
       <div className={cx(styles.root, className)}>
         <input
@@ -44,7 +45,7 @@ class StockSearch extends Component {
           type="search" placeholder="Search By Company Name or Ticker"
         />
         {
-          query ? <SearchDropdown /> : null
+          searches[query] ? <SearchDropdown results={searches[query]} /> : null
         }
       </div>
     );
