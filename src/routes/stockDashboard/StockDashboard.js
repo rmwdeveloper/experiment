@@ -10,7 +10,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 
 import LayoutColumn from '../../components/LayoutColumn';
 import widgetRegistry from '../../components/widgetRegistry';
-
+import cx from 'classnames';
 const title = 'Stock Dashboard';
 
 @connect(state => ({
@@ -55,8 +55,7 @@ class StockDashboard extends Component { //eslint-disable-line
       searchStocks, toggleMode, mode, autosave, widgets, cells, layout, searches, swapWidgetPosition,
       first, last, handle, columns, watchStock, watchedStocks
     } = this.props;
-    console.log('test');
-    return (<div>
+    return (<div className={cx('row', 'center-lg center-md center-sm center-xs', styles.root)}>
       <StockDashboardNavigation toggleMode={toggleMode} mode={mode} autosave={autosave}/>
       {
         layout.map((column, index, array) => {

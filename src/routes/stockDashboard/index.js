@@ -1,9 +1,9 @@
 import React from 'react';
 import { authenticateTradeIt } from '../../core/apis/tradeIt';
 import StockDashboard from './StockDashboard';
-import StockHomepage from '../../components/StockHomepage';
-import StockSearch from '../../components/StockSearch';
-import StockDetail from '../../components/StockDetail';
+// import StockHomepage from '../../components/StockHomepage';
+// import StockSearch from '../../components/StockSearch';
+// import StockDetail from '../../components/StockDetail';
 
 
 export default {

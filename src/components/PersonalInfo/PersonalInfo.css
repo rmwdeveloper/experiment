@@ -12,6 +12,10 @@
   float: left;
   text-align: center;
 }
+.image img {
+  width: 100%;
+  height: auto;
+}
 .handle{
   font-size: 13px;
   color: #1E6DC0;

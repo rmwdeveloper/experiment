@@ -6,7 +6,7 @@ import classNames from 'classnames/bind';
 function StockDashboardNavigation({toggleMode, mode, autosave}) {
   let cx = classNames.bind(styles);
   return (
-    <header className={`${styles.root}  row center-xs`} role="navigation">
+    <header className={`${styles.root} col-md-12 col-sm-12 col-xs-12 col-lg-12`} role="navigation">
       <div className={`${styles.linkContainer} col-xs`}>
         <a onClick={() => toggleMode('layout')} className={cx({ link: true, active: mode === 'layout' })}>
           <span className={styles.desktop}>Layout Mode</span>
