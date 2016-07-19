@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './StockSearch.css'; //eslint-disable-line
+import SearchDropdown from '../SearchDropdown';
 import cx from 'classnames';
 
 class StockSearch extends Component {
@@ -42,9 +43,9 @@ class StockSearch extends Component {
           onChange={this.lookupStock}
           type="search" placeholder="Search By Company Name or Ticker"
         />
-        <div className={styles.searchResults}>
-
-        </div>
+        {
+          query ? <SearchDropdown /> : null
+        }
       </div>
     );
   }
