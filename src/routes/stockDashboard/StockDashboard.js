@@ -57,21 +57,23 @@ class StockDashboard extends Component { //eslint-disable-line
     } = this.props;
     return (<div className={cx('row', 'center-lg center-md center-sm center-xs', styles.root)}>
       <StockDashboardNavigation toggleMode={toggleMode} mode={mode} autosave={autosave}/>
-      {
-        layout.map((column, index, array) => {
+      <div className="row">
+        {
+          layout.map((column, index, array) => {
 
-          return React.createElement(LayoutColumn,
-            { className: columns[index].className, key: index },
-            column.map((cell, index) => {
-              return React.createElement(widgetRegistry[widgets[cell.widget].type], {
-                key: index,
-                swapWidgetPosition, cell, first, last, handle, searchStocks, searches, watchStock,
-                watchedStocks
-              });
-            })
-          );
-        })
-      }
+            return React.createElement(LayoutColumn,
+              { className: columns[index].className, key: index },
+              column.map((cell, index) => {
+                return React.createElement(widgetRegistry[widgets[cell.widget].type], {
+                  key: index,
+                  swapWidgetPosition, cell, first, last, handle, searchStocks, searches, watchStock,
+                  watchedStocks
+                });
+              })
+            );
+          })
+        }
+      </div>
     </div>);
   }
 }
