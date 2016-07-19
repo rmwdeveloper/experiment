@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './WatchTable.css'; //eslint-disable-line
 import cx from 'classnames';
-
+import StockTableRow from '../StockTableRow';
 function WatchTable({ className, watchedStocks }) {
   return (
     <div className={cx(styles.root, className)}>
@@ -20,7 +20,7 @@ function WatchTable({ className, watchedStocks }) {
         <tbody>
         {
           watchedStocks.length ? watchedStocks.map((stock, index) => {
-            return <StockTableRow />
+            return <StockTableRow key={index} stock={stock} />
           }) : null
         }
         </tbody>

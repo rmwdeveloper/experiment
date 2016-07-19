@@ -4,7 +4,7 @@ import {
 } from '../constants';
 
 const initialState = {
-  watchedStocks: [],
+  watchedStocks: [{Exchange: 'NASDAQ', Name: 'Apple Inc', Symbol: 'AAPL' }],
   mode: 'layout',
   autosave: false,
   columns: {
