@@ -5,10 +5,15 @@ import StockSearch from '../StockSearch';
 import WatchTable from '../WatchTable';
 import cx from 'classnames';
 
-function WatchList({ searchStocks, searches }) {
+function WatchList({ searchStocks, searches, watchStock, watchedStocks }) {
   return (
     <div className={cx(styles.root, 'row')}>
-      <StockSearch searches={searches} searchStocks={searchStocks} className="col-lg-12 col-md-12 col-sm-12 col-xs-12"/>
+      <StockSearch
+        watchStock={watchStock}
+        searches={searches}
+        searchStocks={searchStocks}
+        className="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+      />
       <WatchTable className="col-lg-12 col-md-12 col-sm-12 col-xs-12"/>
     </div>
   );
