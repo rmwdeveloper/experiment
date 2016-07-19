@@ -36,9 +36,6 @@ class StockSearch extends Component {
   render() {
     const { className, searches } = this.props;
     const { query } = this.state;
-    if (query) {
-      console.log(searches);
-    }
     return (
       <div className={cx(styles.root, className)}>
         <input

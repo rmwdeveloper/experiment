@@ -32,9 +32,9 @@ export default function stock(state = initialState, action) {
     case SEARCH_STOCKS:
       return state;
     case SEARCH_STOCKS_SUCCESS:
-      const { searches } = state;
-      searches[action.query] = action.data;
-      return { ...state, searches };
+      const copy = Object.assign({}, state.searches);
+      copy[action.query] = action.data;
+      return { ...state, searches: copy };
     case SEARCH_STOCKS_FAILURE:
       return state;
     case CACHED_SEARCH:
