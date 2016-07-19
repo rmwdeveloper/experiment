@@ -4,7 +4,6 @@ import styles from './StockInfoTable.css'; //eslint-disable-line
 
 
 function StockInfoTable({quotes}) {
-  console.log(quotes);
   return (
     <div>Stock Info Table</div>
   );

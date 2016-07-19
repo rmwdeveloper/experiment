@@ -3,8 +3,9 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './StockTableRow.css'; //eslint-disable-line
 import cx from 'classnames';
 
-function StockTableRow({ stock }) {
+function StockTableRow({ stock, quote }) {
   const { Name, Symbol } = stock;
+  const { LastPrice, Change, ChangePercentYTD } = quote;
   return (
     <tr className={styles.root} data-ticker={Symbol}>
       <td className={styles.tickerColumn}>
@@ -15,11 +16,11 @@ function StockTableRow({ stock }) {
         <span className={styles.company}>{Name}</span>
       </td>
       <td className={styles.priceColumn}>
-        <span className={styles.price}>734.69</span>
+        <span className={styles.price}>{LastPrice}</span>
         <br />
         <span className={styles.change}>
-          <font color="#008800">0.91</font>
-          <font color="#008800">(0.12%)</font>
+          <font color="#008800">{Change}</font>
+          <font color="#008800">{ChangePercentYTD}</font>
         </span>
       </td>
     </tr>
@@ -27,6 +28,7 @@ function StockTableRow({ stock }) {
 }
 
 StockTableRow.propTypes = {
-  stock: PropTypes.object
+  stock: PropTypes.object,
+  quote: PropTypes.object
 };
 export default withStyles(styles)(StockTableRow);
