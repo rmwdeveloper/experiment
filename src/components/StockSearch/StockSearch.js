@@ -24,15 +24,19 @@ class StockSearch extends Component {
     }
     this.timeout = setInterval(this.search, 1000, event.target.value);
   }
+
   search(query) {
-    this.props.searchStocks(query);
+    this.props.searchStocks(event.target.value);
     clearInterval(this.timeout);
   }
+
   render() {
     const { className } = this.props;
     return (
       <div className={cx(styles.root, className)}>
-        <input onChange={this.lookupStock} type="search" placeholder="Search By Company Name or Ticker"/>
+        <input
+          onChange={this.lookupStock}
+          type="search" placeholder="Search By Company Name or Ticker" />
       </div>
     );
   }
