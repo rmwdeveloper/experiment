@@ -1,6 +1,6 @@
 import {
   LOAD_STOCKS, SEARCH_STOCKS, SEARCH_STOCKS_SUCCESS, SEARCH_STOCKS_FAILURE, TOGGLE_MODE,
-  TOGGLE_AUTOSAVE, SWAP_WIDGET_POSITION, CACHED_SEARCH, CACHE_SEARCH
+  TOGGLE_AUTOSAVE, SWAP_WIDGET_POSITION, CACHED_SEARCH
 } from '../constants';
 import { lookupStock } from '../core/apis/markit';
 
@@ -16,15 +16,14 @@ export function searchStocks(query) {
     const { stock: { watchedStocks } } = getState();
 
     if (watchedStocks.hasOwnProperty(query)) {
-      dispatch({type: CACHED_SEARCH, query});
+      dispatch({ type: CACHED_SEARCH, query });
     }
     dispatch({ type: SEARCH_STOCKS });
     lookupStock(query, (err, data) => {
       if (err) {
         dispatch({ type: SEARCH_STOCKS_FAILURE, err });
       } else {
-        dispatch({type: CACHE_SEARCH, data});
-        dispatch({ type: SEARCH_STOCKS_SUCCESS, data });
+        dispatch({ type: SEARCH_STOCKS_SUCCESS, query, data });
       }
     });
   };

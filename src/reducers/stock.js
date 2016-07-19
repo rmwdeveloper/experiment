@@ -1,5 +1,7 @@
-import { LOAD_STOCKS, SEARCH_STOCKS, SEARCH_STOCKS_SUCCESS, SEARCH_STOCKS_FAILURE,
-  TOGGLE_MODE, TOGGLE_AUTOSAVE, SWAP_WIDGET_POSITION, CACHED_SEARCH, CACHE_SEARCH } from '../constants';
+import {
+  LOAD_STOCKS, SEARCH_STOCKS, SEARCH_STOCKS_SUCCESS, SEARCH_STOCKS_FAILURE,
+  TOGGLE_MODE, TOGGLE_AUTOSAVE, SWAP_WIDGET_POSITION, CACHED_SEARCH
+} from '../constants';
 
 const initialState = {
   watchedStocks: [],
@@ -30,8 +32,12 @@ export default function stock(state = initialState, action) {
     case SEARCH_STOCKS:
       return state;
     case SEARCH_STOCKS_SUCCESS:
-      return state;
+      const { searches } = state;
+      searches[action.query] = action.data;
+      return { ...state, searches };
     case SEARCH_STOCKS_FAILURE:
+      return state;
+    case CACHED_SEARCH:
       return state;
     case TOGGLE_MODE:
       return { ...state, mode: action.mode };
@@ -39,9 +45,6 @@ export default function stock(state = initialState, action) {
       return { ...state, autosave: !state.autosave };
     case SWAP_WIDGET_POSITION:
       const { layout } = state;
-      // const indexOfSource = state.layout[action.source.column][action.source.row];
-      // const indexOfTarget = state.layout[action.target.column][action.target.row];
-      // const newLayout = layout.concat()
       const newLayout = layout.slice(0, layout.length);
       const targetWidget = action.target.widget;
       const sourceWidget = action.source.widget;
