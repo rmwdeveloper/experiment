@@ -1,7 +1,7 @@
 import React, {PropTypes, Component} from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './StockHomepage.css'; //eslint-disable-line
-
+import cx from 'classnames';
 import { DragDropContext as dragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
@@ -29,7 +29,7 @@ class StockHomepage extends Component {
     const { widgets, layout, swapWidgetPosition, first, last, handle, columns } = this.props;
 
     return (
-      <div className="row">
+      <div className={cx('row', styles.root)}>
         {
           layout.map((column, index, array) => {
 
