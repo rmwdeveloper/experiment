@@ -13,10 +13,11 @@ export function loadStocks() {
 
 export function searchStocks(query) {
   return (dispatch, getState) => {
-    const { stock: { watchedStocks } } = getState();
+    const { stock: { searches } } = getState();
 
-    if (watchedStocks.hasOwnProperty(query)) {
+    if (searches.hasOwnProperty(query)) {
       dispatch({ type: CACHED_SEARCH, query });
+      return null;
     }
     dispatch({ type: SEARCH_STOCKS });
     lookupStock(query, (err, data) => {

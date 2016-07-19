@@ -16,6 +16,7 @@ const title = 'Stock Dashboard';
   columns: state.stock.columns,
   cells: state.stock.cells,
   layout: state.stock.layout,
+  searches: state.stock.searches,
   first: state.auth.first,
   last: state.auth.last,
   handle: state.auth.handle,
