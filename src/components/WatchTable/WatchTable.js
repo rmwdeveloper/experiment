@@ -4,7 +4,6 @@ import styles from './WatchTable.css'; //eslint-disable-line
 import cx from 'classnames';
 
 function WatchTable({ className, watchedStocks }) {
-  console.log(watchedStocks);
   return (
     <div className={cx(styles.root, className)}>
       <table id={styles.watch}>
@@ -18,7 +17,13 @@ function WatchTable({ className, watchedStocks }) {
             </th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+        {
+          watchedStocks.length ? watchedStocks.map((stock, index) => {
+            return <StockTableRow />
+          }) : null
+        }
+        </tbody>
       </table>
     </div>
   );
