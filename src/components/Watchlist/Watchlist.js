@@ -14,7 +14,7 @@ function WatchList({ searchStocks, searches, watchStock, watchedStocks }) {
         searchStocks={searchStocks}
         className="col-lg-12 col-md-12 col-sm-12 col-xs-12"
       />
-      <WatchTable className="col-lg-12 col-md-12 col-sm-12 col-xs-12"/>
+      <WatchTable watchedStocks={watchedStocks} className="col-lg-12 col-md-12 col-sm-12 col-xs-12"/>
     </div>
   );
 }

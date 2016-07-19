@@ -48,9 +48,9 @@ class StockSearch extends Component {
   closeDropdown() {
     this.setState({ dropdownVisible: false });
   }
-  watchStock() {
+  watchStock(stock) {
     this.closeDropdown();
-    this.props.watchStock();
+    this.props.watchStock(stock);
   }
   render() {
     const { className, searches } = this.props;
