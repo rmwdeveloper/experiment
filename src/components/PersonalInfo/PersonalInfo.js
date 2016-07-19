@@ -10,7 +10,7 @@ function PersonalInfo({first, last, handle}) {
         <img src="http://placehold.it/130x130.png" alt="user placeholder" />
       </a>
       <div className={cx(styles.username, 'col-lg-6')}>
-        <a href="#" className={styles.image}>
+        <a href="#" className={styles.name}>
           {first} {last}
           <br />
           <span className={styles.handle}>{handle}</span>

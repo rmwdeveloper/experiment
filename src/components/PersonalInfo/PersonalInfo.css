@@ -13,8 +13,8 @@
   text-align: center;
 }
 .image img {
-  width: 100%;
-  height: auto;
+  width: auto;
+  height: 100%;
 }
 .handle{
   font-size: 13px;
