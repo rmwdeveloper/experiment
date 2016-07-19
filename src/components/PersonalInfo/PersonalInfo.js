@@ -5,9 +5,9 @@ import cx from 'classnames';
 
 function PersonalInfo({first, last, handle}) {
   return (
-    <div className={cx(styles.root, 'row')}>
+    <div className={cx(styles.root, 'row middle-lg middle-md middle-xs middle-sm')}>
       <a href="#" className={cx(styles.image, 'col-lg-6')} >
-        <img src="http://placehold.it/65x65.png" alt="user placeholder" />
+        <img src="http://placehold.it/130x130.png" alt="user placeholder" />
       </a>
       <div className={cx(styles.username, 'col-lg-6')}>
         <a href="#" className={styles.image}>
