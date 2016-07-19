@@ -19,7 +19,7 @@ class StockHomepage extends Component {
     last: PropTypes.string,
     handle: PropTypes.string,
     searchStocks: PropTypes.func,
-    searches: PropTypes.searches,
+    searches: PropTypes.object,
   };
   constructor() {
     super();
