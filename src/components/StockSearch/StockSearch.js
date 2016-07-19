@@ -12,21 +12,29 @@ class StockSearch extends Component {
   constructor() {
     super();
     this.lookupStock = this.lookupStock.bind(this);
+    this.search = this.search.bind(this);
     this.state = {
       timeSinceLastInputChange: null
     };
   }
 
   lookupStock() {
-    const now = Date.now();
-
-    if ((now - this.state.timeSinceLastInputChange) > 2000) {
-      this.props.searchStocks(event.target.value);
+    if (this.timeout) {
+      clearInterval(this.timeout);
     }
-
-    this.setState({ timeSinceLastInputChange: now });
+    this.timeout = setInterval(this.search, 1000);
+    // const now = Date.now();
+    //
+    // if ((now - this.state.timeSinceLastInputChange) > 2000) {
+    //   this.props.searchStocks(event.target.value);
+    // }
+    //
+    // this.setState({ timeSinceLastInputChange: now });
   }
-
+  search() {
+    console.log('Search!');
+    clearInterval(this.timeout);
+  }
   render() {
     const { className } = this.props;
     return (

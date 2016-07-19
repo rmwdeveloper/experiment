@@ -20,7 +20,8 @@ const initialState = {
     1: { type: 'ratings' },
     2: { type: 'posteditor' },
     3: { type: 'watchlist' }
-  }
+  },
+
 };
 export default function stock(state = initialState, action) {
   switch (action.type) {
