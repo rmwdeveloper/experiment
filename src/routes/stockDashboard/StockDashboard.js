@@ -30,6 +30,7 @@ const title = 'Stock Dashboard';
   first: state.auth.first,
   last: state.auth.last,
   handle: state.auth.handle,
+  inEditMode: state.stock.inEditMode
 }), { ...stockActions, ...layoutActions })
 class StockDashboard extends Component { //eslint-disable-line
   static propTypes = {
@@ -54,7 +55,9 @@ class StockDashboard extends Component { //eslint-disable-line
     quotes: PropTypes.object,
     addRow: PropTypes.func,
     addColumn: PropTypes.func,
-    toggleGrid: PropTypes.func
+    toggleGrid: PropTypes.func,
+    toggleEditCellMode: PropTypes.func,
+    inEditMode: PropTypes.array
   };
   static contextTypes = {
     setTitle: PropTypes.func.isRequired
@@ -66,7 +69,7 @@ class StockDashboard extends Component { //eslint-disable-line
   }
 
   renderLayout() {
-    const { rowCount, columnCount, gridVisible, widgets } = this.props;
+    const { rowCount, columnCount, gridVisible, widgets, toggleEditCellMode, inEditMode } = this.props;
     let column = [];
     let widget = null;
     const markup = [];
@@ -77,7 +80,8 @@ class StockDashboard extends Component { //eslint-disable-line
           widget = widgets[`${iterator}${nestediterator}`];
         }
         column.push(React.createElement(LayoutRow, { gridVisible, widget,
-          rowWidth: Math.floor(100 / columnCount),
+          editing: inEditMode.includes(`${iterator}${nestediterator}`),
+          rowWidth: Math.floor(100 / columnCount), toggleEditCellMode, cellIndex: `${iterator}${nestediterator}`,
           key: `${iterator}${nestediterator}`, columnHeight: Math.floor(100 / rowCount)}));
       }
       markup.push(React.createElement(LayoutColumn, {
