@@ -6,13 +6,13 @@ import widgetRegistry from '../widgetRegistry';
 function ScrollableAddMenu({columnHeight}) {
   console.log(Object.keys(widgetRegistry));
   return (
-      <div  style={{minHeight: `${ columnHeight / 2}rem` }} className={styles.root}>
+      <ul  style={{minHeight: `${ columnHeight / 2}rem` }} className={styles.root}>
         {
           Object.keys(widgetRegistry).map(widgetType => {
-            return <span className="addBlock">Make this block a {widgetType}</span>;
+            return <li className="addBlock">Make this block a {widgetType}</li>;
           })
         }
-      </div>
+      </ul>
   );
 }
 
