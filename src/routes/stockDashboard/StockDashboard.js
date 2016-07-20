@@ -9,7 +9,8 @@ import * as layoutActions from '../../actions/layout';
 import { DragDropContext as dragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
-import LayoutCell from '../../components/LayoutCell';
+import LayoutRow from '../../components/LayoutRow';
+import LayoutColumn from '../../components/LayoutColumn';
 import widgetRegistry from '../../components/widgetRegistry';
 import cx from 'classnames';
 const title = 'Stock Dashboard';
@@ -50,33 +51,42 @@ class StockDashboard extends Component { //eslint-disable-line
     last: PropTypes.string,
     handle: PropTypes.string,
     watchStock: PropTypes.func,
-    quotes: PropTypes.object
+    quotes: PropTypes.object,
+    addRow: PropTypes.func,
+    addColumn: PropTypes.func,
   };
   static contextTypes = {
     setTitle: PropTypes.func.isRequired
   };
+
   constructor() {
     super();
     this.renderLayout = this.renderLayout.bind(this);
   }
+
   renderLayout() {
-    const { rowCount, columnCount, gridVisible} = this.props;
+    const { rowCount, columnCount, gridVisible } = this.props;
+    let column = [];
     const markup = [];
     for (let iterator = 0; iterator < columnCount; iterator++) {
+      column = [];
       for (let nestediterator = 0; nestediterator < rowCount; nestediterator++) {
-        markup.push(<LayoutCell gridVisible={gridVisible} key={nestediterator} />);
+        column.push(React.createElement(LayoutRow, { gridVisible, key: `${iterator}${nestediterator}` }));
       }
+      markup.push(React.createElement(LayoutColumn, { gridVisible, key: iterator }, column));
     }
     return markup;
   }
+
   render() {
     const {
       searchStocks, toggleMode, mode, autosave, widgets, searches, swapWidgetPosition,
-      first, last, handle, columnCount, rowCount, watchStock, watchedStocks, quotes
+      first, last, handle, columnCount, rowCount, watchStock, watchedStocks, quotes, addColumn, addRow
     } = this.props;
     const markup = this.renderLayout();
     return (<div className={cx('row', 'center-lg center-md center-sm center-xs', styles.root)}>
-      <StockDashboardNavigation toggleMode={toggleMode} mode={mode} autosave={autosave}/>
+      <StockDashboardNavigation
+        addColumn={addColumn} addRow={addRow} toggleMode={toggleMode} mode={mode} autosave={autosave}/>
       <div className="row">
         {markup}
       </div>

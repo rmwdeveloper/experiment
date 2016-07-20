@@ -3,10 +3,12 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './LayoutColumn.css'; //eslint-disable-line
 import cx from 'classnames';
 
-function LayoutColumn({ className, children }) {
+function LayoutColumn({children}) {
   return (
-    <div className={className}>
-      {children}
+    <div>
+      {React.Children.map(children, child => {
+        return child;
+      })}
     </div>
   );
 }
