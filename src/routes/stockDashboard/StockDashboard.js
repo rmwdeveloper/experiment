@@ -79,13 +79,15 @@ class StockDashboard extends Component { //eslint-disable-line
       for (let nestediterator = 0; nestediterator < rowCount; nestediterator++) {
         widget = null;
         if (widgets.hasOwnProperty(`${iterator}${nestediterator}`)) {
-          const {widgetType} = widgets[`${iterator}${nestediterator}`];
+          const { widgetType } = widgets[`${iterator}${nestediterator}`];
           widget = widgetRegistry[widgetType];
         }
-        column.push(React.createElement(LayoutRow, { gridVisible, widget,
+        column.push(React.createElement(LayoutRow, {
+          gridVisible, widget, propsObj: this.props,
           editing: inEditMode.includes(`${iterator}${nestediterator}`), addStockWidget,
           rowWidth: Math.floor(100 / columnCount), toggleEditCellMode, cellIndex: `${iterator}${nestediterator}`,
-          key: `${iterator}${nestediterator}`, columnHeight: Math.floor(100 / rowCount)}));
+          key: `${iterator}${nestediterator}`, columnHeight: Math.floor(100 / rowCount)
+        }));
       }
       markup.push(React.createElement(LayoutColumn, {
         key: iterator, classNumber: Math.floor(12 / columnCount)
@@ -97,19 +99,21 @@ class StockDashboard extends Component { //eslint-disable-line
   render() {
     const {
       searchStocks, toggleMode, mode, autosave, widgets, searches, swapWidgetPosition, toggleGrid, gridVisible,
-            first, last, handle, columnCount, rowCount, watchStock, watchedStocks, quotes, addColumn, addRow
+      first, last, handle, columnCount, rowCount, watchStock, watchedStocks, quotes, addColumn, addRow
     } = this.props;
     const markup = this.renderLayout();
-    return (<div className={cx('row', 'center-lg center-md center-sm center-xs top-lg top-md top-sm top-xs', styles.root)}>
-      <StockDashboardNavigation toggleGrid={toggleGrid} gridVisible={gridVisible}
-        addColumn={addColumn} addRow={addRow} toggleMode={toggleMode} mode={mode} autosave={autosave}/>
-      <div className={cx("col-lg-12 col-md-12 col-sm-12 col-xs-12", styles.primaryColumn)}>
-        <div  className={cx(styles.primaryRow, "row")}>
-          {markup}
-      </div>
-    </div>
-  </div>)
-    ;
+    return (
+      <div className={cx('row', 'center-lg center-md center-sm center-xs top-lg top-md top-sm top-xs', styles.root)}>
+        <StockDashboardNavigation toggleGrid={toggleGrid} gridVisible={gridVisible}
+                                  addColumn={addColumn} addRow={addRow} toggleMode={toggleMode} mode={mode}
+                                  autosave={autosave}/>
+        <div className={cx("col-lg-12 col-md-12 col-sm-12 col-xs-12", styles.primaryColumn)}>
+          <div className={cx(styles.primaryRow, "row")}>
+            {markup}
+          </div>
+        </div>
+      </div>)
+      ;
   }
 }
 
