@@ -1,4 +1,4 @@
-import { SWAP_WIDGET_POSITION, ADD_COLUMN, ADD_ROW } from '../constants';
+import { SWAP_WIDGET_POSITION, ADD_COLUMN, ADD_ROW, MAX_ROW, MAX_COLUMN } from '../constants';
 
 export function swapWidgetPosition(source, target) {
   return (dispatch) => {
@@ -7,12 +7,23 @@ export function swapWidgetPosition(source, target) {
 }
 
 export function addColumn() {
-  return (dispatch) => {
-    dispatch({ type: ADD_COLUMN });
+  return (dispatch, getState) => {
+    const {layout: {columnCount}} = getState();
+    if (columnCount > 11 ) {
+      dispatch({ type: MAX_COLUMN });
+    } else{
+      dispatch({ type: ADD_COLUMN });
+    }
   };
 }
 export function addRow() {
-  return (dispatch) => {
-    dispatch({ type: ADD_ROW });
+  return (dispatch, getState) => {
+    const {layout: {rowCount}} = getState();
+    if (rowCount > 11) {
+      dispatch({ type: MAX_ROW });
+    } else{
+      dispatch({ type: ADD_ROW });
+    }
+
   };
 }
