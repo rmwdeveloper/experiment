@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './LayoutCell.css'; //eslint-disable-line
-import cx from 'classnames';
 import CellActions from '../CellActions';
+import dragSourceTarget from '../DragSourceTarget/DragSourceTarget';
 
 function LayoutCell({ children, addStockWidget,
   gridVisible, columnHeight, rowWidth, widget, propsObj, cellIndex, toggleEditCellMode, editing }) {
@@ -25,4 +25,4 @@ function LayoutCell({ children, addStockWidget,
 LayoutCell.propTypes = {
   children: PropTypes.element
 };
-export default withStyles(styles)(LayoutCell)
+export default dragSourceTarget(withStyles(styles)(LayoutCell));
