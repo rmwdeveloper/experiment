@@ -5,7 +5,7 @@
   display: flex;
   align-items: center;
   justify-content:center;
-
+  margin: 10px 0;
 
   background: #16A085; /* fallback for old browsers */
   background: -webkit-linear-gradient(to left, #16A085 , #F4D03F); /* Chrome 10-25, Safari 5.1-6 */

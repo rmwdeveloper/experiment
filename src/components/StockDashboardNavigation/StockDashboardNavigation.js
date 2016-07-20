@@ -9,7 +9,7 @@ function StockDashboardNavigation({toggleMode, mode, addColumn, addRow, gridVisi
     <header className={`${styles.root} col-md-12 col-sm-12 col-xs-12 col-lg-12`} role="navigation">
       <div className={`${styles.linkContainer} col-xs`}>
         <a onClick={() => toggleMode('layout')} className={cx({ link: true, active: mode === 'layout' })}>
-          <span className={styles.desktop}>Layout Mode</span>
+          <span className={styles.desktop}>Edit Mode</span>
           <i className={cx('fa fa-2x fa-arrows', styles.mobile)} />
         </a>
         <a onClick={toggleGrid} className={cx({ link: true, active: gridVisible })}>

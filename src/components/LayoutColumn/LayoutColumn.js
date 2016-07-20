@@ -5,7 +5,7 @@ import cx from 'classnames';
 
 function LayoutColumn({children, classNumber}) {
   return (
-    <div className={cx(styles.root, `col-lg-${classNumber} col-md-${classNumber} col-sm-${classNumber} col-xs-${classNumber}`)}>
+    <div className={cx(styles.root, `col-lg-${classNumber} col-md-${classNumber} col-sm-12 col-xs-12`)}>
       {React.Children.map(children, child => {
         return child;
       })}
