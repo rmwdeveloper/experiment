@@ -1,6 +1,6 @@
 import {
   LOAD_STOCKS, SEARCH_STOCKS, SEARCH_STOCKS_SUCCESS, SEARCH_STOCKS_FAILURE, TOGGLE_MODE,
-  TOGGLE_AUTOSAVE, SWAP_WIDGET_POSITION, CACHED_SEARCH, WATCH_STOCK, GET_QUOTE, GET_QUOTE_SUCCESS,
+  TOGGLE_AUTOSAVE, CACHED_SEARCH, WATCH_STOCK, GET_QUOTE, GET_QUOTE_SUCCESS,
   GET_QUOTE_FAILURE
 } from '../constants';
 import { lookupStock, getQuote as gq } from '../core/apis/markit';
@@ -65,8 +65,3 @@ export function toggleAutosave() {
   };
 }
 
-export function swapWidgetPosition(source, target) {
-  return (dispatch) => {
-    dispatch({ type: SWAP_WIDGET_POSITION, source, target });
-  };
-}

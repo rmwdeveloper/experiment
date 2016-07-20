@@ -4,6 +4,7 @@ import styles from './stockDashboard.css';
 import { connect } from 'react-redux';
 import StockDashboardNavigation from '../../components/StockDashboardNavigation';
 import * as stockActions from '../../actions/stock';
+import * as layoutActions from '../../actions/layout';
 
 import { DragDropContext as dragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -19,15 +20,15 @@ const title = 'Stock Dashboard';
   mode: state.stock.mode,
   autosave: state.stock.autosave,
   widgets: state.stock.widgets,
-  columns: state.stock.columns,
+  columns: state.layout.columns,
   cells: state.stock.cells,
-  layout: state.stock.layout,
+  layout: state.layout.layout,
   searches: state.stock.searches,
   quotes: state.stock.quotes,
   first: state.auth.first,
   last: state.auth.last,
   handle: state.auth.handle,
-}), { ...stockActions })
+}), { ...stockActions, ...layoutActions })
 class StockDashboard extends Component { //eslint-disable-line
   static propTypes = {
     watchedStocks: PropTypes.array,
