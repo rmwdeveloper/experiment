@@ -1,19 +1,14 @@
 import {
   LOAD_STOCKS, SEARCH_STOCKS, SEARCH_STOCKS_SUCCESS, SEARCH_STOCKS_FAILURE,
-  TOGGLE_MODE, TOGGLE_AUTOSAVE, SWAP_WIDGET_POSITION, CACHED_SEARCH, WATCH_STOCK, GET_QUOTE, GET_QUOTE_SUCCESS,
-  GET_QUOTE_FAILURE
+  TOGGLE_MODE, TOGGLE_AUTOSAVE, CACHED_SEARCH, WATCH_STOCK, GET_QUOTE, GET_QUOTE_SUCCESS,
+  GET_QUOTE_FAILURE, ADD_STOCK_WIDGET
 } from '../constants';
 
 const initialState = {
   watchedStocks: [],
   mode: 'layout',
   autosave: false,
-  // widgets: {
-  //   0: { type: 'userblock' },
-  //   1: { type: 'ratings' },
-  //   2: { type: 'stockinfotable' },
-  //   3: { type: 'watchlist' }
-  // },
+  widgets: {},
   searches: {},
   quotes: {}
 };

@@ -7,7 +7,7 @@ function LayoutCell({ children, gridVisible, minHeight, xCoord, yCoord }) {
   const border = gridVisible ? '1px dashed black' : 'medium none';
   return (
     <div style={{border, minHeight: `${minHeight}%`}} className={styles.root}>
-      {xCoord} {yCoord}
+      
     </div>
   );
 }

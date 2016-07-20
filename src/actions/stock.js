@@ -1,11 +1,16 @@
 import {
   LOAD_STOCKS, SEARCH_STOCKS, SEARCH_STOCKS_SUCCESS, SEARCH_STOCKS_FAILURE, TOGGLE_MODE,
   TOGGLE_AUTOSAVE, CACHED_SEARCH, WATCH_STOCK, GET_QUOTE, GET_QUOTE_SUCCESS,
-  GET_QUOTE_FAILURE
+  GET_QUOTE_FAILURE, ADD_STOCK_WIDGET
 } from '../constants';
 import { lookupStock, getQuote as gq } from '../core/apis/markit';
 
 
+export function addStockWidget(widgetType, cellIndex) {
+  return dispatch => {
+    dispatch({ type: ADD_STOCK_WIDGET, widgetType, cellIndex });
+  }
+}
 export function loadStocks() {
   return {
     type: LOAD_STOCKS,
