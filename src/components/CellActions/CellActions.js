@@ -3,11 +3,12 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './CellActions.css'; //eslint-disable-line
 import cx from 'classnames';
 
+import ScrollableAddMenu from '../ScrollableAddMenu';
 function CellActions({rowWidth, columnHeight, toggleEditCellMode, cellIndex, editing}) {
   return (
     <div className={styles.root}>
       {
-        editing ? null :
+        editing ? <ScrollableAddMenu /> :
           <i onClick={() => {toggleEditCellMode(cellIndex)}}
              style={{ fontSize: `${rowWidth * (columnHeight * 2) / 100}rem`}}
              className={cx(styles.addWidget, "fa fa-plus")}/>
