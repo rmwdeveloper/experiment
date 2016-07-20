@@ -5,15 +5,19 @@
   background-color: var(--quaternary-color);
 }
 
-.linkContainer .link {
-  margin: 15px 0;
+.linkContainer{
+
 }
 
 .link {
   display: inline-block;
   color: white;
+  cursor: pointer;
 }
 
+.active{
+  color: yellow;
+}
 
 .link:not(:first-child) {
   margin-left: 30px;

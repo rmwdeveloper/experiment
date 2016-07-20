@@ -1,0 +1,6 @@
+@import '../variables.css';
+
+.root {
+  background-color: #FFF;
+  margin: 10px 0;
+}

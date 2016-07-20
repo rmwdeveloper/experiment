@@ -1,0 +1,6 @@
+{
+  "name": "StockInfoTable",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./StockInfoTable.js"
+}

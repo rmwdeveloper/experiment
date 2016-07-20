@@ -1,33 +1,25 @@
 import React from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './StockDashboardNavigation.css'; //eslint-disable-line
-import Link from '../Link';
-import cx from 'classnames';
+import classNames from 'classnames/bind';
 
-function StockDashboardNavigation() {
+function StockDashboardNavigation({toggleMode, mode, autosave}) {
+  let cx = classNames.bind(styles);
   return (
-    <header className={`${styles.root}  row center-xs`} role="navigation">
+    <header className={`${styles.root} col-md-12 col-sm-12 col-xs-12 col-lg-12`} role="navigation">
       <div className={`${styles.linkContainer} col-xs`}>
-        <Link className={styles.link} to="/stocks/search">
-          <span className={styles.desktop}>Search</span>
-          <i className={cx('fa fa-2x fa-search', styles.mobile)} />
-        </Link>
-        <Link className={styles.link} to="/stocks/explore">
-          <span className={styles.desktop}>Explore</span>
-          <i className={cx('fa fa-2x fa-compass', styles.mobile)} />
-        </Link>
-        <Link className={styles.link} to="/stocks/pick">
-          <span className={styles.desktop}>Pick</span>
-          <i className={cx('fa fa-2x fa-industry', styles.mobile)} />
-        </Link>
-        <Link className={styles.link} to="/stocks/watchlist">
-          <span className={styles.desktop}>Watch</span>
+        <a onClick={() => toggleMode('layout')} className={cx({ link: true, active: mode === 'layout' })}>
+          <span className={styles.desktop}>Layout Mode</span>
+          <i className={cx('fa fa-2x fa-arrows', styles.mobile)} />
+        </a>
+        <a onClick={() => toggleMode('preview')} className={cx(styles.link, { link: true, active: mode === 'preview' })}>
+          <span className={styles.desktop}>Preview Mode</span>
           <i className={cx('fa fa-2x fa-eye', styles.mobile)} />
-        </Link>
-        <Link className={styles.link} to="/stocks/alerts">
-          <span className={styles.desktop}>Alerts</span>
-          <i className={cx('fa fa-2x fa-exclamation', styles.mobile)} />
-        </Link>
+        </a>
+        <a className={styles.link}>
+          <span className={styles.desktop}>AutoSave</span>
+          <i className={cx('fa fa-2x fa-save', styles.mobile)} />
+        </a>
       </div>
     </header>
   );

@@ -1,0 +1,6 @@
+{
+  "name": "SearchDropdown",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./SearchDropdown.js"
+}
