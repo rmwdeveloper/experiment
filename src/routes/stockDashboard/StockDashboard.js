@@ -57,7 +57,8 @@ class StockDashboard extends Component { //eslint-disable-line
     addColumn: PropTypes.func,
     toggleGrid: PropTypes.func,
     toggleEditCellMode: PropTypes.func,
-    inEditMode: PropTypes.array
+    inEditMode: PropTypes.array,
+    addStockWidget: PropTypes.func
   };
   static contextTypes = {
     setTitle: PropTypes.func.isRequired
@@ -69,18 +70,20 @@ class StockDashboard extends Component { //eslint-disable-line
   }
 
   renderLayout() {
-    const { rowCount, columnCount, gridVisible, widgets, toggleEditCellMode, inEditMode } = this.props;
+    const { rowCount, columnCount, gridVisible, widgets, toggleEditCellMode, inEditMode, addStockWidget } = this.props;
     let column = [];
     let widget = null;
     const markup = [];
     for (let iterator = 0; iterator < columnCount; iterator++) {
       column = [];
       for (let nestediterator = 0; nestediterator < rowCount; nestediterator++) {
+        widget = null;
         if (widgets.hasOwnProperty(`${iterator}${nestediterator}`)) {
-          widget = widgets[`${iterator}${nestediterator}`];
+          const {widgetType} = widgets[`${iterator}${nestediterator}`];
+          widget = widgetRegistry[widgetType];
         }
         column.push(React.createElement(LayoutRow, { gridVisible, widget,
-          editing: inEditMode.includes(`${iterator}${nestediterator}`),
+          editing: inEditMode.includes(`${iterator}${nestediterator}`), addStockWidget,
           rowWidth: Math.floor(100 / columnCount), toggleEditCellMode, cellIndex: `${iterator}${nestediterator}`,
           key: `${iterator}${nestediterator}`, columnHeight: Math.floor(100 / rowCount)}));
       }

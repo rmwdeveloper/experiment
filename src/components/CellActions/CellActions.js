@@ -5,13 +5,13 @@ import cx from 'classnames';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import ScrollableAddMenu from '../ScrollableAddMenu';
-function CellActions({rowWidth, columnHeight, toggleEditCellMode, cellIndex, editing}) {
+function CellActions({rowWidth, columnHeight, toggleEditCellMode, cellIndex, addStockWidget, editing}) {
   return (
     <div className={styles.root}>
       {
         editing ?
 
-            <ScrollableAddMenu columnHeight={columnHeight} key={cellIndex} />
+            <ScrollableAddMenu addStockWidget={addStockWidget} cellIndex={cellIndex} columnHeight={columnHeight} key={cellIndex} />
 
           :
           <i onClick={() => {toggleEditCellMode(cellIndex)}}
