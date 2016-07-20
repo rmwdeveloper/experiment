@@ -7,7 +7,7 @@ function CellActions({rowWidth, columnHeight}) {
   console.log(rowWidth, columnHeight);
   return (
     <div className={styles.root}>
-      <i style={{ fontSize: `${rowWidth / 5}rem`}} className="fa fa-plus" />
+      <i style={{ fontSize: `${rowWidth / 5}rem`}} className={cx(styles.addWidget, "fa fa-plus")} />
     </div>
   );
 }
