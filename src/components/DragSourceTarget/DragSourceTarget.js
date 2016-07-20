@@ -5,8 +5,8 @@ import flow from 'lodash.flow';
 // import styles from './DragSourceTarget.css'; //eslint-disable-line
 
 const widgetSource = {
-  beginDrag({ cell }) {
-    return cell;
+  beginDrag({ cellIndex }) {
+    return {cellIndex};
   },
   endDrag(props, monitor, component) {
     if (!monitor.didDrop()) {
