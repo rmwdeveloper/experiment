@@ -1,12 +1,30 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './LayoutCell.css'; //eslint-disable-line
-import cx from 'classnames';
+import CellActions from '../CellActions';
+import dragSourceTarget from '../DragSourceTarget/DragSourceTarget';
 
-function LayoutCell({ children }) {
+function LayoutCell({
+  children, addStockWidget, mode,
+  gridVisible, columnHeight, rowWidth, widget, propsObj, cellIndex, toggleEditCellMode, editing
+}) {
+  const border = gridVisible ? '1px dashed black' : 'medium none';
+  let visibility = mode === 'preview' ? 'hidden' : 'visible';
+  if (widget) {
+    visibility = 'visible';
+  }
   return (
-    <div>
-      {children}
+    <div style={{border, visibility, minHeight: `${columnHeight}%`}} className={styles.root}>
+      {
+        widget ?
+
+          React.createElement(widget, { ...propsObj, cellIndex })
+
+          : <CellActions addStockWidget={addStockWidget} editing={editing} cellIndex={cellIndex}
+                         toggleEditCellMode={toggleEditCellMode}
+                         rowWidth={rowWidth}
+                         columnHeight={columnHeight}/>
+      }
     </div>
   );
 }
@@ -14,4 +32,4 @@ function LayoutCell({ children }) {
 LayoutCell.propTypes = {
   children: PropTypes.element
 };
-export default LayoutCell;
+export default dragSourceTarget(withStyles(styles)(LayoutCell));

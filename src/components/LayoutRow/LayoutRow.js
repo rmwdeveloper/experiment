@@ -3,11 +3,23 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './LayoutRow.css'; //eslint-disable-line
 import cx from 'classnames';
 
-function LayoutRow() {
+import LayoutCell from '../LayoutCell';
+
+function LayoutRow({gridVisible, propsObj, rowWidth, addStockWidget, columnHeight, widget, cellIndex, toggleEditCellMode,
+  editing, mode}) {
+
   return (
-      <div>
-        
-      </div>
+    <LayoutCell
+      mode={mode}
+      propsObj={propsObj}
+      addStockWidget={addStockWidget}
+      cellIndex={cellIndex}
+      toggleEditCellMode={toggleEditCellMode}
+      editing={editing}
+      widget={widget}
+      columnHeight={columnHeight}
+      rowWidth={rowWidth}
+      gridVisible={gridVisible} />
   );
 }
 

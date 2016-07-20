@@ -1,0 +1,27 @@
+@import '../variables.css';
+
+.root  {
+  width: 100%;
+  height: 100%;
+  background: #3CA55C; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #3CA55C , #B5AC49); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #3CA55C , #B5AC49); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.addWidget{
+  color: #FFF;
+}
+
+.slideDownEnter-enter {
+  transform: translateY(100%);
+}
+.slideDownEnter-enter.slideDownEnter-enter-active {
+  transform: translateY(0%);
+  transition: transform 300ms ease-in;
+}
+.slideDownEnter-leave {
+  transform: translateY(0%);
+}
+.slideDownEnter-leave.slideDownEnter-leave-active {
+  transform: translateY(100%);
+  transition: transform 300ms ease-in;
+}

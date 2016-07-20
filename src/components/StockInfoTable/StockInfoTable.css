@@ -1,2 +1,14 @@
 @import '../variables.css';
 
+.root td{
+  border-width: 1px 1px 0px 0px;
+  border-color: #d3d3d3;
+  border-style: solid;
+  font-size: 11px;
+}
+.root th{
+  font-size:14px;
+}
+.root tr {
+  background-color: #f4f4f4;
+}

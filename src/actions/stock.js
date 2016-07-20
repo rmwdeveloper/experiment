@@ -1,11 +1,21 @@
 import {
   LOAD_STOCKS, SEARCH_STOCKS, SEARCH_STOCKS_SUCCESS, SEARCH_STOCKS_FAILURE, TOGGLE_MODE,
-  TOGGLE_AUTOSAVE, SWAP_WIDGET_POSITION, CACHED_SEARCH, WATCH_STOCK, GET_QUOTE, GET_QUOTE_SUCCESS,
-  GET_QUOTE_FAILURE
+  TOGGLE_AUTOSAVE, CACHED_SEARCH, WATCH_STOCK, GET_QUOTE, GET_QUOTE_SUCCESS,
+  GET_QUOTE_FAILURE, ADD_STOCK_WIDGET, TOGGLE_EDIT_CELL_MODE
 } from '../constants';
 import { lookupStock, getQuote as gq } from '../core/apis/markit';
 
 
+export function toggleEditCellMode(cellIndex) {
+  return dispatch => {
+    dispatch({ type: TOGGLE_EDIT_CELL_MODE, cellIndex });
+  }
+}
+export function addStockWidget(widgetType, cellIndex) {
+  return dispatch => {
+    dispatch({ type: ADD_STOCK_WIDGET, widgetType, cellIndex });
+  }
+}
 export function loadStocks() {
   return {
     type: LOAD_STOCKS,
@@ -65,8 +75,3 @@ export function toggleAutosave() {
   };
 }
 
-export function swapWidgetPosition(source, target) {
-  return (dispatch) => {
-    dispatch({ type: SWAP_WIDGET_POSITION, source, target });
-  };
-}

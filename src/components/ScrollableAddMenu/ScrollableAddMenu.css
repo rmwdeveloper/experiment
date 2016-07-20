@@ -1,0 +1,17 @@
+@import '../variables.css';
+
+.root {
+  height: 100%;
+  background-color: #fff;
+  color: black;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow: auto;
+}
+
+.root li {
+  padding: 20px 0;
+  border: 1px solid black;
+  cursor: pointer;
+}
