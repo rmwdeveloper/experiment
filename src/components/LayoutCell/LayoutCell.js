@@ -1,12 +1,13 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './LayoutCell.css'; //eslint-disable-line
-import cx from 'classnames';
+import classnames from 'classnames/bind';
+const cx = classnames.bind(styles);
 
-function LayoutCell({ children }) {
+function LayoutCell({ children, gridVisible }) {
   return (
-    <div>
-      {children}
+    <div className={cx({root: true}, {gridVisible})}>
+      Layout Cell
     </div>
   );
 }

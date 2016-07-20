@@ -12,3 +12,6 @@ export const TOGGLE_AUTOSAVE = 'stock/TOGGLE_AUTOSAVE';
 export const SWAP_WIDGET_POSITION = 'stock/SWAP_WIDGET_POSITION';
 export const CACHED_SEARCH = 'stock/CACHED_SEARCH';
 export const WATCH_STOCK = 'stock/WATCH_STOCK';
+
+export const ADD_COLUMN = 'layout/ADD_COLUMN';
+export const ADD_ROW = 'layout/ADD_ROW';

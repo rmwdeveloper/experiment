@@ -1,16 +1,19 @@
-import { SWAP_WIDGET_POSITION } from '../constants';
+import { SWAP_WIDGET_POSITION, ADD_COLUMN, ADD_ROW } from '../constants';
 
 const initialState = {
-  columns: {
-    0: { className: 'col-lg-2 col-md-2 col-sm-12 col-xs-12' },
-    1: { className: 'col-lg-8 col-md-8 col-sm-12 col-xs-12' },
-    2: { className: 'col-lg-2 col-md-2 col-sm-12 col-xs-12' },
-  },
-  layout: [
-    [{ id: 0, column: 0, row: 0, widget: 0 }, { id: 1, column: 0, row: 1, widget: 1 }],
-    [{ id: 2, column: 1, row: 0, widget: 2 }],
-    [{ id: 3, column: 2, row: 0, widget: 3 }]
-  ]
+  columnCount: 1,
+  rowCount: 1,
+  gridVisible: true
+  // columns: {
+  //   0: { className: 'col-lg-2 col-md-2 col-sm-12 col-xs-12' },
+  //   1: { className: 'col-lg-8 col-md-8 col-sm-12 col-xs-12' },
+  //   2: { className: 'col-lg-2 col-md-2 col-sm-12 col-xs-12' },
+  // },
+  // layout: [
+  //   [{ id: 0, column: 0, row: 0, widget: 0 }, { id: 1, column: 0, row: 1, widget: 1 }],
+  //   [{ id: 2, column: 1, row: 0, widget: 2 }],
+  //   [{ id: 3, column: 2, row: 0, widget: 3 }]
+  // ]
 };
 export default function layout(state = initialState, action) {
   switch (action.type) {
@@ -22,6 +25,10 @@ export default function layout(state = initialState, action) {
       newLayout[action.source.column][action.source.row].widget = targetWidget;
       newLayout[action.target.column][action.target.row].widget = sourceWidget;
       return { ...state, layout: newLayout };
+    case ADD_COLUMN:
+      return { ...state, columnCount: state.columnCount + 1 };
+    case ADD_ROW:
+      return { ...state, rowCount: state.rowCount + 1 };
     default:
       return state;
   }

@@ -8,12 +8,12 @@ const initialState = {
   watchedStocks: [],
   mode: 'layout',
   autosave: false,
-  widgets: {
-    0: { type: 'userblock' },
-    1: { type: 'ratings' },
-    2: { type: 'stockinfotable' },
-    3: { type: 'watchlist' }
-  },
+  // widgets: {
+  //   0: { type: 'userblock' },
+  //   1: { type: 'ratings' },
+  //   2: { type: 'stockinfotable' },
+  //   3: { type: 'watchlist' }
+  // },
   searches: {},
   quotes: {}
 };

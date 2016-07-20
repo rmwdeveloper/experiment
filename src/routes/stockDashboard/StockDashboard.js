@@ -9,7 +9,7 @@ import * as layoutActions from '../../actions/layout';
 import { DragDropContext as dragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
-import LayoutColumn from '../../components/LayoutColumn';
+import LayoutCell from '../../components/LayoutCell';
 import widgetRegistry from '../../components/widgetRegistry';
 import cx from 'classnames';
 const title = 'Stock Dashboard';
@@ -20,9 +20,10 @@ const title = 'Stock Dashboard';
   mode: state.stock.mode,
   autosave: state.stock.autosave,
   widgets: state.stock.widgets,
-  columns: state.layout.columns,
+  columnCount: state.layout.columnCount,
+  rowCount: state.layout.rowCount,
+  gridVisible: state.layout.gridVisible,
   cells: state.stock.cells,
-  layout: state.layout.layout,
   searches: state.stock.searches,
   quotes: state.stock.quotes,
   first: state.auth.first,
@@ -38,7 +39,9 @@ class StockDashboard extends Component { //eslint-disable-line
     mode: PropTypes.string,
     autosave: PropTypes.bool,
     widgets: PropTypes.object,
-    columns: PropTypes.object,
+    columnCount: PropTypes.number,
+    rowCount: PropTypes.number,
+    gridVisible: PropTypes.bool,
     cells: PropTypes.array,
     layout: PropTypes.array,
     searches: PropTypes.object,
@@ -52,30 +55,30 @@ class StockDashboard extends Component { //eslint-disable-line
   static contextTypes = {
     setTitle: PropTypes.func.isRequired
   };
-
+  constructor() {
+    super();
+    this.renderLayout = this.renderLayout.bind(this);
+  }
+  renderLayout() {
+    const { rowCount, columnCount, gridVisible} = this.props;
+    const markup = [];
+    for (let iterator = 0; iterator < columnCount; iterator++) {
+      for (let nestediterator = 0; nestediterator < rowCount; nestediterator++) {
+        markup.push(<LayoutCell gridVisible={gridVisible} key={nestediterator} />);
+      }
+    }
+    return markup;
+  }
   render() {
     const {
-      searchStocks, toggleMode, mode, autosave, widgets, cells, layout, searches, swapWidgetPosition,
-      first, last, handle, columns, watchStock, watchedStocks, quotes
+      searchStocks, toggleMode, mode, autosave, widgets, searches, swapWidgetPosition,
+      first, last, handle, columnCount, rowCount, watchStock, watchedStocks, quotes
     } = this.props;
+    const markup = this.renderLayout();
     return (<div className={cx('row', 'center-lg center-md center-sm center-xs', styles.root)}>
       <StockDashboardNavigation toggleMode={toggleMode} mode={mode} autosave={autosave}/>
       <div className="row">
-        {
-          layout.map((column, index, array) => {
-
-            return React.createElement(LayoutColumn,
-              { className: columns[index].className, key: index },
-              column.map((cell, index) => {
-                return React.createElement(widgetRegistry[widgets[cell.widget].type], {
-                  key: index,
-                  swapWidgetPosition, cell, first, last, handle, searchStocks, searches, watchStock,
-                  watchedStocks, quotes
-                });
-              })
-            );
-          })
-        }
+        {markup}
       </div>
     </div>);
   }
