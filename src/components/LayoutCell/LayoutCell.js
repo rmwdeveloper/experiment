@@ -5,8 +5,9 @@ import classnames from 'classnames/bind';
 const cx = classnames.bind(styles);
 
 function LayoutCell({ children, gridVisible }) {
+  const border = gridVisible ? '1px dashed black' : 'medium none';
   return (
-    <div className={cx({root: true}, {gridVisible})}>
+    <div style={{border}} className={cx({root: true}, {gridVisible})}>
       Layout Cell
     </div>
   );

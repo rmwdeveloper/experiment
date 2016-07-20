@@ -74,7 +74,6 @@ class StockDashboard extends Component { //eslint-disable-line
         column.push(React.createElement(LayoutRow, { gridVisible, key: `${iterator}${nestediterator}` }));
       }
       markup.push(React.createElement(LayoutColumn, {
-        gridVisible,
         key: iterator, classNumber: Math.floor(12 / columnCount)
       }, column));
     }

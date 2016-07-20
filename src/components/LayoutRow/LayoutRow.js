@@ -5,8 +5,9 @@ import cx from 'classnames';
 
 import LayoutCell from '../LayoutCell';
 
-function LayoutRow() {
-  return <LayoutCell />;
+function LayoutRow({gridVisible}) {
+  console.log(gridVisible);
+  return <LayoutCell gridVisible={gridVisible} />;
 }
 
 export default withStyles(styles)(LayoutRow);
