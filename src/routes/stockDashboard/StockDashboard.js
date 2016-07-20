@@ -73,8 +73,10 @@ class StockDashboard extends Component { //eslint-disable-line
       for (let nestediterator = 0; nestediterator < rowCount; nestediterator++) {
         column.push(React.createElement(LayoutRow, { gridVisible, key: `${iterator}${nestediterator}` }));
       }
-      markup.push(React.createElement(LayoutColumn, { gridVisible,
-        key: iterator, classNumber: Math.floor(12 / columnCount) }, column));
+      markup.push(React.createElement(LayoutColumn, {
+        gridVisible,
+        key: iterator, classNumber: Math.floor(12 / columnCount)
+      }, column));
     }
     return markup;
   }
@@ -88,10 +90,13 @@ class StockDashboard extends Component { //eslint-disable-line
     return (<div className={cx('row', 'center-lg center-md center-sm center-xs', styles.root)}>
       <StockDashboardNavigation
         addColumn={addColumn} addRow={addRow} toggleMode={toggleMode} mode={mode} autosave={autosave}/>
-      <div className="row">
-        {markup}
+      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div className="row">
+          {markup}
       </div>
-    </div>);
+    </div>
+  </div>)
+    ;
   }
 }
 
