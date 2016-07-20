@@ -68,7 +68,7 @@ class StockDashboard extends Component { //eslint-disable-line
   }
 
   renderLayout() {
-    const { rowCount, columnCount, gridVisible, cells, toggleEditCellMode, inEditMode, addStockWidget, swapWidget } = this.props;
+    const { rowCount, columnCount, gridVisible, cells, mode, toggleEditCellMode, inEditMode, addStockWidget, swapWidget } = this.props;
     let column = [];
     let widget = null;
     const markup = [];
@@ -81,7 +81,7 @@ class StockDashboard extends Component { //eslint-disable-line
           widget = widgetRegistry[widgetType];
         }
         column.push(React.createElement(LayoutRow, {
-          gridVisible, widget, propsObj: this.props,
+          gridVisible, widget, propsObj: this.props, mode,
           editing: inEditMode.includes(`${iterator}${nestediterator}`), addStockWidget, swapWidget,
           rowWidth: Math.floor(100 / columnCount), toggleEditCellMode, cellIndex: `${iterator}${nestediterator}`,
           key: `${iterator}${nestediterator}`, columnHeight: Math.floor(100 / rowCount)

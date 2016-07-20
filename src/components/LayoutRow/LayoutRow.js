@@ -5,10 +5,12 @@ import cx from 'classnames';
 
 import LayoutCell from '../LayoutCell';
 
-function LayoutRow({gridVisible, propsObj, rowWidth, addStockWidget, columnHeight, widget, cellIndex, toggleEditCellMode, editing}) {
+function LayoutRow({gridVisible, propsObj, rowWidth, addStockWidget, columnHeight, widget, cellIndex, toggleEditCellMode,
+  editing, mode}) {
 
   return (
     <LayoutCell
+      mode={mode}
       propsObj={propsObj}
       addStockWidget={addStockWidget}
       cellIndex={cellIndex}

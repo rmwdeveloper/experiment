@@ -4,19 +4,26 @@ import styles from './LayoutCell.css'; //eslint-disable-line
 import CellActions from '../CellActions';
 import dragSourceTarget from '../DragSourceTarget/DragSourceTarget';
 
-function LayoutCell({ children, addStockWidget,
-  gridVisible, columnHeight, rowWidth, widget, propsObj, cellIndex, toggleEditCellMode, editing }) {
+function LayoutCell({
+  children, addStockWidget, mode,
+  gridVisible, columnHeight, rowWidth, widget, propsObj, cellIndex, toggleEditCellMode, editing
+}) {
   const border = gridVisible ? '1px dashed black' : 'medium none';
+  let visibility = mode === 'preview' ? 'hidden' : 'visible';
+  if (widget) {
+    visibility = 'visible';
+  }
   return (
-    <div style={{border, minHeight: `${columnHeight}%`}} className={styles.root}>
+    <div style={{border, visibility, minHeight: `${columnHeight}%`}} className={styles.root}>
       {
         widget ?
 
-          React.createElement(widget, {...propsObj, cellIndex})
+          React.createElement(widget, { ...propsObj, cellIndex })
 
-          : <CellActions addStockWidget={addStockWidget} editing={editing} cellIndex={cellIndex} toggleEditCellMode={toggleEditCellMode}
-          rowWidth={rowWidth}
-          columnHeight={columnHeight} />
+          : <CellActions addStockWidget={addStockWidget} editing={editing} cellIndex={cellIndex}
+                         toggleEditCellMode={toggleEditCellMode}
+                         rowWidth={rowWidth}
+                         columnHeight={columnHeight}/>
       }
     </div>
   );
