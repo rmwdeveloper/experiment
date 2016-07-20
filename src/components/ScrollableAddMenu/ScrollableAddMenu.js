@@ -5,7 +5,7 @@ import cx from 'classnames';
 
 function ScrollableAddMenu() {
   return (
-      <div>
+      <div className={styles.root}>
         scrollableaddmenu
       </div>
   );
