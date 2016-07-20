@@ -3,11 +3,10 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './LayoutCell.css'; //eslint-disable-line
 import cx from 'classnames';
 
-function LayoutCell({ children, gridVisible }) {
+function LayoutCell({ children, gridVisible, minHeight }) {
   const border = gridVisible ? '1px dashed black' : 'medium none';
   return (
-    <div style={{border}} className={styles.root}>
-      Layout Cell
+    <div style={{border, minHeight: `${minHeight}%`}} className={styles.root}>
     </div>
   );
 }

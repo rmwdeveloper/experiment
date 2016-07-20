@@ -1,7 +1,7 @@
 @import '../variables.css';
 
 .root{
-
+  min-height: 100px;
 }
 .gridVisible {
   border: 1px dashed black;

@@ -1,0 +1,6 @@
+.root {
+  height: 100vh;
+}
+.primaryRow, .primaryColumn{
+  height: 100%;
+}
