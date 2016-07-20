@@ -31,8 +31,8 @@ function collectSource(connect, monitor) {
   };
 }
 const widgetTarget = {
-  drop({ cell }) {
-    return cell;
+  drop({ cellIndex }) {
+    return {cellIndex};
   }
 };
 

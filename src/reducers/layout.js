@@ -1,9 +1,10 @@
-import { SWAP_WIDGET_POSITION, ADD_COLUMN, ADD_ROW, TOGGLE_GRID } from '../constants';
+import { SWAP_WIDGET_POSITION, ADD_STOCK_WIDGET, ADD_COLUMN, ADD_ROW, TOGGLE_GRID } from '../constants';
 
 const initialState = {
   columnCount: 3,
   rowCount: 3,
-  gridVisible: false
+  gridVisible: false,
+  cells : {},
   // columns: {
   //   0: { className: 'col-lg-2 col-md-2 col-sm-12 col-xs-12' },
   //   1: { className: 'col-lg-8 col-md-8 col-sm-12 col-xs-12' },
@@ -16,15 +17,19 @@ const initialState = {
   // ]
 };
 export default function layout(state = initialState, action) {
+  let copy = null;
   switch (action.type) {
     case SWAP_WIDGET_POSITION:
-      const { layout } = state;
-      const newLayout = layout.slice(0, layout.length);
-      const targetWidget = action.target.widget;
-      const sourceWidget = action.source.widget;
-      newLayout[action.source.column][action.source.row].widget = targetWidget;
-      newLayout[action.target.column][action.target.row].widget = sourceWidget;
-      return { ...state, layout: newLayout };
+      const { cells } = state;
+      copy = Object.assign({}, cells);
+      copy[action.source.cellIndex] = cells[action.target.cellIndex];
+      copy[action.target.cellIndex] = cells[action.source.cellIndex];
+
+      return { ...state, cells: copy };
+    case ADD_STOCK_WIDGET:
+      copy = Object.assign({}, state.cells);
+      copy[action.cellIndex] = { widgetType: action.widgetType };
+      return { ...state, cells: copy };
     case ADD_COLUMN:
       return { ...state, columnCount: state.columnCount + 1 };
     case ADD_ROW:

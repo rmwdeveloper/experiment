@@ -20,11 +20,10 @@ const title = 'Stock Dashboard';
   searchedStocks: state.stock.searchedStocks,
   mode: state.stock.mode,
   autosave: state.stock.autosave,
-  widgets: state.stock.widgets,
   columnCount: state.layout.columnCount,
   rowCount: state.layout.rowCount,
   gridVisible: state.layout.gridVisible,
-  cells: state.stock.cells,
+  cells: state.layout.cells,
   searches: state.stock.searches,
   quotes: state.stock.quotes,
   first: state.auth.first,
@@ -40,11 +39,10 @@ class StockDashboard extends Component { //eslint-disable-line
     toggleMode: PropTypes.func,
     mode: PropTypes.string,
     autosave: PropTypes.bool,
-    widgets: PropTypes.object,
     columnCount: PropTypes.number,
     rowCount: PropTypes.number,
     gridVisible: PropTypes.bool,
-    cells: PropTypes.array,
+    cells: PropTypes.object,
     layout: PropTypes.array,
     searches: PropTypes.object,
     swapWidgetPosition: PropTypes.func,
@@ -70,7 +68,7 @@ class StockDashboard extends Component { //eslint-disable-line
   }
 
   renderLayout() {
-    const { rowCount, columnCount, gridVisible, widgets, toggleEditCellMode, inEditMode, addStockWidget } = this.props;
+    const { rowCount, columnCount, gridVisible, cells, toggleEditCellMode, inEditMode, addStockWidget } = this.props;
     let column = [];
     let widget = null;
     const markup = [];
@@ -78,8 +76,8 @@ class StockDashboard extends Component { //eslint-disable-line
       column = [];
       for (let nestediterator = 0; nestediterator < rowCount; nestediterator++) {
         widget = null;
-        if (widgets.hasOwnProperty(`${iterator}${nestediterator}`)) {
-          const { widgetType } = widgets[`${iterator}${nestediterator}`];
+        if (cells.hasOwnProperty(`${iterator}${nestediterator}`)) {
+          const { widgetType } = cells[`${iterator}${nestediterator}`];
           widget = widgetRegistry[widgetType];
         }
         column.push(React.createElement(LayoutRow, {

@@ -9,7 +9,6 @@ const initialState = {
   mode: 'layout',
   autosave: false,
   inEditMode: [],
-  widgets: {},
   searches: {},
   quotes: {}
 };
