@@ -66,13 +66,17 @@ class StockDashboard extends Component { //eslint-disable-line
   }
 
   renderLayout() {
-    const { rowCount, columnCount, gridVisible } = this.props;
+    const { rowCount, columnCount, gridVisible, widgets } = this.props;
     let column = [];
+    let widget = null;
     const markup = [];
     for (let iterator = 0; iterator < columnCount; iterator++) {
       column = [];
       for (let nestediterator = 0; nestediterator < rowCount; nestediterator++) {
-        column.push(React.createElement(LayoutRow, { gridVisible, xCoord: iterator, yCoord: nestediterator,
+        if (widgets.hasOwnProperty(`${iterator}${nestediterator}`)) {
+          widget = widgets[`${iterator}${nestediterator}`];
+        }
+        column.push(React.createElement(LayoutRow, { gridVisible, widget,
           key: `${iterator}${nestediterator}`, minHeight: Math.floor(100 / rowCount)}));
       }
       markup.push(React.createElement(LayoutColumn, {
