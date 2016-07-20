@@ -54,6 +54,7 @@ class StockDashboard extends Component { //eslint-disable-line
     quotes: PropTypes.object,
     addRow: PropTypes.func,
     addColumn: PropTypes.func,
+    toggleGrid: PropTypes.func
   };
   static contextTypes = {
     setTitle: PropTypes.func.isRequired
@@ -83,12 +84,12 @@ class StockDashboard extends Component { //eslint-disable-line
 
   render() {
     const {
-      searchStocks, toggleMode, mode, autosave, widgets, searches, swapWidgetPosition,
+      searchStocks, toggleMode, mode, autosave, widgets, searches, swapWidgetPosition, toggleGrid,
       first, last, handle, columnCount, rowCount, watchStock, watchedStocks, quotes, addColumn, addRow
     } = this.props;
     const markup = this.renderLayout();
     return (<div className={cx('row', 'center-lg center-md center-sm center-xs top-lg top-md top-sm top-xs', styles.root)}>
-      <StockDashboardNavigation
+      <StockDashboardNavigation toggleGrid={toggleGrid}
         addColumn={addColumn} addRow={addRow} toggleMode={toggleMode} mode={mode} autosave={autosave}/>
       <div className={cx("col-lg-12 col-md-12 col-sm-12 col-xs-12", styles.primaryColumn)}>
         <div  className={cx(styles.primaryRow, "row")}>
