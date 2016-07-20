@@ -1,8 +1,8 @@
 import { SWAP_WIDGET_POSITION, ADD_COLUMN, ADD_ROW, TOGGLE_GRID } from '../constants';
 
 const initialState = {
-  columnCount: 1,
-  rowCount: 1,
+  columnCount: 3,
+  rowCount: 3,
   gridVisible: true
   // columns: {
   //   0: { className: 'col-lg-2 col-md-2 col-sm-12 col-xs-12' },
