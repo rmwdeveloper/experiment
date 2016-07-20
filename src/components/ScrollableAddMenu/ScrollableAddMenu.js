@@ -3,9 +3,9 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './ScrollableAddMenu.css'; //eslint-disable-line
 import cx from 'classnames';
 
-function ScrollableAddMenu() {
+function ScrollableAddMenu({columnHeight}) {
   return (
-      <div className={styles.root}>
+      <div  style={{minHeight: `${ columnHeight / 2}rem` }} className={styles.root}>
         scrollableaddmenu
       </div>
   );

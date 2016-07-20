@@ -10,9 +10,9 @@ function CellActions({rowWidth, columnHeight, toggleEditCellMode, cellIndex, edi
     <div className={styles.root}>
       {
         editing ?
-          <ReactCSSTransitionGroup transitionName="slideDownEnter" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
-            <ScrollableAddMenu key={cellIndex} />
-          </ReactCSSTransitionGroup>
+
+            <ScrollableAddMenu columnHeight={columnHeight} key={cellIndex} />
+
           :
           <i onClick={() => {toggleEditCellMode(cellIndex)}}
              style={{ fontSize: `${rowWidth * (columnHeight * 2) / 100}rem`}}
