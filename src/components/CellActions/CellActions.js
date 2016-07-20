@@ -5,8 +5,8 @@ import cx from 'classnames';
 
 function CellActions() {
   return (
-    <div className={cx(styles.root, 'row')}>
-
+    <div className={styles.root}>
+      <i className="fa fa-plus" />
     </div>
   );
 }

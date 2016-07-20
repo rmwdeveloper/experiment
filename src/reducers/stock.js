@@ -8,7 +8,7 @@ const initialState = {
   watchedStocks: [],
   mode: 'layout',
   autosave: false,
-  widgets: [],
+  widgets: {},
   searches: {},
   quotes: {}
 };
