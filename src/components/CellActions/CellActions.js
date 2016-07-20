@@ -9,7 +9,11 @@ function CellActions({rowWidth, columnHeight, toggleEditCellMode, cellIndex, edi
   return (
     <div className={styles.root}>
       {
-        editing ? <ScrollableAddMenu key={cellIndex} /> :
+        editing ?
+          <ReactCSSTransitionGroup transitionName="slideDownEnter" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
+            <ScrollableAddMenu key={cellIndex} />
+          </ReactCSSTransitionGroup>
+          :
           <i onClick={() => {toggleEditCellMode(cellIndex)}}
              style={{ fontSize: `${rowWidth * (columnHeight * 2) / 100}rem`}}
              className={cx(styles.addWidget, "fa fa-plus")}/>

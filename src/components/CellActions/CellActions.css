@@ -9,3 +9,18 @@
 .addWidget{
   color: #FFF;
 }
+
+.slideDownEnter-enter {
+  transform: translateY(100%);
+}
+.slideDownEnter-enter.slideDownEnter-enter-active {
+  transform: translateY(0%);
+  transition: transform 300ms ease-in;
+}
+.slideDownEnter-leave {
+  transform: translateY(0%);
+}
+.slideDownEnter-leave.slideDownEnter-leave-active {
+  transform: translateY(100%);
+  transition: transform 300ms ease-in;
+}
