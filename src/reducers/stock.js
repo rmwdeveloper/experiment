@@ -8,7 +8,7 @@ const initialState = {
   watchedStocks: [],
   mode: 'layout',
   autosave: false,
-  widgets: {},
+  widgets: [],
   searches: {},
   quotes: {}
 };
@@ -40,7 +40,11 @@ export default function stock(state = initialState, action) {
     case TOGGLE_AUTOSAVE:
       return { ...state, autosave: !state.autosave };
     case WATCH_STOCK:
-      return { ...state, watchedStocks: [...state.watchedStocks, action.stock]};
+      return { ...state, watchedStocks: [...state.watchedStocks, action.stock] };
+    case ADD_STOCK_WIDGET:
+      copy = Object.assign({}, state.widgets);
+      copy[action.cellIndex] = { widgetType: action.widgetType };
+      return { ...state, widgets: copy };
     default:
       return state;
   }
