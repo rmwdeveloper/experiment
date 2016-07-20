@@ -5,10 +5,10 @@ import cx from 'classnames';
 
 import LayoutCell from '../LayoutCell';
 
-function LayoutRow({gridVisible, minHeight, widget}) {
+function LayoutRow({gridVisible, rowWidth, columnHeight, widget}) {
 
   return (
-    <LayoutCell widget={widget} minHeight={minHeight} gridVisible={gridVisible} />
+    <LayoutCell widget={widget} columnHeight={columnHeight} rowWidth={rowWidth} gridVisible={gridVisible} />
   );
 }
 

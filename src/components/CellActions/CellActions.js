@@ -3,10 +3,11 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './CellActions.css'; //eslint-disable-line
 import cx from 'classnames';
 
-function CellActions() {
+function CellActions({rowWidth, columnHeight}) {
+  console.log(rowWidth, columnHeight);
   return (
     <div className={styles.root}>
-      <i className="fa fa-plus" />
+      <i style={{ fontSize: `${rowWidth / 5}rem`}} className="fa fa-plus" />
     </div>
   );
 }

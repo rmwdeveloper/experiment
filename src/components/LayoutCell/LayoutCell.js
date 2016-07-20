@@ -3,12 +3,13 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './LayoutCell.css'; //eslint-disable-line
 import cx from 'classnames';
 import CellActions from '../CellActions';
-function LayoutCell({ children, gridVisible, minHeight, widget }) {
+
+function LayoutCell({ children, gridVisible, columnHeight, rowWidth, widget }) {
   const border = gridVisible ? '1px dashed black' : 'medium none';
   return (
-    <div style={{border, minHeight: `${minHeight}%`}} className={styles.root}>
+    <div style={{border, minHeight: `${columnHeight}%`}} className={styles.root}>
       {
-        widget ? widget : <CellActions />
+        widget ? widget : <CellActions rowWidth={rowWidth} columnHeight={columnHeight} />
       }
     </div>
   );
@@ -17,4 +18,4 @@ function LayoutCell({ children, gridVisible, minHeight, widget }) {
 LayoutCell.propTypes = {
   children: PropTypes.element
 };
-export default LayoutCell;
+export default withStyles(styles)(LayoutCell)
