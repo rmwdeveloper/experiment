@@ -30,6 +30,7 @@ const title = 'Stock Dashboard';
   last: state.auth.last,
   handle: state.auth.handle,
   charts: state.stock.charts,
+  displayedChart: state.stock.displayedChart,
   inEditMode: state.stock.inEditMode
 }), { ...stockActions, ...layoutActions })
 class StockDashboard extends Component { //eslint-disable-line
@@ -59,7 +60,9 @@ class StockDashboard extends Component { //eslint-disable-line
     inEditMode: PropTypes.array,
     addStockWidget: PropTypes.func,
     charts: PropTypes.object,
-    getChart: PropTypes.func
+    getChart: PropTypes.func,
+    displayedChart: PropTypes.string,
+    changeDisplayedChart: PropTypes.func
   };
   static contextTypes = {
     setTitle: PropTypes.func.isRequired

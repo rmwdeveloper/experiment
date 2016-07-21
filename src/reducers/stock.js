@@ -1,5 +1,5 @@
 import {
-  LOAD_STOCKS, SEARCH_STOCKS, SEARCH_STOCKS_SUCCESS, SEARCH_STOCKS_FAILURE,
+  LOAD_STOCKS, SEARCH_STOCKS, SEARCH_STOCKS_SUCCESS, SEARCH_STOCKS_FAILURE, CHANGE_DISPLAYED_CHART,
   TOGGLE_MODE, TOGGLE_AUTOSAVE, CACHED_SEARCH, WATCH_STOCK, GET_QUOTE, GET_QUOTE_SUCCESS,
   GET_QUOTE_FAILURE, ADD_STOCK_WIDGET, TOGGLE_EDIT_CELL_MODE, GET_CHART, GET_CHART_SUCCESS, GET_CHART_FAILURE
 } from '../constants';
@@ -12,6 +12,7 @@ const initialState = {
   searches: {},
   quotes: {},
   charts: {},
+  displayedChart: 'GOOG'
 };
 export default function stock(state = initialState, action) {
   let copy = null;
@@ -35,6 +36,8 @@ export default function stock(state = initialState, action) {
       copy = Object.assign({}, state.charts);
       copy[action.symbol] = action.data;
       return { ...state, charts: copy };
+    case CHANGE_DISPLAYED_CHART:
+      return {...state, displayedChart: action.symbol};
     case SEARCH_STOCKS_FAILURE:
       return state;
     case CACHED_SEARCH:
