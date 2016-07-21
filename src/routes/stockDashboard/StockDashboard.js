@@ -29,6 +29,7 @@ const title = 'Stock Dashboard';
   first: state.auth.first,
   last: state.auth.last,
   handle: state.auth.handle,
+  charts: state.stock.charts,
   inEditMode: state.stock.inEditMode
 }), { ...stockActions, ...layoutActions })
 class StockDashboard extends Component { //eslint-disable-line
@@ -56,7 +57,9 @@ class StockDashboard extends Component { //eslint-disable-line
     toggleGrid: PropTypes.func,
     toggleEditCellMode: PropTypes.func,
     inEditMode: PropTypes.array,
-    addStockWidget: PropTypes.func
+    addStockWidget: PropTypes.func,
+    charts: PropTypes.object,
+    getChart: PropTypes.func
   };
   static contextTypes = {
     setTitle: PropTypes.func.isRequired

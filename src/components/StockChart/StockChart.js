@@ -1,14 +1,22 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes, Component } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './StockChart.css'; //eslint-disable-line
 
 
-function StockChart() {
-  return (
-    <div className={styles.root}>
+class StockChart extends Component {
+  static propTypes = {
+    getChart: PropTypes.func,
+  };
+  componentWillMount() {
+    this.props.getChart('goog');
+  }
+  render() {
+    return (
+      <div className={styles.root}>
 
-    </div>
-  );
+      </div>
+    );
+  }
 }
 
 
