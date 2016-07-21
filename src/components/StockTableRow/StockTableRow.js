@@ -33,6 +33,6 @@ function StockTableRow({ stock, quote, changeDisplayedChart }) {
 StockTableRow.propTypes = {
   stock: PropTypes.object,
   quote: PropTypes.object,
-  changeDisplayedChart: PropTypes
+  changeDisplayedChart: PropTypes.func
 };
 export default withStyles(styles)(StockTableRow);
