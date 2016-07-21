@@ -17,7 +17,7 @@ function ConnectionsTablet({ title, amount, className }) {
 }
 ConnectionsTablet.propTypes = {
   title: PropTypes.string,
-  amount: PropTypes.string,
+  amount: PropTypes.number,
   className: PropTypes.string
 };
 export default withStyles(styles)(ConnectionsTablet);

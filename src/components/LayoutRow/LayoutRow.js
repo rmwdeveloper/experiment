@@ -23,12 +23,12 @@ function LayoutRow({ gridVisible, propsObj,
 }
 
 LayoutRow.propTypes = {
-  gridVisible: PropTypes.func,
+  gridVisible: PropTypes.bool,
   propsObj: PropTypes.object,
   rowWidth: PropTypes.number,
   addStockWidget: PropTypes.func,
   columnHeight: PropTypes.number,
-  widget: PropTypes.object,
+  widget: PropTypes.element,
   cellIndex: PropTypes.string,
   toggleEditCellMode: PropTypes.func,
   editing: PropTypes.bool,

@@ -37,11 +37,11 @@ function LayoutCell({
 LayoutCell.propTypes = {
   children: PropTypes.element,
   addStockWidget: PropTypes.func,
-  mode: PropTypes.bool,
+  mode: PropTypes.string,
   gridVisible: PropTypes.bool,
   columnHeight: PropTypes.number,
   rowWidth: PropTypes.number,
-  widget: PropTypes.element,
+  widget: PropTypes.object,
   propsObj: PropTypes.object,
   cellIndex: PropTypes.string,
   toggleEditCellMode: PropTypes.func,
