@@ -24,6 +24,7 @@ const title = 'Stock Dashboard';
   rowCount: state.layout.rowCount,
   gridVisible: state.layout.gridVisible,
   cells: state.layout.cells,
+  layout: state.layout.layout,
   searches: state.stock.searches,
   quotes: state.stock.quotes,
   first: state.auth.first,
@@ -72,13 +73,39 @@ class StockDashboard extends Component { //eslint-disable-line
   constructor() {
     super();
     this.renderLayout = this.renderLayout.bind(this);
+    this.isTall = this.isTall.bind(this);
+    this.isWide = this.isWide.bind(this);
+    this.isTallAndWide = this.isTallAndWide.bind(this);
   }
-
+  isTall(layoutData) {
+    const comparator = layoutData[0][1];
+    return layoutData.every(element => { return element[1] === comparator; });
+  }
+  isWide(layoutData) {
+    const comparator = layoutData[0][0];
+    return layoutData.every(element => { return element[0] === comparator; });
+  }
+  isTallAndWide(layoutData) {
+    console.log(layoutData);
+    return false;
+  }
   renderLayout() {
-    const { rowCount, columnCount, gridVisible, cells, mode,
+    const { rowCount, columnCount, gridVisible, cells, mode, layout,
       toggleEditCellMode, inEditMode, addStockWidget, swapWidget } = this.props;
     const markup = [];
-    let column = [];
+    for (let cellIndex = 0; cellIndex < layout.length; cellIndex++) {
+      if (this.isTall(layout[cellIndex][0])) {
+        console.log('Render Tall!');
+      } else if (this.isWide(layout[cellIndex][0])) {
+        console.log('Render Wide');
+      } else if (this.isTallAndWide(layout[cellIndex][0])) {
+        console.log('Render A Big Box');
+      } else {
+        console.log('Render Nothing!');
+      }
+    }
+
+/*    let column = [];
     let widget = null;
     for (let columnNumber = 0; columnNumber < columnCount; columnNumber++) {
       column = [];
@@ -100,7 +127,7 @@ class StockDashboard extends Component { //eslint-disable-line
       markup.push(React.createElement(LayoutColumn, {
         key: columnNumber, classNumber: Math.floor(12 / columnCount)
       }, column));
-    }
+    }*/
     return markup;
   }
 

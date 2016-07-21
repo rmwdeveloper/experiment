@@ -5,6 +5,7 @@ const initialState = {
   columnCount: 2,
   rowCount: 2,
   gridVisible: true,
+  layout: [[['00', '10', '01', '11'], {}], [['02', '12'], {}]],
   cells: {},
 };
 export default function layout(state = initialState, action) {
