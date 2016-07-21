@@ -11,6 +11,7 @@ class StockChart extends Component {
     this.props.getChart('goog');
   }
   render() {
+    console.log(this.props.charts);
     return (
       <div className={styles.root}>
 

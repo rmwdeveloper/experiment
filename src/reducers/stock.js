@@ -33,7 +33,7 @@ export default function stock(state = initialState, action) {
       return { ...state, searches: copy };
     case GET_CHART_SUCCESS:
       copy = Object.assign({}, state.charts);
-      copy[action.query] = action.data;
+      copy[action.symbol] = action.data;
       return { ...state, charts: copy };
     case SEARCH_STOCKS_FAILURE:
       return state;
