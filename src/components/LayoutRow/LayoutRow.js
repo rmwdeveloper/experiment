@@ -5,7 +5,7 @@ import LayoutCell from '../LayoutCell';
 
 function LayoutRow({ gridVisible,
   rowWidth, addStockWidget, columnHeight, widget, cellIndex, toggleEditCellMode,
-  editing, mode }) {
+  editing, mode, ...props }) {
   return (
     <LayoutCell
       mode={mode}
@@ -17,6 +17,7 @@ function LayoutRow({ gridVisible,
       columnHeight={columnHeight}
       rowWidth={rowWidth}
       gridVisible={gridVisible}
+      {...props}
     />
   );
 }
