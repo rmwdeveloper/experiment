@@ -3,12 +3,16 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './StockDashboardNavigation.css'; //eslint-disable-line
 import classNames from 'classnames/bind';
 
-function StockDashboardNavigation({toggleMode, mode, addColumn, addRow, gridVisible, autosave, toggleGrid}) {
-  let cx = classNames.bind(styles);
+function StockDashboardNavigation({ toggleMode,
+  mode, addColumn, addRow, gridVisible, toggleGrid }) {
+  const cx = classNames.bind(styles);
   return (
     <header className={`${styles.root} col-md-12 col-sm-12 col-xs-12 col-lg-12`} role="navigation">
       <div className={`${styles.linkContainer} col-xs`}>
-        <a onClick={() => toggleMode('layout')} className={cx({ link: true, active: mode === 'layout' })}>
+        <a
+          onClick={() => toggleMode('layout')}
+          className={cx({ link: true, active: mode === 'layout' })}
+        >
           <span className={styles.desktop}>Add Mode</span>
           <i className={cx('fa fa-2x fa-arrows', styles.mobile)} />
         </a>
@@ -24,7 +28,10 @@ function StockDashboardNavigation({toggleMode, mode, addColumn, addRow, gridVisi
           <span className={styles.desktop}>Add Row</span>
           <i className={cx('fa fa-2x fa-navicon', styles.mobile)} />
         </a>
-        <a onClick={() => toggleMode('preview')} className={cx(styles.link, { link: true, active: mode === 'preview' })}>
+        <a
+          onClick={() => toggleMode('preview')}
+          className={cx(styles.link, { link: true, active: mode === 'preview' })}
+        >
           <span className={styles.desktop}>Preview Mode</span>
           <i className={cx('fa fa-2x fa-eye', styles.mobile)} />
         </a>

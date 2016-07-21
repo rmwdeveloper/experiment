@@ -7,7 +7,10 @@ function StockTableRow({ stock, quote, changeDisplayedChart }) {
   const { Name, Symbol } = stock;
   const { LastPrice, Change, ChangePercentYTD } = quote;
   return (
-    <tr onClick={() => {changeDisplayedChart(Symbol); }} className={styles.root} data-ticker={Symbol}>
+    <tr
+      onClick={() => { changeDisplayedChart(Symbol); }}
+      className={styles.root} data-ticker={Symbol}
+    >
       <td className={styles.tickerColumn}>
         <span className={styles.symbol}>
           <a href="#">{Symbol}</a>
@@ -30,6 +33,6 @@ function StockTableRow({ stock, quote, changeDisplayedChart }) {
 StockTableRow.propTypes = {
   stock: PropTypes.object,
   quote: PropTypes.object,
-  changeDisplayedChart: PropTypes.func
+  changeDisplayedChart: PropTypes
 };
 export default withStyles(styles)(StockTableRow);

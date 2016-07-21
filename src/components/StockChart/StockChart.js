@@ -30,9 +30,9 @@ class StockChart extends Component {
       const data = nextProps.charts[nextProps.displayedChart];
       const ohlc = this.getOHLC(data);
       const volume = this.getVolume(data);
-      HighCharts.chart("highcharts-container",{
-        rangeSelector: {selected: 1},
-        title: {text: `${nextProps.displayedChart} Historical Price`},
+      HighCharts.chart('highcharts-container', {
+        rangeSelector: { selected: 1 },
+        title: { text: `${nextProps.displayedChart} Historical Price` },
         yAxis: [{
           title: {
             text: 'OHLC'
@@ -96,7 +96,6 @@ class StockChart extends Component {
     const chartSeries = [];
 
     if (elements[1]) {
-
       for (let i = 0, datLen = dates.length; i < datLen; i++) {
         const dat = this.fixDate(dates[i]);
         const pointData = [
@@ -113,9 +112,7 @@ class StockChart extends Component {
     return Date.UTC(dat.getFullYear(), dat.getMonth(), dat.getDate());
   }
   render() {
-    let chart = null;
     return <div id="highcharts-container"></div>
-
   }
 }
 

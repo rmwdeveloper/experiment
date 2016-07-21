@@ -62,7 +62,8 @@ class StockDashboard extends Component { //eslint-disable-line
     charts: PropTypes.object,
     getChart: PropTypes.func,
     displayedChart: PropTypes.string,
-    changeDisplayedChart: PropTypes.func
+    changeDisplayedChart: PropTypes.func,
+    swapWidget: PropTypes.func,
   };
   static contextTypes = {
     setTitle: PropTypes.func.isRequired

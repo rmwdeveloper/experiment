@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './PersonalInfo.css'; //eslint-disable-line
 import cx from 'classnames';
@@ -24,4 +24,9 @@ function PersonalInfo({first, last, handle}) {
   );
 }
 
+PersonalInfo.propTypes = {
+  first: PropTypes.string,
+  last: PropTypes.string,
+  handle: PropTypes.string,
+};
 export default withStyles(styles)(PersonalInfo);

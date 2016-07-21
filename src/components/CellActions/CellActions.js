@@ -4,18 +4,24 @@ import styles from './CellActions.css'; //eslint-disable-line
 import cx from 'classnames';
 import ScrollableAddMenu from '../ScrollableAddMenu';
 
-function CellActions({rowWidth, columnHeight, toggleEditCellMode, cellIndex, addStockWidget, editing}) {
+function CellActions({ rowWidth,
+  columnHeight, toggleEditCellMode, cellIndex, addStockWidget, editing }) {
   return (
     <div className={styles.root}>
       {
         editing ?
-
-            <ScrollableAddMenu addStockWidget={addStockWidget} cellIndex={cellIndex} columnHeight={columnHeight} key={cellIndex} />
-
+          <ScrollableAddMenu
+            addStockWidget={addStockWidget}
+            cellIndex={cellIndex}
+            columnHeight={columnHeight}
+            key={cellIndex}
+          />
           :
-          <i onClick={() => {toggleEditCellMode(cellIndex)}}
-             style={{ fontSize: `${rowWidth * (columnHeight * 2) / 100}rem`}}
-             className={cx(styles.addWidget, "fa fa-plus")}/>
+          <i
+            onClick={() => { toggleEditCellMode(cellIndex); }}
+            style={{ fontSize: `${rowWidth * (columnHeight * 2) / 100}rem` }}
+            className={cx(styles.addWidget, 'fa fa-plus')}
+          />
       }
     </div>
   );
