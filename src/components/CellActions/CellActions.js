@@ -19,7 +19,7 @@ function CellActions({ rowWidth,
           :
           <i
             onClick={() => { toggleEditCellMode(cellIndex); }}
-            style={{ fontSize: `${rowWidth * (columnHeight * 2) / 100}rem` }}
+            style={{ fontSize: `${rowWidth * (columnHeight * 2) / 150}rem` }}
             className={cx(styles.addWidget, 'fa fa-plus')}
           />
       }
