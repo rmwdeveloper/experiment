@@ -28,7 +28,7 @@ LayoutRow.propTypes = {
   rowWidth: PropTypes.number,
   addStockWidget: PropTypes.func,
   columnHeight: PropTypes.number,
-  widget: PropTypes.element,
+  widget: PropTypes.func,
   cellIndex: PropTypes.string,
   toggleEditCellMode: PropTypes.func,
   editing: PropTypes.bool,

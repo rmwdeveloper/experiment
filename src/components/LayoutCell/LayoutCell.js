@@ -41,7 +41,7 @@ LayoutCell.propTypes = {
   gridVisible: PropTypes.bool,
   columnHeight: PropTypes.number,
   rowWidth: PropTypes.number,
-  widget: PropTypes.object,
+  widget: PropTypes.func,
   propsObj: PropTypes.object,
   cellIndex: PropTypes.string,
   toggleEditCellMode: PropTypes.func,
