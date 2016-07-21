@@ -17,7 +17,7 @@ function LayoutColumn({ children, classNumber }) { // eslint-disable-line
 }
 
 LayoutColumn.propTypes = {
-  children: PropTypes.element,
+  children: PropTypes.array,
   classNumber: PropTypes.number
 };
 export default withStyles(styles)(LayoutColumn);

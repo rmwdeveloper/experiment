@@ -46,7 +46,7 @@ function StockDashboardNavigation({ toggleMode,
 
 StockDashboardNavigation.propTypes = {
   toggleMode: PropTypes.func,
-  mode: PropTypes.func,
+  mode: PropTypes.string,
   addColumn: PropTypes.func,
   addRow: PropTypes.func,
   gridVisible: PropTypes.bool,
