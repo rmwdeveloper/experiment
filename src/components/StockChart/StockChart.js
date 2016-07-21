@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './StockChart.css'; //eslint-disable-line
-import HighCharts from 'highcharts';
+import HighCharts from 'highcharts/highstock';
 
 class StockChart extends Component {
   static propTypes = {
@@ -13,6 +13,13 @@ class StockChart extends Component {
     this.getOHLC = this.getOHLC.bind(this);
     this.getVolume = this.getVolume.bind(this);
     this.fixDate = this.fixDate.bind(this);
+    this.groupingUnits = [[
+      'week',
+      [1]
+    ], [
+      'month',
+      [1, 2, 3, 4, 6]
+    ]];
   }
 
   componentWillMount() {
@@ -64,13 +71,55 @@ class StockChart extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(this.props.charts);
-    console.log(nextProps.charts);
+    if(nextProps.charts['AAPL']) {
+      const data = nextProps.charts['AAPL'];
+      const ohlc = this.getOHLC(data);
+      const volume = this.getVolume(data);
+      HighCharts.chart("highcharts-container",{
+        rangeSelector: {selected: 1},
+        title: {text: `AAPL Historical Price`},
+        yAxis: [{
+          title: {
+            text: 'OHLC'
+          },
+          height: 200,
+          lineWidth: 2
+        }, {
+          title: {
+            text: 'Volume'
+          },
+          top: 300,
+          height: 100,
+          offset: 0,
+          lineWidth: 2
+        }],
+
+        series: [{
+          type: 'candlestick',
+          name: 'AAPL',
+          data: ohlc,
+          dataGrouping: {
+            units: this.groupingUnits
+          }
+        }, {
+          type: 'column',
+          name: 'Volume',
+          data: volume,
+          yAxis: 1,
+          dataGrouping: {
+            units: this.groupingUnits
+          }
+        }],
+        credits: {
+          enabled: false
+        }
+      });
+    }
   }
 
   render() {
     let chart = null;
-    return <div></div>
+    return <div id="highcharts-container"></div>
 
   }
 }
