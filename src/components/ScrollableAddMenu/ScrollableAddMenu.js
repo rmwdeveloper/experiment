@@ -11,9 +11,10 @@ function ScrollableAddMenu({ columnHeight, addStockWidget, cellIndex }) {
           return (
             <li
               key={index}
+              style={{height: `${100 / Object.keys(widgetRegistry).length}%` }}
               onClick={() => { addStockWidget(widgetType, cellIndex); }}
               className="addBlock"
-            >Make this block a {widgetType}
+            ><span>Make this block a {widgetType}</span>
             </li>);
         })
       }

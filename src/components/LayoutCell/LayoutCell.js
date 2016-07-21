@@ -11,11 +11,16 @@ function LayoutCell({
 }) {
   const border = gridVisible ? '1px dashed black' : 'medium none';
   let visibility = mode === 'preview' ? 'hidden' : 'visible';
+  const style = { border };
   if (widget) {
     visibility = 'visible';
+  } else {
+    style.height = `${columnHeight * 8.8}px`;
+    style.visibility = visibility;
   }
+
   return (
-    <div style={{ border, visibility, minHeight: `${columnHeight}%` }} className={styles.root}>
+    <div style={style} className={styles.root}>
       {
         widget ?
 

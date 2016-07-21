@@ -4,7 +4,7 @@ import { SWAP_WIDGET_POSITION, ADD_STOCK_WIDGET,
 const initialState = {
   columnCount: 2,
   rowCount: 2,
-  gridVisible: false,
+  gridVisible: true,
   cells: {},
 };
 export default function layout(state = initialState, action) {
