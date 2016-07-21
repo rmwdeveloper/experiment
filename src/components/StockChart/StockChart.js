@@ -6,6 +6,8 @@ import HighCharts from 'highcharts/highstock';
 class StockChart extends Component {
   static propTypes = {
     getChart: PropTypes.func,
+    displayedChart: PropTypes.string,
+    charts: PropTypes.object
   };
 
   constructor() {
@@ -23,7 +25,7 @@ class StockChart extends Component {
   }
 
   componentWillMount() {
-    this.props.getChart('AAPL');
+    this.props.getChart(this.props.displayedChart);
   }
 
   getOHLC(data) {
@@ -71,13 +73,14 @@ class StockChart extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.charts['AAPL']) {
-      const data = nextProps.charts['AAPL'];
+
+    if(nextProps.charts[nextProps.displayedChart]) {
+      const data = nextProps.charts[nextProps.displayedChart];
       const ohlc = this.getOHLC(data);
       const volume = this.getVolume(data);
       HighCharts.chart("highcharts-container",{
         rangeSelector: {selected: 1},
-        title: {text: `AAPL Historical Price`},
+        title: {text: `${nextProps.displayedChart} Historical Price`},
         yAxis: [{
           title: {
             text: 'OHLC'
@@ -96,7 +99,7 @@ class StockChart extends Component {
 
         series: [{
           type: 'candlestick',
-          name: 'AAPL',
+          name: nextProps.displayedChart,
           data: ohlc,
           dataGrouping: {
             units: this.groupingUnits

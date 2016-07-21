@@ -3,7 +3,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './WatchTable.css'; //eslint-disable-line
 import cx from 'classnames';
 import StockTableRow from '../StockTableRow';
-function WatchTable({ className, watchedStocks, quotes }) {
+function WatchTable({ className, watchedStocks, quotes, changeDisplayedChart }) {
 
   return (
     <div className={cx(styles.root, className)}>
@@ -22,7 +22,7 @@ function WatchTable({ className, watchedStocks, quotes }) {
         {
           watchedStocks.length ? watchedStocks.map((stock, index) => {
             if (quotes[stock.Symbol]) {
-              return <StockTableRow key={index} stock={stock} quote={quotes[stock.Symbol]} />
+              return <StockTableRow changeDisplayedChart={changeDisplayedChart} key={index} stock={stock} quote={quotes[stock.Symbol]} />
             }
           }) : null
         }

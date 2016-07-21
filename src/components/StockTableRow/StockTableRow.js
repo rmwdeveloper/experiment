@@ -3,11 +3,11 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './StockTableRow.css'; //eslint-disable-line
 import cx from 'classnames';
 
-function StockTableRow({ stock, quote }) {
+function StockTableRow({ stock, quote, changeDisplayedChart }) {
   const { Name, Symbol } = stock;
   const { LastPrice, Change, ChangePercentYTD } = quote;
   return (
-    <tr className={styles.root} data-ticker={Symbol}>
+    <tr onClick={()=>{changeDisplayedChart(Symbol)}} className={styles.root} data-ticker={Symbol}>
       <td className={styles.tickerColumn}>
         <span className={styles.symbol}>
           <a href="#">{Symbol}</a>
