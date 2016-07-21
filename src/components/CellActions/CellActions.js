@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './CellActions.css'; //eslint-disable-line
-import cx from 'classnames';
 import ScrollableAddMenu from '../ScrollableAddMenu';
 
 function CellActions({ rowWidth,
@@ -17,11 +16,10 @@ function CellActions({ rowWidth,
             key={cellIndex}
           />
           :
-          <i
+          <div
+            className={styles.addWidget}
             onClick={() => { toggleEditCellMode(cellIndex); }}
-            style={{ fontSize: `${rowWidth * (columnHeight * 2) / 100}rem` }}
-            className={cx(styles.addWidget, 'fa fa-plus')}
-          />
+          ></div>
       }
     </div>
   );

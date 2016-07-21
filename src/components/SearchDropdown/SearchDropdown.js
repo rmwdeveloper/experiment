@@ -21,6 +21,6 @@ function SearchDropdown({ results, watchStock }) {
 
 SearchDropdown.propTypes = {
   watchStock: PropTypes.func,
-  results: PropTypes.array
+  results: PropTypes.object
 };
 export default withStyles(styles)(SearchDropdown);
