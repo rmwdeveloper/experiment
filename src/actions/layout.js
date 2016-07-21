@@ -10,7 +10,7 @@ export function swapWidgetPosition(source, target) {
 export function addColumn() {
   return (dispatch, getState) => {
     const { layout: { columnCount } } = getState();
-    if (columnCount > 11) {
+    if (columnCount > 5) {
       dispatch({ type: MAX_COLUMN });
     } else {
       dispatch({ type: ADD_COLUMN });
