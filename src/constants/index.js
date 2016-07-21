@@ -16,6 +16,9 @@ export const TOGGLE_EDIT_CELL_MODE = 'stock/TOGGLE_EDIT_CELL_MODE';
 export const ADD_STOCK_WIDGET ='stock/ADD_STOCK_WIDGET';
 export const ADD_STOCK_WIDGET_SUCCESS ='stock/ADD_STOCK_WIDGET_SUCCESS';
 export const ADD_STOCK_WIDGET_FAILURE ='stock/ADD_STOCK_WIDGET_FAILURE';
+export const GET_CHART = 'stock/GET_CHART';
+export const GET_CHART_SUCCESS = 'stock/GET_CHART_SUCCESS';
+export const GET_CHART_FAILURE = 'stock/GET_CHART_FAILURE';
 
 export const ADD_COLUMN = 'layout/ADD_COLUMN';
 export const ADD_ROW = 'layout/ADD_ROW';
