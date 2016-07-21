@@ -5,9 +5,9 @@ import CellActions from '../CellActions';
 import dragSourceTarget from '../DragSourceTarget/DragSourceTarget';
 
 function LayoutCell({
-  children, addStockWidget, mode,
-  gridVisible, columnHeight, rowWidth, widget, propsObj, cellIndex, toggleEditCellMode,
-  editing
+  addStockWidget, mode,
+  gridVisible, columnHeight, rowWidth, widget, cellIndex, toggleEditCellMode,
+  editing, ...props
 }) {
   const border = gridVisible ? '1px dashed black' : 'medium none';
   let visibility = mode === 'preview' ? 'hidden' : 'visible';
@@ -19,7 +19,7 @@ function LayoutCell({
       {
         widget ?
 
-          React.createElement(widget, { ...propsObj, cellIndex })
+          React.createElement(widget, { cellIndex, ...props })
 
           : <CellActions
             addStockWidget={addStockWidget}
@@ -28,6 +28,7 @@ function LayoutCell({
             toggleEditCellMode={toggleEditCellMode}
             rowWidth={rowWidth}
             columnHeight={columnHeight}
+          {...props}
           />
       }
     </div>
@@ -35,14 +36,12 @@ function LayoutCell({
 }
 
 LayoutCell.propTypes = {
-  children: PropTypes.element,
   addStockWidget: PropTypes.func,
   mode: PropTypes.string,
   gridVisible: PropTypes.bool,
   columnHeight: PropTypes.number,
   rowWidth: PropTypes.number,
   widget: PropTypes.func,
-  propsObj: PropTypes.object,
   cellIndex: PropTypes.string,
   toggleEditCellMode: PropTypes.func,
   editing: PropTypes.bool

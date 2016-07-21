@@ -77,28 +77,28 @@ class StockDashboard extends Component { //eslint-disable-line
   renderLayout() {
     const { rowCount, columnCount, gridVisible, cells, mode,
       toggleEditCellMode, inEditMode, addStockWidget, swapWidget } = this.props;
+    const markup = [];
     let column = [];
     let widget = null;
-    const markup = [];
-    for (let iterator = 0; iterator < columnCount; iterator++) {
+    for (let columnNumber = 0; columnNumber < columnCount; columnNumber++) {
       column = [];
-      for (let nestediterator = 0; nestediterator < rowCount; nestediterator++) {
+      for (let rowNumber = 0; rowNumber < rowCount; rowNumber++) {
         widget = null;
-        if (cells.hasOwnProperty(`${iterator}${nestediterator}`)
-          && cells[`${iterator}${nestediterator}`]) {
-          const { widgetType } = cells[`${iterator}${nestediterator}`];
+        if (cells.hasOwnProperty(`${columnNumber}${rowNumber}`)
+          && cells[`${columnNumber}${rowNumber}`]) {
+          const { widgetType } = cells[`${columnNumber}${rowNumber}`];
           widget = widgetRegistry[widgetType];
         }
         column.push(React.createElement(LayoutRow, {
-          gridVisible, widget, propsObj: this.props, mode,
-          editing: inEditMode.includes(`${iterator}${nestediterator}`), addStockWidget, swapWidget,
+          gridVisible, widget, mode,
+          editing: inEditMode.includes(`${columnNumber}${rowNumber}`), addStockWidget, swapWidget,
           rowWidth: Math.floor(100 / columnCount), toggleEditCellMode,
-          cellIndex: `${iterator}${nestediterator}`,
-          key: `${iterator}${nestediterator}`, columnHeight: Math.floor(100 / rowCount)
+          cellIndex: `${columnNumber}${rowNumber}`,
+          key: `${columnNumber}${rowNumber}`, columnHeight: Math.floor(100 / rowCount), ...this.props
         }));
       }
       markup.push(React.createElement(LayoutColumn, {
-        key: iterator, classNumber: Math.floor(12 / columnCount)
+        key: columnNumber, classNumber: Math.floor(12 / columnCount)
       }, column));
     }
     return markup;
