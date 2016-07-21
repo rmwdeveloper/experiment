@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import styles from './stockDashboard.css';
+import styles from './stockDashboard.css'; //eslint-disable-line
 import { connect } from 'react-redux';
 import StockDashboardNavigation from '../../components/StockDashboardNavigation';
 import * as stockActions from '../../actions/stock';
@@ -62,7 +62,8 @@ class StockDashboard extends Component { //eslint-disable-line
     charts: PropTypes.object,
     getChart: PropTypes.func,
     displayedChart: PropTypes.string,
-    changeDisplayedChart: PropTypes.func
+    changeDisplayedChart: PropTypes.func,
+    swapWidget: PropTypes.func,
   };
   static contextTypes = {
     setTitle: PropTypes.func.isRequired
@@ -74,7 +75,8 @@ class StockDashboard extends Component { //eslint-disable-line
   }
 
   renderLayout() {
-    const { rowCount, columnCount, gridVisible, cells, mode, toggleEditCellMode, inEditMode, addStockWidget, swapWidget } = this.props;
+    const { rowCount, columnCount, gridVisible, cells, mode,
+      toggleEditCellMode, inEditMode, addStockWidget, swapWidget } = this.props;
     let column = [];
     let widget = null;
     const markup = [];
@@ -82,14 +84,16 @@ class StockDashboard extends Component { //eslint-disable-line
       column = [];
       for (let nestediterator = 0; nestediterator < rowCount; nestediterator++) {
         widget = null;
-        if (cells.hasOwnProperty(`${iterator}${nestediterator}`) && cells[`${iterator}${nestediterator}`] ) {
+        if (cells.hasOwnProperty(`${iterator}${nestediterator}`)
+          && cells[`${iterator}${nestediterator}`]) {
           const { widgetType } = cells[`${iterator}${nestediterator}`];
           widget = widgetRegistry[widgetType];
         }
         column.push(React.createElement(LayoutRow, {
           gridVisible, widget, propsObj: this.props, mode,
           editing: inEditMode.includes(`${iterator}${nestediterator}`), addStockWidget, swapWidget,
-          rowWidth: Math.floor(100 / columnCount), toggleEditCellMode, cellIndex: `${iterator}${nestediterator}`,
+          rowWidth: Math.floor(100 / columnCount), toggleEditCellMode,
+          cellIndex: `${iterator}${nestediterator}`,
           key: `${iterator}${nestediterator}`, columnHeight: Math.floor(100 / rowCount)
         }));
       }
@@ -101,18 +105,26 @@ class StockDashboard extends Component { //eslint-disable-line
   }
 
   render() {
-    const {
-      searchStocks, toggleMode, mode, autosave, widgets, searches, swapWidgetPosition, toggleGrid, gridVisible,
-      first, last, handle, columnCount, rowCount, watchStock, watchedStocks, quotes, addColumn, addRow
-    } = this.props;
+    const { toggleGrid, gridVisible, addColumn, addRow, toggleMode, mode, autosave } = this.props;
+    this.context.setTitle(title);
     const markup = this.renderLayout();
     return (
-      <div className={cx('row', 'center-lg center-md center-sm center-xs top-lg top-md top-sm top-xs', styles.root)}>
-        <StockDashboardNavigation toggleGrid={toggleGrid} gridVisible={gridVisible}
-                                  addColumn={addColumn} addRow={addRow} toggleMode={toggleMode} mode={mode}
-                                  autosave={autosave}/>
-        <div className={cx("col-lg-12 col-md-12 col-sm-12 col-xs-12", styles.primaryColumn)}>
-          <div className={cx(styles.primaryRow, "row")}>
+      <div
+        className={cx('row',
+      'center-lg center-md center-sm center-xs top-lg top-md top-sm top-xs',
+        styles.root)}
+      >
+        <StockDashboardNavigation
+          toggleGrid={toggleGrid}
+          gridVisible={gridVisible}
+          addColumn={addColumn}
+          addRow={addRow}
+          toggleMode={toggleMode}
+          mode={mode}
+          autosave={autosave}
+        />
+        <div className={cx('col-lg-12 col-md-12 col-sm-12 col-xs-12', styles.primaryColumn)}>
+          <div className={cx(styles.primaryRow, 'row')}>
             {markup}
           </div>
         </div>
@@ -121,4 +133,4 @@ class StockDashboard extends Component { //eslint-disable-line
   }
 }
 
-export default dragDropContext(HTML5Backend)(withStyles(styles)(StockDashboard))
+export default dragDropContext(HTML5Backend)(withStyles(styles)(StockDashboard));

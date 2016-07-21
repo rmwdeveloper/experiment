@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './UserBlock.css'; //eslint-disable-line
 import cx from 'classnames';
@@ -6,10 +6,10 @@ import cx from 'classnames';
 import PersonalInfo from '../PersonalInfo/PersonalInfo';
 import ConnectionsInfo from '../ConnectionsInfo/ConnectionsInfo';
 
-function UserBlock({first, last, handle}) {
+function UserBlock({ first, last, handle }) {
   return (
     <div className={cx(styles.root, 'row')}>
-      <div className={cx(styles.background, "col-lg-12 col-md-12 col-sm-12 col-xs-12")}>
+      <div className={cx(styles.background, 'col-lg-12 col-md-12 col-sm-12 col-xs-12')}>
         <PersonalInfo first={first} last={last} handle={handle} />
         <ConnectionsInfo />
       </div>
@@ -17,4 +17,9 @@ function UserBlock({first, last, handle}) {
   );
 }
 
+UserBlock.propTypes = {
+  first: PropTypes.string,
+  last: PropTypes.string,
+  handle: PropTypes.string
+};
 export default withStyles(styles)(UserBlock);

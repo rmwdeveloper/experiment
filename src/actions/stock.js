@@ -1,20 +1,20 @@
 import {
   LOAD_STOCKS, SEARCH_STOCKS, SEARCH_STOCKS_SUCCESS, SEARCH_STOCKS_FAILURE, TOGGLE_MODE,
   TOGGLE_AUTOSAVE, CACHED_SEARCH, WATCH_STOCK, GET_QUOTE, GET_QUOTE_SUCCESS, CHANGE_DISPLAYED_CHART,
-  GET_QUOTE_FAILURE, ADD_STOCK_WIDGET, TOGGLE_EDIT_CELL_MODE, GET_CHART, GET_CHART_SUCCESS, GET_CHART_FAILURE
-} from '../constants';
+  GET_QUOTE_FAILURE, ADD_STOCK_WIDGET, TOGGLE_EDIT_CELL_MODE, GET_CHART,
+  GET_CHART_SUCCESS, GET_CHART_FAILURE } from '../constants';
 import { lookupStock, getQuote as gq, getChart as gc } from '../core/apis/markit';
 
 
 export function toggleEditCellMode(cellIndex) {
   return dispatch => {
     dispatch({ type: TOGGLE_EDIT_CELL_MODE, cellIndex });
-  }
+  };
 }
 export function addStockWidget(widgetType, cellIndex) {
   return dispatch => {
     dispatch({ type: ADD_STOCK_WIDGET, widgetType, cellIndex });
-  }
+  };
 }
 export function loadStocks() {
   return {
@@ -41,7 +41,7 @@ export function getChart(symbol) {
     });
   };
 }
-function getChartInternal(symbol, dispatch, getState) {
+function getChartInternal(symbol, dispatch, getState) { // eslint-disable-line
   const { stock: { charts } } = getState();
 
   if (charts.hasOwnProperty(symbol)) {
@@ -61,7 +61,7 @@ export function changeDisplayedChart(symbol) {
   return (dispatch, getState) => {
     getChartInternal(symbol, dispatch, getState);
     dispatch({ type: CHANGE_DISPLAYED_CHART, symbol });
-  }
+  };
 }
 export function searchStocks(query) {
   return (dispatch, getState) => {

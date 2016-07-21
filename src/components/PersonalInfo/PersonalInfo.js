@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './PersonalInfo.css'; //eslint-disable-line
 import cx from 'classnames';
 
-function PersonalInfo({first, last, handle}) {
+function PersonalInfo({ first, last, handle }) {
   return (
     <div className={cx(styles.root, 'row middle-lg middle-md middle-xs middle-sm')}>
       <a href="#" className={cx(styles.image, 'col-lg-6 col-md-6 col-sm-6 col-xs-6')} >
@@ -24,4 +24,9 @@ function PersonalInfo({first, last, handle}) {
   );
 }
 
+PersonalInfo.propTypes = {
+  first: PropTypes.string,
+  last: PropTypes.string,
+  handle: PropTypes.string,
+};
 export default withStyles(styles)(PersonalInfo);

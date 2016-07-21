@@ -1,4 +1,3 @@
-import React from 'react';
 import UserBlock from './UserBlock/UserBlock';
 import Ratings from './Ratings/Ratings';
 import PostEditor from './PostEditor/PostEditor';

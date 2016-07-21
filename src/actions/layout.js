@@ -1,6 +1,5 @@
-import { SWAP_WIDGET_POSITION, ADD_COLUMN, ADD_ROW, MAX_ROW, MAX_COLUMN, TOGGLE_GRID } from '../constants';
-
-
+import { SWAP_WIDGET_POSITION, ADD_COLUMN, ADD_ROW,
+  MAX_ROW, MAX_COLUMN, TOGGLE_GRID } from '../constants';
 
 export function swapWidgetPosition(source, target) {
   return (dispatch) => {
@@ -32,5 +31,5 @@ export function addRow() {
 export function toggleGrid() {
   return dispatch => {
     dispatch({ type: TOGGLE_GRID });
-  }
+  };
 }

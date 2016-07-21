@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './ConnectionTablet.css'; //eslint-disable-line
 import cx from 'classnames';
 
-function ConnectionsTablet({title, amount, className}) {
+function ConnectionsTablet({ title, amount, className }) {
   return (
     <div className={cx(styles.root, className)}>
       <div className={styles.title}>
@@ -15,5 +15,9 @@ function ConnectionsTablet({title, amount, className}) {
     </div>
   );
 }
-
+ConnectionsTablet.propTypes = {
+  title: PropTypes.string,
+  amount: PropTypes.number,
+  className: PropTypes.string
+};
 export default withStyles(styles)(ConnectionsTablet);

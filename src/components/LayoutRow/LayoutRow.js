@@ -1,13 +1,11 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './LayoutRow.css'; //eslint-disable-line
-import cx from 'classnames';
-
 import LayoutCell from '../LayoutCell';
 
-function LayoutRow({gridVisible, propsObj, rowWidth, addStockWidget, columnHeight, widget, cellIndex, toggleEditCellMode,
-  editing, mode}) {
-
+function LayoutRow({ gridVisible, propsObj,
+  rowWidth, addStockWidget, columnHeight, widget, cellIndex, toggleEditCellMode,
+  editing, mode }) {
   return (
     <LayoutCell
       mode={mode}
@@ -19,8 +17,21 @@ function LayoutRow({gridVisible, propsObj, rowWidth, addStockWidget, columnHeigh
       widget={widget}
       columnHeight={columnHeight}
       rowWidth={rowWidth}
-      gridVisible={gridVisible} />
+      gridVisible={gridVisible}
+    />
   );
 }
 
+LayoutRow.propTypes = {
+  gridVisible: PropTypes.bool,
+  propsObj: PropTypes.object,
+  rowWidth: PropTypes.number,
+  addStockWidget: PropTypes.func,
+  columnHeight: PropTypes.number,
+  widget: PropTypes.func,
+  cellIndex: PropTypes.string,
+  toggleEditCellMode: PropTypes.func,
+  editing: PropTypes.bool,
+  mode: PropTypes.string
+};
 export default withStyles(styles)(LayoutRow);

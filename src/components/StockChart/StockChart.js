@@ -9,7 +9,6 @@ class StockChart extends Component {
     displayedChart: PropTypes.string,
     charts: PropTypes.object
   };
-
   constructor() {
     super();
     this.getOHLC = this.getOHLC.bind(this);
@@ -23,64 +22,17 @@ class StockChart extends Component {
       [1, 2, 3, 4, 6]
     ]];
   }
-
   componentWillMount() {
     this.props.getChart(this.props.displayedChart);
   }
-
-  getOHLC(data) {
-    const dates = data.Dates || [];
-    const elements = data.Elements || [];
-    const chartSeries = [];
-    if (elements[0]) {
-      for (let i = 0, datLen = dates.length; i < datLen; i++) {
-        const dat = this.fixDate(dates[i]);
-        const pointData = [
-          dat,
-          elements[0].DataSeries.open.values[i],
-          elements[0].DataSeries.high.values[i],
-          elements[0].DataSeries.low.values[i],
-          elements[0].DataSeries.close.values[i]
-        ];
-        chartSeries.push(pointData);
-      }
-    }
-    return chartSeries;
-  }
-
-  fixDate(dateIn) {
-    const dat = new Date(dateIn);
-    return Date.UTC(dat.getFullYear(), dat.getMonth(), dat.getDate());
-  }
-
-  getVolume(data) {
-    const dates = data.Dates || [];
-    const elements = data.Elements || [];
-    const chartSeries = [];
-
-    if (elements[1]) {
-
-      for (let i = 0, datLen = dates.length; i < datLen; i++) {
-        const dat = this.fixDate(dates[i]);
-        const pointData = [
-          dat,
-          elements[1].DataSeries.volume.values[i]
-        ];
-        chartSeries.push(pointData);
-      }
-    }
-    return chartSeries;
-  }
-
   componentWillReceiveProps(nextProps) {
-
-    if(nextProps.charts[nextProps.displayedChart]) {
+    if (nextProps.charts[nextProps.displayedChart]) {
       const data = nextProps.charts[nextProps.displayedChart];
       const ohlc = this.getOHLC(data);
       const volume = this.getVolume(data);
-      HighCharts.chart("highcharts-container",{
-        rangeSelector: {selected: 1},
-        title: {text: `${nextProps.displayedChart} Historical Price`},
+      HighCharts.chart('highcharts-container', {
+        rangeSelector: { selected: 1 },
+        title: { text: `${nextProps.displayedChart} Historical Price` },
         yAxis: [{
           title: {
             text: 'OHLC'
@@ -119,11 +71,48 @@ class StockChart extends Component {
       });
     }
   }
+  getOHLC(data) {
+    const dates = data.Dates || [];
+    const elements = data.Elements || [];
+    const chartSeries = [];
+    if (elements[0]) {
+      for (let i = 0, datLen = dates.length; i < datLen; i++) {
+        const dat = this.fixDate(dates[i]);
+        const pointData = [
+          dat,
+          elements[0].DataSeries.open.values[i],
+          elements[0].DataSeries.high.values[i],
+          elements[0].DataSeries.low.values[i],
+          elements[0].DataSeries.close.values[i]
+        ];
+        chartSeries.push(pointData);
+      }
+    }
+    return chartSeries;
+  }
+  getVolume(data) {
+    const dates = data.Dates || [];
+    const elements = data.Elements || [];
+    const chartSeries = [];
 
+    if (elements[1]) {
+      for (let i = 0, datLen = dates.length; i < datLen; i++) {
+        const dat = this.fixDate(dates[i]);
+        const pointData = [
+          dat,
+          elements[1].DataSeries.volume.values[i]
+        ];
+        chartSeries.push(pointData);
+      }
+    }
+    return chartSeries;
+  }
+  fixDate(dateIn) {
+    const dat = new Date(dateIn);
+    return Date.UTC(dat.getFullYear(), dat.getMonth(), dat.getDate());
+  }
   render() {
-    let chart = null;
-    return <div id="highcharts-container"></div>
-
+    return <div id="highcharts-container"></div>;
   }
 }
 

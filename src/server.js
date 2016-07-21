@@ -1,7 +1,7 @@
 import 'babel-polyfill';
 import path from 'path';
 import express from 'express';
-import expressGraphQL from 'express-graphql';
+// import expressGraphQL from 'express-graphql';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import PrettyError from 'pretty-error';
@@ -23,8 +23,8 @@ global.navigator = global.navigator || {};
 global.navigator.userAgent = global.navigator.userAgent || 'all';
 
 // Allow Cross Domain Requests
-const allowCrossDomain = function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', "*");
+const allowCrossDomain = function(req, res, next) { // eslint-disable-line
+  res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   next();
@@ -47,12 +47,12 @@ app.use(allowCrossDomain);
 //
 // Register API middleware
 // -----------------------------------------------------------------------------
-app.use('/graphql', expressGraphQL(req => ({
-  schema,
-  graphiql: true,
-  rootValue: { request: req },
-  pretty: process.env.NODE_ENV !== 'production',
-})));
+// app.use('/graphql', expressGraphQL(req => ({
+//   schema,
+//   graphiql: true,
+//   rootValue: { request: req },
+//   pretty: process.env.NODE_ENV !== 'production',
+// })));
 
 //
 // Register server-side rendering middleware

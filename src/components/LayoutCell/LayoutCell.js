@@ -6,7 +6,8 @@ import dragSourceTarget from '../DragSourceTarget/DragSourceTarget';
 
 function LayoutCell({
   children, addStockWidget, mode,
-  gridVisible, columnHeight, rowWidth, widget, propsObj, cellIndex, toggleEditCellMode, editing
+  gridVisible, columnHeight, rowWidth, widget, propsObj, cellIndex, toggleEditCellMode,
+  editing
 }) {
   const border = gridVisible ? '1px dashed black' : 'medium none';
   let visibility = mode === 'preview' ? 'hidden' : 'visible';
@@ -14,22 +15,36 @@ function LayoutCell({
     visibility = 'visible';
   }
   return (
-    <div style={{border, visibility, minHeight: `${columnHeight}%`}} className={styles.root}>
+    <div style={{ border, visibility, minHeight: `${columnHeight}%` }} className={styles.root}>
       {
         widget ?
 
           React.createElement(widget, { ...propsObj, cellIndex })
 
-          : <CellActions addStockWidget={addStockWidget} editing={editing} cellIndex={cellIndex}
-                         toggleEditCellMode={toggleEditCellMode}
-                         rowWidth={rowWidth}
-                         columnHeight={columnHeight}/>
+          : <CellActions
+            addStockWidget={addStockWidget}
+            editing={editing}
+            cellIndex={cellIndex}
+            toggleEditCellMode={toggleEditCellMode}
+            rowWidth={rowWidth}
+            columnHeight={columnHeight}
+          />
       }
     </div>
   );
 }
 
 LayoutCell.propTypes = {
-  children: PropTypes.element
+  children: PropTypes.element,
+  addStockWidget: PropTypes.func,
+  mode: PropTypes.string,
+  gridVisible: PropTypes.bool,
+  columnHeight: PropTypes.number,
+  rowWidth: PropTypes.number,
+  widget: PropTypes.func,
+  propsObj: PropTypes.object,
+  cellIndex: PropTypes.string,
+  toggleEditCellMode: PropTypes.func,
+  editing: PropTypes.bool
 };
 export default dragSourceTarget(withStyles(styles)(LayoutCell));

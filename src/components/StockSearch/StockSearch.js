@@ -63,7 +63,8 @@ class StockSearch extends Component {
           type="search" placeholder="Search By Company Name or Ticker"
         />
         {
-          searches[query] && dropdownVisible ? <SearchDropdown watchStock={this.watchStock} results={searches[query]} /> : null
+          searches[query] && dropdownVisible ?
+            <SearchDropdown watchStock={this.watchStock} results={searches[query]} /> : null
         }
       </div>
     );
