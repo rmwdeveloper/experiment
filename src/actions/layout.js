@@ -1,5 +1,5 @@
 import { SWAP_WIDGET_POSITION, ADD_COLUMN, ADD_ROW,
-  MAX_ROW, MAX_COLUMN, TOGGLE_GRID } from '../constants';
+  MAX_ROW, MAX_COLUMN, TOGGLE_GRID, DELETE_COLUMN, DELETE_ROW } from '../constants';
 
 export function swapWidgetPosition(source, target) {
   return (dispatch) => {
@@ -27,7 +27,16 @@ export function addRow() {
     }
   };
 }
-
+export function deleteRow(rowNumber) {
+  return (dispatch) => {
+    dispatch({ type: DELETE_ROW, rowNumber });
+  };
+}
+export function deleteColumn(columnNumber) {
+  return (dispatch) => {
+    dispatch({ type: DELETE_COLUMN, columnNumber });
+  };
+}
 export function toggleGrid() {
   return dispatch => {
     dispatch({ type: TOGGLE_GRID });

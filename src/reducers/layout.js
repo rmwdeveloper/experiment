@@ -1,5 +1,5 @@
 import { SWAP_WIDGET_POSITION, ADD_STOCK_WIDGET,
-  ADD_COLUMN, ADD_ROW, TOGGLE_GRID } from '../constants';
+  ADD_COLUMN, ADD_ROW, TOGGLE_GRID, DELETE_COLUMN, DELETE_ROW } from '../constants';
 
 const initialState = {
   columnCount: 2,
@@ -25,6 +25,10 @@ export default function layout(state = initialState, action) {
       return { ...state, columnCount: state.columnCount + 1 };
     case ADD_ROW:
       return { ...state, rowCount: state.rowCount + 1 };
+    case DELETE_COLUMN:
+      return state;
+    case DELETE_ROW:
+      return state;
     case TOGGLE_GRID:
       return { ...state, gridVisible: !state.gridVisible };
     default:

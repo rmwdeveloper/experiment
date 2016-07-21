@@ -22,7 +22,9 @@ export const GET_CHART_FAILURE = 'stock/GET_CHART_FAILURE';
 export const CHANGE_DISPLAYED_CHART = 'stock/CHANGE_DISPLAYED_CHART';
 
 export const ADD_COLUMN = 'layout/ADD_COLUMN';
+export const DELETE_COLUMN = 'layout/DELETE_COLUMN';
 export const ADD_ROW = 'layout/ADD_ROW';
+export const DELETE_ROW = 'layout/DELETE_ROW';
 export const MAX_ROW = 'layout/MAX_ROW';
 export const MAX_COLUMN = 'layout/MAX_COLUMN';
 export const TOGGLE_GRID = 'layout/TOGGLE_GRID';
