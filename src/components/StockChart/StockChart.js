@@ -112,7 +112,7 @@ class StockChart extends Component {
     return Date.UTC(dat.getFullYear(), dat.getMonth(), dat.getDate());
   }
   render() {
-    return <div id="highcharts-container"></div>
+    return <div id="highcharts-container"></div>;
   }
 }
 

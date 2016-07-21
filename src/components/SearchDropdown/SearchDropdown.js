@@ -8,7 +8,11 @@ function SearchDropdown({ results, watchStock }) {
     <div className={styles.root}>
       <ol>
         {results.map((searchResult, index) => {
-          return <SearchDropdownRow watchStock={watchStock} searchResult={searchResult} key={index}/>
+          return (<SearchDropdownRow
+            watchStock={watchStock}
+            searchResult={searchResult}
+            key={index}
+          />);
         })}
       </ol>
     </div>

@@ -15,7 +15,7 @@ function LayoutCell({
     visibility = 'visible';
   }
   return (
-    <div style={{border, visibility, minHeight: `${columnHeight}%`}} className={styles.root}>
+    <div style={{ border, visibility, minHeight: `${columnHeight}%` }} className={styles.root}>
       {
         widget ?
 

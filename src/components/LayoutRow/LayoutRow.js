@@ -5,9 +5,9 @@ import styles from './LayoutRow.css'; //eslint-disable-line
 
 import LayoutCell from '../LayoutCell';
 
-function LayoutRow({gridVisible, propsObj, rowWidth, addStockWidget, columnHeight, widget, cellIndex, toggleEditCellMode,
-  editing, mode}) {
-
+function LayoutRow({ gridVisible, propsObj,
+  rowWidth, addStockWidget, columnHeight, widget, cellIndex, toggleEditCellMode,
+  editing, mode }) {
   return (
     <LayoutCell
       mode={mode}
@@ -19,7 +19,8 @@ function LayoutRow({gridVisible, propsObj, rowWidth, addStockWidget, columnHeigh
       widget={widget}
       columnHeight={columnHeight}
       rowWidth={rowWidth}
-      gridVisible={gridVisible} />
+      gridVisible={gridVisible}
+    />
   );
 }
 

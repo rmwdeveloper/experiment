@@ -40,7 +40,7 @@ function collectTarget(connect, monitor) {
   };
 }
 
-function dragSourceTarget(ComposedComponent, props) {
+function dragSourceTarget(ComposedComponent) {
   return flow(
     dragSource('widget', widgetSource, collectSource),
     dropTarget('widget', widgetTarget, collectTarget)

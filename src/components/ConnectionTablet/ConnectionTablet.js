@@ -3,7 +3,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './ConnectionTablet.css'; //eslint-disable-line
 import cx from 'classnames';
 
-function ConnectionsTablet({title, amount, className}) {
+function ConnectionsTablet({ title, amount, className }) {
   return (
     <div className={cx(styles.root, className)}>
       <div className={styles.title}>
