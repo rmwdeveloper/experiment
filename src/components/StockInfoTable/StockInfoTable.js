@@ -4,7 +4,6 @@ import styles from './StockInfoTable.css'; //eslint-disable-line
 
 // todo: Refactor return statement
 function StockInfoTable({ quotes }) {
-
   return (
     <table className={styles.root}>
       <colgroup span="4"></colgroup>

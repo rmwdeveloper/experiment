@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './LayoutColumn.css'; //eslint-disable-line
 import cx from 'classnames';
 
-function LayoutColumn({children, classNumber}) {
+function LayoutColumn({ children, classNumber }) {
   return (
     <div className={cx(styles.root, `col-lg-${classNumber} col-md-${classNumber} col-sm-12 col-xs-12`)}>
       {React.Children.map(children, child => {
@@ -13,4 +13,8 @@ function LayoutColumn({children, classNumber}) {
   );
 }
 
+LayoutCell.propTypes = {
+  children: PropTypes.element,
+  classNumber: PropTypes.number
+};
 export default withStyles(styles)(LayoutColumn);

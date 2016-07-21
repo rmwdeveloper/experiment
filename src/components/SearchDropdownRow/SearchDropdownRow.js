@@ -5,7 +5,6 @@ import styles from './SearchDropdownRow.css'; //eslint-disable-line
 
 function SearchDropdownRow({ searchResult, watchStock }) {
   const { Symbol, Name, Exchange } = searchResult;
-  console.log(searchResult);
   return (
     <li onClick={() => {watchStock(searchResult)}} className={styles.root}>
       <span className={styles.symbol}>{Symbol}</span>
@@ -18,5 +17,4 @@ SearchDropdownRow.propTypes = {
   watchStock: PropTypes.func,
   searchResult: PropTypes.object
 };
-
 export default withStyles(styles)(SearchDropdownRow);

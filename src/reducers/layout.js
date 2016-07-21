@@ -1,4 +1,5 @@
-import { SWAP_WIDGET_POSITION, ADD_STOCK_WIDGET, ADD_COLUMN, ADD_ROW, TOGGLE_GRID } from '../constants';
+import { SWAP_WIDGET_POSITION, ADD_STOCK_WIDGET,
+  ADD_COLUMN, ADD_ROW, TOGGLE_GRID } from '../constants';
 
 const initialState = {
   columnCount: 2,

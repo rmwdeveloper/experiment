@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './StockDashboardNavigation.css'; //eslint-disable-line
 import classNames from 'classnames/bind';
@@ -37,4 +37,13 @@ function StockDashboardNavigation({toggleMode, mode, addColumn, addRow, gridVisi
   );
 }
 
+StockDashboardNavigation.propTypes = {
+  toggleMode: PropTypes.func,
+  mode: PropTypes.func,
+  addColumn: PropTypes.func,
+  addRow: PropTypes.func,
+  gridVisible: PropTypes.bool,
+  autosave: PropTypes.bool,
+  toggleGrid: PropTypes.func
+};
 export default withStyles(styles)(StockDashboardNavigation);

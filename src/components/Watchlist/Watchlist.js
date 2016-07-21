@@ -30,6 +30,7 @@ WatchList.propTypes = {
   searches: PropTypes.object,
   watchStock: PropTypes.func,
   watchedStocks: PropTypes.array,
-  quotes: PropTypes.object
+  quotes: PropTypes.object,
+  changeDisplayedChart: PropTypes.func
 };
 export default withStyles(styles)(WatchList);

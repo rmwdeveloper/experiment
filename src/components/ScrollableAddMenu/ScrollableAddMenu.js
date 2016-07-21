@@ -5,7 +5,7 @@ import widgetRegistry from '../widgetRegistry';
 
 function ScrollableAddMenu({ columnHeight, addStockWidget, cellIndex }) {
   return (
-    <ul style={{minHeight: `${ columnHeight / 2}rem` }} className={styles.root}>
+    <ul style={{ minHeight: `${columnHeight / 2}rem` }} className={styles.root}>
       {
         Object.keys(widgetRegistry).map((widgetType, index) => {
           return (

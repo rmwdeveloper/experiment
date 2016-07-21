@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import styles from './stockDashboard.css';
+import styles from './stockDashboard.css'; //eslint-disable-line
 import { connect } from 'react-redux';
 import StockDashboardNavigation from '../../components/StockDashboardNavigation';
 import * as stockActions from '../../actions/stock';
@@ -132,4 +132,4 @@ class StockDashboard extends Component { //eslint-disable-line
   }
 }
 
-export default dragDropContext(HTML5Backend)(withStyles(styles)(StockDashboard))
+export default dragDropContext(HTML5Backend)(withStyles(styles)(StockDashboard));

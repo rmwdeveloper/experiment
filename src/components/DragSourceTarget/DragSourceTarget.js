@@ -1,12 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { DragSource as dragSource, DropTarget as dropTarget } from 'react-dnd';
 import flow from 'lodash.flow';
-// import withStyles from 'isomorphic-style-loader/lib/withStyles';
-// import styles from './DragSourceTarget.css'; //eslint-disable-line
 
 const widgetSource = {
   beginDrag({ cellIndex }) {
-    return {cellIndex};
+    return { cellIndex };
   },
   endDrag(props, monitor, component) {
     if (!monitor.didDrop()) {
@@ -18,8 +16,6 @@ const widgetSource = {
       console.log(props);
       props.propsObj.swapWidgetPosition(item, dropResult);
     }
-
-
     if (props === component) {
       return;
     }
@@ -33,7 +29,7 @@ function collectSource(connect, monitor) {
 }
 const widgetTarget = {
   drop({ cellIndex }) {
-    return {cellIndex};
+    return { cellIndex };
   }
 };
 
