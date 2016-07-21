@@ -28,6 +28,10 @@ class StockChart extends Component {
     this.props.getChart(this.props.displayedChart);
   }
 
+  fixDate(dateIn) {
+    const dat = new Date(dateIn);
+    return Date.UTC(dat.getFullYear(), dat.getMonth(), dat.getDate());
+  }
   getOHLC(data) {
     const dates = data.Dates || [];
     const elements = data.Elements || [];
@@ -47,12 +51,6 @@ class StockChart extends Component {
     }
     return chartSeries;
   }
-
-  fixDate(dateIn) {
-    const dat = new Date(dateIn);
-    return Date.UTC(dat.getFullYear(), dat.getMonth(), dat.getDate());
-  }
-
   getVolume(data) {
     const dates = data.Dates || [];
     const elements = data.Elements || [];

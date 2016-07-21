@@ -22,7 +22,8 @@ function WatchTable({ className, watchedStocks, quotes, changeDisplayedChart }) 
         {
           watchedStocks.length ? watchedStocks.map((stock, index) => {
             if (quotes[stock.Symbol]) {
-              return <StockTableRow changeDisplayedChart={changeDisplayedChart} key={index} stock={stock} quote={quotes[stock.Symbol]} />
+              return <StockTableRow changeDisplayedChart={changeDisplayedChart} key={index} stock={stock}
+                                    quote={quotes[stock.Symbol]}/>
             }
           }) : null
         }
@@ -35,6 +36,7 @@ function WatchTable({ className, watchedStocks, quotes, changeDisplayedChart }) 
 WatchTable.propTypes = {
   className: PropTypes.string,
   quotes: PropTypes.object,
-  watchedStocks: PropTypes.array
+  watchedStocks: PropTypes.array,
+  changeDisplayedChart: PropTypes.func
 };
 export default withStyles(styles)(WatchTable);

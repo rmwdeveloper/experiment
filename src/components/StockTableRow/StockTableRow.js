@@ -1,13 +1,13 @@
 import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './StockTableRow.css'; //eslint-disable-line
-import cx from 'classnames';
+
 
 function StockTableRow({ stock, quote, changeDisplayedChart }) {
   const { Name, Symbol } = stock;
   const { LastPrice, Change, ChangePercentYTD } = quote;
   return (
-    <tr onClick={()=>{changeDisplayedChart(Symbol)}} className={styles.root} data-ticker={Symbol}>
+    <tr onClick={() => {changeDisplayedChart(Symbol); }} className={styles.root} data-ticker={Symbol}>
       <td className={styles.tickerColumn}>
         <span className={styles.symbol}>
           <a href="#">{Symbol}</a>
@@ -29,6 +29,7 @@ function StockTableRow({ stock, quote, changeDisplayedChart }) {
 
 StockTableRow.propTypes = {
   stock: PropTypes.object,
-  quote: PropTypes.object
+  quote: PropTypes.object,
+  changeDisplayedChart: PropTypes.func
 };
 export default withStyles(styles)(StockTableRow);

@@ -4,22 +4,12 @@ const initialState = {
   columnCount: 2,
   rowCount: 2,
   gridVisible: false,
-  cells : {},
-  // columns: {
-  //   0: { className: 'col-lg-2 col-md-2 col-sm-12 col-xs-12' },
-  //   1: { className: 'col-lg-8 col-md-8 col-sm-12 col-xs-12' },
-  //   2: { className: 'col-lg-2 col-md-2 col-sm-12 col-xs-12' },
-  // },
-  // layout: [
-  //   [{ id: 0, column: 0, row: 0, widget: 0 }, { id: 1, column: 0, row: 1, widget: 1 }],
-  //   [{ id: 2, column: 1, row: 0, widget: 2 }],
-  //   [{ id: 3, column: 2, row: 0, widget: 3 }]
-  // ]
+  cells: {},
 };
 export default function layout(state = initialState, action) {
   let copy = null;
   switch (action.type) {
-    case SWAP_WIDGET_POSITION:
+    case SWAP_WIDGET_POSITION: // eslint-disable-line
       const { cells } = state;
       copy = Object.assign({}, cells);
       copy[action.source.cellIndex] = cells[action.target.cellIndex];
@@ -35,7 +25,7 @@ export default function layout(state = initialState, action) {
     case ADD_ROW:
       return { ...state, rowCount: state.rowCount + 1 };
     case TOGGLE_GRID:
-      return {...state, gridVisible: !state.gridVisible};
+      return { ...state, gridVisible: !state.gridVisible };
     default:
       return state;
   }

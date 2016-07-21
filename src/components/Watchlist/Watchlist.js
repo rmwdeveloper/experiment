@@ -5,7 +5,8 @@ import StockSearch from '../StockSearch';
 import WatchTable from '../WatchTable';
 import cx from 'classnames';
 
-function WatchList({ searchStocks, searches, watchStock, watchedStocks, quotes, changeDisplayedChart }) {
+function WatchList({ searchStocks, searches, watchStock, watchedStocks,
+  quotes, changeDisplayedChart }) {
   return (
     <div className={cx(styles.root, 'row')}>
       <StockSearch
@@ -14,7 +15,12 @@ function WatchList({ searchStocks, searches, watchStock, watchedStocks, quotes, 
         searchStocks={searchStocks}
         className="col-lg-12 col-md-12 col-sm-12 col-xs-12"
       />
-      <WatchTable changeDisplayedChart={changeDisplayedChart} quotes={quotes} watchedStocks={watchedStocks} className="col-lg-12 col-md-12 col-sm-12 col-xs-12"/>
+      <WatchTable
+        changeDisplayedChart={changeDisplayedChart}
+        quotes={quotes}
+        watchedStocks={watchedStocks}
+        className="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+      />
     </div>
   );
 }
@@ -22,7 +28,7 @@ function WatchList({ searchStocks, searches, watchStock, watchedStocks, quotes, 
 WatchList.propTypes = {
   searchStocks: PropTypes.func,
   searches: PropTypes.object,
-  watchStocks: PropTypes.func,
+  watchStock: PropTypes.func,
   watchedStocks: PropTypes.array,
   quotes: PropTypes.object
 };

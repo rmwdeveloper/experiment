@@ -1,7 +1,7 @@
 import {
   LOAD_STOCKS, SEARCH_STOCKS, SEARCH_STOCKS_SUCCESS, SEARCH_STOCKS_FAILURE, CHANGE_DISPLAYED_CHART,
   TOGGLE_MODE, TOGGLE_AUTOSAVE, CACHED_SEARCH, WATCH_STOCK, GET_QUOTE, GET_QUOTE_SUCCESS,
-  GET_QUOTE_FAILURE, ADD_STOCK_WIDGET, TOGGLE_EDIT_CELL_MODE, GET_CHART, GET_CHART_SUCCESS, GET_CHART_FAILURE
+  GET_QUOTE_FAILURE, ADD_STOCK_WIDGET, TOGGLE_EDIT_CELL_MODE, GET_CHART_SUCCESS,
 } from '../constants';
 
 const initialState = {
@@ -24,10 +24,12 @@ export default function stock(state = initialState, action) {
     case TOGGLE_EDIT_CELL_MODE:
       if (state.inEditMode.includes(action.cellIndex)) {
         const index = state.inEditMode.indexOf(action.cellIndex);
-        return { ...state, inEditMode: [...state.inEditMode.slice(0, index), ...state.inEditMode.slice(index + 1)] };
-      } else {
-        return { ...state, inEditMode: [...state.inEditMode, action.cellIndex] };
+        return {
+          ...state, inEditMode: [...state.inEditMode.slice(0, index),
+            ...state.inEditMode.slice(index + 1)]
+        };
       }
+      return { ...state, inEditMode: [...state.inEditMode, action.cellIndex] };
     case SEARCH_STOCKS_SUCCESS:
       copy = Object.assign({}, state.searches);
       copy[action.query] = action.data;
@@ -37,7 +39,7 @@ export default function stock(state = initialState, action) {
       copy[action.symbol] = action.data;
       return { ...state, charts: copy };
     case CHANGE_DISPLAYED_CHART:
-      return {...state, displayedChart: action.symbol};
+      return { ...state, displayedChart: action.symbol };
     case SEARCH_STOCKS_FAILURE:
       return state;
     case CACHED_SEARCH:

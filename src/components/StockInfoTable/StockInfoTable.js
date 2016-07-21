@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './StockInfoTable.css'; //eslint-disable-line
 
 // todo: Refactor return statement
-function StockInfoTable({quotes}) {
+function StockInfoTable({ quotes }) {
 
   return (
     <table className={styles.root}>
@@ -29,8 +29,9 @@ function StockInfoTable({quotes}) {
             <td>{quotes[quote].Name}</td>
             <td>{quotes[quote].Symbol}</td>
             <td>{quotes[quote].LastPrice}</td>
-            <td style={{ color: parseFloat(quotes[quote].Change).toPrecision(2) > 0 ? 'green' : 'red' }}>{parseFloat(quotes[quote].Change).toPrecision(2)}</td>
-            <td style={{ color: parseFloat(quotes[quote].ChangePercent).toPrecision(2) > 0 ? 'green' : 'red' }} >{parseFloat(quotes[quote].ChangePercent).toPrecision(2)}</td>
+            <td style={{ color: parseFloat(quotes[quote].Change).toPrecision(2) > 0 ? 'green' : 'red' }}>
+              {parseFloat(quotes[quote].Change).toPrecision(2)}</td>
+            <td style={{ color: parseFloat(quotes[quote].ChangePercent).toPrecision(2) > 0 ? 'green' : 'red' }}>{parseFloat(quotes[quote].ChangePercent).toPrecision(2)}</td>
             <td>{parseFloat(quotes[quote].MSDate).toPrecision(7)}</td>
             <td>{quotes[quote].MarketCap}</td>
             <td>{quotes[quote].Volume}</td>
@@ -46,4 +47,7 @@ function StockInfoTable({quotes}) {
   );
 }
 
+StockInfoTable.propTypes = {
+  quotes: PropTypes.object
+};
 export default withStyles(styles)(StockInfoTable);
