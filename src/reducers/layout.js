@@ -38,6 +38,7 @@ export default function layout(state = initialState, action) {
         newRowCells.push([[`${state.rowCount}${iterator}`], {}]);
       }
       return { ...state, layout: state.layout.concat(newRowCells), rowCount: state.rowCount + 1 };
+    
     case DELETE_COLUMN:
       return state;
     case DELETE_ROW:

@@ -85,8 +85,9 @@ class StockDashboard extends Component { //eslint-disable-line
     const markup = [];
     let columnRendering = 0;
     for (let cellIndex = 0; cellIndex < layout.length; cellIndex++) {
+      const layoutIndices = layout[cellIndex][0];
       const className = `col-lg-${12 / columnCount} col-md-6 col-sm-12 col-xs-12`;
-      markup.push(React.createElement(LayoutCell, {className, key: cellIndex}));
+      markup.push(React.createElement(LayoutCell, {className, layoutIndices, key: cellIndex}));
     }
 
 /*    let column = [];
@@ -134,7 +135,7 @@ class StockDashboard extends Component { //eslint-disable-line
           mode={mode}
           autosave={autosave}
         />
-        <div className={cx('col-lg-12 col-md-12 col-sm-12 col-xs-12', styles.primaryColumn)}>
+        <div id="stockDashboard" className={cx('col-lg-12 col-md-12 col-sm-12 col-xs-12', styles.primaryColumn)}>
           <div className={cx(styles.primaryRow, 'row')}>
             {markup}
           </div>
