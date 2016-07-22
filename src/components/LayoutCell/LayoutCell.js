@@ -19,21 +19,32 @@ class LayoutCell extends Component {
   };
   constructor(){
     super();
+    this.state = {
+      resizeStartX: null,
+      resizeStartY: null,
+      pageX: null,
+      pageY: null,
+      resizing: false,
+    };
     this.resize = this.resize.bind(this);
     this.startResize = this.startResize.bind(this);
     this.endResize = this.endResize.bind(this);
+
   }
   resize(event) {
     event.preventDefault();
-    console.log('start resize..');
+    const { pageX, pageY } = event;
+    this.setState({pageX, pageY});
+    const { resizeStartX, resizeStartY } = this.state;
   }
   startResize(event) {
     event.preventDefault();
+    this.setState({resizeStartX: event.pageX, resizeStartY: event.pageY, resizing: true});
     this.mouseUp = window.addEventListener('mouseup', this.endResize);
     this.mouseMove = window.addEventListener('mousemove', this.resize);
   }
   endResize(){
-    console.log('endResize..');
+    this.setState({resizing: false, pageX: this.state.resizeStartX, pageY: this.state.resizeStartY});
     window.removeEventListener('mouseup', this.endResize);
     window.removeEventListener('mousemove', this.resize);
   }
@@ -42,17 +53,20 @@ class LayoutCell extends Component {
   }
   render() {
     const { mode, gridVisible, columnHeight, widget, rowWidth, layoutIndices, addStockWidget, toggleEditCellMode, cellIndex, editing } = this.props;
-
+    const { resizing, pageX, pageY } = this.state;
     const border = gridVisible ? '1px dashed black' : 'medium none';
     let visibility = mode === 'preview' ? 'hidden' : 'visible';
     const style = { border };
     if (widget) {
       visibility = 'visible';
     } else {
-      style.height = `${columnHeight * 8.8}px`;
+      // style.height = `${columnHeight * 8.8}px`;
       style.visibility = visibility;
     }
-
+    if (resizing) {
+      style.width = `${pageX}px`;
+      style.height = `${pageY - 100}px`;
+    }
     return (
       <div style={style} className={styles.root}>
         {layoutIndices}
