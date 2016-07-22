@@ -9,6 +9,7 @@ import * as layoutActions from '../../actions/layout';
 import { DragDropContext as dragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
+import LayoutCell from '../../components/LayoutCell';
 import LayoutRow from '../../components/LayoutRow';
 import LayoutColumn from '../../components/LayoutColumn';
 import widgetRegistry from '../../components/widgetRegistry';
@@ -73,36 +74,18 @@ class StockDashboard extends Component { //eslint-disable-line
   constructor() {
     super();
     this.renderLayout = this.renderLayout.bind(this);
-    this.isTall = this.isTall.bind(this);
-    this.isWide = this.isWide.bind(this);
-    this.isTallAndWide = this.isTallAndWide.bind(this);
+    this.getOppositeIndex = this.getOppositeIndex.bind(this);
   }
-  isTall(layoutData) {
-    const comparator = layoutData[0][1];
-    return layoutData.every(element => { return element[1] === comparator; });
-  }
-  isWide(layoutData) {
-    const comparator = layoutData[0][0];
-    return layoutData.every(element => { return element[0] === comparator; });
-  }
-  isTallAndWide(layoutData) {
-    console.log(layoutData);
-    return false;
+  getOppositeIndex(layoutDataStructure) {
+    console.log(layoutDataStructure);
   }
   renderLayout() {
     const { rowCount, columnCount, gridVisible, cells, mode, layout,
       toggleEditCellMode, inEditMode, addStockWidget, swapWidget } = this.props;
     const markup = [];
     for (let cellIndex = 0; cellIndex < layout.length; cellIndex++) {
-      if (this.isTall(layout[cellIndex][0])) {
-        console.log('Render Tall!');
-      } else if (this.isWide(layout[cellIndex][0])) {
-        console.log('Render Wide');
-      } else if (this.isTallAndWide(layout[cellIndex][0])) {
-        console.log('Render A Big Box');
-      } else {
-        console.log('Render Nothing!');
-      }
+      console.log(layout[cellIndex][0],layout[cellIndex][1] );
+      // markup.push(React.createElement(LayoutCell, {key: cellIndex}));
     }
 
 /*    let column = [];
