@@ -51,10 +51,10 @@ function dragSourceTarget(ComposedComponent) {
       };
 
       render() {
-        const { connectDragSource, connectDropTarget } = this.props;
+        const { connectDragSource, connectDropTarget, className } = this.props;
         return (
           connectDragSource(connectDropTarget(
-            <div>
+            <div className={className}>
               <ComposedComponent {...this.props} />
             </div>
           ))

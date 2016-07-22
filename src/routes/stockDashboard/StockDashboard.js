@@ -83,9 +83,10 @@ class StockDashboard extends Component { //eslint-disable-line
     const { rowCount, columnCount, gridVisible, cells, mode, layout,
       toggleEditCellMode, inEditMode, addStockWidget, swapWidget } = this.props;
     const markup = [];
+    let columnRendering = 0;
     for (let cellIndex = 0; cellIndex < layout.length; cellIndex++) {
-      console.log(layout[cellIndex][0],layout[cellIndex][1] );
-      // markup.push(React.createElement(LayoutCell, {key: cellIndex}));
+      const className = `col-lg-${12 / columnCount} col-md-6 col-sm-12 col-xs-12`;
+      markup.push(React.createElement(LayoutCell, {className, key: cellIndex}));
     }
 
 /*    let column = [];
