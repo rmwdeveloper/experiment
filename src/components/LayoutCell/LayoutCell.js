@@ -42,23 +42,21 @@ class LayoutCell extends Component {
     const movedX = pageX - initialClickPageX;
     let transform = null;
     let width = null;
-    console.log(movedX, initialClickCellWidth, initialClickPageX);
+    if ((movedX > initialClickCellWidth)) {
+      return null;
+    }
     switch (cornerClicked) {
       case 'bottomRight':
+        width = xDirection === 'right' ? `${initialClickCellWidth + movedX}px` : `${initialClickCellWidth + movedX}px`;
         break;
       case 'bottomLeft':
-        if ((movedX > initialClickCellWidth)) {
-          return null;
-        }
-          width = xDirection === 'right' ? `${initialClickCellWidth - movedX}px` : `${initialClickCellWidth + Math.abs(movedX)}px`;
-          transform = `translateX(${movedX}px)`;
+        width = xDirection === 'right' ? `${initialClickCellWidth - movedX}px` : `${initialClickCellWidth + Math.abs(movedX)}px`;
+        transform = `translateX(${movedX}px)`;
         break;
       case 'topRight':
+        width = xDirection === 'right' ? `${initialClickCellWidth + movedX}px` : `${initialClickCellWidth + movedX}px`;
         break;
       case 'topLeft':
-        if ((movedX > initialClickCellWidth)) {
-          return null;
-        }
         width = xDirection === 'right' ? `${initialClickCellWidth - movedX}px` : `${initialClickCellWidth + Math.abs(movedX)}px`;
         transform = `translateX(${movedX}px)`;
         break;
