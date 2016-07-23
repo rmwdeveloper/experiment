@@ -16,12 +16,10 @@
 }
 
 .resizeHandle{
-  outline:1px solid black;
+
   height: 25px;
   width:25px;
   position: absolute;
-  bottom: 0;
-  right:0;
   display: block;
   z-index: 2;
 }
