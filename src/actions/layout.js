@@ -1,4 +1,4 @@
-import { SWAP_WIDGET_POSITION, ADD_COLUMN, ADD_ROW, RESIZING_CELL,
+import { SWAP_WIDGET_POSITION, ADD_COLUMN, ADD_ROW, RESIZING_CELL, RESIZE_COMPLETE, START_RESIZE,
   MAX_ROW, MAX_COLUMN, TOGGLE_GRID, DELETE_COLUMN, DELETE_ROW } from '../constants';
 
 export function swapWidgetPosition(source, target) {
@@ -47,4 +47,16 @@ export function resizingCell(layoutIndex, boundingBox) {
   return dispatch => {
     dispatch({type: RESIZING_CELL, layoutIndex, boundingBox });
   }
+}
+
+export function resizeComplete() {
+  return dispatch => {
+    dispatch({type: RESIZE_COMPLETE });
+  }
+}
+export function startResize() {
+  return dispatch => {
+    dispatch({type: START_RESIZE });
+  }
+
 }

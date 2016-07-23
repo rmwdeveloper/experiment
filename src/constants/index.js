@@ -20,7 +20,9 @@ export const GET_CHART = 'stock/GET_CHART';
 export const GET_CHART_SUCCESS = 'stock/GET_CHART_SUCCESS';
 export const GET_CHART_FAILURE = 'stock/GET_CHART_FAILURE';
 export const CHANGE_DISPLAYED_CHART = 'stock/CHANGE_DISPLAYED_CHART';
-export const RESIZING_CELL = 'stock/RESIZING_CELL';
+export const START_RESIZE = 'layout/START_RESIZE';
+export const RESIZING_CELL = 'layout/RESIZING_CELL';
+export const RESIZE_COMPLETE = 'layout/RESIZE_COMPLETE';
 
 
 export const ADD_COLUMN = 'layout/ADD_COLUMN';

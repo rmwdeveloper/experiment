@@ -35,7 +35,9 @@ const title = 'Stock Dashboard';
   displayedChart: state.stock.displayedChart,
   inEditMode: state.stock.inEditMode,
   resizingLayoutIndex: state.layout.resizingLayoutIndex,
-  boundingBox: state.layout.boundingBox
+  boundingBox: state.layout.boundingBox,
+  resizingInProgress: state.layout.resizingInProgress,
+  resizingNeedsConfirm: state.layout.resizingNeedsConfirm
 }), { ...stockActions, ...layoutActions })
 class StockDashboard extends Component { //eslint-disable-line
   static propTypes = {
@@ -71,6 +73,10 @@ class StockDashboard extends Component { //eslint-disable-line
     resizingCell: PropTypes.func,
     resizingLayoutIndex: PropTypes.string,
     boundingBox: PropTypes.object,
+    resizeComplete: PropTypes.func,
+    startResize: PropTypes.func,
+    resizingInProgress: PropTypes.bool,
+    resizingNeedsConfirm: PropTypes.bool
   };
   static contextTypes = {
     setTitle: PropTypes.func.isRequired
@@ -86,13 +92,15 @@ class StockDashboard extends Component { //eslint-disable-line
   }
   renderLayout() {
     const { rowCount, columnCount, gridVisible, cells, mode, layout, resizingLayoutIndex, boundingBox,
-      toggleEditCellMode, inEditMode, addStockWidget, swapWidget, resizingCell } = this.props;
+      resizingInProgress, startResize,
+      toggleEditCellMode, inEditMode, addStockWidget, swapWidget, resizingCell, resizeComplete } = this.props;
     const markup = [];
     let columnRendering = 0;
     for (let cellIndex = 0; cellIndex < layout.length; cellIndex++) {
       const layoutIndices = layout[cellIndex][0];
       const className = `col-lg-${12 / columnCount} col-md-6 col-sm-12 col-xs-12`;
-      markup.push(React.createElement(LayoutCell, {resizingCell, className, layoutIndices, key: cellIndex, resizingLayoutIndex, boundingBox}));
+      markup.push(React.createElement(LayoutCell, {resizingCell, resizingInProgress, startResize,
+        resizeComplete, className, layoutIndices, key: cellIndex, resizingLayoutIndex, boundingBox}));
     }
 
 /*    let column = [];
@@ -122,9 +130,12 @@ class StockDashboard extends Component { //eslint-disable-line
   }
 
   render() {
-    const { toggleGrid, gridVisible, addColumn, addRow, toggleMode, mode, autosave } = this.props;
+    const { toggleGrid, gridVisible, addColumn, addRow, toggleMode, mode, autosave, resizingNeedsConfirm } = this.props;
     this.context.setTitle(title);
     const markup = this.renderLayout();
+    if (resizingNeedsConfirm) {
+
+    }
     return (
       <div
         className={cx('row',

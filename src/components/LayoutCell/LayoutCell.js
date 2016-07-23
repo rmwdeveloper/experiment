@@ -18,7 +18,10 @@ class LayoutCell extends Component {
     layoutIndices: PropTypes.array,
     resizingCell: PropTypes.func,
     boundingBox: PropTypes.object,
-    resizingLayoutIndex: PropTypes.string
+    resizingLayoutIndex: PropTypes.string,
+    resizeComplete: PropTypes.func,
+    startResize: PropTypes.func,
+    resizingInProgress: PropTypes.bool
   };
 
   constructor() {
@@ -103,7 +106,7 @@ class LayoutCell extends Component {
 
   startResize(event, cornerClicked) {
     event.preventDefault();
-    
+    this.props.startResize();
     this.setState({
       resizing: true,
       initialClickPageX: event.pageX,
@@ -130,6 +133,7 @@ class LayoutCell extends Component {
       width: null,
       transform: null
     });
+    this.props.resizeComplete();
     window.removeEventListener('mouseup', this.endResize);
     window.removeEventListener('mousemove', this.resize);
   }
@@ -146,12 +150,13 @@ class LayoutCell extends Component {
   }
 
   render() {
-    const { mode, gridVisible, columnHeight, widget, rowWidth, layoutIndices, addStockWidget, toggleEditCellMode, cellIndex, editing, boundingBox, resizingLayoutIndex } = this.props;
+    const { mode, gridVisible, columnHeight, widget, rowWidth, layoutIndices, addStockWidget, toggleEditCellMode, cellIndex, editing, boundingBox,
+      resizingInProgress, resizingLayoutIndex } = this.props;
     const { resizing, transform, width, height, minHeight } = this.state;
     const border = gridVisible ? '1px dashed black' : 'medium none';
     const style = { border };
     let visibility = mode === 'preview' ? 'hidden' : 'visible';
-    if (resizingLayoutIndex !== layoutIndices[0] && this.widgetCell) {
+    if (resizingLayoutIndex !== layoutIndices[0] && this.widgetCell && resizingInProgress) {
       const thisBox = this.widgetCell.getBoundingClientRect();
       const overlap = !(boundingBox.right < thisBox.left ||
       boundingBox.left > thisBox.right ||
@@ -162,7 +167,9 @@ class LayoutCell extends Component {
         style.backgroundColor = 'red';
       }
     }
-
+    if (resizingLayoutIndex === layoutIndices[0] && !resizing) {
+      style.backgroundColor = 'yellow';
+    }
     if (resizing) {
       style.height = height;
       style.minHeight = minHeight;
