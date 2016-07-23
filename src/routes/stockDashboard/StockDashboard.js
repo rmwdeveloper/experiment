@@ -10,9 +10,9 @@ import { DragDropContext as dragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 import LayoutCell from '../../components/LayoutCell';
-// import LayoutRow from '../../components/LayoutRow';
-// import LayoutColumn from '../../components/LayoutColumn';
-// import widgetRegistry from '../../components/widgetRegistry';
+import Modal from '../../components/Modal';
+
+
 import cx from 'classnames';
 const title = 'Stock Dashboard';
 
@@ -102,30 +102,6 @@ class StockDashboard extends Component { //eslint-disable-line
       markup.push(React.createElement(LayoutCell, {resizingCell, resizingInProgress, startResize,
         resizeComplete, className, layoutIndices, key: cellIndex, resizingLayoutIndex, boundingBox}));
     }
-
-/*    let column = [];
-    let widget = null;
-    for (let columnNumber = 0; columnNumber < columnCount; columnNumber++) {
-      column = [];
-      for (let rowNumber = 0; rowNumber < rowCount; rowNumber++) {
-        widget = null;
-        if (cells.hasOwnProperty(`${columnNumber}${rowNumber}`)
-          && cells[`${columnNumber}${rowNumber}`]) {
-          const { widgetType } = cells[`${columnNumber}${rowNumber}`];
-          widget = widgetRegistry[widgetType];
-        }
-        column.push(React.createElement(LayoutRow, {
-          gridVisible, widget, mode,
-          editing: inEditMode.includes(`${columnNumber}${rowNumber}`), addStockWidget, swapWidget,
-          rowWidth: Math.floor(100 / columnCount), toggleEditCellMode,
-          cellIndex: `${columnNumber}${rowNumber}`,
-          key: `${columnNumber}${rowNumber}`, columnHeight: Math.floor(100 / rowCount), ...this.props
-        }));
-      }
-      markup.push(React.createElement(LayoutColumn, {
-        key: columnNumber, classNumber: Math.floor(12 / columnCount)
-      }, column));
-    }*/
     return markup;
   }
 
@@ -156,6 +132,7 @@ class StockDashboard extends Component { //eslint-disable-line
             {markup}
           </div>
         </div>
+        <Modal id="primaryModal" modalContent="Hello World!" />
       </div>)
       ;
   }
