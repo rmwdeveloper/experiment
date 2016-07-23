@@ -69,7 +69,7 @@ class LayoutCell extends Component {
         width = xDirection === 'right' ? `${initialClickCellWidth - movedX}px` : `${initialClickCellWidth + Math.abs(movedX)}px`;
         height = `${initialClickCellHeight + movedY}px`;
         minHeight = `${initialClickCellHeight + movedY}px`;
-        transform = `translateX(${movedX}px)`;
+        transform = `translateX(-${movedX}px)`;
         break;
       case 'topRight':
         if ((pageY - 100) < 0 || yDirection === 'down') {
