@@ -103,23 +103,7 @@ class LayoutCell extends Component {
 
   startResize(event, cornerClicked) {
     event.preventDefault();
-
-    switch (cornerClicked) {
-      case 'bottomRight':
-
-        break;
-      case 'bottomLeft':
-        break;
-      case 'topRight':
-
-        break;
-      case 'topLeft':
-
-        break;
-      default:
-        break;
-    }
-
+    
     this.setState({
       resizing: true,
       initialClickPageX: event.pageX,
