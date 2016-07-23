@@ -15,7 +15,10 @@ class LayoutCell extends Component {
     cellIndex: PropTypes.string,
     toggleEditCellMode: PropTypes.func,
     editing: PropTypes.bool,
-    layoutIndices: PropTypes.array
+    layoutIndices: PropTypes.array,
+    resizingCell: PropTypes.func,
+    boundingBox: PropTypes.object,
+    resizingLayoutIndex: PropTypes.string
   };
 
   constructor() {
@@ -46,6 +49,8 @@ class LayoutCell extends Component {
       cornerClicked, initialClickPageX, initialClickCellWidth, initialClickPageY,
       initialClickCellHeight
     } = this.state;
+    const { resizingCell, layoutIndices } = this.props;
+    resizingCell(layoutIndices[0], this.widgetCell.getBoundingClientRect());
     const xDirection = pageX < initialClickPageX ? 'left' : 'right';
     const yDirection = pageY < initialClickPageY ? 'up' : 'down';
     const movedX = pageX - initialClickPageX;
@@ -157,11 +162,23 @@ class LayoutCell extends Component {
   }
 
   render() {
-    const { mode, gridVisible, columnHeight, widget, rowWidth, layoutIndices, addStockWidget, toggleEditCellMode, cellIndex, editing } = this.props;
+    const { mode, gridVisible, columnHeight, widget, rowWidth, layoutIndices, addStockWidget, toggleEditCellMode, cellIndex, editing, boundingBox, resizingLayoutIndex } = this.props;
     const { resizing, transform, width, height, minHeight } = this.state;
     const border = gridVisible ? '1px dashed black' : 'medium none';
-    let visibility = mode === 'preview' ? 'hidden' : 'visible';
     const style = { border };
+    let visibility = mode === 'preview' ? 'hidden' : 'visible';
+    if (resizingLayoutIndex !== layoutIndices[0] && this.widgetCell) {
+      const thisBox = this.widgetCell.getBoundingClientRect();
+      const overlap = !(boundingBox.right < thisBox.left ||
+      boundingBox.left > thisBox.right ||
+      boundingBox.bottom < thisBox.top ||
+      boundingBox.top > thisBox.bottom);
+
+      if (overlap) {
+        style.backgroundColor = 'red';
+      }
+    }
+
     if (resizing) {
       style.height = height;
       style.minHeight = minHeight;

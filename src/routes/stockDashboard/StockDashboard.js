@@ -10,9 +10,9 @@ import { DragDropContext as dragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 import LayoutCell from '../../components/LayoutCell';
-import LayoutRow from '../../components/LayoutRow';
-import LayoutColumn from '../../components/LayoutColumn';
-import widgetRegistry from '../../components/widgetRegistry';
+// import LayoutRow from '../../components/LayoutRow';
+// import LayoutColumn from '../../components/LayoutColumn';
+// import widgetRegistry from '../../components/widgetRegistry';
 import cx from 'classnames';
 const title = 'Stock Dashboard';
 
@@ -33,7 +33,9 @@ const title = 'Stock Dashboard';
   handle: state.auth.handle,
   charts: state.stock.charts,
   displayedChart: state.stock.displayedChart,
-  inEditMode: state.stock.inEditMode
+  inEditMode: state.stock.inEditMode,
+  resizingLayoutIndex: state.layout.resizingLayoutIndex,
+  boundingBox: state.layout.boundingBox
 }), { ...stockActions, ...layoutActions })
 class StockDashboard extends Component { //eslint-disable-line
   static propTypes = {
@@ -66,6 +68,9 @@ class StockDashboard extends Component { //eslint-disable-line
     displayedChart: PropTypes.string,
     changeDisplayedChart: PropTypes.func,
     swapWidget: PropTypes.func,
+    resizingCell: PropTypes.func,
+    resizingLayoutIndex: PropTypes.string,
+    boundingBox: PropTypes.object,
   };
   static contextTypes = {
     setTitle: PropTypes.func.isRequired
@@ -80,14 +85,14 @@ class StockDashboard extends Component { //eslint-disable-line
     console.log(layoutDataStructure);
   }
   renderLayout() {
-    const { rowCount, columnCount, gridVisible, cells, mode, layout,
-      toggleEditCellMode, inEditMode, addStockWidget, swapWidget } = this.props;
+    const { rowCount, columnCount, gridVisible, cells, mode, layout, resizingLayoutIndex, boundingBox,
+      toggleEditCellMode, inEditMode, addStockWidget, swapWidget, resizingCell } = this.props;
     const markup = [];
     let columnRendering = 0;
     for (let cellIndex = 0; cellIndex < layout.length; cellIndex++) {
       const layoutIndices = layout[cellIndex][0];
       const className = `col-lg-${12 / columnCount} col-md-6 col-sm-12 col-xs-12`;
-      markup.push(React.createElement(LayoutCell, {className, layoutIndices, key: cellIndex}));
+      markup.push(React.createElement(LayoutCell, {resizingCell, className, layoutIndices, key: cellIndex, resizingLayoutIndex, boundingBox}));
     }
 
 /*    let column = [];

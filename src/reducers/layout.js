@@ -1,5 +1,5 @@
 import {
-  SWAP_WIDGET_POSITION, ADD_STOCK_WIDGET,
+  SWAP_WIDGET_POSITION, ADD_STOCK_WIDGET, RESIZING_CELL,
   ADD_COLUMN, ADD_ROW, TOGGLE_GRID, DELETE_COLUMN, DELETE_ROW
 } from '../constants';
 
@@ -11,6 +11,8 @@ const initialState = {
   // layout: [[['10', '22'], { type: 'stockWidget' }], [['04', '24'], { type: 'userWidget' }],
   //     [['00', '02'], { type: 'postWidget' }], [['03'], { type: 'graphWidget' }], [['13', '23'], { type: 'alertWidget' }]],
   cells: {},
+  resizingLayoutIndex: '',
+  boundingBox: {}
 };
 export default function layout(state = initialState, action) {
   let copy = null;
@@ -41,6 +43,8 @@ export default function layout(state = initialState, action) {
     
     case DELETE_COLUMN:
       return state;
+    case RESIZING_CELL:
+      return {...state, boundingBox: action.boundingBox, resizingLayoutIndex: action.layoutIndex}
     case DELETE_ROW:
       return state;
     case TOGGLE_GRID:
