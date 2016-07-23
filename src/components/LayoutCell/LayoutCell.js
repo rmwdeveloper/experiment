@@ -122,6 +122,7 @@ class LayoutCell extends Component {
       initialClickPageY: event.pageY,
       initialClickCellHeight: this.widgetCell.offsetHeight,
       cornerClicked,
+
     });
     this.mouseUp = window.addEventListener('mouseup', this.endResize);
     this.mouseMove = window.addEventListener('mousemove', this.resize);
@@ -135,6 +136,10 @@ class LayoutCell extends Component {
       initialClickPageY: null,
       initialClickCellHeight: null,
       cornerClicked: null,
+      height: null,
+      minHeight:null,
+      width: null,
+      transform: null
     });
     window.removeEventListener('mouseup', this.endResize);
     window.removeEventListener('mousemove', this.resize);
