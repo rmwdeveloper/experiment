@@ -1,0 +1,24 @@
+@import '../variables.css';
+
+.root td {
+  padding: 5px 0;
+}
+.tickerColumn {
+  text-align: left;
+}
+
+.symbol a {
+  color: #1E6DC0;
+  text-decoration: none;
+}
+
+.company {
+  font-size: 11px;
+}
+.priceColumn{
+  display: table-cell;
+  text-align: right;
+}
+.change {
+  font-size: 11px;
+}

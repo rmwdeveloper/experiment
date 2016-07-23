@@ -1,0 +1,6 @@
+{
+  "name": "PostEditor",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./PostEditor.js"
+}

@@ -1,0 +1,9 @@
+.root {
+
+}
+.primaryColumn {
+  margin: 15px;
+}
+.primaryRow, .primaryColumn{
+  height: 100%;
+}

@@ -1,0 +1,10 @@
+@import '../variables.css';
+
+.root ol {
+  list-style: none;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+  width: 100%;
+}

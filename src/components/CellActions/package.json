@@ -1,0 +1,6 @@
+{
+  "name": "CellActions",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./CellActions.js"
+}

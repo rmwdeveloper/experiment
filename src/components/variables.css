@@ -1,0 +1,55 @@
+/**
+ * React Starter Kit (https://www.reactstarterkit.com/)
+ *
+ * Copyright © 2014-2016 Kriasoft, LLC. All rights reserved.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE.txt file in the root directory of this source tree.
+ */
+
+:root {
+  /*
+   * Typography
+   * ======================================================================== */
+
+  --font-family-base: 'Open Sans', 'HelveticaNeue-Light', sans-serif;
+  --font-family-console: 'VT323', 'monospace';
+
+  /*
+   * Layout
+   * ======================================================================== */
+
+  --max-content-width: 1000px;
+
+  /*
+  * Color Scheme
+  * ======================================================================== */
+  --primary-color: #5caad1;
+  --secondary-color: #a36764;
+  --tertiary-color: #2baab1;
+  --quaternary-color: #383f48;
+
+  --console-background: #211d1a;
+  --console-font-color: #ddaa2d;
+
+  /*
+   * Media queries breakpoints
+   * ======================================================================== */
+
+  --screen-xs-min: 480px; /* Extra small screen / phone */
+  --screen-xs-max: 767px;
+
+  --screen-sm-min: 768px; /* Small screen / tablet */
+  --screen-sm-max: 991px;
+
+  --screen-md-min: 992px; /* Medium screen / desktop */
+  --screen-md-max: 1119px;
+
+  --screen-lg-min: 1200px; /* Large screen / wide desktop */
+
+  @custom-media --phone (width <= --screen-xs-max);
+  @custom-media --tablet (width >= --screen-sm-min) and (width <= --screen-sm-max);
+  @custom-media --desktop (width >= --screen-md-max) and (width <= --screen-md-max);
+  @custom-media --widescreen (width >= --screen-lg-min);
+
+}

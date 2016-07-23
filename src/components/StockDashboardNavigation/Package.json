@@ -1,0 +1,6 @@
+{
+  "name": "StockDashboardNavigation",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./StockDashboardNavigation.js"
+}

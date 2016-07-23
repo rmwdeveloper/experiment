@@ -1,0 +1,23 @@
+@import '../variables.css';
+
+.root {
+  text-align: left;
+}
+.root span {
+  display: inline-block;
+  font-size: 13px;
+}
+.root:hover {
+  background-color: #E5E2E2;
+  cursor: pointer;
+}
+.symbol{
+  color: red;
+  padding-right: 5px;
+}
+.name{
+  padding-right: 5px;
+}
+.exchange{
+  color: #1E6DC0;
+}

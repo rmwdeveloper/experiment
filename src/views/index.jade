@@ -1,0 +1,22 @@
+doctype html
+html(class="no-js", lang="")
+    head
+        meta(charset="utf-8")
+        meta(http-equiv="x-ua-compatible", content="ie=edge")
+        title='Robert Westenberger Portfolio'
+        meta(name="description", description='Robert Westenberger Portfolio')
+        meta(name="viewport", content="width=device-width, initial-scale=1")
+        link(rel="stylesheet", type="text/css", href="https://fonts.googleapis.com/css?family=Open+Sans|VT323")
+        link(rel="stylesheet", type="text/css", href="https://cdn.jsdelivr.net/flexboxgrid/6.3.0/flexboxgrid.min.css")
+        link(rel="stylesheet", type="text/css", href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css")
+        style#css!= css
+    body
+        #app!= body
+        script#source(src=entry, data-initial-state=state)
+        script.
+            window.ga = function () {
+                ga.q.push(arguments)
+            };ga.q = [];ga.l = +new Date;
+            if(trackingId)
+                ga('create', '#{trackingId}', 'auto');ga('send', 'pageview')
+                script(src = "https://www.google-analytics.com/analytics.js", async = true, defer = true)

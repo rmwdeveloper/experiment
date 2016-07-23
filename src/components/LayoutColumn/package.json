@@ -1,0 +1,6 @@
+{
+  "name": "LayoutColumn",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./LayoutColumn.js"
+}
