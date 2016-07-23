@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import StockDashboardNavigation from '../../components/StockDashboardNavigation';
 import * as stockActions from '../../actions/stock';
 import * as layoutActions from '../../actions/layout';
+import * as modalActions from '../../actions/modal';
 
 import { DragDropContext as dragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -37,8 +38,9 @@ const title = 'Stock Dashboard';
   resizingLayoutIndex: state.layout.resizingLayoutIndex,
   boundingBox: state.layout.boundingBox,
   resizingInProgress: state.layout.resizingInProgress,
-  resizingNeedsConfirm: state.layout.resizingNeedsConfirm
-}), { ...stockActions, ...layoutActions })
+  resizingNeedsConfirm: state.layout.resizingNeedsConfirm,
+  modalVisible: state.modal.modalVisible
+}), { ...stockActions, ...layoutActions, ...modalActions })
 class StockDashboard extends Component { //eslint-disable-line
   static propTypes = {
     watchedStocks: PropTypes.array,
@@ -76,7 +78,10 @@ class StockDashboard extends Component { //eslint-disable-line
     resizeComplete: PropTypes.func,
     startResize: PropTypes.func,
     resizingInProgress: PropTypes.bool,
-    resizingNeedsConfirm: PropTypes.bool
+    resizingNeedsConfirm: PropTypes.bool,
+    modalVisible: PropTypes.bool,
+    openModal: PropTypes.func,
+    closeModal: PropTypes.func
   };
   static contextTypes = {
     setTitle: PropTypes.func.isRequired
@@ -106,7 +111,8 @@ class StockDashboard extends Component { //eslint-disable-line
   }
 
   render() {
-    const { toggleGrid, gridVisible, addColumn, addRow, toggleMode, mode, autosave, resizingNeedsConfirm } = this.props;
+    const { toggleGrid, gridVisible, addColumn, addRow, toggleMode, mode, autosave, resizingNeedsConfirm,
+      closeModal, modalVisible } = this.props;
     this.context.setTitle(title);
     const markup = this.renderLayout();
     if (resizingNeedsConfirm) {
@@ -132,7 +138,7 @@ class StockDashboard extends Component { //eslint-disable-line
             {markup}
           </div>
         </div>
-        <Modal id="primaryModal" modalContent="Hello World!" />
+        <Modal id="primaryModal" modalVisible={modalVisible} closeModal={closeModal} modalTitle="The title!" modalContent="Hello World!" />
       </div>)
       ;
   }
