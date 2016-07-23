@@ -51,10 +51,17 @@ function dragSourceTarget(ComposedComponent) {
       };
 
       render() {
+<<<<<<< HEAD
         const { connectDragSource, connectDropTarget, className } = this.props;
         return (
           connectDragSource(connectDropTarget(
             <div style={{maxHeight: '115px'}} className={className}>
+=======
+        const { connectDragSource, connectDropTarget } = this.props;
+        return (
+          connectDragSource(connectDropTarget(
+            <div>
+>>>>>>> origin/dev
               <ComposedComponent {...this.props} />
             </div>
           ))

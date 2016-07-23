@@ -9,7 +9,10 @@ import * as layoutActions from '../../actions/layout';
 import { DragDropContext as dragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
+<<<<<<< HEAD
 import LayoutCell from '../../components/LayoutCell';
+=======
+>>>>>>> origin/dev
 import LayoutRow from '../../components/LayoutRow';
 import LayoutColumn from '../../components/LayoutColumn';
 import widgetRegistry from '../../components/widgetRegistry';
@@ -25,7 +28,10 @@ const title = 'Stock Dashboard';
   rowCount: state.layout.rowCount,
   gridVisible: state.layout.gridVisible,
   cells: state.layout.cells,
+<<<<<<< HEAD
   layout: state.layout.layout,
+=======
+>>>>>>> origin/dev
   searches: state.stock.searches,
   quotes: state.stock.quotes,
   first: state.auth.first,
@@ -74,6 +80,7 @@ class StockDashboard extends Component { //eslint-disable-line
   constructor() {
     super();
     this.renderLayout = this.renderLayout.bind(this);
+<<<<<<< HEAD
     this.getOppositeIndex = this.getOppositeIndex.bind(this);
   }
   getOppositeIndex(layoutDataStructure) {
@@ -91,6 +98,15 @@ class StockDashboard extends Component { //eslint-disable-line
     }
 
 /*    let column = [];
+=======
+  }
+
+  renderLayout() {
+    const { rowCount, columnCount, gridVisible, cells, mode,
+      toggleEditCellMode, inEditMode, addStockWidget, swapWidget } = this.props;
+    const markup = [];
+    let column = [];
+>>>>>>> origin/dev
     let widget = null;
     for (let columnNumber = 0; columnNumber < columnCount; columnNumber++) {
       column = [];
@@ -112,7 +128,11 @@ class StockDashboard extends Component { //eslint-disable-line
       markup.push(React.createElement(LayoutColumn, {
         key: columnNumber, classNumber: Math.floor(12 / columnCount)
       }, column));
+<<<<<<< HEAD
     }*/
+=======
+    }
+>>>>>>> origin/dev
     return markup;
   }
 
@@ -135,7 +155,11 @@ class StockDashboard extends Component { //eslint-disable-line
           mode={mode}
           autosave={autosave}
         />
+<<<<<<< HEAD
         <div id="stockDashboard" className={cx('col-lg-12 col-md-12 col-sm-12 col-xs-12', styles.primaryColumn)}>
+=======
+        <div className={cx('col-lg-12 col-md-12 col-sm-12 col-xs-12', styles.primaryColumn)}>
+>>>>>>> origin/dev
           <div className={cx(styles.primaryRow, 'row')}>
             {markup}
           </div>
