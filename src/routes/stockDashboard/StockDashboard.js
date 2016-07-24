@@ -127,7 +127,7 @@ class StockDashboard extends Component { //eslint-disable-line
         const cellColumns = Number(layoutIndices[1][1]) - Number(layoutIndices[0][1]) + 1 ;
         const cellRows = Number(layoutIndices[1][0]) - Number(layoutIndices[0][0]) + 1 ;
         console.log(cellColumns, cellRows, ' ... ', columnCount, rowCount);
-        className = `col-lg-${Math.floor(12 / (cellColumns / columnCount))} col-md-6 col-sm-12 col-xs-12`;
+        className = `col-lg-${Math.floor(12 / (columnCount / cellColumns))} col-md-6 col-sm-12 col-xs-12`;
       }
       markup.push(React.createElement(LayoutCell, {resizingCell, resizingInProgress, startResize,
         resizingNeedsConfirm, markAsOverlapped,
