@@ -1,7 +1,6 @@
 @import '../variables.css';
 
 .root{
-  min-height: 100px;
   display: flex;
   position: relative;
   align-items: center;
