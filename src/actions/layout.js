@@ -1,5 +1,5 @@
 import { SWAP_WIDGET_POSITION, ADD_COLUMN, ADD_ROW, RESIZING_CELL, RESIZE_COMPLETE, START_RESIZE, DEACTIVATE_MERGE_CONFIRM,
-  MAX_ROW, MAX_COLUMN, TOGGLE_GRID, DELETE_COLUMN, DELETE_ROW } from '../constants';
+  MAX_ROW, MAX_COLUMN, TOGGLE_GRID, DELETE_COLUMN, DELETE_ROW, MERGE_CELLS } from '../constants';
 
 export function swapWidgetPosition(source, target) {
   return (dispatch) => {
@@ -60,8 +60,15 @@ export function startResize() {
   }
 
 }
+
 export function deactivateMergeConfirm() {
   return dispatch => {
     dispatch({type: DEACTIVATE_MERGE_CONFIRM });
+  }
+}
+
+export function mergeCells() {
+  return dispatch => {
+    dispatch({type: MERGE_CELLS });
   }
 }

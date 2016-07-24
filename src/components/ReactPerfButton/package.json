@@ -1,0 +1,6 @@
+{
+  "name": "ReactPerfButton",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./ReactPerfButton.js"
+}

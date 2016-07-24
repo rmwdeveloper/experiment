@@ -164,7 +164,11 @@ class LayoutCell extends Component {
       boundingBox.top > thisBox.bottom);
 
       if (overlap) {
+        this.overLapped = true;
         style.backgroundColor = 'red';
+      }
+      else {
+        this.overLapped = false;
       }
     }
     if (resizingLayoutIndex === layoutIndices[0] && !resizing) {

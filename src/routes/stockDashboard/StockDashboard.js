@@ -87,7 +87,8 @@ class StockDashboard extends Component { //eslint-disable-line
     closeModal: PropTypes.func,
     modalBody: PropTypes.string,
     modalFooter: PropTypes.element,
-    deactivateMergeConfirm: PropTypes.func
+    deactivateMergeConfirm: PropTypes.func,
+    mergeCells: PropTypes.func
   };
   static contextTypes = {
     setTitle: PropTypes.func.isRequired
@@ -102,15 +103,13 @@ class StockDashboard extends Component { //eslint-disable-line
       this.props.deactivateMergeConfirm();
       const footer = (
         <div>
-          <ModalButton closeModal={this.props.closeModal}  text="Cancel"  />
+          <ModalButton closeModal={this.props.closeModal} text="Cancel"  />
           <ModalButton closeModal={this.props.closeModal} text="Confirm" clickFunction={this.props.mergeCells} />
       </div>);
       this.props.openModal('Merge these cells?', footer);
     }
   }
-  componentDidUpdate(prevProps) {
 
-  }
   renderLayout() {
     const { rowCount, columnCount, gridVisible, cells, mode, layout, resizingLayoutIndex, boundingBox,
       resizingInProgress, startResize,
@@ -131,9 +130,6 @@ class StockDashboard extends Component { //eslint-disable-line
       closeModal, modalVisible, modalBody, modalFooter } = this.props;
     this.context.setTitle(title);
     const markup = this.renderLayout();
-    if (resizingNeedsConfirm) {
-
-    }
     return (
       <div
         className={cx('row',
