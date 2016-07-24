@@ -20,11 +20,12 @@ export const GET_CHART = 'stock/GET_CHART';
 export const GET_CHART_SUCCESS = 'stock/GET_CHART_SUCCESS';
 export const GET_CHART_FAILURE = 'stock/GET_CHART_FAILURE';
 export const CHANGE_DISPLAYED_CHART = 'stock/CHANGE_DISPLAYED_CHART';
+
+
 export const START_RESIZE = 'layout/START_RESIZE';
 export const RESIZING_CELL = 'layout/RESIZING_CELL';
 export const RESIZE_COMPLETE = 'layout/RESIZE_COMPLETE';
-
-
+export const DEACTIVATE_MERGE_CONFIRM = 'layout/DEACTIVATE_MERGE_CONFIRM';
 export const ADD_COLUMN = 'layout/ADD_COLUMN';
 export const DELETE_COLUMN = 'layout/DELETE_COLUMN';
 export const ADD_ROW = 'layout/ADD_ROW';

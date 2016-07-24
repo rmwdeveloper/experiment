@@ -1,8 +1,8 @@
 import { OPEN_MODAL, CLOSE_MODAL } from '../constants';
 
-export function openModal() {
+export function openModal(body, footer) {
   return (dispatch) => {
-    dispatch({ type: OPEN_MODAL });
+    dispatch({ type: OPEN_MODAL, body, footer });
   };
 }
 
@@ -11,4 +11,3 @@ export function closeModal() {
     dispatch({ type: CLOSE_MODAL });
   };
 }
- 

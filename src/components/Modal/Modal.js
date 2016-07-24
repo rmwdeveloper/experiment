@@ -3,7 +3,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Modal.css'; //eslint-disable-line
 
 
-function Modal({ id, modalContent, modalVisible, closeModal }) {
+function Modal({ id, modalContent, modalVisible, modalFooter}) {
   const display = modalVisible ? 'block' : 'none';
   return (
     <div id={id} style={{display}} className={styles.root}>
@@ -12,7 +12,7 @@ function Modal({ id, modalContent, modalVisible, closeModal }) {
           {modalContent}
         </div>
         <div className={styles.modalFooter}>
-          <button type="button" onClick={closeModal}>Close</button>
+          {modalFooter}
         </div>
 
       </div>

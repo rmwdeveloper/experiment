@@ -12,6 +12,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 
 import LayoutCell from '../../components/LayoutCell';
 import Modal from '../../components/Modal';
+import ModalButton from '../../components/ModalButton';
 
 
 import cx from 'classnames';
@@ -39,6 +40,8 @@ const title = 'Stock Dashboard';
   boundingBox: state.layout.boundingBox,
   resizingInProgress: state.layout.resizingInProgress,
   resizingNeedsConfirm: state.layout.resizingNeedsConfirm,
+  modalBody: state.modal.modalBody,
+  modalFooter: state.modal.modalFooter,
   modalVisible: state.modal.modalVisible
 }), { ...stockActions, ...layoutActions, ...modalActions })
 class StockDashboard extends Component { //eslint-disable-line
@@ -81,7 +84,10 @@ class StockDashboard extends Component { //eslint-disable-line
     resizingNeedsConfirm: PropTypes.bool,
     modalVisible: PropTypes.bool,
     openModal: PropTypes.func,
-    closeModal: PropTypes.func
+    closeModal: PropTypes.func,
+    modalBody: PropTypes.string,
+    modalFooter: PropTypes.element,
+    deactivateMergeConfirm: PropTypes.func
   };
   static contextTypes = {
     setTitle: PropTypes.func.isRequired
@@ -90,10 +96,20 @@ class StockDashboard extends Component { //eslint-disable-line
   constructor() {
     super();
     this.renderLayout = this.renderLayout.bind(this);
-    this.getOppositeIndex = this.getOppositeIndex.bind(this);
   }
-  getOppositeIndex(layoutDataStructure) {
-    console.log(layoutDataStructure);
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.resizingNeedsConfirm) {
+      this.props.deactivateMergeConfirm();
+      const footer = (
+        <div>
+          <ModalButton closeModal={this.props.closeModal}  text="Cancel"  />
+          <ModalButton closeModal={this.props.closeModal} text="Confirm" clickFunction={this.props.mergeCells} />
+      </div>);
+      this.props.openModal('Merge these cells?', footer);
+    }
+  }
+  componentDidUpdate(prevProps) {
+
   }
   renderLayout() {
     const { rowCount, columnCount, gridVisible, cells, mode, layout, resizingLayoutIndex, boundingBox,
@@ -112,7 +128,7 @@ class StockDashboard extends Component { //eslint-disable-line
 
   render() {
     const { toggleGrid, gridVisible, addColumn, addRow, toggleMode, mode, autosave, resizingNeedsConfirm,
-      closeModal, modalVisible } = this.props;
+      closeModal, modalVisible, modalBody, modalFooter } = this.props;
     this.context.setTitle(title);
     const markup = this.renderLayout();
     if (resizingNeedsConfirm) {
@@ -138,7 +154,7 @@ class StockDashboard extends Component { //eslint-disable-line
             {markup}
           </div>
         </div>
-        <Modal id="primaryModal" modalVisible={modalVisible} closeModal={closeModal} modalTitle="The title!" modalContent="Hello World!" />
+        <Modal id="primaryModal" modalVisible={modalVisible}  modalTitle="The title!" modalFooter={modalFooter} modalContent={modalBody} />
       </div>)
       ;
   }

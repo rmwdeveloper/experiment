@@ -1,6 +1,6 @@
 import {
   SWAP_WIDGET_POSITION, ADD_STOCK_WIDGET, RESIZING_CELL, RESIZE_COMPLETE, START_RESIZE,
-  ADD_COLUMN, ADD_ROW, TOGGLE_GRID, DELETE_COLUMN, DELETE_ROW
+  ADD_COLUMN, ADD_ROW, TOGGLE_GRID, DELETE_COLUMN, DELETE_ROW, DEACTIVATE_MERGE_CONFIRM
 } from '../constants';
 
 const initialState = {
@@ -55,6 +55,8 @@ export default function layout(state = initialState, action) {
       return state;
     case TOGGLE_GRID:
       return { ...state, gridVisible: !state.gridVisible };
+    case DEACTIVATE_MERGE_CONFIRM:
+      return { ...state, resizingNeedsConfirm: false};
     default:
       return state;
   }

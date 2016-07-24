@@ -1,4 +1,4 @@
-import { SWAP_WIDGET_POSITION, ADD_COLUMN, ADD_ROW, RESIZING_CELL, RESIZE_COMPLETE, START_RESIZE,
+import { SWAP_WIDGET_POSITION, ADD_COLUMN, ADD_ROW, RESIZING_CELL, RESIZE_COMPLETE, START_RESIZE, DEACTIVATE_MERGE_CONFIRM,
   MAX_ROW, MAX_COLUMN, TOGGLE_GRID, DELETE_COLUMN, DELETE_ROW } from '../constants';
 
 export function swapWidgetPosition(source, target) {
@@ -59,4 +59,9 @@ export function startResize() {
     dispatch({type: START_RESIZE });
   }
 
+}
+export function deactivateMergeConfirm() {
+  return dispatch => {
+    dispatch({type: DEACTIVATE_MERGE_CONFIRM });
+  }
 }
