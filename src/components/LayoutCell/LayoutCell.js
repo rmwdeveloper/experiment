@@ -23,7 +23,8 @@ class LayoutCell extends Component {
     startResize: PropTypes.func,
     resizingInProgress: PropTypes.bool,
     resizingNeedsConfirm: PropTypes.bool,
-    markAsOverlapped: PropTypes.func
+    markAsOverlapped: PropTypes.func,
+    cellHeight: PropTypes.number
   };
 
   constructor() {
@@ -173,7 +174,7 @@ class LayoutCell extends Component {
   render() {
     const {
       mode, gridVisible, columnHeight, widget, rowWidth, layoutIndices, addStockWidget, toggleEditCellMode, cellIndex, editing,
-      resizingInProgress, resizingLayoutIndex
+      resizingInProgress, resizingLayoutIndex, cellHeight
     } = this.props;
     const { resizing, transform, width, height, minHeight } = this.state;
     const border = gridVisible ? '1px dashed black' : 'medium none';
@@ -201,7 +202,6 @@ class LayoutCell extends Component {
     if (widget) {
       visibility = 'visible';
     } else {
-      // style.height = `${columnHeight * 8.8}px`;
       style.visibility = visibility;
     }
     return (
