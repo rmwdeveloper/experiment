@@ -1,6 +1,8 @@
-import { SWAP_WIDGET_POSITION, ADD_COLUMN, ADD_ROW, RESIZING_CELL, RESIZE_COMPLETE, START_RESIZE, DEACTIVATE_MERGE_CONFIRM,
+import {
+  SWAP_WIDGET_POSITION, ADD_COLUMN, ADD_ROW, RESIZING_CELL, RESIZE_COMPLETE, START_RESIZE, DEACTIVATE_MERGE_CONFIRM,
   MARK_AS_OVERLAPPED,
-  MAX_ROW, MAX_COLUMN, TOGGLE_GRID, DELETE_COLUMN, DELETE_ROW, MERGE_CELLS } from '../constants';
+  MAX_ROW, MAX_COLUMN, TOGGLE_GRID, DELETE_COLUMN, DELETE_ROW, MERGE_CELLS
+} from '../constants';
 
 export function swapWidgetPosition(source, target) {
   return (dispatch) => {
@@ -46,35 +48,36 @@ export function toggleGrid() {
 
 export function resizingCell(layoutIndex, boundingBox) {
   return dispatch => {
-    dispatch({type: RESIZING_CELL, layoutIndex, boundingBox });
+    dispatch({ type: RESIZING_CELL, layoutIndex, boundingBox });
   }
 }
 
 export function resizeComplete() {
   return dispatch => {
-    dispatch({type: RESIZE_COMPLETE });
+    dispatch({ type: RESIZE_COMPLETE });
   }
 }
 export function startResize() {
   return dispatch => {
-    dispatch({type: START_RESIZE });
+    dispatch({ type: START_RESIZE });
   }
 
 }
 
 export function deactivateMergeConfirm() {
   return dispatch => {
-    dispatch({type: DEACTIVATE_MERGE_CONFIRM });
+    dispatch({ type: DEACTIVATE_MERGE_CONFIRM });
   }
 }
 
 export function mergeCells() {
-  return dispatch => {
-    dispatch({type: MERGE_CELLS });
+  return (dispatch, getState) => {
+    const { layout } = getState();
+    dispatch({ type: MERGE_CELLS, overlapping: layout.overlapping });
   }
 }
 export function markAsOverlapped(index) {
   return dispatch => {
-    dispatch({type: MARK_AS_OVERLAPPED, index});
+    dispatch({ type: MARK_AS_OVERLAPPED, index });
   }
 }

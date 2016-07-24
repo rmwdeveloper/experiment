@@ -57,7 +57,16 @@ export default function layout(state = initialState, action) {
     case DEACTIVATE_MERGE_CONFIRM:
       return { ...state, resizingNeedsConfirm: false};
     case MERGE_CELLS:
-      return state;
+      const newLayout = [];
+      const mergedCell = [[action.overlapping[0], action.overlapping[action.overlapping.length - 1]], {}];
+      for(let i = 0; i < state.layout.length; i++ ) {
+        const cellIsMerged = action.overlapping.includes(state.layout[i][0][0]);
+        if (!cellIsMerged) {
+          newLayout.push(state.layout[i]);
+        } 
+      }
+      newLayout.unshift(mergedCell);
+      return { ...state, layout: newLayout, resizingNeedsConfirm: false};
     case MARK_AS_OVERLAPPED:
       return {...state, overlapping: state.overlapping.concat(action.index)};
     default:
