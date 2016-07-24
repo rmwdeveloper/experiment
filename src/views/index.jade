@@ -11,7 +11,7 @@ html(class="no-js", lang="")
         link(rel="stylesheet", type="text/css", href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css")
         style#css!= css
     body
-        #app!= body
+        #app(style={height: '100%'})!= body
         script#source(src=entry, data-initial-state=state)
         script.
             window.ga = function () {

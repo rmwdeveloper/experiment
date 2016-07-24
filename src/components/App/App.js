@@ -49,7 +49,7 @@ export default class App extends Component {
     const store = this.props.context.store;
     return (
       <Provider store={store}>
-        <div>
+        <div className={styles.root}>
           <Navigation />
           {this.props.children}
         </div>
