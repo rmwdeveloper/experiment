@@ -1,5 +1,5 @@
 import {
-  SWAP_WIDGET_POSITION, ADD_STOCK_WIDGET, RESIZING_CELL, RESIZE_COMPLETE, START_RESIZE,
+  SWAP_WIDGET_POSITION, ADD_STOCK_WIDGET, RESIZING_CELL, RESIZE_COMPLETE, START_RESIZE, MARK_AS_OVERLAPPED,
   ADD_COLUMN, ADD_ROW, TOGGLE_GRID, DELETE_COLUMN, DELETE_ROW, DEACTIVATE_MERGE_CONFIRM, MERGE_CELLS,
 } from '../constants';
 
@@ -8,8 +8,7 @@ const initialState = {
   rowCount: 1,
   gridVisible: true,
   layout: [[['00'], {}]],
-  // layout: [[['10', '22'], { type: 'stockWidget' }], [['04', '24'], { type: 'userWidget' }],
-  //     [['00', '02'], { type: 'postWidget' }], [['03'], { type: 'graphWidget' }], [['13', '23'], { type: 'alertWidget' }]],
+  overlapping: [],
   cells: {},
   resizingLayoutIndex: '',
   boundingBox: {},
@@ -50,7 +49,7 @@ export default function layout(state = initialState, action) {
     case RESIZE_COMPLETE:
       return { ...state, resizingInProgress: false, resizingNeedsConfirm: true };
     case START_RESIZE:
-      return { ...state, resizingInProgress: true };
+      return { ...state, resizingInProgress: true, overlapping: [] };
     case DELETE_ROW:
       return state;
     case TOGGLE_GRID:
@@ -59,6 +58,8 @@ export default function layout(state = initialState, action) {
       return { ...state, resizingNeedsConfirm: false};
     case MERGE_CELLS:
       return state;
+    case MARK_AS_OVERLAPPED:
+      return {...state, overlapping: state.overlapping.concat(action.index)};
     default:
       return state;
   }

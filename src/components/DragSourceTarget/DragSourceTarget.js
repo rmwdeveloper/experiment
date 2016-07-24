@@ -49,7 +49,9 @@ function dragSourceTarget(ComposedComponent) {
         connectDragSource: PropTypes.func.isRequired,
         connectDropTarget: PropTypes.func.isRequired
       };
-
+      static shouldComponentUpdate() {
+        return false;
+      }
       render() {
         const { connectDragSource, connectDropTarget, className } = this.props;
         return (

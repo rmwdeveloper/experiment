@@ -21,7 +21,9 @@ class LayoutCell extends Component {
     resizingLayoutIndex: PropTypes.string,
     resizeComplete: PropTypes.func,
     startResize: PropTypes.func,
-    resizingInProgress: PropTypes.bool
+    resizingInProgress: PropTypes.bool,
+    resizingNeedsConfirm: PropTypes.bool,
+    markAsOverlapped: PropTypes.func
   };
 
   constructor() {
@@ -42,6 +44,7 @@ class LayoutCell extends Component {
     this.resize = this.resize.bind(this);
     this.startResize = this.startResize.bind(this);
     this.endResize = this.endResize.bind(this);
+    this.isOverlapping = this.isOverlapping.bind(this);
 
   }
 
@@ -129,7 +132,7 @@ class LayoutCell extends Component {
       initialClickCellHeight: null,
       cornerClicked: null,
       height: null,
-      minHeight:null,
+      minHeight: null,
       width: null,
       transform: null
     });
@@ -149,20 +152,35 @@ class LayoutCell extends Component {
     this.widgetCell = document.getElementById(`cell${this.props.layoutIndices[0]}`);
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { layoutIndices, markAsOverlapped } = this.props;
+    if (!this.props.resizingNeedsConfirm && nextProps.resizingNeedsConfirm) {
+      if (this.isOverlapping()) {
+        markAsOverlapped(layoutIndices[0]);
+      }
+    }
+  }
+
+  isOverlapping() {
+    const thisBox = this.widgetCell.getBoundingClientRect();
+    const { boundingBox } = this.props;
+    return !(boundingBox.right < thisBox.left ||
+    boundingBox.left > thisBox.right ||
+    boundingBox.bottom < thisBox.top ||
+    boundingBox.top > thisBox.bottom);
+  }
+
   render() {
-    const { mode, gridVisible, columnHeight, widget, rowWidth, layoutIndices, addStockWidget, toggleEditCellMode, cellIndex, editing, boundingBox,
-      resizingInProgress, resizingLayoutIndex } = this.props;
+    const {
+      mode, gridVisible, columnHeight, widget, rowWidth, layoutIndices, addStockWidget, toggleEditCellMode, cellIndex, editing,
+      resizingInProgress, resizingLayoutIndex
+    } = this.props;
     const { resizing, transform, width, height, minHeight } = this.state;
     const border = gridVisible ? '1px dashed black' : 'medium none';
     const style = { border };
     let visibility = mode === 'preview' ? 'hidden' : 'visible';
     if (resizingLayoutIndex !== layoutIndices[0] && this.widgetCell && resizingInProgress) {
-      const thisBox = this.widgetCell.getBoundingClientRect();
-      const overlap = !(boundingBox.right < thisBox.left ||
-      boundingBox.left > thisBox.right ||
-      boundingBox.bottom < thisBox.top ||
-      boundingBox.top > thisBox.bottom);
-
+      const overlap = this.isOverlapping();
       if (overlap) {
         this.overLapped = true;
         style.backgroundColor = 'red';

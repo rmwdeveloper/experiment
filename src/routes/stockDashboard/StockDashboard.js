@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './stockDashboard.css'; //eslint-disable-line
 import { connect } from 'react-redux';
+import shallowCompare from 'react-addons-shallow-compare';
 import StockDashboardNavigation from '../../components/StockDashboardNavigation';
 import * as stockActions from '../../actions/stock';
 import * as layoutActions from '../../actions/layout';
@@ -88,7 +89,8 @@ class StockDashboard extends Component { //eslint-disable-line
     modalBody: PropTypes.string,
     modalFooter: PropTypes.element,
     deactivateMergeConfirm: PropTypes.func,
-    mergeCells: PropTypes.func
+    mergeCells: PropTypes.func,
+    markAsOverlapped: PropTypes.func
   };
   static contextTypes = {
     setTitle: PropTypes.func.isRequired
@@ -109,10 +111,12 @@ class StockDashboard extends Component { //eslint-disable-line
       this.props.openModal('Merge these cells?', footer);
     }
   }
-
+  shouldComponentUpdate(nextProps) {
+    return shallowCompare(this.props, nextProps);
+  }
   renderLayout() {
     const { rowCount, columnCount, gridVisible, cells, mode, layout, resizingLayoutIndex, boundingBox,
-      resizingInProgress, startResize,
+      resizingInProgress, startResize, resizingNeedsConfirm, markAsOverlapped,
       toggleEditCellMode, inEditMode, addStockWidget, swapWidget, resizingCell, resizeComplete } = this.props;
     const markup = [];
     let columnRendering = 0;
@@ -120,6 +124,7 @@ class StockDashboard extends Component { //eslint-disable-line
       const layoutIndices = layout[cellIndex][0];
       const className = `col-lg-${12 / columnCount} col-md-6 col-sm-12 col-xs-12`;
       markup.push(React.createElement(LayoutCell, {resizingCell, resizingInProgress, startResize,
+        resizingNeedsConfirm, markAsOverlapped, 
         resizeComplete, className, layoutIndices, key: cellIndex, resizingLayoutIndex, boundingBox}));
     }
     return markup;
