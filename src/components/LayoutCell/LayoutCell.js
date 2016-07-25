@@ -166,7 +166,7 @@ class LayoutCell extends Component {
   isOverlapping() {
     const thisBox = this.widgetCell.getBoundingClientRect();
     const { boundingBox } = this.props;
-    if (Object.keys(boundingBox).length === 0) {
+    if (Object.keys(boundingBox).length === 0 && boundingBox.constructor === Object) {
       return false;
     }
     return !(boundingBox.right < thisBox.left ||
