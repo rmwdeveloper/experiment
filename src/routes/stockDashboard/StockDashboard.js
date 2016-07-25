@@ -119,6 +119,7 @@ class StockDashboard extends Component { //eslint-disable-line
       resizingInProgress, startResize, resizingNeedsConfirm, markAsOverlapped,
       toggleEditCellMode, inEditMode, addStockWidget, swapWidget, resizingCell, resizeComplete } = this.props;
     const markup = [];
+
     let columnRendering = 0;
     for (let cellIndex = 0; cellIndex < layout.length; cellIndex++) {
       const layoutIndices = layout[cellIndex][0];

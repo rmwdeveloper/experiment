@@ -2,6 +2,7 @@ import {
   SWAP_WIDGET_POSITION, ADD_STOCK_WIDGET, RESIZING_CELL, RESIZE_COMPLETE, START_RESIZE, MARK_AS_OVERLAPPED,
   ADD_COLUMN, ADD_ROW, TOGGLE_GRID, DELETE_COLUMN, DELETE_ROW, DEACTIVATE_MERGE_CONFIRM, MERGE_CELLS,
 } from '../constants';
+import { sortLayout } from '../core/layout';
 
 const initialState = {
   columnCount: 1,
@@ -17,6 +18,7 @@ const initialState = {
 };
 export default function layout(state = initialState, action) {
   let copy = null;
+  let newLayout = null;
   switch (action.type) {
     case SWAP_WIDGET_POSITION: // eslint-disable-line
       const { cells } = state;
@@ -34,13 +36,17 @@ export default function layout(state = initialState, action) {
       for (let iterator = 0; iterator < state.rowCount; iterator++) {
         newColumnCells.push([[`${iterator}${state.columnCount}`], {}]);
       }
-      return { ...state, layout: state.layout.concat(newColumnCells), columnCount: state.columnCount + 1 };
+
+      newLayout = state.layout.concat(newColumnCells).sort(sortLayout);
+
+      return { ...state, layout: newLayout, columnCount: state.columnCount + 1 };
     case ADD_ROW:
       const newRowCells = [];
       for (let iterator = 0; iterator < state.columnCount; iterator++) {
         newRowCells.push([[`${state.rowCount}${iterator}`], {}]);
       }
-      return { ...state, layout: state.layout.concat(newRowCells), rowCount: state.rowCount + 1 };
+      newLayout = state.layout.concat(newRowCells).sort(sortLayout);
+      return { ...state, layout: newLayout, rowCount: state.rowCount + 1 };
 
     case DELETE_COLUMN:
       return state;
@@ -57,13 +63,13 @@ export default function layout(state = initialState, action) {
     case DEACTIVATE_MERGE_CONFIRM:
       return { ...state, resizingNeedsConfirm: false};
     case MERGE_CELLS:
-      const newLayout = [];
+      newLayout = [];
       const mergedCell = [[action.overlapping[0], action.overlapping[action.overlapping.length - 1]], {}];
       for(let i = 0; i < state.layout.length; i++ ) {
         const cellIsMerged = action.overlapping.includes(state.layout[i][0][0]);
         if (!cellIsMerged) {
           newLayout.push(state.layout[i]);
-        } 
+        }
       }
       newLayout.unshift(mergedCell);
       return { ...state, layout: newLayout, resizingNeedsConfirm: false};
