@@ -1,6 +1,6 @@
 import {
   SWAP_WIDGET_POSITION, ADD_COLUMN, ADD_ROW, RESIZING_CELL, RESIZE_COMPLETE, START_RESIZE, DEACTIVATE_MERGE_CONFIRM,
-  MARK_AS_OVERLAPPED,
+  MARK_AS_OVERLAPPED, CANCEL_MERGE,
   MAX_ROW, MAX_COLUMN, TOGGLE_GRID, DELETE_COLUMN, DELETE_ROW, MERGE_CELLS
 } from '../constants';
 
@@ -73,6 +73,10 @@ export function deactivateMergeConfirm() {
 export function mergeCells() {
   return (dispatch, getState) => {
     const { layout } = getState();
+    if (layout.overlapping.length === 1) {
+      dispatch({ type: CANCEL_MERGE });
+      return null;
+    }
     dispatch({ type: MERGE_CELLS, overlapping: layout.overlapping });
   }
 }

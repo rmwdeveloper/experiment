@@ -34,6 +34,7 @@ export const MAX_ROW = 'layout/MAX_ROW';
 export const MAX_COLUMN = 'layout/MAX_COLUMN';
 export const TOGGLE_GRID = 'layout/TOGGLE_GRID';
 export const MERGE_CELLS = 'layout/MERGE_CELLS';
+export const CANCEL_MERGE = 'layout/CANCEL_MERGE';
 
 export const OPEN_MODAL = 'modal/OPEN_MODAL';
 export const CLOSE_MODAL = 'modal/CLOSE_MODAL';
