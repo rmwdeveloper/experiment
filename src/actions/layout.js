@@ -81,7 +81,10 @@ export function mergeCells() {
   }
 }
 export function markAsOverlapped(index) {
-  return dispatch => {
-    dispatch({ type: MARK_AS_OVERLAPPED, index });
+  return (dispatch, getState) => {
+    const { layout } = getState();
+    if (index !== layout.resizingLayoutIndex) {
+      dispatch({ type: MARK_AS_OVERLAPPED, index });
+    }
   }
 }

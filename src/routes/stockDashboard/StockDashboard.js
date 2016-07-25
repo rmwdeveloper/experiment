@@ -41,6 +41,7 @@ const title = 'Stock Dashboard';
   boundingBox: state.layout.boundingBox,
   resizingInProgress: state.layout.resizingInProgress,
   resizingNeedsConfirm: state.layout.resizingNeedsConfirm,
+  resizingDone: state.layout.resizingDone,
   modalBody: state.modal.modalBody,
   modalFooter: state.modal.modalFooter,
   modalVisible: state.modal.modalVisible
@@ -83,6 +84,7 @@ class StockDashboard extends Component { //eslint-disable-line
     startResize: PropTypes.func,
     resizingInProgress: PropTypes.bool,
     resizingNeedsConfirm: PropTypes.bool,
+    resizingDone: PropTypes.bool,
     modalVisible: PropTypes.bool,
     openModal: PropTypes.func,
     closeModal: PropTypes.func,
@@ -116,7 +118,7 @@ class StockDashboard extends Component { //eslint-disable-line
   }
   renderLayout() {
     const { rowCount, columnCount, gridVisible, cells, mode, layout, resizingLayoutIndex, boundingBox,
-      resizingInProgress, startResize, resizingNeedsConfirm, markAsOverlapped,
+      resizingInProgress, startResize, resizingNeedsConfirm, markAsOverlapped, resizingDone,
       toggleEditCellMode, inEditMode, addStockWidget, swapWidget, resizingCell, resizeComplete } = this.props;
     const markup = [];
 
@@ -133,7 +135,7 @@ class StockDashboard extends Component { //eslint-disable-line
         className = `col-lg-${Math.floor(12 * cellWidth)} col-md-6 col-sm-12 col-xs-12`;
       }
       markup.push(React.createElement(LayoutCell, {resizingCell, resizingInProgress, startResize,
-        resizingNeedsConfirm, markAsOverlapped, cellHeight,
+        resizingNeedsConfirm, markAsOverlapped, cellHeight, resizingDone,
         resizeComplete, className, layoutIndices, key: cellIndex, resizingLayoutIndex, boundingBox}));
     }
     return markup;

@@ -14,6 +14,7 @@ const initialState = {
   resizingLayoutIndex: '',
   boundingBox: {},
   resizingInProgress: false,
+  resizingDone: false,
   resizingNeedsConfirm: false,
 };
 export default function layout(state = initialState, action) {
@@ -53,7 +54,8 @@ export default function layout(state = initialState, action) {
     case RESIZING_CELL:
       return { ...state, boundingBox: action.boundingBox, resizingLayoutIndex: action.layoutIndex };
     case RESIZE_COMPLETE:
-      return { ...state, resizingInProgress: false, resizingNeedsConfirm: true };
+      return { ...state, resizingInProgress: false, resizingDone: true };
+      // return { ...state, resizingInProgress: false, resizingNeedsConfirm: true };
     case START_RESIZE:
       return { ...state, resizingInProgress: true, overlapping: [] };
     case DELETE_ROW:
@@ -74,7 +76,7 @@ export default function layout(state = initialState, action) {
       newLayout.unshift(mergedCell);
       return { ...state, layout: newLayout, resizingNeedsConfirm: false};
     case MARK_AS_OVERLAPPED:
-      return {...state, overlapping: state.overlapping.concat(action.index)};
+      return {...state, resizingNeedsConfirm: true, overlapping: state.overlapping.concat(action.index)};
     default:
       return state;
   }

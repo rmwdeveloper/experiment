@@ -23,6 +23,7 @@ class LayoutCell extends Component {
     startResize: PropTypes.func,
     resizingInProgress: PropTypes.bool,
     resizingNeedsConfirm: PropTypes.bool,
+    resizingDone: PropTypes.bool,
     markAsOverlapped: PropTypes.func,
     cellHeight: PropTypes.number
   };
@@ -155,7 +156,7 @@ class LayoutCell extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { layoutIndices, markAsOverlapped } = this.props;
-    if (!this.props.resizingNeedsConfirm && nextProps.resizingNeedsConfirm) {
+    if (!this.props.resizingDone && nextProps.resizingDone) {
       if (this.isOverlapping()) {
         markAsOverlapped(layoutIndices[0]);
       }
