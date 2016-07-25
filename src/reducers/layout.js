@@ -57,7 +57,7 @@ export default function layout(state = initialState, action) {
       return { ...state, resizingInProgress: false, resizingDone: true };
       // return { ...state, resizingInProgress: false, resizingNeedsConfirm: true };
     case START_RESIZE:
-      return { ...state, resizingInProgress: true, overlapping: [] };
+      return { ...state, resizingInProgress: true, overlapping: [], resizingNeedsConfirm: false, resizingDone: false };
     case DELETE_ROW:
       return state;
     case TOGGLE_GRID:
@@ -66,9 +66,10 @@ export default function layout(state = initialState, action) {
       return { ...state, resizingNeedsConfirm: false};
     case MERGE_CELLS:
       newLayout = [];
-      const mergedCell = [[action.overlapping[0], action.overlapping[action.overlapping.length - 1]], {}];
+      const overlapping = [state.resizingLayoutIndex, ...action.overlapping];
+      const mergedCell = [[overlapping[0], overlapping[overlapping.length - 1]], {}];
       for(let i = 0; i < state.layout.length; i++ ) {
-        const cellIsMerged = action.overlapping.includes(state.layout[i][0][0]);
+        const cellIsMerged = overlapping.includes(state.layout[i][0][0]);
         if (!cellIsMerged) {
           newLayout.push(state.layout[i]);
         }
