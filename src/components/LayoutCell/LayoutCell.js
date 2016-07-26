@@ -58,7 +58,7 @@ class LayoutCell extends Component {
       initialClickCellHeight
     } = this.state;
     const { resizingCell, layoutIndices } = this.props;
-    resizingCell(layoutIndices[0], this.widgetCell.getBoundingClientRect());
+    resizingCell(layoutIndices, this.widgetCell.getBoundingClientRect());
     const xDirection = pageX < initialClickPageX ? 'left' : 'right';
     const yDirection = pageY < initialClickPageY ? 'up' : 'down';
     const movedX = pageX - initialClickPageX;
@@ -145,20 +145,20 @@ class LayoutCell extends Component {
 
   componentDidMount() {
     this.dashBoard = document.getElementById('stockDashboard');
-    this.widgetCell = document.getElementById(`cell${this.props.layoutIndices[0]}`);
+    this.widgetCell = document.getElementById(`cell${this.props.layoutIndices}`);
     this.widgetWidth = this.widgetCell.offsetWidth;
     this.widgetRect = this.widgetCell.getBoundingClientRect();
   }
 
   componentDidUpdate() {
-    this.widgetCell = document.getElementById(`cell${this.props.layoutIndices[0]}`);
+    this.widgetCell = document.getElementById(`cell${this.props.layoutIndices}`);
   }
 
   componentWillReceiveProps(nextProps) {
     const { layoutIndices, markAsOverlapped } = this.props;
     if (!this.props.resizingDone && nextProps.resizingDone) {
       if (this.isOverlapping()) {
-        markAsOverlapped(layoutIndices[0]);
+        markAsOverlapped(layoutIndices);
       }
     }
   }
@@ -184,7 +184,7 @@ class LayoutCell extends Component {
     const border = gridVisible ? '1px dashed black' : 'medium none';
     const style = { border };
     let visibility = mode === 'preview' ? 'hidden' : 'visible';
-    if (resizingLayoutIndex !== layoutIndices[0] && this.widgetCell && resizingInProgress) {
+    if (resizingLayoutIndex !== layoutIndices && this.widgetCell && resizingInProgress) {
       const overlap = this.isOverlapping();
       if (overlap) {
         this.overLapped = true;
@@ -194,7 +194,7 @@ class LayoutCell extends Component {
         this.overLapped = false;
       }
     }
-    if (resizingLayoutIndex === layoutIndices[0] && !resizing) {
+    if (resizingLayoutIndex === layoutIndices && !resizing) {
       style.backgroundColor = 'yellow';
     }
     if (resizing) {
@@ -209,8 +209,8 @@ class LayoutCell extends Component {
       style.visibility = visibility;
     }
     return (
-      <div id={`cell${layoutIndices[0]}`} style={style} className={styles.root}>
-        <div id={`inner${layoutIndices[0]}`} style={{position: 'absolute'}}>
+      <div id={`cell${layoutIndices}`} style={style} className={styles.root}>
+        <div id={`inner${layoutIndices}`} style={{position: 'absolute'}}>
           {layoutIndices}
           {
             widget ?
