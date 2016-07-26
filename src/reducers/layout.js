@@ -67,9 +67,12 @@ export default function layout(state = initialState, action) {
     case MERGE_CELLS:
       newLayout = [];
       const overlapping = [state.resizingLayoutIndex, ...action.overlapping];
-      const mergedCell = [[overlapping[0], overlapping[overlapping.length - 1]], {}];
+      const newColumnCount = Number(action.overlapping[action.overlapping.length - 1][1]) - Number(state.resizingLayoutIndex[1]);
+      const newRowCount = Number(action.overlapping[action.overlapping.length - 1][0]) - Number(state.resizingLayoutIndex[1]);
+      const mergedCell = {index: state.resizingLayoutIndex, columns: newColumnCount + 1, rows: newRowCount + 1 }
+      // const mergedCell = [[overlapping[0], overlapping[overlapping.length - 1]], {}];
       for (let i = 0; i < state.layout.length; i++) {
-        const cellIsMerged = overlapping.includes(state.layout[i][0][0]);
+        const cellIsMerged = overlapping.includes(state.layout[i].index);
         if (!cellIsMerged) {
           newLayout.push(state.layout[i]);
         }
