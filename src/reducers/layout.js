@@ -75,6 +75,7 @@ export default function layout(state = initialState, action) {
         }
       }
       newLayout.unshift(mergedCell);
+      newLayout.sort(sortLayout);
       return { ...state, layout: newLayout, resizingNeedsConfirm: false};
     case MARK_AS_OVERLAPPED:
       return {...state, resizingNeedsConfirm: true, overlapping: state.overlapping.concat(action.index)};

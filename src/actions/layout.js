@@ -73,10 +73,7 @@ export function deactivateMergeConfirm() {
 export function mergeCells() {
   return (dispatch, getState) => {
     const { layout } = getState();
-    if (layout.overlapping.length === 1) {
-      dispatch({ type: CANCEL_MERGE });
-      return null;
-    }
+
     dispatch({ type: MERGE_CELLS, overlapping: layout.overlapping });
   }
 }
