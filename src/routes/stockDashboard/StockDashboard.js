@@ -101,6 +101,7 @@ class StockDashboard extends Component { //eslint-disable-line
   constructor() {
     super();
     this.renderLayout = this.renderLayout.bind(this);
+    this.putInBlock = this.putInBlock.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -119,22 +120,58 @@ class StockDashboard extends Component { //eslint-disable-line
     return shallowCompare(this.props, nextProps);
   }
 
+  putInBlock(tallCell, otherCell) {
+    const height = tallCell.rows + Number(tallCell.index[0]);
+    const result = height > Number(otherCell.index[0]);
+    if (result) {
+      return true;
+    } else if (!result) {
+      return false;
+    }
+  }
+
   renderLayout() {
     const {
       rowCount, columnCount, gridVisible, cells, mode, layout, resizingLayoutIndex, boundingBox,
       resizingInProgress, startResize, resizingNeedsConfirm, markAsOverlapped, resizingDone,
       toggleEditCellMode, inEditMode, addStockWidget, swapWidget, resizingCell, resizeComplete
     } = this.props;
-    const markup = [];
-    let columnRendering = 0;
+
+    let markup = [];
+    const alreadyRendered = [];
 
     for (let cellIndex = 0; cellIndex < layout.length; cellIndex++) {
+      if (alreadyRendered.includes(layout[cellIndex].index)) {
+        continue;
+      }
       const cell = layout[cellIndex];
       const className = `col-lg-${Math.floor(12 / (columnCount / cell.columns))} col-md-6 col-sm-12 col-xs-12`;
       const cellHeight = (cell.rows / rowCount ) * 100;
-      markup.push(React.createElement(LayoutCell, {resizingCell, resizingInProgress, startResize,
+      if (cell.rows > 1) {
+        const blockedElements = [];
+        const restOfElements = [...layout.slice(0, cellIndex), ...layout.slice(cellIndex + 1)];
+
+        for (let iterator = 0; iterator < restOfElements.length; iterator++) {
+          if (this.putInBlock(layout[cellIndex], restOfElements[iterator])) {
+            blockedElements.push(restOfElements[iterator]);
+            alreadyRendered.push(restOfElements[iterator].index);
+            if (markup.findIndex((item => { return item.key === restOfElements[iterator].index; })) !== -1) {
+              const markupIndex = markup.findIndex((item => { return item.key === restOfElements[iterator].index; }));
+              markup = [...markup.slice(0, markupIndex), ...markup.slice(markupIndex + 1)];
+            }
+          }
+        }
+        console.log(blockedElements);
+        // console.log('two blocks of height.. ', cellHeight, 'needs to be made');
+        // console.log('and it needs to have a classname of..', className);
+        // console.log('the other block needs', 12 - Math.floor(12 / (columnCount / cell.columns)));
+        // console.log('and it needs to contain the following elements');
+      }
+      markup.push(React.createElement(LayoutCell, {
+        resizingCell, resizingInProgress, startResize,
         resizingNeedsConfirm, markAsOverlapped, cellHeight, resizingDone,
-        resizeComplete, className, layoutIndices: cell.index , key: cellIndex, resizingLayoutIndex, boundingBox}));
+        resizeComplete, className, layoutIndices: cell.index, key: cell.index, resizingLayoutIndex, boundingBox
+      }));
       // const layoutIndices = layout[cellIndex][0];
       //   let cellHeight = 100 / rowCount;
       //   let className = `col-lg-${Math.floor(12 / columnCount)} col-md-6 col-sm-12 col-xs-12`;
