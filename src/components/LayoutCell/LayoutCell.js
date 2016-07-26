@@ -15,7 +15,7 @@ class LayoutCell extends Component {
     cellIndex: PropTypes.string,
     toggleEditCellMode: PropTypes.func,
     editing: PropTypes.bool,
-    layoutIndices: PropTypes.array,
+    layoutIndices: PropTypes.string,
     resizingCell: PropTypes.func,
     boundingBox: PropTypes.object,
     resizingLayoutIndex: PropTypes.string,

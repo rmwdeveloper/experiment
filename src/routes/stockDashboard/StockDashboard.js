@@ -102,48 +102,63 @@ class StockDashboard extends Component { //eslint-disable-line
     super();
     this.renderLayout = this.renderLayout.bind(this);
   }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.resizingNeedsConfirm) {
       this.props.deactivateMergeConfirm();
       const footer = (
         <div>
-          <ModalButton closeModal={this.props.closeModal} text="Cancel"  />
-          <ModalButton closeModal={this.props.closeModal} text="Confirm" clickFunction={this.props.mergeCells} />
-      </div>);
+          <ModalButton closeModal={this.props.closeModal} text="Cancel"/>
+          <ModalButton closeModal={this.props.closeModal} text="Confirm" clickFunction={this.props.mergeCells}/>
+        </div>);
       this.props.openModal('Merge these cells?', footer);
     }
   }
+
   shouldComponentUpdate(nextProps) {
     return shallowCompare(this.props, nextProps);
   }
+
   renderLayout() {
-    const { rowCount, columnCount, gridVisible, cells, mode, layout, resizingLayoutIndex, boundingBox,
+    const {
+      rowCount, columnCount, gridVisible, cells, mode, layout, resizingLayoutIndex, boundingBox,
       resizingInProgress, startResize, resizingNeedsConfirm, markAsOverlapped, resizingDone,
-      toggleEditCellMode, inEditMode, addStockWidget, swapWidget, resizingCell, resizeComplete } = this.props;
+      toggleEditCellMode, inEditMode, addStockWidget, swapWidget, resizingCell, resizeComplete
+    } = this.props;
     const markup = [];
     let columnRendering = 0;
 
     for (let cellIndex = 0; cellIndex < layout.length; cellIndex++) {
-      const layoutIndices = layout[cellIndex][0];
-      let cellHeight = 100 / rowCount;
-      let className = `col-lg-${Math.floor(12 / columnCount)} col-md-6 col-sm-12 col-xs-12`;
-      if (layoutIndices.length > 1) {
-        const cellColumns = Number(layoutIndices[1][1]) - Number(layoutIndices[0][1]) + 1 ;
-        const cellRows = Number(layoutIndices[1][0]) - Number(layoutIndices[0][0]) + 1 ;
-        cellHeight = (cellRows / rowCount ) * 100;
-        const cellWidth = cellColumns / columnCount;
-        className = `col-lg-${Math.floor(12 * cellWidth)} col-md-6 col-sm-12 col-xs-12`;
-      }
+      const cell = layout[cellIndex];
+      const className = `col-lg-${Math.floor(12 / columnCount / cell.columns)} col-md-6 col-sm-12 col-xs-12`;
+      const cellHeight = (cell.rows / rowCount ) * 100;
       markup.push(React.createElement(LayoutCell, {resizingCell, resizingInProgress, startResize,
         resizingNeedsConfirm, markAsOverlapped, cellHeight, resizingDone,
-        resizeComplete, className, layoutIndices, key: cellIndex, resizingLayoutIndex, boundingBox}));
+        resizeComplete, className, layoutIndices: cell.index , key: cellIndex, resizingLayoutIndex, boundingBox}));
+      // const layoutIndices = layout[cellIndex][0];
+      //   let cellHeight = 100 / rowCount;
+      //   let className = `col-lg-${Math.floor(12 / columnCount)} col-md-6 col-sm-12 col-xs-12`;
+      //   if (layoutIndices.length > 1) {
+      //     const cellColumns = Number(layoutIndices[1][1]) - Number(layoutIndices[0][1]) + 1 ;
+      //     const cellRows = Number(layoutIndices[1][0]) - Number(layoutIndices[0][0]) + 1 ;
+      //     cellHeight = (cellRows / rowCount ) * 100;
+      //     const cellWidth = cellColumns / columnCount;
+      //     className = `col-lg-${Math.floor(12 * cellWidth)} col-md-6 col-sm-12 col-xs-12`;
+      //   }
+      //   markup.push(React.createElement(LayoutCell, {resizingCell, resizingInProgress, startResize,
+      //     resizingNeedsConfirm, markAsOverlapped, cellHeight, resizingDone,
+      //     resizeComplete, className, layoutIndices, key: cellIndex, resizingLayoutIndex, boundingBox}));
+      // }
     }
     return markup;
+
   }
 
   render() {
-    const { toggleGrid, gridVisible, addColumn, addRow, toggleMode, mode, autosave, resizingNeedsConfirm,
-      closeModal, modalVisible, modalBody, modalFooter } = this.props;
+    const {
+      toggleGrid, gridVisible, addColumn, addRow, toggleMode, mode, autosave, resizingNeedsConfirm,
+      closeModal, modalVisible, modalBody, modalFooter
+    } = this.props;
     this.context.setTitle(title);
     const markup = this.renderLayout();
     return (
@@ -166,7 +181,8 @@ class StockDashboard extends Component { //eslint-disable-line
             {markup}
           </div>
         </div>
-        <Modal id="primaryModal" modalVisible={modalVisible}  modalTitle="The title!" modalFooter={modalFooter} modalContent={modalBody} />
+        <Modal id="primaryModal" modalVisible={modalVisible} modalTitle="The title!" modalFooter={modalFooter}
+               modalContent={modalBody}/>
       </div>)
       ;
   }
