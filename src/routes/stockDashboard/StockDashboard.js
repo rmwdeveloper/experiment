@@ -146,14 +146,19 @@ class StockDashboard extends Component { //eslint-disable-line
       }
       const cell = layout[cellIndex];
       const className = `col-lg-${Math.floor(12 / (columnCount / cell.columns))} col-md-6 col-sm-12 col-xs-12`;
-      const cellHeight = (cell.rows / rowCount ) * 100;
+      const cellHeight = (cell.rows / rowCount) * 100;
       if (cell.rows > 1) {
-        const blockedElements = [];
+        const blockedElements = {};
         const restOfElements = [...layout.slice(0, cellIndex), ...layout.slice(cellIndex + 1)];
 
         for (let iterator = 0; iterator < restOfElements.length; iterator++) {
           if (this.putInBlock(layout[cellIndex], restOfElements[iterator])) {
-            blockedElements.push(restOfElements[iterator]);
+            if (blockedElements.hasOwnProperty(restOfElements[iterator].index[1])) {
+              blockedElements[restOfElements[iterator].index[1]].push(restOfElements[iterator]);
+            } else {
+              blockedElements[restOfElements[iterator].index[1]] = [];
+              blockedElements[restOfElements[iterator].index[1]].push(restOfElements[iterator]);
+            }
             alreadyRendered.push(restOfElements[iterator].index);
             if (markup.findIndex((item => { return item.key === restOfElements[iterator].index; })) !== -1) {
               const markupIndex = markup.findIndex((item => { return item.key === restOfElements[iterator].index; }));
@@ -187,6 +192,7 @@ class StockDashboard extends Component { //eslint-disable-line
       //     resizeComplete, className, layoutIndices, key: cellIndex, resizingLayoutIndex, boundingBox}));
       // }
     }
+    console.log(markup);
     return markup;
 
   }
