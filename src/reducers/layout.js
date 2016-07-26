@@ -40,14 +40,14 @@ export default function layout(state = initialState, action) {
 
       newLayout = state.layout.concat(newColumnCells);
 
-      return { ...state, layout: newLayout, columnCount: state.columnCount + 1 };
+      return { ...state, layout: newLayout.sort(sortLayout), columnCount: state.columnCount + 1 };
     case ADD_ROW:
       const newRowCells = [];
       for (let iterator = 0; iterator < state.columnCount; iterator++) {
         newRowCells.push({index: `${state.rowCount}${iterator}`, rows: 1, columns: 1, data: {}});
       }
       newLayout = state.layout.concat(newRowCells);
-      return { ...state, layout: newLayout, rowCount: state.rowCount + 1 };
+      return { ...state, layout: newLayout.sort(sortLayout), rowCount: state.rowCount + 1 };
 
     case DELETE_COLUMN:
       return state;
