@@ -105,6 +105,8 @@ class StockDashboard extends Component { //eslint-disable-line
     // this.putInBlock = this.putInBlock.bind(this);
     this.getCellsInSameRowsFilter = this.getCellsInSameRowsFilter.bind(this);
     this.groupCellsByColumn = this.groupCellsByColumn.bind(this);
+    this.renderBlocks = this.renderBlocks.bind(this);
+    this.deduplicateCellsFilter = this.deduplicateCellsFilter.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -122,6 +124,9 @@ class StockDashboard extends Component { //eslint-disable-line
   shouldComponentUpdate(nextProps) {
     return shallowCompare(this.props, nextProps);
   }
+  deduplicateCellsFilter(alreadyRendered, value) {
+    return !alreadyRendered.includes(value.props.layoutIndices);
+  }
   getCellsInSameRowsFilter(rowStart, rowEnd, value) {
     return (rowStart <= Number(value.index[0])) && (Number(value.index[0]) < rowEnd);
   }
@@ -137,15 +142,15 @@ class StockDashboard extends Component { //eslint-disable-line
     }
     return cellsGroupedByColumn;
   }
-  // putInBlock(tallCell, otherCell) {
-  //   const height = tallCell.rows + Number(tallCell.index[0]);
-  //   const result = height > Number(otherCell.index[0]);
-  //   if (result) {
-  //     return true;
-  //   } else if (!result) {
-  //     return false;
-  //   }
-  // }
+  renderBlocks(blockedElements){
+    const elements = [];
+    for (const columnIndex in blockedElements) { //eslint-disable-line
+      if (blockedElements.hasOwnProperty(columnIndex)) {
+        elements.push(React.createElement(LayoutBlock, {key: columnIndex}, blockedElements[columnIndex]));
+      }
+    }
+    return elements;
+  }
 
   renderLayout() {
     const {
@@ -159,8 +164,8 @@ class StockDashboard extends Component { //eslint-disable-line
     const alreadyRendered = [];
 
     for (let cellIndex = 0; cellIndex < layout.length; cellIndex++) { // For every cell
-      if (alreadyRendered.includes(layout[cellIndex].index)) { // Delete this? Might be unneccessary. Cut down on
-        continue;                                             // Extraneous rendering
+      if (alreadyRendered.includes(layout[cellIndex].index)) { // todo: probably shouldn't need this. Don't
+        continue;                                              // render extraneously
       }
       const cell = layout[cellIndex];
       const className = `col-lg-${Math.floor(12 / (columnCount / cell.columns))} col-md-6 col-sm-12 col-xs-12`;
@@ -169,59 +174,27 @@ class StockDashboard extends Component { //eslint-disable-line
         const restOfElements = [...layout.slice(0, cellIndex), ...layout.slice(cellIndex + 1)];
         const cellRowRange = (Number(cell.index[0]) + cell.rows);
         const sameLevelCells = restOfElements.filter(this.getCellsInSameRowsFilter.bind(null, Number(cell.index[0]), cellRowRange));
+        alreadyRendered.push(...sameLevelCells.map((item) => {
+          return item.index;
+        }));
         const blockedElements = this.groupCellsByColumn(sameLevelCells); // Further group cells into an object of arrays indexed by column
 
-        const test = 't0';
-        // for (let iterator = 0; iterator < restOfElements.length; iterator++) {
-        //   if (this.putInBlock(layout[cellIndex], restOfElements[iterator])) {
-        //     if (blockedElements.hasOwnProperty(restOfElements[iterator].index[1])) {
-        //       blockedElements[restOfElements[iterator].index[1]].push(restOfElements[iterator]);
-        //     } else {
-        //       blockedElements[restOfElements[iterator].index[1]] = [];
-        //       blockedElements[restOfElements[iterator].index[1]].push(restOfElements[iterator]);
-        //     }
-        //     alreadyRendered.push(restOfElements[iterator].index);
-        //     if (markup.findIndex((item => { return item.key === restOfElements[iterator].index; })) !== -1) {
-        //       const markupIndex = markup.findIndex((item => { return item.key === restOfElements[iterator].index; }));
-        //       markup = [...markup.slice(0, markupIndex), ...markup.slice(markupIndex + 1)];
-        //     }
-        //   }
-        // }
-        // for (let j = 0; j < Object.keys(blockedElements).length + 1; j++) {
-        //   if (blockedElements.hasOwnProperty(j)) {
-        //     markup.push(React.createElement(LayoutBlock,  {key: j}, blockedElements[j]));
-        //   } else {
-        //     markup.push(React.createElement(LayoutCell, {
-        //       resizingCell, resizingInProgress, startResize,
-        //       resizingNeedsConfirm, markAsOverlapped, cellHeight, resizingDone,
-        //       resizeComplete, className, layoutIndices: cell.index, key: cell.index, resizingLayoutIndex, boundingBox
-        //     }));
-        //   }
-        // }
-      } else {
-        markup.push(React.createElement(LayoutCell, {
-          resizingCell, resizingInProgress, startResize,
-          resizingNeedsConfirm, markAsOverlapped, cellHeight, resizingDone,
-          resizeComplete, className, layoutIndices: cell.index, key: cell.index, resizingLayoutIndex, boundingBox
-        }));
-      }
-      // const layoutIndices = layout[cellIndex][0];
-      //   let cellHeight = 100 / rowCount;
-      //   let className = `col-lg-${Math.floor(12 / columnCount)} col-md-6 col-sm-12 col-xs-12`;
-      //   if (layoutIndices.length > 1) {
-      //     const cellColumns = Number(layoutIndices[1][1]) - Number(layoutIndices[0][1]) + 1 ;
-      //     const cellRows = Number(layoutIndices[1][0]) - Number(layoutIndices[0][0]) + 1 ;
-      //     cellHeight = (cellRows / rowCount ) * 100;
-      //     const cellWidth = cellColumns / columnCount;
-      //     className = `col-lg-${Math.floor(12 * cellWidth)} col-md-6 col-sm-12 col-xs-12`;
-      //   }
-      //   markup.push(React.createElement(LayoutCell, {resizingCell, resizingInProgress, startResize,
-      //     resizingNeedsConfirm, markAsOverlapped, cellHeight, resizingDone,
-      //     resizeComplete, className, layoutIndices, key: cellIndex, resizingLayoutIndex, boundingBox}));
-      // }
-    }
-    return markup;
+        layoutCells.push(...this.renderBlocks(blockedElements));
 
+      }
+      layoutCells.push(React.createElement(LayoutCell, {
+        resizingCell, resizingInProgress, startResize,
+        resizingNeedsConfirm, markAsOverlapped, cellHeight, resizingDone,
+        resizeComplete, className, layoutIndices: cell.index, key: cell.index, resizingLayoutIndex, boundingBox
+       }));
+
+    }
+
+    const uniqueCells = layoutCells.filter(this.deduplicateCellsFilter.bind(null, alreadyRendered));
+    return uniqueCells.sort((cellA, cellB) => {
+      return Number(cellA.key) - Number(cellB.key);
+    });
+    return markup;
   }
 
   render() {
