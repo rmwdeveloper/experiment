@@ -12,6 +12,7 @@ import { DragDropContext as dragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 import LayoutCell from '../../components/LayoutCell';
+import LayoutBlock from '../../components/LayoutBlock';
 import Modal from '../../components/Modal';
 import ModalButton from '../../components/ModalButton';
 
@@ -166,17 +167,30 @@ class StockDashboard extends Component { //eslint-disable-line
             }
           }
         }
-        console.log(blockedElements);
+        console.log('blockedElements',blockedElements);
+        for (let j = 0; j < Object.keys(blockedElements).length + 1; j++) {
+          if (blockedElements.hasOwnProperty(j)) {
+            markup.push(React.createElement(LayoutBlock,  {key: j}, blockedElements[j]));
+          } else {
+            markup.push(React.createElement(LayoutCell, {
+              resizingCell, resizingInProgress, startResize,
+              resizingNeedsConfirm, markAsOverlapped, cellHeight, resizingDone,
+              resizeComplete, className, layoutIndices: cell.index, key: cell.index, resizingLayoutIndex, boundingBox
+            }));
+          }
+        }
+        const test ='t0';
         // console.log('two blocks of height.. ', cellHeight, 'needs to be made');
         // console.log('and it needs to have a classname of..', className);
         // console.log('the other block needs', 12 - Math.floor(12 / (columnCount / cell.columns)));
         // console.log('and it needs to contain the following elements');
+      } else {
+        markup.push(React.createElement(LayoutCell, {
+          resizingCell, resizingInProgress, startResize,
+          resizingNeedsConfirm, markAsOverlapped, cellHeight, resizingDone,
+          resizeComplete, className, layoutIndices: cell.index, key: cell.index, resizingLayoutIndex, boundingBox
+        }));
       }
-      markup.push(React.createElement(LayoutCell, {
-        resizingCell, resizingInProgress, startResize,
-        resizingNeedsConfirm, markAsOverlapped, cellHeight, resizingDone,
-        resizeComplete, className, layoutIndices: cell.index, key: cell.index, resizingLayoutIndex, boundingBox
-      }));
       // const layoutIndices = layout[cellIndex][0];
       //   let cellHeight = 100 / rowCount;
       //   let className = `col-lg-${Math.floor(12 / columnCount)} col-md-6 col-sm-12 col-xs-12`;

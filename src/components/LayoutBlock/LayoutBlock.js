@@ -4,7 +4,7 @@ import styles from './LayoutBlock.css'; //eslint-disable-line
 
 class LayoutBlock extends Component {
   static propTypes = {
-    className: Proptypes.string.isRequired,
+    className: PropTypes.string.isRequired,
     height: PropTypes.number.isRequired,
     children: PropTypes.element.isRequired
   };
