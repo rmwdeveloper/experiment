@@ -104,9 +104,9 @@ class StockDashboard extends Component { //eslint-disable-line
     this.renderLayout = this.renderLayout.bind(this);
     // this.putInBlock = this.putInBlock.bind(this);
     this.getCellsInSameRowsFilter = this.getCellsInSameRowsFilter.bind(this);
-    this.groupCellsByColumn = this.groupCellsByColumn.bind(this);
     this.renderBlocks = this.renderBlocks.bind(this);
     this.deduplicateCellsFilter = this.deduplicateCellsFilter.bind(this);
+    this.getGroupedColumnCount = this.getGroupedColumnCount.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -130,8 +130,14 @@ class StockDashboard extends Component { //eslint-disable-line
   getCellsInSameRowsFilter(rowStart, rowEnd, value) {
     return (rowStart <= Number(value.index[0])) && (Number(value.index[0]) < rowEnd);
   }
-  groupCellsByColumn(cells) {
-
+  getGroupedColumnCount(cells, columnIndex) {
+    let counter = 0;
+    for (let iterator = 0; iterator < cells.length; iterator++) {
+      if (columnIndex === cells[iterator].index[1]) {
+        counter++;
+      }
+    }
+    return counter;
   }
   renderBlocks(blockedElements, className){
     const elements = [];
@@ -175,7 +181,7 @@ class StockDashboard extends Component { //eslint-disable-line
             cellsGroupedByColumn[sameLevelCells[iterator].index[1]].push(
               React.createElement(LayoutCell, {
                   resizingCell, resizingInProgress, startResize,
-                  resizingNeedsConfirm, markAsOverlapped, cellHeight: (100 / 3), resizingDone,
+                  resizingNeedsConfirm, markAsOverlapped, cellHeight: (100 / this.getGroupedColumnCount(sameLevelCells, sameLevelCells[iterator].index[1])), resizingDone,
                   resizeComplete, className: "col-xs-12", layoutIndices: sameLevelCells[iterator].index, key: sameLevelCells[iterator].index, resizingLayoutIndex, boundingBox
                 }));
           } else {
@@ -184,7 +190,7 @@ class StockDashboard extends Component { //eslint-disable-line
 
               React.createElement(LayoutCell, {
                   resizingCell, resizingInProgress, startResize,
-                  resizingNeedsConfirm, markAsOverlapped, cellHeight: (100 / 3), resizingDone,
+                  resizingNeedsConfirm, markAsOverlapped, cellHeight: (100 / this.getGroupedColumnCount(sameLevelCells, sameLevelCells[iterator].index[1])), resizingDone,
                   resizeComplete, className: "col-xs-12", layoutIndices: sameLevelCells[iterator].index, key: sameLevelCells[iterator].index, resizingLayoutIndex, boundingBox
                 }));
           }
