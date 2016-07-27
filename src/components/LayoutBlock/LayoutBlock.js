@@ -2,6 +2,8 @@ import React, { PropTypes, Component } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './LayoutBlock.css'; //eslint-disable-line
 
+import LayoutCell from '../../components/LayoutCell';
+
 class LayoutBlock extends Component {
   static propTypes = {
     className: PropTypes.string.isRequired,
@@ -15,7 +17,10 @@ class LayoutBlock extends Component {
   }
 
   render() {
-    return <div>Layout Block</div>
+    const { className } = this.props;
+    return <div className={className}>
+      { this.props.children }
+    </div>;
   }
 }
 

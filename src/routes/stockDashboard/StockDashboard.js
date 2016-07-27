@@ -131,22 +131,13 @@ class StockDashboard extends Component { //eslint-disable-line
     return (rowStart <= Number(value.index[0])) && (Number(value.index[0]) < rowEnd);
   }
   groupCellsByColumn(cells) {
-    const cellsGroupedByColumn = {};
-    for (let iterator = 0; iterator < cells.length; iterator++) {
-      if (cellsGroupedByColumn.hasOwnProperty(cells[iterator].index[1])) {
-        cellsGroupedByColumn[cells[iterator].index[1]].push(cells[iterator]);
-      } else {
-        cellsGroupedByColumn[cells[iterator].index[1]] = [];
-        cellsGroupedByColumn[cells[iterator].index[1]].push(cells[iterator]);
-      }
-    }
-    return cellsGroupedByColumn;
+
   }
-  renderBlocks(blockedElements){
+  renderBlocks(blockedElements, className){
     const elements = [];
     for (const columnIndex in blockedElements) { //eslint-disable-line
       if (blockedElements.hasOwnProperty(columnIndex)) {
-        elements.push(React.createElement(LayoutBlock, {key: columnIndex}, blockedElements[columnIndex]));
+        elements.push(React.createElement(LayoutBlock, {key: columnIndex, className}, blockedElements[columnIndex]));
       }
     }
     return elements;
@@ -177,9 +168,28 @@ class StockDashboard extends Component { //eslint-disable-line
         alreadyRendered.push(...sameLevelCells.map((item) => {
           return item.index;
         }));
-        const blockedElements = this.groupCellsByColumn(sameLevelCells); // Further group cells into an object of arrays indexed by column
 
-        layoutCells.push(...this.renderBlocks(blockedElements));
+        const cellsGroupedByColumn = {};
+        for (let iterator = 0; iterator < sameLevelCells.length; iterator++) {
+          if (cellsGroupedByColumn.hasOwnProperty(sameLevelCells[iterator].index[1])) {
+            cellsGroupedByColumn[sameLevelCells[iterator].index[1]].push(
+              React.createElement(LayoutCell, {
+                  resizingCell, resizingInProgress, startResize,
+                  resizingNeedsConfirm, markAsOverlapped, cellHeight: (100 / 3), resizingDone,
+                  resizeComplete, className: "col-xs-12", layoutIndices: sameLevelCells[iterator].index, key: sameLevelCells[iterator].index, resizingLayoutIndex, boundingBox
+                }));
+          } else {
+            cellsGroupedByColumn[sameLevelCells[iterator].index[1]] = [];
+            cellsGroupedByColumn[sameLevelCells[iterator].index[1]].push(
+
+              React.createElement(LayoutCell, {
+                  resizingCell, resizingInProgress, startResize,
+                  resizingNeedsConfirm, markAsOverlapped, cellHeight: (100 / 3), resizingDone,
+                  resizeComplete, className: "col-xs-12", layoutIndices: sameLevelCells[iterator].index, key: sameLevelCells[iterator].index, resizingLayoutIndex, boundingBox
+                }));
+          }
+        }
+        layoutCells.push(...this.renderBlocks(cellsGroupedByColumn, className));
 
       }
       layoutCells.push(React.createElement(LayoutCell, {
