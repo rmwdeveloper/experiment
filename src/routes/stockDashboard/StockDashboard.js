@@ -102,7 +102,9 @@ class StockDashboard extends Component { //eslint-disable-line
   constructor() {
     super();
     this.renderLayout = this.renderLayout.bind(this);
-    this.putInBlock = this.putInBlock.bind(this);
+    // this.putInBlock = this.putInBlock.bind(this);
+    this.getCellsInSameRowsFilter = this.getCellsInSameRowsFilter.bind(this);
+    this.groupCellsByColumn = this.groupCellsByColumn.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -120,16 +122,30 @@ class StockDashboard extends Component { //eslint-disable-line
   shouldComponentUpdate(nextProps) {
     return shallowCompare(this.props, nextProps);
   }
-
-  putInBlock(tallCell, otherCell) {
-    const height = tallCell.rows + Number(tallCell.index[0]);
-    const result = height > Number(otherCell.index[0]);
-    if (result) {
-      return true;
-    } else if (!result) {
-      return false;
-    }
+  getCellsInSameRowsFilter(rowStart, rowEnd, value) {
+    return (rowStart <= Number(value.index[0])) && (Number(value.index[0]) < rowEnd);
   }
+  groupCellsByColumn(cells) {
+    const cellsGroupedByColumn = {};
+    for (let iterator = 0; iterator < cells.length; iterator++) {
+      if (cellsGroupedByColumn.hasOwnProperty(cells[iterator].index[1])) {
+        cellsGroupedByColumn[cells[iterator].index[1]].push(cells[iterator]);
+      } else {
+        cellsGroupedByColumn[cells[iterator].index[1]] = [];
+        cellsGroupedByColumn[cells[iterator].index[1]].push(cells[iterator]);
+      }
+    }
+    return cellsGroupedByColumn;
+  }
+  // putInBlock(tallCell, otherCell) {
+  //   const height = tallCell.rows + Number(tallCell.index[0]);
+  //   const result = height > Number(otherCell.index[0]);
+  //   if (result) {
+  //     return true;
+  //   } else if (!result) {
+  //     return false;
+  //   }
+  // }
 
   renderLayout() {
     const {
@@ -139,51 +155,49 @@ class StockDashboard extends Component { //eslint-disable-line
     } = this.props;
 
     let markup = [];
+    const layoutCells = [];
     const alreadyRendered = [];
 
-    for (let cellIndex = 0; cellIndex < layout.length; cellIndex++) {
-      if (alreadyRendered.includes(layout[cellIndex].index)) {
-        continue;
+    for (let cellIndex = 0; cellIndex < layout.length; cellIndex++) { // For every cell
+      if (alreadyRendered.includes(layout[cellIndex].index)) { // Delete this? Might be unneccessary. Cut down on
+        continue;                                             // Extraneous rendering
       }
       const cell = layout[cellIndex];
       const className = `col-lg-${Math.floor(12 / (columnCount / cell.columns))} col-md-6 col-sm-12 col-xs-12`;
       const cellHeight = (cell.rows / rowCount) * 100;
       if (cell.rows > 1) {
-        const blockedElements = {};
         const restOfElements = [...layout.slice(0, cellIndex), ...layout.slice(cellIndex + 1)];
+        const cellRowRange = (Number(cell.index[0]) + cell.rows);
+        const sameLevelCells = restOfElements.filter(this.getCellsInSameRowsFilter.bind(null, Number(cell.index[0]), cellRowRange));
+        const blockedElements = this.groupCellsByColumn(sameLevelCells); // Further group cells into an object of arrays indexed by column
 
-        for (let iterator = 0; iterator < restOfElements.length; iterator++) {
-          if (this.putInBlock(layout[cellIndex], restOfElements[iterator])) {
-            if (blockedElements.hasOwnProperty(restOfElements[iterator].index[1])) {
-              blockedElements[restOfElements[iterator].index[1]].push(restOfElements[iterator]);
-            } else {
-              blockedElements[restOfElements[iterator].index[1]] = [];
-              blockedElements[restOfElements[iterator].index[1]].push(restOfElements[iterator]);
-            }
-            alreadyRendered.push(restOfElements[iterator].index);
-            if (markup.findIndex((item => { return item.key === restOfElements[iterator].index; })) !== -1) {
-              const markupIndex = markup.findIndex((item => { return item.key === restOfElements[iterator].index; }));
-              markup = [...markup.slice(0, markupIndex), ...markup.slice(markupIndex + 1)];
-            }
-          }
-        }
-        console.log('blockedElements',blockedElements);
-        for (let j = 0; j < Object.keys(blockedElements).length + 1; j++) {
-          if (blockedElements.hasOwnProperty(j)) {
-            markup.push(React.createElement(LayoutBlock,  {key: j}, blockedElements[j]));
-          } else {
-            markup.push(React.createElement(LayoutCell, {
-              resizingCell, resizingInProgress, startResize,
-              resizingNeedsConfirm, markAsOverlapped, cellHeight, resizingDone,
-              resizeComplete, className, layoutIndices: cell.index, key: cell.index, resizingLayoutIndex, boundingBox
-            }));
-          }
-        }
-        const test ='t0';
-        // console.log('two blocks of height.. ', cellHeight, 'needs to be made');
-        // console.log('and it needs to have a classname of..', className);
-        // console.log('the other block needs', 12 - Math.floor(12 / (columnCount / cell.columns)));
-        // console.log('and it needs to contain the following elements');
+        const test = 't0';
+        // for (let iterator = 0; iterator < restOfElements.length; iterator++) {
+        //   if (this.putInBlock(layout[cellIndex], restOfElements[iterator])) {
+        //     if (blockedElements.hasOwnProperty(restOfElements[iterator].index[1])) {
+        //       blockedElements[restOfElements[iterator].index[1]].push(restOfElements[iterator]);
+        //     } else {
+        //       blockedElements[restOfElements[iterator].index[1]] = [];
+        //       blockedElements[restOfElements[iterator].index[1]].push(restOfElements[iterator]);
+        //     }
+        //     alreadyRendered.push(restOfElements[iterator].index);
+        //     if (markup.findIndex((item => { return item.key === restOfElements[iterator].index; })) !== -1) {
+        //       const markupIndex = markup.findIndex((item => { return item.key === restOfElements[iterator].index; }));
+        //       markup = [...markup.slice(0, markupIndex), ...markup.slice(markupIndex + 1)];
+        //     }
+        //   }
+        // }
+        // for (let j = 0; j < Object.keys(blockedElements).length + 1; j++) {
+        //   if (blockedElements.hasOwnProperty(j)) {
+        //     markup.push(React.createElement(LayoutBlock,  {key: j}, blockedElements[j]));
+        //   } else {
+        //     markup.push(React.createElement(LayoutCell, {
+        //       resizingCell, resizingInProgress, startResize,
+        //       resizingNeedsConfirm, markAsOverlapped, cellHeight, resizingDone,
+        //       resizeComplete, className, layoutIndices: cell.index, key: cell.index, resizingLayoutIndex, boundingBox
+        //     }));
+        //   }
+        // }
       } else {
         markup.push(React.createElement(LayoutCell, {
           resizingCell, resizingInProgress, startResize,
@@ -206,7 +220,6 @@ class StockDashboard extends Component { //eslint-disable-line
       //     resizeComplete, className, layoutIndices, key: cellIndex, resizingLayoutIndex, boundingBox}));
       // }
     }
-    console.log(markup);
     return markup;
 
   }
