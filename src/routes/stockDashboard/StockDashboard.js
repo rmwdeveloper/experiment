@@ -11,8 +11,8 @@ import * as modalActions from '../../actions/modal';
 import { DragDropContext as dragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
-import LayoutCell from '../../components/LayoutCell';
-import LayoutBlock from '../../components/LayoutBlock';
+import LayoutRenderer from '../../components/LayoutRenderer';
+
 import Modal from '../../components/Modal';
 import ModalButton from '../../components/ModalButton';
 
@@ -101,12 +101,6 @@ class StockDashboard extends Component { //eslint-disable-line
 
   constructor() {
     super();
-    this.renderLayout = this.renderLayout.bind(this);
-    // this.putInBlock = this.putInBlock.bind(this);
-    this.getCellsInSameRowsFilter = this.getCellsInSameRowsFilter.bind(this);
-    this.renderBlocks = this.renderBlocks.bind(this);
-    this.deduplicateCellsFilter = this.deduplicateCellsFilter.bind(this);
-    this.getGroupedColumnCount = this.getGroupedColumnCount.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -124,94 +118,7 @@ class StockDashboard extends Component { //eslint-disable-line
   shouldComponentUpdate(nextProps) {
     return shallowCompare(this.props, nextProps);
   }
-  deduplicateCellsFilter(alreadyRendered, value) {
-    return !alreadyRendered.includes(value.props.layoutIndices);
-  }
-  getCellsInSameRowsFilter(rowStart, rowEnd, value) {
-    return (rowStart <= Number(value.index[0])) && (Number(value.index[0]) < rowEnd);
-  }
-  getGroupedColumnCount(cells, columnIndex) {
-    let counter = 0;
-    for (let iterator = 0; iterator < cells.length; iterator++) {
-      if (columnIndex === cells[iterator].index[1]) {
-        counter++;
-      }
-    }
-    return counter;
-  }
-  renderBlocks(blockedElements, className){
-    const elements = [];
-    for (const columnIndex in blockedElements) { //eslint-disable-line
-      if (blockedElements.hasOwnProperty(columnIndex)) {
-        elements.push(React.createElement(LayoutBlock, {key: columnIndex, className}, blockedElements[columnIndex]));
-      }
-    }
-    return elements;
-  }
 
-  renderLayout() {
-    const {
-      rowCount, columnCount, gridVisible, cells, mode, layout, resizingLayoutIndex, boundingBox,
-      resizingInProgress, startResize, resizingNeedsConfirm, markAsOverlapped, resizingDone,
-      toggleEditCellMode, inEditMode, addStockWidget, swapWidget, resizingCell, resizeComplete
-    } = this.props;
-
-    let markup = [];
-    const layoutCells = [];
-    const alreadyRendered = [];
-
-    for (let cellIndex = 0; cellIndex < layout.length; cellIndex++) { // For every cell
-      if (alreadyRendered.includes(layout[cellIndex].index)) { // todo: probably shouldn't need this. Don't
-        continue;                                              // render extraneously
-      }
-      const cell = layout[cellIndex];
-      const className = `col-lg-${Math.floor(12 / (columnCount / cell.columns))} col-md-6 col-sm-12 col-xs-12`;
-      const cellHeight = (cell.rows / rowCount) * 100;
-      if (cell.rows > 1) {
-        const restOfElements = [...layout.slice(0, cellIndex), ...layout.slice(cellIndex + 1)];
-        const cellRowRange = (Number(cell.index[0]) + cell.rows);
-        const sameLevelCells = restOfElements.filter(this.getCellsInSameRowsFilter.bind(null, Number(cell.index[0]), cellRowRange));
-        alreadyRendered.push(...sameLevelCells.map((item) => {
-          return item.index;
-        }));
-
-        const cellsGroupedByColumn = {};
-        for (let iterator = 0; iterator < sameLevelCells.length; iterator++) {
-          if (cellsGroupedByColumn.hasOwnProperty(sameLevelCells[iterator].index[1])) {
-            cellsGroupedByColumn[sameLevelCells[iterator].index[1]].push(
-              React.createElement(LayoutCell, {
-                  resizingCell, resizingInProgress, startResize,
-                  resizingNeedsConfirm, markAsOverlapped, cellHeight: (100 / this.getGroupedColumnCount(sameLevelCells, sameLevelCells[iterator].index[1])), resizingDone,
-                  resizeComplete, className: "col-xs-12", layoutIndices: sameLevelCells[iterator].index, key: sameLevelCells[iterator].index, resizingLayoutIndex, boundingBox
-                }));
-          } else {
-            cellsGroupedByColumn[sameLevelCells[iterator].index[1]] = [];
-            cellsGroupedByColumn[sameLevelCells[iterator].index[1]].push(
-
-              React.createElement(LayoutCell, {
-                  resizingCell, resizingInProgress, startResize,
-                  resizingNeedsConfirm, markAsOverlapped, cellHeight: (100 / this.getGroupedColumnCount(sameLevelCells, sameLevelCells[iterator].index[1])), resizingDone,
-                  resizeComplete, className: "col-xs-12", layoutIndices: sameLevelCells[iterator].index, key: sameLevelCells[iterator].index, resizingLayoutIndex, boundingBox
-                }));
-          }
-        }
-        layoutCells.push(...this.renderBlocks(cellsGroupedByColumn, className));
-
-      }
-      layoutCells.push(React.createElement(LayoutCell, {
-        resizingCell, resizingInProgress, startResize,
-        resizingNeedsConfirm, markAsOverlapped, cellHeight, resizingDone,
-        resizeComplete, className, layoutIndices: cell.index, key: cell.index, resizingLayoutIndex, boundingBox
-       }));
-
-    }
-
-    const uniqueCells = layoutCells.filter(this.deduplicateCellsFilter.bind(null, alreadyRendered));
-    return uniqueCells.sort((cellA, cellB) => {
-      return Number(cellA.key) - Number(cellB.key);
-    });
-    return markup;
-  }
 
   render() {
     const {
@@ -219,7 +126,6 @@ class StockDashboard extends Component { //eslint-disable-line
       closeModal, modalVisible, modalBody, modalFooter
     } = this.props;
     this.context.setTitle(title);
-    const markup = this.renderLayout();
     return (
       <div
         className={cx('row',
@@ -236,9 +142,7 @@ class StockDashboard extends Component { //eslint-disable-line
           autosave={autosave}
         />
         <div id="stockDashboard" className={cx('col-lg-12 col-md-12 col-sm-12 col-xs-12', styles.primaryColumn)}>
-          <div className={cx(styles.primaryRow, 'row')}>
-            {markup}
-          </div>
+            <LayoutRenderer className={cx(styles.primaryRow, 'row')} {...this.props} />
         </div>
         <Modal id="primaryModal" modalVisible={modalVisible} modalTitle="The title!" modalFooter={modalFooter}
                modalContent={modalBody}/>
