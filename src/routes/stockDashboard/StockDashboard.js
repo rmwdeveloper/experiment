@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './stockDashboard.css'; //eslint-disable-line
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { connect } from 'react-redux';
 import shallowCompare from 'react-addons-shallow-compare';
 import StockDashboardNavigation from '../../components/StockDashboardNavigation';
@@ -142,7 +143,14 @@ class StockDashboard extends Component { //eslint-disable-line
           mode={mode}
           autosave={autosave}
         />
-        { layoutPickerVisible ? <LayoutPicker /> : null }
+
+        <ReactCSSTransitionGroup transitionName={{
+          enter: styles.exampleEnter, enterActive: styles.exampleEnterActive,
+          leave: styles.exampleLeave, exampleLeaveActive: styles.exampleLeaveActive
+        }} transitionEnterTimeout={600} transitionLeaveTimeout={600}>
+          { layoutPickerVisible ?
+            <LayoutPicker className={styles.layoutPicker} /> : null }
+        </ReactCSSTransitionGroup>
         <div id="stockDashboard" className={cx('col-lg-12 col-md-12 col-sm-12 col-xs-12', styles.primaryColumn)}>
 
         </div>
