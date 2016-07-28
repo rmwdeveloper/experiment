@@ -11,7 +11,7 @@ import * as modalActions from '../../actions/modal';
 import { DragDropContext as dragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
-import LayoutRenderer from '../../components/LayoutRenderer';
+import LayoutPicker from '../../components/LayoutPicker';
 
 import Modal from '../../components/Modal';
 import ModalButton from '../../components/ModalButton';
@@ -25,11 +25,6 @@ const title = 'Stock Dashboard';
   searchedStocks: state.stock.searchedStocks,
   mode: state.stock.mode,
   autosave: state.stock.autosave,
-  columnCount: state.layout.columnCount,
-  rowCount: state.layout.rowCount,
-  gridVisible: state.layout.gridVisible,
-  cells: state.layout.cells,
-  layout: state.layout.layout,
   searches: state.stock.searches,
   quotes: state.stock.quotes,
   first: state.auth.first,
@@ -38,14 +33,20 @@ const title = 'Stock Dashboard';
   charts: state.stock.charts,
   displayedChart: state.stock.displayedChart,
   inEditMode: state.stock.inEditMode,
-  resizingLayoutIndex: state.layout.resizingLayoutIndex,
-  boundingBox: state.layout.boundingBox,
-  resizingInProgress: state.layout.resizingInProgress,
-  resizingNeedsConfirm: state.layout.resizingNeedsConfirm,
-  resizingDone: state.layout.resizingDone,
+  gridVisible: state.layout.gridVisible,
+  layout: state.layout.layout,
   modalBody: state.modal.modalBody,
   modalFooter: state.modal.modalFooter,
-  modalVisible: state.modal.modalVisible
+  modalVisible: state.modal.modalVisible,
+  layoutPickerVisible: state.layout.layoutPickerVisible
+  // columnCount: state.layout.columnCount,
+  // rowCount: state.layout.rowCount,
+  // cells: state.layout.cells,
+  // resizingLayoutIndex: state.layout.resizingLayoutIndex,
+  // boundingBox: state.layout.boundingBox,
+  // resizingInProgress: state.layout.resizingInProgress,
+  // resizingNeedsConfirm: state.layout.resizingNeedsConfirm,
+  // resizingDone: state.layout.resizingDone,
 }), { ...stockActions, ...layoutActions, ...modalActions })
 class StockDashboard extends Component { //eslint-disable-line
   static propTypes = {
@@ -78,22 +79,26 @@ class StockDashboard extends Component { //eslint-disable-line
     displayedChart: PropTypes.string,
     changeDisplayedChart: PropTypes.func,
     swapWidget: PropTypes.func,
-    resizingCell: PropTypes.func,
-    resizingLayoutIndex: PropTypes.string,
-    boundingBox: PropTypes.object,
-    resizeComplete: PropTypes.func,
-    startResize: PropTypes.func,
-    resizingInProgress: PropTypes.bool,
-    resizingNeedsConfirm: PropTypes.bool,
-    resizingDone: PropTypes.bool,
     modalVisible: PropTypes.bool,
     openModal: PropTypes.func,
     closeModal: PropTypes.func,
     modalBody: PropTypes.string,
     modalFooter: PropTypes.element,
-    deactivateMergeConfirm: PropTypes.func,
-    mergeCells: PropTypes.func,
-    markAsOverlapped: PropTypes.func
+    openLayoutPicker: PropTypes.func,
+    closeLayoutPicker: PropTypes.func,
+    layoutPickerVisible: PropTypes.bool
+    // resizingCell: PropTypes.func,
+    // resizingLayoutIndex: PropTypes.string,
+    // boundingBox: PropTypes.object,
+    // resizeComplete: PropTypes.func,
+    // startResize: PropTypes.func,
+    // resizingInProgress: PropTypes.bool,
+    // resizingNeedsConfirm: PropTypes.bool,
+    // resizingDone: PropTypes.bool,
+    // deactivateMergeConfirm: PropTypes.func,
+    // mergeCells: PropTypes.func,
+    // markAsOverlapped: PropTypes.func
+
   };
   static contextTypes = {
     setTitle: PropTypes.func.isRequired
@@ -122,27 +127,24 @@ class StockDashboard extends Component { //eslint-disable-line
 
   render() {
     const {
-      toggleGrid, gridVisible, addColumn, addRow, toggleMode, mode, autosave, resizingNeedsConfirm,
-      closeModal, modalVisible, modalBody, modalFooter
+      toggleGrid, gridVisible, toggleMode, mode, autosave, layoutPickerVisible,
+      closeModal, modalVisible, modalBody, modalFooter, openLayoutPicker, closeLayoutPicker
     } = this.props;
     this.context.setTitle(title);
     return (
-      <div
-        className={cx('row',
-      'center-lg center-md center-sm center-xs top-lg top-md top-sm top-xs',
-        styles.root)}
-      >
+      <div className={cx('row', 'center-lg center-md center-sm center-xs top-lg top-md top-sm top-xs', styles.root)}>
         <StockDashboardNavigation
+          openLayoutPicker={openLayoutPicker}
+          closeLayoutPicker={closeLayoutPicker}
           toggleGrid={toggleGrid}
           gridVisible={gridVisible}
-          addColumn={addColumn}
-          addRow={addRow}
           toggleMode={toggleMode}
           mode={mode}
           autosave={autosave}
         />
+        { layoutPickerVisible ? <LayoutPicker /> : null }
         <div id="stockDashboard" className={cx('col-lg-12 col-md-12 col-sm-12 col-xs-12', styles.primaryColumn)}>
-            <LayoutRenderer className={cx(styles.primaryRow, 'row')} {...this.props} />
+
         </div>
         <Modal id="primaryModal" modalVisible={modalVisible} modalTitle="The title!" modalFooter={modalFooter}
                modalContent={modalBody}/>

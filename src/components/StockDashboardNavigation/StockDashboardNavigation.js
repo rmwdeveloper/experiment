@@ -3,30 +3,18 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './StockDashboardNavigation.css'; //eslint-disable-line
 import classNames from 'classnames/bind';
 
-function StockDashboardNavigation({ toggleMode,
-  mode, addColumn, addRow, gridVisible, toggleGrid }) {
+function StockDashboardNavigation({ toggleMode, openLayoutPicker,
+  mode }) {
   const cx = classNames.bind(styles);
   return (
     <header className={`${styles.root} col-md-12 col-sm-12 col-xs-12 col-lg-12`} role="navigation">
       <div className={`${styles.linkContainer} col-xs`}>
         <a
-          onClick={() => toggleMode('layout')}
-          className={cx({ link: true, active: mode === 'layout' })}
+          onClick={openLayoutPicker}
+          className={cx(styles.link, { link: true })}
         >
-          <span className={styles.desktop}>Add Mode</span>
-          <i className={cx('fa fa-2x fa-arrows', styles.mobile)} />
-        </a>
-        <a onClick={toggleGrid} className={cx({ link: true, active: gridVisible })}>
-          <span className={styles.desktop}>Grid</span>
-          <i className={cx('fa fa-2x fa-table', styles.mobile)} />
-        </a>
-        <a onClick={addColumn} className={cx({ link: true })}>
-          <span className={styles.desktop}>Add Column</span>
-          <i className={cx('fa fa-2x fa-columns', styles.mobile)} />
-        </a>
-        <a onClick={addRow} className={cx({ link: true })}>
-          <span className={styles.desktop}>Add Row</span>
-          <i className={cx('fa fa-2x fa-navicon', styles.mobile)} />
+          <span className={styles.desktop}>Pick Layout</span>
+          <i className={cx('fa fa-2x fa-eye', styles.mobile)} />
         </a>
         <a
           onClick={() => toggleMode('preview')}
@@ -46,11 +34,12 @@ function StockDashboardNavigation({ toggleMode,
 
 StockDashboardNavigation.propTypes = {
   toggleMode: PropTypes.func,
+  openLayoutPicker: PropTypes.func,
   mode: PropTypes.string,
-  addColumn: PropTypes.func,
-  addRow: PropTypes.func,
-  gridVisible: PropTypes.bool,
+  // addColumn: PropTypes.func,
+  // addRow: PropTypes.func,
+  // gridVisible: PropTypes.bool,
   autosave: PropTypes.bool,
-  toggleGrid: PropTypes.func
+  // toggleGrid: PropTypes.func
 };
 export default withStyles(styles)(StockDashboardNavigation);
