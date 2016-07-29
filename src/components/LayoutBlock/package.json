@@ -1,0 +1,6 @@
+{
+  "name": "LayoutBlock",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./LayoutBlock.js"
+}

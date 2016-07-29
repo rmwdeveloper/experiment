@@ -1,14 +1,11 @@
-<<<<<<< HEAD
+
 import React, { PropTypes, Component } from 'react';
-=======
-import React, { PropTypes } from 'react';
->>>>>>> origin/dev
+
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './LayoutCell.css'; //eslint-disable-line
 import CellActions from '../CellActions';
 import dragSourceTarget from '../DragSourceTarget/DragSourceTarget';
 
-<<<<<<< HEAD
 class LayoutCell extends Component {
   static propTypes = {
     addStockWidget: PropTypes.func,
@@ -20,7 +17,17 @@ class LayoutCell extends Component {
     cellIndex: PropTypes.string,
     toggleEditCellMode: PropTypes.func,
     editing: PropTypes.bool,
-    layoutIndices: PropTypes.array
+    layoutIndices: PropTypes.string,
+    resizingCell: PropTypes.func,
+    boundingBox: PropTypes.object,
+    resizingLayoutIndex: PropTypes.string,
+    resizeComplete: PropTypes.func,
+    startResize: PropTypes.func,
+    resizingInProgress: PropTypes.bool,
+    resizingNeedsConfirm: PropTypes.bool,
+    resizingDone: PropTypes.bool,
+    markAsOverlapped: PropTypes.func,
+    cellHeight: PropTypes.number
   };
 
   constructor() {
@@ -41,7 +48,6 @@ class LayoutCell extends Component {
     this.resize = this.resize.bind(this);
     this.startResize = this.startResize.bind(this);
     this.endResize = this.endResize.bind(this);
-
   }
 
   resize(event) {
@@ -51,6 +57,7 @@ class LayoutCell extends Component {
       cornerClicked, initialClickPageX, initialClickCellWidth, initialClickPageY,
       initialClickCellHeight
     } = this.state;
+    resizingCell(layoutIndices, this.widgetCell.getBoundingClientRect());
     const xDirection = pageX < initialClickPageX ? 'left' : 'right';
     const yDirection = pageY < initialClickPageY ? 'up' : 'down';
     const movedX = pageX - initialClickPageX;
@@ -74,7 +81,6 @@ class LayoutCell extends Component {
         width = xDirection === 'right' ? `${initialClickCellWidth - movedX}px` : `${initialClickCellWidth + Math.abs(movedX)}px`;
         height = `${initialClickCellHeight + movedY}px`;
         minHeight = `${initialClickCellHeight + movedY}px`;
-        transform = `translateX(-${movedX}px)`;
         break;
       case 'topRight':
         if ((pageY - 100) < 0 || yDirection === 'down') {
@@ -119,6 +125,7 @@ class LayoutCell extends Component {
         break;
     }
 
+    this.props.startResize();
     this.setState({
       resizing: true,
       initialClickPageX: event.pageX,
@@ -139,14 +146,19 @@ class LayoutCell extends Component {
       initialClickPageY: null,
       initialClickCellHeight: null,
       cornerClicked: null,
+      height: null,
+      minHeight: null,
+      width: null,
+      transform: null
     });
+    this.props.resizeComplete();
     window.removeEventListener('mouseup', this.endResize);
     window.removeEventListener('mousemove', this.resize);
   }
 
   componentDidMount() {
     this.dashBoard = document.getElementById('stockDashboard');
-    this.widgetCell = document.getElementById(`cell${this.props.layoutIndices[0]}`);
+    this.widgetCell = document.getElementById(`cell${this.props.layoutIndices}`);
     this.widgetWidth = this.widgetCell.offsetWidth;
     this.widgetRect = this.widgetCell.getBoundingClientRect();
   }
@@ -211,53 +223,6 @@ class LayoutCell extends Component {
   }
 }
 
-=======
-function LayoutCell({
-  addStockWidget, mode,
-  gridVisible, columnHeight, rowWidth, widget, cellIndex, toggleEditCellMode,
-  editing, ...props
-}) {
-  const border = gridVisible ? '1px dashed black' : 'medium none';
-  let visibility = mode === 'preview' ? 'hidden' : 'visible';
-  const style = { border };
-  if (widget) {
-    visibility = 'visible';
-  } else {
-    style.height = `${columnHeight * 8.8}px`;
-    style.visibility = visibility;
-  }
 
-  return (
-    <div style={style} className={styles.root}>
-      {
-        widget ?
 
-          React.createElement(widget, { cellIndex, ...props })
-
-          : <CellActions
-            addStockWidget={addStockWidget}
-            editing={editing}
-            cellIndex={cellIndex}
-            toggleEditCellMode={toggleEditCellMode}
-            rowWidth={rowWidth}
-            columnHeight={columnHeight}
-          {...props}
-          />
-      }
-    </div>
-  );
-}
-
-LayoutCell.propTypes = {
-  addStockWidget: PropTypes.func,
-  mode: PropTypes.string,
-  gridVisible: PropTypes.bool,
-  columnHeight: PropTypes.number,
-  rowWidth: PropTypes.number,
-  widget: PropTypes.func,
-  cellIndex: PropTypes.string,
-  toggleEditCellMode: PropTypes.func,
-  editing: PropTypes.bool
-};
->>>>>>> origin/dev
 export default dragSourceTarget(withStyles(styles)(LayoutCell));

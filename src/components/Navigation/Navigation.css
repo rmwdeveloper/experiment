@@ -1,5 +1,8 @@
 .root {
   margin: 0;
+  height: 5%;
+  min-height: 50px;
+  overflow: hidden;
 }
 
 .linkContainer .link {

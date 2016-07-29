@@ -4,6 +4,7 @@ import styles from './App.css'; //eslint-disable-line
 import { Provider } from 'react-redux';
 import Navigation from '../Navigation';
 
+
 export default class App extends Component {
 
   static propTypes = {
@@ -45,11 +46,10 @@ export default class App extends Component {
     if (this.props.error) {
       return this.props.children;
     }
-
     const store = this.props.context.store;
     return (
       <Provider store={store}>
-        <div>
+        <div className={styles.root}>
           <Navigation />
           {this.props.children}
         </div>

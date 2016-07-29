@@ -1,36 +1,28 @@
 @import '../variables.css';
 
 .root{
-  min-height: 100px;
   display: flex;
-<<<<<<< HEAD
+
   position: relative;
   align-items: center;
   justify-content:center;
   margin: 10px;
   outline: 1px dashed black;
   width: 100%;
-=======
-  align-items: center;
-  justify-content:center;
-  margin: 10px;
-
->>>>>>> origin/dev
+  height: 100%;
 }
 
 .gridVisible {
   border: 1px dashed black;
 }
 
-<<<<<<< HEAD
-.resizeHandle{
 
+
+
+.resizeHandle {
   height: 25px;
-  width:25px;
+  width: 25px;
   position: absolute;
   display: block;
   z-index: 2;
 }
-=======
-
->>>>>>> origin/dev

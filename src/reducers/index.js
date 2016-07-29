@@ -3,10 +3,12 @@ import runtime from './runtime';
 import stock from './stock';
 import auth from './auth';
 import layout from './layout';
+import modal from './modal';
 
 export default combineReducers({
   runtime,
   stock,
   auth,
-  layout
+  layout,
+  modal
 });
