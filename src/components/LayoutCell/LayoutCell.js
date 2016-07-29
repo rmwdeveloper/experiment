@@ -1,4 +1,6 @@
+
 import React, { PropTypes, Component } from 'react';
+
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './LayoutCell.css'; //eslint-disable-line
 import CellActions from '../CellActions';
@@ -46,8 +48,6 @@ class LayoutCell extends Component {
     this.resize = this.resize.bind(this);
     this.startResize = this.startResize.bind(this);
     this.endResize = this.endResize.bind(this);
-    this.isOverlapping = this.isOverlapping.bind(this);
-
   }
 
   resize(event) {
@@ -57,7 +57,6 @@ class LayoutCell extends Component {
       cornerClicked, initialClickPageX, initialClickCellWidth, initialClickPageY,
       initialClickCellHeight
     } = this.state;
-    const { resizingCell, layoutIndices } = this.props;
     resizingCell(layoutIndices, this.widgetCell.getBoundingClientRect());
     const xDirection = pageX < initialClickPageX ? 'left' : 'right';
     const yDirection = pageY < initialClickPageY ? 'up' : 'down';
@@ -82,7 +81,6 @@ class LayoutCell extends Component {
         width = xDirection === 'right' ? `${initialClickCellWidth - movedX}px` : `${initialClickCellWidth + Math.abs(movedX)}px`;
         height = `${initialClickCellHeight + movedY}px`;
         minHeight = `${initialClickCellHeight + movedY}px`;
-        transform = `translateX(${movedX}px)`;
         break;
       case 'topRight':
         if ((pageY - 100) < 0 || yDirection === 'down') {
@@ -94,7 +92,6 @@ class LayoutCell extends Component {
         width = xDirection === 'right' ? `${initialClickCellWidth + movedX}px` : `${initialClickCellWidth + movedX}px`;
         break;
       case 'topLeft':
-
         if ((pageY - 100) < 0 || yDirection === 'down') {
           return null;
         }
@@ -111,6 +108,23 @@ class LayoutCell extends Component {
 
   startResize(event, cornerClicked) {
     event.preventDefault();
+
+    switch (cornerClicked) {
+      case 'bottomRight':
+
+        break;
+      case 'bottomLeft':
+        break;
+      case 'topRight':
+
+        break;
+      case 'topLeft':
+
+        break;
+      default:
+        break;
+    }
+
     this.props.startResize();
     this.setState({
       resizing: true,
@@ -119,7 +133,6 @@ class LayoutCell extends Component {
       initialClickPageY: event.pageY,
       initialClickCellHeight: this.widgetCell.offsetHeight,
       cornerClicked,
-
     });
     this.mouseUp = window.addEventListener('mouseup', this.endResize);
     this.mouseMove = window.addEventListener('mousemove', this.resize);
@@ -151,52 +164,15 @@ class LayoutCell extends Component {
   }
 
   componentDidUpdate() {
-    this.widgetCell = document.getElementById(`cell${this.props.layoutIndices}`);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { layoutIndices, markAsOverlapped } = this.props;
-    if (!this.props.resizingDone && nextProps.resizingDone) {
-      if (this.isOverlapping()) {
-        markAsOverlapped(layoutIndices);
-      }
-    }
-  }
-
-  isOverlapping() {
-    const thisBox = this.widgetCell.getBoundingClientRect();
-    const { boundingBox } = this.props;
-    if (Object.keys(boundingBox).length === 0 && boundingBox.constructor === Object) {
-      return false;
-    }
-    return !(boundingBox.right < thisBox.left ||
-    boundingBox.left > thisBox.right ||
-    boundingBox.bottom < thisBox.top ||
-    boundingBox.top > thisBox.bottom);
+    this.widgetCell = document.getElementById(`cell${this.props.layoutIndices[0]}`);
   }
 
   render() {
-    const {
-      mode, gridVisible, columnHeight, widget, rowWidth, layoutIndices, addStockWidget, toggleEditCellMode, cellIndex, editing,
-      resizingInProgress, resizingLayoutIndex, cellHeight
-    } = this.props;
+    const { mode, gridVisible, columnHeight, widget, rowWidth, layoutIndices, addStockWidget, toggleEditCellMode, cellIndex, editing } = this.props;
     const { resizing, transform, width, height, minHeight } = this.state;
     const border = gridVisible ? '1px dashed black' : 'medium none';
-    const style = { border };
     let visibility = mode === 'preview' ? 'hidden' : 'visible';
-    if (resizingLayoutIndex !== layoutIndices && this.widgetCell && resizingInProgress) {
-      const overlap = this.isOverlapping();
-      if (overlap) {
-        this.overLapped = true;
-        style.backgroundColor = 'red';
-      }
-      else {
-        this.overLapped = false;
-      }
-    }
-    if (resizingLayoutIndex === layoutIndices && !resizing) {
-      style.backgroundColor = 'yellow';
-    }
+    const style = { border };
     if (resizing) {
       style.height = height;
       style.minHeight = minHeight;
@@ -206,11 +182,12 @@ class LayoutCell extends Component {
     if (widget) {
       visibility = 'visible';
     } else {
+      // style.height = `${columnHeight * 8.8}px`;
       style.visibility = visibility;
     }
     return (
-      <div id={`cell${layoutIndices}`} style={style} className={styles.root}>
-        <div id={`inner${layoutIndices}`} style={{position: 'absolute'}}>
+      <div id={`cell${layoutIndices[0]}`} style={style} className={styles.root}>
+        <div id={`inner${layoutIndices[0]}`} style={{position: 'absolute'}}>
           {layoutIndices}
           {
             widget ?
@@ -245,5 +222,7 @@ class LayoutCell extends Component {
     );
   }
 }
+
+
 
 export default dragSourceTarget(withStyles(styles)(LayoutCell));

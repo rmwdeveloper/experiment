@@ -12,11 +12,6 @@ import * as modalActions from '../../actions/modal';
 import { DragDropContext as dragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
-import LayoutPicker from '../../components/LayoutPicker';
-
-import Modal from '../../components/Modal';
-import ModalButton from '../../components/ModalButton';
-
 
 import cx from 'classnames';
 const title = 'Stock Dashboard';
@@ -108,6 +103,7 @@ class StockDashboard extends Component { //eslint-disable-line
     super();
   }
 
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.resizingNeedsConfirm) {
       this.props.deactivateMergeConfirm();
@@ -142,6 +138,13 @@ class StockDashboard extends Component { //eslint-disable-line
           autosave={autosave}
         />
 
+        <div id="stockDashboard" className={cx('col-lg-12 col-md-12 col-sm-12 col-xs-12', styles.primaryColumn)}>
+        <div className={cx('col-lg-12 col-md-12 col-sm-12 col-xs-12', styles.primaryColumn)}>
+          <div className={cx(styles.primaryRow, 'row')}>
+            {markup}
+          </div>
+
+
         <ReactCSSTransitionGroup transitionName={{
           enter: styles.exampleEnter, enterActive: styles.exampleEnterActive,
           leave: styles.exampleLeave, exampleLeaveActive: styles.exampleLeaveActive
@@ -151,11 +154,13 @@ class StockDashboard extends Component { //eslint-disable-line
         </ReactCSSTransitionGroup>
         <div id="stockDashboard" className={cx('col-lg-12 col-md-12 col-sm-12 col-xs-12', styles.primaryColumn)}>
 
+
         </div>
         <Modal id="primaryModal" modalVisible={modalVisible} modalTitle="The title!" modalFooter={modalFooter}
                modalContent={modalBody}/>
-      </div>)
-      ;
+      </div>
+          </div>
+        </div>);
   }
 }
 
