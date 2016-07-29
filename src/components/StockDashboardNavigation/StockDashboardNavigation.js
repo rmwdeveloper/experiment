@@ -3,14 +3,14 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './StockDashboardNavigation.css'; //eslint-disable-line
 import classNames from 'classnames/bind';
 
-function StockDashboardNavigation({ toggleMode, openLayoutPicker,
+function StockDashboardNavigation({ toggleMode, toggleLayoutPicker,
   mode }) {
   const cx = classNames.bind(styles);
   return (
     <header className={`${styles.root} col-md-12 col-sm-12 col-xs-12 col-lg-12`} role="navigation">
       <div className={`${styles.linkContainer} col-xs`}>
         <a
-          onClick={openLayoutPicker}
+          onClick={toggleLayoutPicker}
           className={cx(styles.link, { link: true })}
         >
           <span className={styles.desktop}>Pick Layout</span>

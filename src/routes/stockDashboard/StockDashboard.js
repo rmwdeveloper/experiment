@@ -85,8 +85,7 @@ class StockDashboard extends Component { //eslint-disable-line
     closeModal: PropTypes.func,
     modalBody: PropTypes.string,
     modalFooter: PropTypes.element,
-    openLayoutPicker: PropTypes.func,
-    closeLayoutPicker: PropTypes.func,
+    toggleLayoutPicker: PropTypes.func,
     layoutPickerVisible: PropTypes.bool
     // resizingCell: PropTypes.func,
     // resizingLayoutIndex: PropTypes.string,
@@ -129,14 +128,13 @@ class StockDashboard extends Component { //eslint-disable-line
   render() {
     const {
       toggleGrid, gridVisible, toggleMode, mode, autosave, layoutPickerVisible,
-      closeModal, modalVisible, modalBody, modalFooter, openLayoutPicker, closeLayoutPicker
+      closeModal, modalVisible, modalBody, modalFooter, toggleLayoutPicker
     } = this.props;
     this.context.setTitle(title);
     return (
       <div className={cx('row', 'center-lg center-md center-sm center-xs top-lg top-md top-sm top-xs', styles.root)}>
         <StockDashboardNavigation
-          openLayoutPicker={openLayoutPicker}
-          closeLayoutPicker={closeLayoutPicker}
+          toggleLayoutPicker={toggleLayoutPicker}
           toggleGrid={toggleGrid}
           gridVisible={gridVisible}
           toggleMode={toggleMode}

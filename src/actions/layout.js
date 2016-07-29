@@ -11,17 +11,17 @@ export function swapWidgetPosition(source, target) {
   };
 }
 
-export function openLayoutPicker() {
-  return (dispatch) => {
-    dispatch({ type: OPEN_LAYOUT_PICKER });
-  };
-}
-export function closeLayoutPicker() {
-  return (dispatch) => {
-    dispatch({ type: CLOSE_LAYOUT_PICKER });
-  };
-}
+export function toggleLayoutPicker() {
+  return (dispatch, getState) => {
+    const { layout: { layoutPickerVisible } } = getState();
+    if(layoutPickerVisible) {
+      dispatch({ type: CLOSE_LAYOUT_PICKER });
+    } else {
+      dispatch({ type: OPEN_LAYOUT_PICKER });
+    }
 
+  };
+}
 //
 // export function addColumn() {
 //   return (dispatch, getState) => {
