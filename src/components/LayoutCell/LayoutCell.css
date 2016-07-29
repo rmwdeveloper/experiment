@@ -1,14 +1,14 @@
 @import '../variables.css';
 
 .root{
-  min-height: 100px;
   display: flex;
   position: relative;
   align-items: center;
   justify-content:center;
-  margin: 10px;
+
   outline: 1px dashed black;
   width: 100%;
+  height: 100%;
 }
 
 .gridVisible {
@@ -16,7 +16,6 @@
 }
 
 .resizeHandle{
-
   height: 25px;
   width:25px;
   position: absolute;

@@ -1,18 +1,23 @@
 import React, { Component, PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './stockDashboard.css'; //eslint-disable-line
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { connect } from 'react-redux';
+import shallowCompare from 'react-addons-shallow-compare';
 import StockDashboardNavigation from '../../components/StockDashboardNavigation';
 import * as stockActions from '../../actions/stock';
 import * as layoutActions from '../../actions/layout';
+import * as modalActions from '../../actions/modal';
 
 import { DragDropContext as dragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
-import LayoutCell from '../../components/LayoutCell';
-import LayoutRow from '../../components/LayoutRow';
-import LayoutColumn from '../../components/LayoutColumn';
-import widgetRegistry from '../../components/widgetRegistry';
+import LayoutPicker from '../../components/LayoutPicker';
+
+import Modal from '../../components/Modal';
+import ModalButton from '../../components/ModalButton';
+
+
 import cx from 'classnames';
 const title = 'Stock Dashboard';
 
@@ -21,11 +26,6 @@ const title = 'Stock Dashboard';
   searchedStocks: state.stock.searchedStocks,
   mode: state.stock.mode,
   autosave: state.stock.autosave,
-  columnCount: state.layout.columnCount,
-  rowCount: state.layout.rowCount,
-  gridVisible: state.layout.gridVisible,
-  cells: state.layout.cells,
-  layout: state.layout.layout,
   searches: state.stock.searches,
   quotes: state.stock.quotes,
   first: state.auth.first,
@@ -33,8 +33,22 @@ const title = 'Stock Dashboard';
   handle: state.auth.handle,
   charts: state.stock.charts,
   displayedChart: state.stock.displayedChart,
-  inEditMode: state.stock.inEditMode
-}), { ...stockActions, ...layoutActions })
+  inEditMode: state.stock.inEditMode,
+  gridVisible: state.layout.gridVisible,
+  layout: state.layout.layout,
+  modalBody: state.modal.modalBody,
+  modalFooter: state.modal.modalFooter,
+  modalVisible: state.modal.modalVisible,
+  layoutPickerVisible: state.layout.layoutPickerVisible
+  // columnCount: state.layout.columnCount,
+  // rowCount: state.layout.rowCount,
+  // cells: state.layout.cells,
+  // resizingLayoutIndex: state.layout.resizingLayoutIndex,
+  // boundingBox: state.layout.boundingBox,
+  // resizingInProgress: state.layout.resizingInProgress,
+  // resizingNeedsConfirm: state.layout.resizingNeedsConfirm,
+  // resizingDone: state.layout.resizingDone,
+}), { ...stockActions, ...layoutActions, ...modalActions })
 class StockDashboard extends Component { //eslint-disable-line
   static propTypes = {
     watchedStocks: PropTypes.array,
@@ -66,6 +80,25 @@ class StockDashboard extends Component { //eslint-disable-line
     displayedChart: PropTypes.string,
     changeDisplayedChart: PropTypes.func,
     swapWidget: PropTypes.func,
+    modalVisible: PropTypes.bool,
+    openModal: PropTypes.func,
+    closeModal: PropTypes.func,
+    modalBody: PropTypes.string,
+    modalFooter: PropTypes.element,
+    toggleLayoutPicker: PropTypes.func,
+    layoutPickerVisible: PropTypes.bool
+    // resizingCell: PropTypes.func,
+    // resizingLayoutIndex: PropTypes.string,
+    // boundingBox: PropTypes.object,
+    // resizeComplete: PropTypes.func,
+    // startResize: PropTypes.func,
+    // resizingInProgress: PropTypes.bool,
+    // resizingNeedsConfirm: PropTypes.bool,
+    // resizingDone: PropTypes.bool,
+    // deactivateMergeConfirm: PropTypes.func,
+    // mergeCells: PropTypes.func,
+    // markAsOverlapped: PropTypes.func
+
   };
   static contextTypes = {
     setTitle: PropTypes.func.isRequired
@@ -73,73 +106,54 @@ class StockDashboard extends Component { //eslint-disable-line
 
   constructor() {
     super();
-    this.renderLayout = this.renderLayout.bind(this);
-    this.getOppositeIndex = this.getOppositeIndex.bind(this);
   }
-  getOppositeIndex(layoutDataStructure) {
-    console.log(layoutDataStructure);
-  }
-  renderLayout() {
-    const { rowCount, columnCount, gridVisible, cells, mode, layout,
-      toggleEditCellMode, inEditMode, addStockWidget, swapWidget } = this.props;
-    const markup = [];
-    let columnRendering = 0;
-    for (let cellIndex = 0; cellIndex < layout.length; cellIndex++) {
-      const layoutIndices = layout[cellIndex][0];
-      const className = `col-lg-${12 / columnCount} col-md-6 col-sm-12 col-xs-12`;
-      markup.push(React.createElement(LayoutCell, {className, layoutIndices, key: cellIndex}));
-    }
 
-/*    let column = [];
-    let widget = null;
-    for (let columnNumber = 0; columnNumber < columnCount; columnNumber++) {
-      column = [];
-      for (let rowNumber = 0; rowNumber < rowCount; rowNumber++) {
-        widget = null;
-        if (cells.hasOwnProperty(`${columnNumber}${rowNumber}`)
-          && cells[`${columnNumber}${rowNumber}`]) {
-          const { widgetType } = cells[`${columnNumber}${rowNumber}`];
-          widget = widgetRegistry[widgetType];
-        }
-        column.push(React.createElement(LayoutRow, {
-          gridVisible, widget, mode,
-          editing: inEditMode.includes(`${columnNumber}${rowNumber}`), addStockWidget, swapWidget,
-          rowWidth: Math.floor(100 / columnCount), toggleEditCellMode,
-          cellIndex: `${columnNumber}${rowNumber}`,
-          key: `${columnNumber}${rowNumber}`, columnHeight: Math.floor(100 / rowCount), ...this.props
-        }));
-      }
-      markup.push(React.createElement(LayoutColumn, {
-        key: columnNumber, classNumber: Math.floor(12 / columnCount)
-      }, column));
-    }*/
-    return markup;
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.resizingNeedsConfirm) {
+      this.props.deactivateMergeConfirm();
+      const footer = (
+        <div>
+          <ModalButton closeModal={this.props.closeModal} text="Cancel"/>
+          <ModalButton closeModal={this.props.closeModal} text="Confirm" clickFunction={this.props.mergeCells}/>
+        </div>);
+      this.props.openModal('Merge these cells?', footer);
+    }
   }
+
+  shouldComponentUpdate(nextProps) {
+    return shallowCompare(this.props, nextProps);
+  }
+
 
   render() {
-    const { toggleGrid, gridVisible, addColumn, addRow, toggleMode, mode, autosave } = this.props;
+    const {
+      toggleGrid, gridVisible, toggleMode, mode, autosave, layoutPickerVisible,
+      closeModal, modalVisible, modalBody, modalFooter, toggleLayoutPicker
+    } = this.props;
     this.context.setTitle(title);
-    const markup = this.renderLayout();
     return (
-      <div
-        className={cx('row',
-      'center-lg center-md center-sm center-xs top-lg top-md top-sm top-xs',
-        styles.root)}
-      >
+      <div className={cx('row', 'center-lg center-md center-sm center-xs top-lg top-md top-sm top-xs', styles.root)}>
         <StockDashboardNavigation
+          toggleLayoutPicker={toggleLayoutPicker}
           toggleGrid={toggleGrid}
           gridVisible={gridVisible}
-          addColumn={addColumn}
-          addRow={addRow}
           toggleMode={toggleMode}
           mode={mode}
           autosave={autosave}
         />
+
+        <ReactCSSTransitionGroup transitionName={{
+          enter: styles.exampleEnter, enterActive: styles.exampleEnterActive,
+          leave: styles.exampleLeave, exampleLeaveActive: styles.exampleLeaveActive
+        }} transitionEnterTimeout={600} transitionLeaveTimeout={600}>
+          { layoutPickerVisible ?
+            <LayoutPicker className={styles.layoutPicker} /> : null }
+        </ReactCSSTransitionGroup>
         <div id="stockDashboard" className={cx('col-lg-12 col-md-12 col-sm-12 col-xs-12', styles.primaryColumn)}>
-          <div className={cx(styles.primaryRow, 'row')}>
-            {markup}
-          </div>
+
         </div>
+        <Modal id="primaryModal" modalVisible={modalVisible} modalTitle="The title!" modalFooter={modalFooter}
+               modalContent={modalBody}/>
       </div>)
       ;
   }

@@ -3,6 +3,7 @@
 
 #app {
   overflow: hidden;
+  height: 100%;
 }
 
 html {
@@ -13,6 +14,9 @@ html {
   line-height: 1.375; /* ~22px */
 }
 
+html, body, #app, .root {
+  height: 100%;
+}
 a {
   text-decoration: none;
 }

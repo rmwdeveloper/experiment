@@ -1,5 +1,3 @@
-
-
 const initialState = {
   first: 'Robert',
   last: 'W',

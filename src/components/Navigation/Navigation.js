@@ -2,6 +2,7 @@ import React from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Navigation.css'; //eslint-disable-line
 import Link from '../Link';
+import ReactPerfButton  from '../ReactPerfButton';
 
 
 function Navigation() {
@@ -11,6 +12,7 @@ function Navigation() {
         <Link className={styles.link} to="/"> Robert Westenberger </Link>
         <Link className={styles.link} to="/console">Console</Link>
         <Link className={styles.link} to="/stocks">Stock Dashboard</Link>
+        {__DEV__ ? <ReactPerfButton className={styles.link} /> : null}
       </div>
     </header>
   );

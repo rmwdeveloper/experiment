@@ -49,12 +49,14 @@ function dragSourceTarget(ComposedComponent) {
         connectDragSource: PropTypes.func.isRequired,
         connectDropTarget: PropTypes.func.isRequired
       };
-
+      static shouldComponentUpdate() {
+        return false;
+      }
       render() {
-        const { connectDragSource, connectDropTarget, className } = this.props;
+        const { connectDragSource, connectDropTarget, className, cellHeight } = this.props;
         return (
           connectDragSource(connectDropTarget(
-            <div style={{maxHeight: '115px'}} className={className}>
+            <div style={{height: `${cellHeight}%`, padding: '15px'}} className={className}>
               <ComposedComponent {...this.props} />
             </div>
           ))
