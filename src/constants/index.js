@@ -21,6 +21,10 @@ export const GET_CHART_SUCCESS = 'stock/GET_CHART_SUCCESS';
 export const GET_CHART_FAILURE = 'stock/GET_CHART_FAILURE';
 export const CHANGE_DISPLAYED_CHART = 'stock/CHANGE_DISPLAYED_CHART';
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/dev
 export const ADD_COLUMN = 'layout/ADD_COLUMN';
 export const DELETE_COLUMN = 'layout/DELETE_COLUMN';
 export const ADD_ROW = 'layout/ADD_ROW';

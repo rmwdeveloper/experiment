@@ -1,3 +1,17 @@
+<<<<<<< HEAD
+import {
+  SWAP_WIDGET_POSITION, ADD_STOCK_WIDGET,
+  ADD_COLUMN, ADD_ROW, TOGGLE_GRID, DELETE_COLUMN, DELETE_ROW
+} from '../constants';
+
+const initialState = {
+  columnCount: 1,
+  rowCount: 1,
+  gridVisible: true,
+  layout: [[['00'], {}]],
+  // layout: [[['10', '22'], { type: 'stockWidget' }], [['04', '24'], { type: 'userWidget' }],
+  //     [['00', '02'], { type: 'postWidget' }], [['03'], { type: 'graphWidget' }], [['13', '23'], { type: 'alertWidget' }]],
+=======
 import { SWAP_WIDGET_POSITION, ADD_STOCK_WIDGET,
   ADD_COLUMN, ADD_ROW, TOGGLE_GRID, DELETE_COLUMN, DELETE_ROW } from '../constants';
 
@@ -5,6 +19,7 @@ const initialState = {
   columnCount: 2,
   rowCount: 2,
   gridVisible: true,
+>>>>>>> origin/dev
   cells: {},
 };
 export default function layout(state = initialState, action) {
@@ -22,9 +37,24 @@ export default function layout(state = initialState, action) {
       copy[action.cellIndex] = { widgetType: action.widgetType };
       return { ...state, cells: copy };
     case ADD_COLUMN:
+<<<<<<< HEAD
+      const newColumnCells = [];
+      for (let iterator = 0; iterator < state.rowCount; iterator++) {
+        newColumnCells.push([[`${iterator}${state.columnCount}`], {}]);
+      }
+      return { ...state, layout: state.layout.concat(newColumnCells), columnCount: state.columnCount + 1 };
+    case ADD_ROW:
+      const newRowCells = [];
+      for (let iterator = 0; iterator < state.columnCount; iterator++) {
+        newRowCells.push([[`${state.rowCount}${iterator}`], {}]);
+      }
+      return { ...state, layout: state.layout.concat(newRowCells), rowCount: state.rowCount + 1 };
+    
+=======
       return { ...state, columnCount: state.columnCount + 1 };
     case ADD_ROW:
       return { ...state, rowCount: state.rowCount + 1 };
+>>>>>>> origin/dev
     case DELETE_COLUMN:
       return state;
     case DELETE_ROW:

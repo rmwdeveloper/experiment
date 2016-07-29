@@ -37,8 +37,13 @@ jspm_packages
 .node_repl_history
 
 # Webstorm specific files
+
 .idea
 
 #build files
 build
 /build
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/dev
