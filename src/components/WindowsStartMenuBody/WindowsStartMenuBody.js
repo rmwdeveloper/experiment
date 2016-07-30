@@ -10,8 +10,12 @@ class WindowsStartMenuBody extends Component {
   render() {
     return (
       <div className={styles.root}>
-        <WindowsStartMenuProgramsListing />
-        <WindowsStartMenuQuickAccess />
+        <div className={styles.left}>
+          <WindowsStartMenuProgramsListing />
+        </div>
+        <div className={styles.right}>
+          <WindowsStartMenuQuickAccess />
+        </div>
       </div>
     );
   }
