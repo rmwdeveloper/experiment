@@ -13,6 +13,11 @@ class SimpleTimer extends Component {
   componentWillMount() {
     this.timeInterval = setTimeout(this.timer, 1000);
   }
+  componentWillUnmount() {
+    if (window) {
+      window.clearInterval(this.timeInterval);
+    }
+  }
   timer() {
     const today = new Date();
     const hours = today.getHours();
