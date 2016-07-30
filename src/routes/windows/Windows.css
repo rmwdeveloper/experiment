@@ -1,3 +1,11 @@
+@import '../../components/variables.css';
+
 .root {
   height: 95%;
+}
+
+@media (--phoneRetina) {
+  .root {
+    height: 87%;
+  }
 }

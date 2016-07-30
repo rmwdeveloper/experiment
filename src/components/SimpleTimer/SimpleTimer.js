@@ -18,14 +18,20 @@ class SimpleTimer extends Component {
     const hours = today.getHours();
     const minutes = today.getMinutes();
     const AMPM = hours >= 12 ? 'PM' : 'AM';
-    const formattedMinutes = this.formatTime(minutes);
-    const formattedHours = this.formatTime(hours);
+    const formattedMinutes = this.formatTime(minutes, 'minutes');
+    const formattedHours = this.formatTime(hours, 'hours');
 
-    const node = document.getElementById('timer');
-    node.innerHTML = `${formattedHours}:${formattedMinutes} ${AMPM}`;
+    if (document) {
+      const node = document.getElementById('timer');
+      node.innerHTML = `${formattedHours}:${formattedMinutes} ${AMPM}`;
+    }
   }
-  formatTime(digit) {
-    if (digit < 10) {digit = `0${digit}`;}
+  formatTime(digit, interval) {
+    if (digit < 10) {
+      digit = `0${digit}`;
+    } else if (digit > 10 && interval === 'hours' ) {
+      digit = Math.abs(12 - digit);
+    }
     return digit;
   }
   render() {
