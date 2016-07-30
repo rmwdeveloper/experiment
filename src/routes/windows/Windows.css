@@ -1,11 +1,13 @@
 @import '../../components/variables.css';
 
-.root {
-  height: 95%;
-}
 
 @media (--phoneRetina) {
   .root {
     height: 87%;
+  }
+}
+@media(--tablet) {
+  .root {
+    height: 91.5%;
   }
 }

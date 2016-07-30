@@ -1,7 +1,6 @@
 @import '../variables.css';
 
 .root {
-  width: 150px;
   height: 100%;
   display: flex;
   align-items: center;
@@ -30,5 +29,14 @@
   }
   .startText {
     display: none;
+  }
+}
+
+@media (--tablet) {
+  .root {
+    width: 150px;
+  }
+  .startText {
+    display: block;
   }
 }
