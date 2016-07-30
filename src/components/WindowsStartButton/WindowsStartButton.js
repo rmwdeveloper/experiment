@@ -7,7 +7,7 @@ import xpLogo from './XPLogoXSmall.png';
 function WindowsStartButton({ className }) {
   return (
     <div className={styles.root}>
-      <img src={xpLogo} width="37" height="27" alt="Windows XP Logo" />
+      <img id={styles.logoImage} src={xpLogo} width="37" height="27" alt="Windows XP Logo" />
       <span className={styles.startText}>start</span>
     </div>
   );
