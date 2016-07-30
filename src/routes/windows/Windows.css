@@ -1,6 +1,11 @@
 @import '../../components/variables.css';
 
-
+.root * {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 @media (--phoneRetina) {
   .root {
     height: 87%;
