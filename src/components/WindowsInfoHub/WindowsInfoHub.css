@@ -16,3 +16,9 @@
 .infoImage {
   margin: 0 7px;
 }
+
+@media (--phoneRetina) {
+  .root {
+    min-width: 125px;
+  }
+}

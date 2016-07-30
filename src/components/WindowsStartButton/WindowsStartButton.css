@@ -24,3 +24,11 @@
   letter-spacing: 1px;
 }
 
+@media (--phoneRetina) {
+  .root {
+    width: 50px;
+  }
+  .startText {
+    display: none;
+  }
+}
