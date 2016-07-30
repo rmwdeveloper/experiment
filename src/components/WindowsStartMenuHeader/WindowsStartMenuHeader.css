@@ -3,11 +3,9 @@
 .root {
   height: 12.3%;
   background-image: linear-gradient( 0deg, #1059C5 1%, #2774D9 70%, #4691EB );
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
   display: flex;
   align-items: center;
-
+  border-bottom: 2px solid #FF8819;
 }
 
 .userImage {

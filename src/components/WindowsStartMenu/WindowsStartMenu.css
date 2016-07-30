@@ -5,4 +5,7 @@
   height: 82%;
   position: absolute;
   bottom: 48px;
+  border: 1px solid #1059C5;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
