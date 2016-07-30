@@ -4,9 +4,9 @@ import styles from './WindowsStartButton.css'; //eslint-disable-line
 
 import xpLogo from './XPLogoXSmall.png';
 
-function WindowsStartButton({ className }) {
+function WindowsStartButton({ toggleStartMenu }) {
   return (
-    <div className={styles.root}>
+    <div className={styles.root} onClick={toggleStartMenu}>
       <img id={styles.logoImage} src={xpLogo} width="37" height="27" alt="Windows XP Logo" />
       <span className={styles.startText}>start</span>
     </div>

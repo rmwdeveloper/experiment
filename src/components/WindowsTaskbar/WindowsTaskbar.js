@@ -6,14 +6,17 @@ import WindowsStartButton from '../WindowsStartButton';
 import WindowsInfoHub from '../WindowsInfoHub';
 
 class WindowsTaskbar extends Component {
-
+  static propTypes = {
+    toggleStartMenu: PropTypes.func
+  };
   shouldComponentUpdate() {
     return false;
   }
   render() {
+    const { toggleStartMenu } = this.props;
     return (
       <div className={styles.root}>
-        <WindowsStartButton />
+        <WindowsStartButton toggleStartMenu={toggleStartMenu} />
         <WindowsInfoHub />
       </div>
     );

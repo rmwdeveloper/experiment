@@ -15,10 +15,12 @@ import cx from 'classnames';
 const title = 'Windows XP';
 
 @connect(state => ({
-
+  startMenuOpened: state.windows.startMenuOpened,
 }), { ...windowsActions })
 class StockDashboard extends Component { //eslint-disable-line
   static propTypes = {
+    startMenuOpened: PropTypes.bool,
+    toggleStartMenu: PropTypes.func
   };
   static contextTypes = {
     setTitle: PropTypes.func.isRequired
@@ -33,10 +35,12 @@ class StockDashboard extends Component { //eslint-disable-line
 
 
   render() {
+    const { startMenuOpened, toggleStartMenu } = this.props;
     return (<div className={styles.root}>
       <WindowsDesktop />
-      <WindowsStartMenu />
-      <WindowsTaskbar />
+      { startMenuOpened ? <WindowsStartMenu /> : null }
+
+      <WindowsTaskbar toggleStartMenu={toggleStartMenu} />
     </div>);
   }
 }
