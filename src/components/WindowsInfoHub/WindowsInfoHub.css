@@ -4,7 +4,6 @@
   position: absolute;
   right: 0;
   top: 0;
-  min-width: 145px;
   background-color: #1296EB;
   box-shadow: inset 3px 3px 5px #22C5F4;
   border-left: 1px solid black;
@@ -20,5 +19,16 @@
 @media (--phoneRetina) {
   .root {
     min-width: 125px;
+  }
+  .infoImage {
+    margin: 0 7px;
+  }
+}
+@media(--desktop) {
+  .root {
+    min-width: 145px;
+  }
+  .infoImage {
+    margin: 0 15px;
   }
 }
