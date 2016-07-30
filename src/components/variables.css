@@ -47,9 +47,14 @@
 
   --screen-lg-min: 1200px; /* Large screen / wide desktop */
 
-  @custom-media --phone (width <= --screen-xs-max);
-  @custom-media --tablet (width >= --screen-sm-min) and (width <= --screen-sm-max);
-  @custom-media --desktop (width >= --screen-md-max) and (width <= --screen-md-max);
-  @custom-media --widescreen (width >= --screen-lg-min);
+  @custom-media --phoneRetina (min-width: 320px);
+  @custom-media --phone (min-width: 480px);
+  @custom-media --tablet (min-width: 768px);
+  @custom-media --desktop (min-width: 992px);
+  @custom-media --widescreen (min-width: 1200px);
+  /*@custom-media --phone (width <= --screen-xs-max);*/
+  /*@custom-media --tablet (width >= --screen-sm-min) and (width <= --screen-sm-max);*/
+  /*@custom-media --desktop (width >= --screen-md-max) and (width <= --screen-md-max);*/
+  /*@custom-media --widescreen (width >= --screen-lg-min);*/
 
 }
