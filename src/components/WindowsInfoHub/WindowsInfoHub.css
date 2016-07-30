@@ -9,4 +9,13 @@
   box-shadow: inset 3px 3px 5px #22C5F4;
   border-left: 1px solid black;
   height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.infoImage {
+  margin: 0 7px;
+}
+.time {
+  color: white;
 }
