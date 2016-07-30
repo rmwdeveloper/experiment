@@ -7,7 +7,7 @@ class SimpleTimer extends Component {
 
   constructor() {
     super();
-    this.checkTime = this.checkTime.bind(this);
+    this.formatTime = this.formatTime.bind(this);
     this.timer = this.timer.bind(this);
   }
   componentWillMount() {
@@ -17,11 +17,14 @@ class SimpleTimer extends Component {
     const today = new Date();
     const hours = today.getHours();
     const minutes = today.getMinutes();
-    const checkedMinutes = this.checkTime(minutes);
+    const AMPM = hours >= 12 ? 'PM' : 'AM';
+    const formattedMinutes = this.formatTime(minutes);
+    const formattedHours = this.formatTime(hours);
+
     const node = document.getElementById('timer');
-    node.innerHTML = `${hours}:${minutes}`;
+    node.innerHTML = `${formattedHours}:${formattedMinutes} ${AMPM}`;
   }
-  checkTime(digit) {
+  formatTime(digit) {
     if (digit < 10) {digit = `0${digit}`;}
     return digit;
   }
