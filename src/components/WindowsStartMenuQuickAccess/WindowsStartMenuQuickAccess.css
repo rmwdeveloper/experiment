@@ -1,5 +1,7 @@
 @import '../variables.css';
 
 .root {
-
+  height: 100%;
+  background-color: #D2E5F9;
+  border-left: 1px solid #8FBAF1;
 }
