@@ -4,4 +4,9 @@
   position: absolute;
   right: 0;
   top: 0;
+  min-width: 145px;
+  background-color: #1296EB;
+  box-shadow: inset 3px 3px 5px #22C5F4;
+  border-left: 1px solid black;
+  height: 100%;
 }

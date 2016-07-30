@@ -5,7 +5,7 @@ import styles from './WindowsInfoHub.css'; //eslint-disable-line
 function WindowsInfoHub({ className }) {
   return (
     <div className={styles.root}>
-      iwndos info uhb
+      <span className={styles.time}>12:03 PM</span>
     </div>
   );
 }
