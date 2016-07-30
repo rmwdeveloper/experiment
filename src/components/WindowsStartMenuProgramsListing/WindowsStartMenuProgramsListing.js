@@ -6,9 +6,9 @@ class WindowsStartMenuProgramsListing extends Component {
 
   render() {
     return (
-      <div className={styles.root}>
+      <ul className={styles.root}>
         WindowsStartMenuProgramsListing
-      </div>
+      </ul>
     );
   }
 }
