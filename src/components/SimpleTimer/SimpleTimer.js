@@ -26,7 +26,7 @@ class SimpleTimer extends Component {
     const formattedMinutes = this.formatTime(minutes, 'minutes');
     const formattedHours = this.formatTime(hours, 'hours');
 
-    if (document) {
+    if (typeof document !== 'undefined') {
       const node = document.getElementById('timer');
       node.innerHTML = `${formattedHours}:${formattedMinutes} ${AMPM}`;
     }
