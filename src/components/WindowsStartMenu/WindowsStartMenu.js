@@ -6,16 +6,19 @@ import WindowsStartMenuHeader from '../WindowsStartMenuHeader';
 import WindowsStartMenuBody from '../WindowsStartMenuBody';
 import WindowsStartMenuFooter from '../WindowsStartMenuFooter';
 class WindowsStartMenu extends Component {
-
+  static propTypes = {
+    installedPrograms: PropTypes.object
+  };
   shouldComponentUpdate() {
     return false;
   }
 
   render() {
+    const { installedPrograms } = this.props;
     return (
       <div className={styles.root}>
         <WindowsStartMenuHeader />
-        <WindowsStartMenuBody />
+        <WindowsStartMenuBody installedPrograms={installedPrograms} />
         <WindowsStartMenuFooter />
       </div>
     );

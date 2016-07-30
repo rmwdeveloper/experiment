@@ -2,12 +2,21 @@ import React, { PropTypes, Component } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './WindowsStartMenuProgramsListing.css'; //eslint-disable-line
 
+import WindowStartMenuProgramsListItem from '../WindowsStartMenuProgramListItem';
 class WindowsStartMenuProgramsListing extends Component {
+  static propTypes = {
+    installedPrograms: PropTypes.object
+  };
 
   render() {
+    const { installedPrograms } = this.props;
     return (
       <ul className={styles.root}>
-        WindowsStartMenuProgramsListing
+        {
+          Object.keys(installedPrograms).map( program => {
+            return <WindowStartMenuProgramsListItem />
+          })
+        }
       </ul>
     );
   }

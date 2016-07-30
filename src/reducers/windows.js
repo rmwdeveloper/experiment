@@ -2,6 +2,17 @@ import {OPEN_START_MENU, CLOSE_START_MENU} from '../constants';
 
 
 const initialState = {
+  installedPrograms: {
+    'Microsoft Word': {
+      subtext: 'Word Processor'
+    },
+    'Microsoft Excel': {
+      subtext: 'Spreadsheet'
+    },
+    'Internet Explorer': {
+      subtext: 'Internet'
+    },
+  },
   startMenuOpened: false
 };
 export default function layout(state = initialState, action) {
