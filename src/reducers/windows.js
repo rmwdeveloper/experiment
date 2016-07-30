@@ -1,3 +1,14 @@
-/**
- * Created by rob on 7/29/2016.
- */
+import {} from '../constants';
+
+
+const initialState = {
+
+};
+export default function layout(state = initialState, action) {
+
+  switch (action.type) {
+
+    default:
+      return state;
+  }
+}

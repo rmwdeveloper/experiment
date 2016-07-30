@@ -1,0 +1,6 @@
+{
+  "name": "WindowsDesktop",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./WindowsDesktop.js"
+}

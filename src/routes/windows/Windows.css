@@ -1,26 +1,3 @@
 .root {
-  height: 90%;
-}
-.primaryColumn {
-  margin: 15px;
-}
-.primaryRow, .primaryColumn{
-  height: 100%;
-}
-.layoutPicker {
-  transform: translateY(100%);
-}
-.exampleEnter {
-  transform: translateY(0%);
-}
-.exampleEnter.exampleEnterActive {
-  transform: translateY(100%);
-  transition: transform 600ms ease-in;
-}
-.exampleLeave {
-  transform: translateY(0%);
-}
-.exampleLeave.exampleLeaveActive {
-  transform: translateY(100%);
-  transition: transform 600ms ease-in;
+  height: 95%;
 }

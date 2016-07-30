@@ -11,7 +11,7 @@ function Navigation() {
       <div className={`${styles.linkContainer} col-lg-12 around-lg`}>
         <Link className={styles.link} to="/"> Robert Westenberger </Link>
         <Link className={styles.link} to="/console">Console</Link>
-        <Link className={styles.link} to="/xp">Windows</Link>
+        <Link className={styles.link} to="/windows">Windows</Link>
 
 
         {__DEV__ ? <ReactPerfButton className={cx(styles.link, styles.devOnly)} /> : null}

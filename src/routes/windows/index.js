@@ -1,12 +1,12 @@
 import React from 'react';
-import StockDashboard from './StockDashboard';
+import Windows from './Windows';
 
 
 export default {
-  path: '/stocks',
+  path: '/windows',
 
   async action() {
-    return <StockDashboard />;
+    return <Windows />;
   }
 
 };

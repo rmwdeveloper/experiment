@@ -1,0 +1,12 @@
+@import '../variables.css';
+
+.root {
+  width: 150px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  background-color: #46A645;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: inset -2px 0 5px #000;
+}

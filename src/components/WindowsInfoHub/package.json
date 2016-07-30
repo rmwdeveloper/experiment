@@ -1,0 +1,6 @@
+{
+  "name": "WindowsInfoHub",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./WindowsInfoHub.js"
+}
