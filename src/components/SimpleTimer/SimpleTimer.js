@@ -1,12 +1,35 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes, Component } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './SimpleTimer.css'; //eslint-disable-line
 
 
-function SimpleTimer({ className }) {
-  return (
-      <span className={styles.root}>12:03 PM</span>
-  );
+class SimpleTimer extends Component {
+
+  constructor() {
+    super();
+    this.checkTime = this.checkTime.bind(this);
+    this.timer = this.timer.bind(this);
+  }
+  componentWillMount() {
+    this.timeInterval = setTimeout(this.timer, 1000);
+  }
+  timer() {
+    const today = new Date();
+    const hours = today.getHours();
+    const minutes = today.getMinutes();
+    const checkedMinutes = this.checkTime(minutes);
+    const node = document.getElementById('timer');
+    node.innerHTML = `${hours}:${minutes}`;
+  }
+  checkTime(digit) {
+    if (digit < 10) {digit = `0${digit}`;}
+    return digit;
+  }
+  render() {
+    return (
+      <span id="timer" className={styles.root}>12:00 PM</span>
+    );
+  }
 }
 
 SimpleTimer.propTypes = {
