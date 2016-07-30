@@ -9,6 +9,7 @@
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
   box-shadow: inset -2px 0 5px #000;
+  cursor: pointer;
 }
 
 #logoImage {

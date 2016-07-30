@@ -9,6 +9,7 @@ import * as windowsActions from '../../actions/windows';
 
 import WindowsDesktop from '../../components/WindowsDesktop';
 import WindowsTaskbar from '../../components/WindowsTaskbar';
+import WindowsStartMenu from '../../components/WindowsStartMenu';
 
 import cx from 'classnames';
 const title = 'Windows XP';
@@ -34,6 +35,7 @@ class StockDashboard extends Component { //eslint-disable-line
   render() {
     return (<div className={styles.root}>
       <WindowsDesktop />
+      <WindowsStartMenu />
       <WindowsTaskbar />
     </div>);
   }
