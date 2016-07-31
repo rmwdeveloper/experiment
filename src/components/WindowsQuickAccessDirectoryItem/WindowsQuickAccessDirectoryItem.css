@@ -1,5 +1,11 @@
 @import '../variables.css';
 
 .root {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
 
+.icon {
+  margin-right: 10px;
 }

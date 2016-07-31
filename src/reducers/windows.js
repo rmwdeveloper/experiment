@@ -27,13 +27,22 @@ const initialState = {
       icon: 'MyComputerXSmall.png'
     }
   },
+  computerSettings: {
+    'Control Panel': {
+      icon: 'ControlPanelXSmall.png'
+    },
+    'Printers And Faxes': {
+      icon: 'printerAndFaxesXsmall.png'
+    }
+  },
   utilityControls: {
     'Help And Support': {
       icon: 'HelpAndSupportXSmall.png',
     },
     'Search': {
       icon: 'SearchXSmall.png',
-    },'Run': {
+    },
+    'Run. . .': {
       icon: 'RunXSmall.png',
     }
   },

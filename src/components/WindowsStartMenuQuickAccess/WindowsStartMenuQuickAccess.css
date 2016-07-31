@@ -5,3 +5,29 @@
   background-color: #D2E5F9;
   border-left: 1px solid #8FBAF1;
 }
+.userDirectories, .computerSettings, .utilityControls {
+  height: 33%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.userDirectories, .computerSettings {
+  position: relative;
+  /*margin-bottom: 10px;*/
+  /*padding-bottom: 10px;*/
+}
+
+.userDirectories:after,
+.computerSettings:after{
+  content:'';
+  width: 75%;
+  height:1px;
+  left: 12%;
+  background:#93CAF8;
+  position:absolute;
+  bottom:-4px;
+}
+
+.userDirectoryItem {
+  font-weight: bold;
+}

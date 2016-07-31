@@ -19,12 +19,14 @@ const title = 'Windows XP';
   installedPrograms: state.windows.installedPrograms,
   userDirectories: state.windows.userDirectories,
   utilityControls: state.windows.utilityControls,
+  computerSettings: state.windows.computerSettings,
 }), { ...windowsActions })
 class StockDashboard extends Component { //eslint-disable-line
   static propTypes = {
     installedPrograms: PropTypes.object,
     userDirectories: PropTypes.object,
     utilityControls: PropTypes.object,
+    computerSettings: PropTypes.object,
     startMenuOpened: PropTypes.bool,
     toggleStartMenu: PropTypes.func
   };
