@@ -2,18 +2,26 @@ import React, { PropTypes, Component } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './WindowsStartMenuQuickAccess.css'; //eslint-disable-line
 
-class WindowsStartMenuQuickAccess extends Component {
+import WindowsQuickAccessDirectoryItem from '../WindowsQuickAccessDirectoryItem';
 
-  render() {
-    return (
-      <div className={styles.root}>
-        WindowsStartMenuQuickAccess
+function WindowsStartMenuQuickAccess({userDirectories, utilityControls}) {
+
+  return (
+    <div className={styles.root}>
+      <div className={styles.userDirectories}>
+        { Object.keys(userDirectories).map(directoryName => {
+          return <WindowsQuickAccessDirectoryItem name={directoryName} data={userDirectories[directoryName]} />
+        })}
       </div>
-    );
-  }
+      <div className={styles.utilityControls}>
+        { Object.keys(utilityControls).map(directoryName => {
+          return <WindowsQuickAccessDirectoryItem name={directoryName} data={utilityControls[directoryName]} />
+        })}
+      </div>
+    </div>
+  );
 }
 
-WindowsStartMenuQuickAccess.propTypes = {
 
-};
+WindowsStartMenuQuickAccess.propTypes = {};
 export default withStyles(styles)(WindowsStartMenuQuickAccess);

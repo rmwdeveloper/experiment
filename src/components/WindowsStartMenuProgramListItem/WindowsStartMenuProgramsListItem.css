@@ -2,13 +2,18 @@
 
 .root {
   background-color: #fff;
-  width: 90%;
+  width: 99.5%;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   margin-bottom: 5px;
 }
+
+.root:last-child {
+  border-bottom: 1px solid #EEE;
+}
+
 .root:hover {
   box-shadow: 1px 1px 1px 1px #857896;
 }
