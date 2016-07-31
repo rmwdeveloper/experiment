@@ -6,9 +6,13 @@ import styles from './WindowsStartMenuProgramsListItem.css'; //eslint-disable-li
 function WindowsStartMenuProgramListItem({programName, programData}) {
   return (
     <div className={styles.root}>
-      <img src={programData.icon} alt={`${programName} logo`} />
-      {programName}
-      {programData.subtext}
+      <div className={styles.iconContainer}>
+        <img src={programData.icon} alt={`${programName} logo`} />
+      </div>
+      <div className={styles.textContainer}>
+        <span className={styles.programName}>{programName}</span>
+        <span className={styles.programSubtext}>{programData.subtext}</span>
+      </div>
     </div>
   );
 }
