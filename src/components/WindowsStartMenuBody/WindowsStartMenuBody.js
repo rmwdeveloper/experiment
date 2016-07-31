@@ -10,14 +10,14 @@ class WindowsStartMenuBody extends Component {
     installedPrograms: PropTypes.object,
   };
   render() {
-    const {installedPrograms} = this.props;
+    const {installedPrograms, userDirectories, utilityControls} = this.props;
     return (
       <div className={styles.root}>
         <div className={styles.left}>
           <WindowsStartMenuProgramsListing installedPrograms={installedPrograms} />
         </div>
         <div className={styles.right}>
-          <WindowsStartMenuQuickAccess />
+          <WindowsStartMenuQuickAccess userDirectories={userDirectories} utilityControls={utilityControls}/>
         </div>
       </div>
     );

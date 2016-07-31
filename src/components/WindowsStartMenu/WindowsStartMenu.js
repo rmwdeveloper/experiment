@@ -18,7 +18,7 @@ class WindowsStartMenu extends Component {
     return (
       <div className={styles.root}>
         <WindowsStartMenuHeader />
-        <WindowsStartMenuBody installedPrograms={installedPrograms} />
+        <WindowsStartMenuBody installedPrograms={installedPrograms} {...this.props} />
         <WindowsStartMenuFooter />
       </div>
     );

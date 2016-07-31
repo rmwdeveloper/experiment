@@ -36,8 +36,7 @@ const initialState = {
     },'Run': {
       icon: 'RunXSmall.png',
     }
-
-  }
+  },
   startMenuOpened: false
 };
 export default function layout(state = initialState, action) {

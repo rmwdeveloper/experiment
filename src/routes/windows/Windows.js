@@ -16,11 +16,15 @@ const title = 'Windows XP';
 
 @connect(state => ({
   startMenuOpened: state.windows.startMenuOpened,
-  installedPrograms: state.windows.installedPrograms
+  installedPrograms: state.windows.installedPrograms,
+  userDirectories: state.windows.userDirectories,
+  utilityControls: state.windows.utilityControls,
 }), { ...windowsActions })
 class StockDashboard extends Component { //eslint-disable-line
   static propTypes = {
     installedPrograms: PropTypes.object,
+    userDirectories: PropTypes.object,
+    utilityControls: PropTypes.object,
     startMenuOpened: PropTypes.bool,
     toggleStartMenu: PropTypes.func
   };
@@ -40,7 +44,7 @@ class StockDashboard extends Component { //eslint-disable-line
     const { startMenuOpened, toggleStartMenu, installedPrograms } = this.props;
     return (<div className={styles.root}>
       <WindowsDesktop installedPrograms={installedPrograms} />
-      { startMenuOpened ? <WindowsStartMenu installedPrograms={installedPrograms} /> : null }
+      { startMenuOpened ? <WindowsStartMenu installedPrograms={installedPrograms} {...this.props} /> : null }
 
       <WindowsTaskbar toggleStartMenu={toggleStartMenu} />
     </div>);
