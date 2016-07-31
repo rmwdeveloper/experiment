@@ -13,8 +13,8 @@ class WindowsStartMenuProgramsListing extends Component {
     return (
       <ul className={styles.root}>
         {
-          Object.keys(installedPrograms).map( program => {
-            return <WindowStartMenuProgramsListItem />
+          Object.keys(installedPrograms).map( programName=> {
+            return <WindowStartMenuProgramsListItem programName={programName} programData={installedPrograms[programName]} />
           })
         }
       </ul>
