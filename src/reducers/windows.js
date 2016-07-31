@@ -16,6 +16,28 @@ const initialState = {
       icon: 'ie7.png'
     },
   },
+  userDirectories: {
+    'My Documents': {
+      icon: 'MyDocumentsXSmall.png'
+    },
+    'My Music': {
+      icon: 'MyMusicXSmall.png'
+    },
+    'My Computer': {
+      icon: 'MyComputerXSmall.png'
+    }
+  },
+  utilityControls: {
+    'Help And Support': {
+      icon: 'HelpAndSupportXSmall.png',
+    },
+    'Search': {
+      icon: 'SearchXSmall.png',
+    },'Run': {
+      icon: 'RunXSmall.png',
+    }
+
+  }
   startMenuOpened: false
 };
 export default function layout(state = initialState, action) {
