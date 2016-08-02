@@ -10,9 +10,9 @@ export default function sendFormData({username, password}) {
       const { status, statusText, responseText } = xHTTP;
       const response = JSON.parse(xHTTP.responseText);
       if (status === 200 && statusText === 'OK') {
-        console.log(responseText);
+        // console.log(responseText);
       } else {
-        console.log('failure');
+        // console.log('failure');
       }
     }
   };

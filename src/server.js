@@ -9,6 +9,8 @@ import PrettyError from 'pretty-error';
 import passport from './core/passport';
 import ReactDOM from 'react-dom/server';
 import models from './data/models';
+import { User } from './data/models';
+
 import routes from './routes';
 import { resolve } from 'universal-router';
 import { port, analytics, auth } from './config';
@@ -62,7 +64,7 @@ app.post('/register', (req, res) => {
       }
       else if ( hash ) {
         res.status(200);
-        res.send(JSON.stringify(hash));
+        User.create({username: req.body.username, password: hash});
       }
     });
   });
