@@ -6,3 +6,4 @@ export const analytics = {
   google: { trackingId: process.env.GOOGLE_TRACKING_ID || 'UA-XXXXX-X' },
 
 };
+export const databaseUrl = process.env.DATABASE_URL || 'sqlite:database.sqlite';
