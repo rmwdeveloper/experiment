@@ -8,7 +8,12 @@ const User = Model.define('User', {
     defaultValue: DataType.UUIDV1,
     primaryKey: true,
   },
-
+  username: {
+    type: DataType.STRING(30)
+  },
+  password: {
+    type: DataType.STRING(128)
+  },
   email: {
     type: DataType.STRING(256),
     validate: { isEmail: true },
