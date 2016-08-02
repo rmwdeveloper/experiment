@@ -4,6 +4,8 @@ import home from './home';
 import console from './console';
 import stockDashboard from './stockDashboard';
 import windows from './windows';
+import login from './login';
+import register from './register';
 import App from '../components/App';
 
 
@@ -15,6 +17,8 @@ const routes = {
     home,
     console,
     stockDashboard,
+    login,
+    register,
     windows
   ],
 
