@@ -4,7 +4,7 @@ import {
   // ADD_COLUMN, ADD_ROW, TOGGLE_GRID, DELETE_COLUMN, DELETE_ROW, DEACTIVATE_MERGE_CONFIRM, MERGE_CELLS,
 } from '../constants';
 import { sortLayout } from '../core/layout';
->>>>>>> e51aa3ece7c80b3570cb73327b276d642f81b208
+
 
 const initialState = {
   columnCount: 1,

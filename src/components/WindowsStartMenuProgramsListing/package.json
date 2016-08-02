@@ -1,0 +1,6 @@
+{
+  "name": "WindowsStartMenuProgramsListing",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./WindowsStartMenuProgramsListing.js"
+}

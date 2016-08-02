@@ -1,0 +1,6 @@
+{
+  "name": "WindowsStartMenuBody",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./WindowsStartMenuBody.js"
+}

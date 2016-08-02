@@ -1,0 +1,6 @@
+{
+  "name": "WindowsStartMenuQuickAccess",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./WindowsStartMenuQuickAccess.js"
+}

@@ -3,6 +3,7 @@ import React from 'react';
 import home from './home';
 import console from './console';
 import stockDashboard from './stockDashboard';
+import windows from './windows';
 import App from '../components/App';
 
 
@@ -13,7 +14,8 @@ const routes = {
   children: [
     home,
     console,
-    stockDashboard
+    stockDashboard,
+    windows
   ],
 
   async action({ next, render, context }) {
