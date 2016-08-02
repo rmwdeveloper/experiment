@@ -23,12 +23,12 @@ global.navigator = global.navigator || {};
 global.navigator.userAgent = global.navigator.userAgent || 'all';
 
 // Allow Cross Domain Requests
-const allowCrossDomain = function(req, res, next) { // eslint-disable-line
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  next();
-};
+// const allowCrossDomain = function(req, res, next) { // eslint-disable-line
+//   res.header('Access-Control-Allow-Origin', '*');
+//   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+//   res.header('Access-Control-Allow-Headers', 'Content-Type');
+//   next();
+// };
 
 
 //
@@ -39,7 +39,7 @@ app.use(express.static(path.join(__dirname, 'public', 'windows')));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(allowCrossDomain);
+// app.use(allowCrossDomain);
 
 
 // app.set('views', path.join(__dirname, 'views') );
