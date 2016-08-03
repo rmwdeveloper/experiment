@@ -6,6 +6,7 @@ const installedProgramsIndices = state => state.windows.installedPrograms;
 const userDirectoriesIndices = state => state.windows.userDirectories;
 const computerSettingsIndices = state => state.windows.computerSettings;
 const utilityControlsIndices = state => state.windows.utilityControls;
+const desktopItemsIndices = state => state.windows.desktopItems;
 
 export const installedProgramsSelector = createSelector(
   [entitiesObject, installedProgramsIndices],
@@ -37,6 +38,15 @@ export const utilityControlsSelector = createSelector(
   [entitiesObject, utilityControlsIndices],
   (entities, utilityControls) => {
     return utilityControls.map(index => {
+      return entities[index];
+    });
+  }
+);
+
+export const desktopItemsSelector = createSelector(
+  [entitiesObject, desktopItemsIndices],
+  (entities, desktopItems) => {
+    return desktopItems.map(index => {
       return entities[index];
     });
   }

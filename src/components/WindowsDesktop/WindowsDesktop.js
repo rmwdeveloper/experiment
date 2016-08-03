@@ -2,10 +2,16 @@ import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './WindowsDesktop.css'; //eslint-disable-line
 
-function WindowsDesktop({ className }) {
+import WindowsDesktopItem from '../WindowsDesktopItem';
+
+function WindowsDesktop({ desktopItems }) {
   return (
     <div className={styles.root}>
-      Windows Desktop
+      {
+        desktopItems.map(desktopitem => {
+          return <WindowsDesktopItem item={desktopitem} />;
+        })
+      }
     </div>
   );
 }

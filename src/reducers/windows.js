@@ -6,12 +6,12 @@ const initialState = {
     1: {
       name: 'Microsoft Word',
       subtext: 'Word Processor',
-      icon: 'wordlogo.png'
+      icon: 'wordlogoXSmall.png'
     },
     2: {
       name: 'Microsoft Excel',
       subtext: 'Spreadsheet',
-      icon: 'excellogo.png'
+      icon: 'excellogoXSmall.png'
     },
     3: {
       name: 'Internet Explorer',
@@ -55,6 +55,7 @@ const initialState = {
   userDirectories: [4, 5, 6],
   computerSettings: [7, 8],
   utilityControls: [9, 10, 11],
+  desktopItems: [1, 2, 3, 4, 6],
   startMenuOpened: false
 };
 export default function layout(state = initialState, action) {

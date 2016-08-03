@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import shallowCompare from 'react-addons-shallow-compare';
 
 import * as windowsActions from '../../actions/windows';
-import {installedProgramsSelector, userDirectoriesSelector,
+import {installedProgramsSelector, userDirectoriesSelector, desktopItemsSelector,
   computerSettingsSelector, utilityControlsSelector} from '../../selectors';
 import WindowsDesktop from '../../components/WindowsDesktop';
 import WindowsTaskbar from '../../components/WindowsTaskbar';
@@ -21,6 +21,7 @@ const title = 'Windows XP';
   userDirectories: userDirectoriesSelector(state),
   utilityControls: utilityControlsSelector(state),
   computerSettings: computerSettingsSelector(state),
+  desktopItems: desktopItemsSelector(state),
 }), { ...windowsActions })
 class Windows extends Component { //eslint-disable-line
   static propTypes = {
@@ -28,6 +29,7 @@ class Windows extends Component { //eslint-disable-line
     userDirectories: PropTypes.array,
     utilityControls: PropTypes.array,
     computerSettings: PropTypes.array,
+    desktopItems: PropTypes.array,
     startMenuOpened: PropTypes.bool,
     toggleStartMenu: PropTypes.func
   };
@@ -44,9 +46,9 @@ class Windows extends Component { //eslint-disable-line
 
 
   render() {
-    const { startMenuOpened, toggleStartMenu, installedPrograms } = this.props;
+    const { startMenuOpened, toggleStartMenu, installedPrograms, desktopItems } = this.props;
     return (<div className={styles.root}>
-      <WindowsDesktop installedPrograms={installedPrograms} />
+      <WindowsDesktop desktopItems={desktopItems} />
       { startMenuOpened ? <WindowsStartMenu installedPrograms={installedPrograms} {...this.props} /> : null }
 
       <WindowsTaskbar toggleStartMenu={toggleStartMenu} />
