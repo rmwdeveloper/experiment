@@ -55,47 +55,25 @@ app.use(expressJwt({
 }));
 app.use(passport.initialize());
 
-app.post('/register', (req, res) => {
-  bcrypt.genSalt(10, (err, salt) => {
-    bcrypt.hash(req.body.password, salt, (err, hash) => {
-      if ( err ) {
-        res.status(400);
-        res.send('Error');
-      }
-      else if ( hash ) {
-        res.status(200);
-        User.create({username: req.body.username, password: hash});
-      }
-    });
-  });
+// app.post('/register', (req, res) => {
+//   bcrypt.genSalt(10, (err, salt) => {
+//     bcrypt.hash(req.body.password, salt, (err, hash) => {
+//       if ( err ) {
+//         res.status(400);
+//         res.send('Error');
+//       }
+//       else if ( hash ) {
+//         res.status(200);
+//         User.create({username: req.body.username, password: hash});
+//       }
+//     });
+//   });
 });
-app.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => {
-  // console.log(req.body);
-  res.redirect('/');
-  // User.findOne({where: {username: req.body.username}}).then(user => {
-  //   if(user===null) {
-  //     throw 'User not found';
-  //   } else {
-  //     passport.authenticate('local', { failureRedirect: '/login' }),
-  //   }
-  // }).catch(error => {
-  //   console.log(error);
-  // });
-  res.status(200);
-  res.send();
-  // bcrypt.genSalt(10, (err, salt) => {
-  //   bcrypt.hash(req.body.password, salt, (err, hash) => {
-  //     if ( err ) {
-  //       res.status(400);
-  //       res.send('Error');
-  //     }
-  //     else if ( hash ) {
-  //       res.status(200);
-  //       User.create({username: req.body.username, password: hash});
-  //     }
-  //   });
-  // });
-});
+// app.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => {
+//   res.redirect('/');
+//   res.status(200);
+//   res.send();
+// });
 passport.serializeUser(function(user, cb) {
   cb(null, user.id);
 });

@@ -12,8 +12,6 @@ function Navigation() {
         <Link className={styles.link} to="/"> Robert Westenberger </Link>
         <Link className={styles.link} to="/console">Console</Link>
         <Link className={styles.link} to="/windows">Windows</Link>
-        <Link className={styles.link} to="/register">Register</Link>
-        <Link className={styles.link} to="/login">Login</Link>
 
 
         {__DEV__ ? <ReactPerfButton className={cx(styles.link, styles.devOnly)} /> : null}
