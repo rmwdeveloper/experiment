@@ -1,14 +1,19 @@
 import 'babel-polyfill';
 import path from 'path';
 import express from 'express';
-// import expressGraphQL from 'express-graphql';
+import bcrypt from 'bcrypt';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
+import expressJwt from 'express-jwt';
 import PrettyError from 'pretty-error';
+import passport from './core/passport';
 import ReactDOM from 'react-dom/server';
+import models from './data/models';
+import { User } from './data/models';
+
 import routes from './routes';
 import { resolve } from 'universal-router';
-import { port, analytics } from './config';
+import { port, analytics, auth } from './config';
 import assets from './assets';
 import configureStore from './store/configureStore';
 import { setRuntimeVariable } from './actions/runtime';
@@ -23,12 +28,12 @@ global.navigator = global.navigator || {};
 global.navigator.userAgent = global.navigator.userAgent || 'all';
 
 // Allow Cross Domain Requests
-const allowCrossDomain = function(req, res, next) { // eslint-disable-line
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  next();
-};
+// const allowCrossDomain = function(req, res, next) { // eslint-disable-line
+//   res.header('Access-Control-Allow-Origin', '*');
+//   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+//   res.header('Access-Control-Allow-Headers', 'Content-Type');
+//   next();
+// };
 
 
 //
@@ -39,9 +44,46 @@ app.use(express.static(path.join(__dirname, 'public', 'windows')));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(allowCrossDomain);
+// app.use(allowCrossDomain);
 
+app.use(expressJwt({
+  secret: auth.jwt.secret,
+  credentialsRequired: false,
+  /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
+  getToken: req => req.cookies.id_token,
+  /* jscs:enable requireCamelCaseOrUpperCaseIdentifiers */
+}));
+app.use(passport.initialize());
 
+// app.post('/register', (req, res) => {
+//   bcrypt.genSalt(10, (err, salt) => {
+//     bcrypt.hash(req.body.password, salt, (err, hash) => {
+//       if ( err ) {
+//         res.status(400);
+//         res.send('Error');
+//       }
+//       else if ( hash ) {
+//         res.status(200);
+//         User.create({username: req.body.username, password: hash});
+//       }
+//     });
+//   });
+});
+// app.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => {
+//   res.redirect('/');
+//   res.status(200);
+//   res.send();
+// });
+passport.serializeUser(function(user, cb) {
+  cb(null, user.id);
+});
+
+passport.deserializeUser(function(id, cb) {
+  db.users.findById(id, function (err, user) {
+    if (err) { return cb(err); }
+    cb(null, user);
+  });
+});
 // app.set('views', path.join(__dirname, 'views') );
 // app.set('view engine', 'jade');
 
@@ -128,14 +170,14 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
 // Launch the server
 // -----------------------------------------------------------------------------
 /* eslint-disable no-console */
-app.listen(port, () => {
-  console.log(`The server is running at http://localhost:${port}/`);
-});
+// app.listen(port, () => {
+//   console.log(`The server is running at http://localhost:${port}/`);
+// });
 
 /* eslint-disable no-console */
-// models.sync().catch(err => console.error(err.stack)).then(() => {
-//   app.listen(port, () => {
-//     console.log(`The server is running at http://localhost:${port}/`);
-//   });
-// });
+models.sync().catch(err => console.error(err.stack)).then(() => {
+  app.listen(port, () => {
+    console.log(`The server is running at http://localhost:${port}/`);
+  });
+});
 /* eslint-enable no-console */
