@@ -33,7 +33,6 @@ class ReactPerfButton extends Component {
   render() {
     const { className } = this.props;
     const { width } = this.state;
-    console.log('width..', width);
     return (
       <div className={cx(className, styles.root)}>
         {(() => {

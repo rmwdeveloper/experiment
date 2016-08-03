@@ -3,14 +3,14 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './WindowsStartMenuProgramsListItem.css'; //eslint-disable-line
 
 
-function WindowsStartMenuProgramListItem({programName, programData}) {
+function WindowsStartMenuProgramListItem({programData}) {
   return (
     <div className={styles.root}>
       <div className={styles.iconContainer}>
-        <img src={programData.icon} alt={`${programName} logo`} />
+        <img src={programData.icon} alt={`${programData.name} logo`} />
       </div>
       <div className={styles.textContainer}>
-        <span className={styles.programName}>{programName}</span>
+        <span className={styles.programName}>{programData.name}</span>
         <span className={styles.programSubtext}>{programData.subtext}</span>
       </div>
     </div>
