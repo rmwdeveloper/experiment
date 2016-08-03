@@ -2,14 +2,21 @@ import passport from 'passport';
 import { Strategy as localStrategy } from 'passport-local';
 import { User, UserLogin, UserClaim, UserProfile } from '../data/models';
 import { auth as config } from '../config';
+import bcrypt from 'bcrypt';
 
 passport.use(new localStrategy(
   (username, password, cb) => {
-    db.users.findByUsername(username, function(err, user) {
-      if (err) { return cb(err); }
-      if (!user) { return cb(null, false); }
-      if (user.password != password) { return cb(null, false); }
-      return cb(null, user);
+    User.findOne({ where: { username } }).then(user => {
+      if (user === null) {
+        return cb(null, false);
+      }
+      bcrypt.compare(password, user.password, function (err, res) {
+        if (res) {
+          return cb(null, user);
+        } else if (err) {
+          return cb(null, false);
+        }
+      });
     });
   }));
 

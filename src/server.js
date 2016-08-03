@@ -69,6 +69,43 @@ app.post('/register', (req, res) => {
     });
   });
 });
+app.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => {
+  // console.log(req.body);
+  res.redirect('/');
+  // User.findOne({where: {username: req.body.username}}).then(user => {
+  //   if(user===null) {
+  //     throw 'User not found';
+  //   } else {
+  //     passport.authenticate('local', { failureRedirect: '/login' }),
+  //   }
+  // }).catch(error => {
+  //   console.log(error);
+  // });
+  res.status(200);
+  res.send();
+  // bcrypt.genSalt(10, (err, salt) => {
+  //   bcrypt.hash(req.body.password, salt, (err, hash) => {
+  //     if ( err ) {
+  //       res.status(400);
+  //       res.send('Error');
+  //     }
+  //     else if ( hash ) {
+  //       res.status(200);
+  //       User.create({username: req.body.username, password: hash});
+  //     }
+  //   });
+  // });
+});
+passport.serializeUser(function(user, cb) {
+  cb(null, user.id);
+});
+
+passport.deserializeUser(function(id, cb) {
+  db.users.findById(id, function (err, user) {
+    if (err) { return cb(err); }
+    cb(null, user);
+  });
+});
 // app.set('views', path.join(__dirname, 'views') );
 // app.set('view engine', 'jade');
 
