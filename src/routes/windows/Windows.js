@@ -6,7 +6,8 @@ import { connect } from 'react-redux';
 import shallowCompare from 'react-addons-shallow-compare';
 
 import * as windowsActions from '../../actions/windows';
-
+import {installedProgramsSelector, userDirectoriesSelector, desktopItemsSelector,
+  computerSettingsSelector, utilityControlsSelector} from '../../selectors';
 import WindowsDesktop from '../../components/WindowsDesktop';
 import WindowsTaskbar from '../../components/WindowsTaskbar';
 import WindowsStartMenu from '../../components/WindowsStartMenu';
@@ -16,17 +17,19 @@ const title = 'Windows XP';
 
 @connect(state => ({
   startMenuOpened: state.windows.startMenuOpened,
-  installedPrograms: state.windows.installedPrograms,
-  userDirectories: state.windows.userDirectories,
-  utilityControls: state.windows.utilityControls,
-  computerSettings: state.windows.computerSettings,
+  installedPrograms: installedProgramsSelector(state),
+  userDirectories: userDirectoriesSelector(state),
+  utilityControls: utilityControlsSelector(state),
+  computerSettings: computerSettingsSelector(state),
+  desktopItems: desktopItemsSelector(state),
 }), { ...windowsActions })
-class StockDashboard extends Component { //eslint-disable-line
+class Windows extends Component { //eslint-disable-line
   static propTypes = {
-    installedPrograms: PropTypes.object,
-    userDirectories: PropTypes.object,
-    utilityControls: PropTypes.object,
-    computerSettings: PropTypes.object,
+    installedPrograms: PropTypes.array,
+    userDirectories: PropTypes.array,
+    utilityControls: PropTypes.array,
+    computerSettings: PropTypes.array,
+    desktopItems: PropTypes.array,
     startMenuOpened: PropTypes.bool,
     toggleStartMenu: PropTypes.func
   };
@@ -43,9 +46,9 @@ class StockDashboard extends Component { //eslint-disable-line
 
 
   render() {
-    const { startMenuOpened, toggleStartMenu, installedPrograms } = this.props;
+    const { startMenuOpened, toggleStartMenu, installedPrograms, desktopItems } = this.props;
     return (<div className={styles.root}>
-      <WindowsDesktop installedPrograms={installedPrograms} />
+      <WindowsDesktop desktopItems={desktopItems} />
       { startMenuOpened ? <WindowsStartMenu installedPrograms={installedPrograms} {...this.props} /> : null }
 
       <WindowsTaskbar toggleStartMenu={toggleStartMenu} />
@@ -53,4 +56,4 @@ class StockDashboard extends Component { //eslint-disable-line
   }
 }
 
-export default withStyles(styles)(StockDashboard);
+export default withStyles(styles)(Windows);

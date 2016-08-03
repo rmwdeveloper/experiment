@@ -68,7 +68,7 @@ app.use(passport.initialize());
 //       }
 //     });
 //   });
-});
+// });
 // app.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => {
 //   res.redirect('/');
 //   res.status(200);

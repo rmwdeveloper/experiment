@@ -10,17 +10,17 @@ function WindowsStartMenuQuickAccess({userDirectories, utilityControls, computer
     <div className={styles.root}>
       <div className={styles.userDirectories}>
         { Object.keys(userDirectories).map(directoryName => {
-          return <WindowsQuickAccessDirectoryItem key={directoryName} className={styles.userDirectoryItem} name={directoryName} data={userDirectories[directoryName]} />
+          return <WindowsQuickAccessDirectoryItem key={directoryName} className={styles.userDirectoryItem} data={userDirectories[directoryName]} />
         })}
       </div>
       <div className={styles.computerSettings}>
         { Object.keys(computerSettings).map(directoryName => {
-          return <WindowsQuickAccessDirectoryItem key={directoryName}  name={directoryName} data={computerSettings[directoryName]} />
+          return <WindowsQuickAccessDirectoryItem key={directoryName} data={computerSettings[directoryName]} />
         })}
       </div>
       <div className={styles.utilityControls}>
         { Object.keys(utilityControls).map(directoryName => {
-          return <WindowsQuickAccessDirectoryItem key={directoryName} name={directoryName} data={utilityControls[directoryName]} />
+          return <WindowsQuickAccessDirectoryItem key={directoryName} data={utilityControls[directoryName]} />
         })}
       </div>
     </div>

@@ -3,6 +3,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Navigation.css'; //eslint-disable-line
 import Link from '../Link';
 import ReactPerfButton  from '../ReactPerfButton';
+import DisplayEditingMode  from '../DisplayEditingMode';
 import cx from 'classnames';
 
 function Navigation() {
@@ -15,6 +16,7 @@ function Navigation() {
 
 
         {__DEV__ ? <ReactPerfButton className={cx(styles.link, styles.devOnly)} /> : null}
+        {__DEV__ ? <DisplayEditingMode className={cx(styles.link, styles.devOnly)} /> : null}
       </div>
     </header>
   );

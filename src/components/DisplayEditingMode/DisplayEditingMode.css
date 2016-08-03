@@ -1,0 +1,23 @@
+@import '../variables.css';
+
+@media (--phone) {
+  * {
+    visibility: visible;
+  }
+}
+@media (--tablet) {
+  * {
+    visibility: visible;
+  }
+}
+
+@media (--desktop) {
+  * {
+    visibility: visible;
+  }
+}
+@media (--widescreen) {
+  * {
+    visibility: visible;
+  }
+}

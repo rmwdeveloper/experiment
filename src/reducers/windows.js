@@ -2,50 +2,60 @@ import {OPEN_START_MENU, CLOSE_START_MENU} from '../constants';
 
 
 const initialState = {
-  installedPrograms: {
-    'Microsoft Word': {
+  entities: {
+    1: {
+      name: 'Microsoft Word',
       subtext: 'Word Processor',
-      icon: 'wordlogo.png'
+      icon: 'wordlogoXSmall.png'
     },
-    'Microsoft Excel': {
+    2: {
+      name: 'Microsoft Excel',
       subtext: 'Spreadsheet',
-      icon: 'excellogo.png'
+      icon: 'excellogoXSmall.png'
     },
-    'Internet Explorer': {
+    3: {
+      name: 'Internet Explorer',
       subtext: 'Internet',
       icon: 'ie7.png'
     },
-  },
-  userDirectories: {
-    'My Documents': {
+    4: {
+      name: 'My Documents',
       icon: 'MyDocumentsXSmall.png'
     },
-    'My Music': {
+    5: {
+      name: 'My Music',
       icon: 'MyMusicXSmall.png'
     },
-    'My Computer': {
+    6: {
+      name: 'My Computer',
       icon: 'MyComputerXSmall.png'
-    }
-  },
-  computerSettings: {
-    'Control Panel': {
+    },
+    7: {
+      name: 'Control Panel',
       icon: 'ControlPanelXSmall.png'
     },
-    'Printers And Faxes': {
+    8: {
+      name: 'Printer And Faxes',
       icon: 'printerAndFaxesXsmall.png'
+    },
+    9: {
+      name: 'Help And Support',
+      icon: 'HelpAndSupportXSmall.png'
+    },
+    10: {
+      name: 'Search',
+      icon: 'SearchXSmall.png'
+    },
+    11: {
+      name: 'Run',
+      icon: 'RunXSmall.png'
     }
   },
-  utilityControls: {
-    'Help And Support': {
-      icon: 'HelpAndSupportXSmall.png',
-    },
-    'Search': {
-      icon: 'SearchXSmall.png',
-    },
-    'Run. . .': {
-      icon: 'RunXSmall.png',
-    }
-  },
+  installedPrograms: [1, 2, 3],
+  userDirectories: [4, 5, 6],
+  computerSettings: [7, 8],
+  utilityControls: [9, 10, 11],
+  desktopItems: [1, 2, 3, 4, 6],
   startMenuOpened: false
 };
 export default function layout(state = initialState, action) {
