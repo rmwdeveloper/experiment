@@ -4,3 +4,13 @@
   height: 95%;
   background-color: #EEEEEE;
 }
+
+
+@media (--tablet) {
+  .root {
+    /*width: 150px;*/
+  }
+  .startText {
+    display: block;
+  }
+}

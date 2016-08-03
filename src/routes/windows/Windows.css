@@ -1,23 +1,12 @@
 @import '../../components/variables.css';
 
+.root {
+  height: 95%;
+}
 .root * {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
 }
-@media (--phoneRetina) {
-  .root {
-    height: 87%;
-  }
-}
-@media(--tablet) {
-  .root {
-    height: 91.5%;
-  }
-}
-@media(--desktop) {
-  .root {
-    height: 95%;
-  }
-}
+

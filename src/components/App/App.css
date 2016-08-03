@@ -21,7 +21,7 @@ html, body, #app, .root {
   height: 100%;
 }
 .root {
-  overflow: hidden;
+  overflow-x: hidden;
 }
 a {
   text-decoration: none;
