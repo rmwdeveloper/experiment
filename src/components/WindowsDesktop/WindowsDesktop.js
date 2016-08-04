@@ -10,13 +10,19 @@ class WindowsDesktop extends Component {
     this.startDragSelect = this.startDragSelect.bind(this);
     this.stopDragSelect = this.stopDragSelect.bind(this);
     this.dragSelecting = this.dragSelecting.bind(this);
+    this.checkForOverlap = this.checkForOverlap.bind(this);
+    this.dragbox = null;
+    this.icons = null;
     this.state = {
       dragSelecting: false,
       dragStartX: null,
       dragStartY: null
     };
   }
-
+  componentDidMount() {
+    this.icons = document.getElementsByClassName('desktopIcon');
+  }
+  
   startDragSelect(event) {
     const desktop = document.getElementById('desktop');
     this.dragbox = document.getElementById('dragbox');
@@ -39,6 +45,20 @@ class WindowsDesktop extends Component {
       dragStartY: event.clientY
     });
   }
+  checkForOverlap() {
+    const dragboxRect = this.dragbox.getBoundingClientRect();
+    for (let i = 0; i < this.icons.length; i++) {
+      const icon = this.icons[i].getBoundingClientRect();
+      const overlapping = !(dragboxRect.right < icon.left ||
+      dragboxRect.left > icon.right ||
+      dragboxRect.bottom < icon.top ||
+      dragboxRect.top > icon.bottom);
+
+      if ( overlapping ) {
+        console.log(overlapping);
+      }
+    }
+  }
 
   dragSelecting(event) {
     const deltaX = event.clientX - this.state.dragStartX;
@@ -54,8 +74,7 @@ class WindowsDesktop extends Component {
 
     this.dragbox.style.width = `${Math.abs(deltaX)}px`;
     this.dragbox.style.height = `${Math.abs(deltaY)}px`;
-
-
+    this.checkForOverlap();
   }
 
   stopDragSelect() {
