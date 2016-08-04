@@ -22,7 +22,9 @@ class WindowsDesktop extends Component {
   componentDidMount() {
     this.icons = document.getElementsByClassName('desktopIcon');
   }
-  
+  shouldComponentUpdate() {
+    return false;
+  }
   startDragSelect(event) {
     const desktop = document.getElementById('desktop');
     this.dragbox = document.getElementById('dragbox');
@@ -48,6 +50,7 @@ class WindowsDesktop extends Component {
   checkForOverlap() {
     const dragboxRect = this.dragbox.getBoundingClientRect();
     for (let i = 0; i < this.icons.length; i++) {
+      this.icons[i].style.backgroundColor = 'transparent';
       const icon = this.icons[i].getBoundingClientRect();
       const overlapping = !(dragboxRect.right < icon.left ||
       dragboxRect.left > icon.right ||
@@ -55,7 +58,7 @@ class WindowsDesktop extends Component {
       dragboxRect.top > icon.bottom);
 
       if ( overlapping ) {
-        console.log(overlapping);
+        this.icons[i].style.backgroundColor = 'yellow';
       }
     }
   }
