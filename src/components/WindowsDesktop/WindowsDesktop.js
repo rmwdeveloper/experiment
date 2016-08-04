@@ -120,7 +120,6 @@ class WindowsDesktop extends Component {
     if (this.icons.length > 0 && selectedIcons.length > 0) {
       unselectedIcons = this.diffNodeLists(this.icons, selectedIcons);
     }
-    console.log(unselectedIcons);
     return (
       <div id="desktop" className={styles.root} onMouseDown={this.startDragSelect} onMouseUp={this.stopDragSelect}>
         {
@@ -134,7 +133,7 @@ class WindowsDesktop extends Component {
       <div id="desktop" className={styles.root} onMouseDown={this.startDragSelect} onMouseUp={this.stopDragSelect}>
         {
           desktopItems.map((desktopitem, index) => {
-            return <WindowsDesktopItem key={index} id={index} item={desktopitem}/>;
+            return <WindowsDesktopItem key={index} item={desktopitem}/>;
           })
         }
       </div>
