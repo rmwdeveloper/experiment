@@ -12,8 +12,9 @@ class WindowsDesktop extends Component {
     this.dragSelecting = this.dragSelecting.bind(this);
     this.checkForOverlap = this.checkForOverlap.bind(this);
     this.dragbox = null;
-    this.icons = null;
+    this.icons = [];
     this.selectedIcons = [];
+    this.diffNodeLists = this.diffNodeLists.bind(this);
     this.state = {
       dragSelecting: false,
       dragStartX: null,
@@ -26,6 +27,13 @@ class WindowsDesktop extends Component {
   }
   shouldComponentUpdate(nextProps, nextState) {
     return !(this.state.selectedIcons === nextState.selectedIcons);
+  }
+  diffNodeLists(firstNodeList, secondNodeList) {
+    const iconsArray = [].slice.call(firstNodeList);
+    const selectedArray = [].slice.call(secondNodeList);
+    return iconsArray.filter(icon => {
+      return selectedArray.indexOf(icon) < 0;
+    });
   }
   startDragSelect(event) {
     const desktop = document.getElementById('desktop');
@@ -108,7 +116,20 @@ class WindowsDesktop extends Component {
   render() {
     const { desktopItems } = this.props;
     const { selectedIcons } = this.state;
-    console.log(selectedIcons.length);
+    let unselectedIcons = desktopItems;
+    if (this.icons.length > 0 && selectedIcons.length > 0) {
+      unselectedIcons = this.diffNodeLists(this.icons, selectedIcons);
+    }
+    console.log(unselectedIcons);
+    return (
+      <div id="desktop" className={styles.root} onMouseDown={this.startDragSelect} onMouseUp={this.stopDragSelect}>
+        {
+          desktopItems.map((desktopitem, index) => {
+            return <WindowsDesktopItem key={index} index={index} item={desktopitem}/>;
+          })
+        }
+      </div>
+    );
     return (
       <div id="desktop" className={styles.root} onMouseDown={this.startDragSelect} onMouseUp={this.stopDragSelect}>
         {
