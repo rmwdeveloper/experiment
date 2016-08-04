@@ -13,17 +13,19 @@ class WindowsDesktop extends Component {
     this.checkForOverlap = this.checkForOverlap.bind(this);
     this.dragbox = null;
     this.icons = null;
+    this.selectedIcons = [];
     this.state = {
       dragSelecting: false,
       dragStartX: null,
-      dragStartY: null
+      dragStartY: null,
+      selectedIcons: []
     };
   }
   componentDidMount() {
     this.icons = document.getElementsByClassName('desktopIcon');
   }
-  shouldComponentUpdate() {
-    return false;
+  shouldComponentUpdate(nextProps, nextState) {
+    return !(this.state.selectedIcons === nextState.selectedIcons);
   }
   startDragSelect(event) {
     const desktop = document.getElementById('desktop');
@@ -49,6 +51,7 @@ class WindowsDesktop extends Component {
   }
   checkForOverlap() {
     const dragboxRect = this.dragbox.getBoundingClientRect();
+    this.selectedIcons = [];
     for (let i = 0; i < this.icons.length; i++) {
       this.icons[i].style.backgroundColor = 'transparent';
       this.icons[i].style.outline = 'none';
@@ -61,6 +64,7 @@ class WindowsDesktop extends Component {
       if ( overlapping ) {
         this.icons[i].style.backgroundColor = 'rgba(66,85,101,0.25)';
         this.icons[i].style.outline = '2px solid rgb(115, 128, 140)';
+        this.selectedIcons.push(this.icons[i]);
       }
     }
   }
@@ -85,10 +89,12 @@ class WindowsDesktop extends Component {
   stopDragSelect() {
     const desktop = document.getElementById('desktop');
     desktop.removeEventListener('mousemove', this.dragSelecting);
+
     this.setState({
       dragSelecting: false,
       dragStartX: null,
-      dragStartY: null
+      dragStartY: null,
+      selectedIcons: this.selectedIcons
     });
     this.dragbox.remove();
     this.dragbox.border = 'none';
@@ -101,11 +107,13 @@ class WindowsDesktop extends Component {
 
   render() {
     const { desktopItems } = this.props;
+    const { selectedIcons } = this.state;
+    console.log(selectedIcons.length);
     return (
       <div id="desktop" className={styles.root} onMouseDown={this.startDragSelect} onMouseUp={this.stopDragSelect}>
         {
           desktopItems.map((desktopitem, index) => {
-            return <WindowsDesktopItem key={index} item={desktopitem}/>;
+            return <WindowsDesktopItem key={index} id={index} item={desktopitem}/>;
           })
         }
       </div>
