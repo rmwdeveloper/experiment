@@ -1,4 +1,7 @@
-import { OPEN_START_MENU, CLOSE_START_MENU, CREATE_FOLDER } from '../constants';
+import {
+  OPEN_START_MENU, CLOSE_START_MENU, CREATE_FOLDER,
+  OPEN_CONTEXT_MENU, SELECT_ICONS
+} from '../constants';
 
 
 export function toggleStartMenu() {
@@ -15,6 +18,18 @@ export function toggleStartMenu() {
 export function createFolder() {
   return dispatch => {
     dispatch({ type: CREATE_FOLDER });
+  };
+}
+
+export function selectIcons(icons) {
+  return dispatch => {
+    dispatch({ type: SELECT_ICONS, icons });
+  };
+}
+
+export function openContextMenu(mouseX, mouseY) {
+  return dispatch => {
+    dispatch({ type: OPEN_CONTEXT_MENU, mouseX, mouseY });
   };
 }
 
