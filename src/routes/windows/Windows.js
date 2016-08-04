@@ -47,7 +47,7 @@ class Windows extends Component { //eslint-disable-line
 
   render() {
     const { startMenuOpened, toggleStartMenu, installedPrograms, desktopItems } = this.props;
-    return (<div className={styles.root}>
+    return (<div className={styles.root} >
       <WindowsDesktop desktopItems={desktopItems} />
       { startMenuOpened ? <WindowsStartMenu installedPrograms={installedPrograms} {...this.props} /> : null }
 

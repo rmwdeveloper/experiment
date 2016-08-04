@@ -2,6 +2,7 @@ export const SET_RUNTIME_VARIABLE = 'SET_RUNTIME_VARIABLE';
 
 export const OPEN_START_MENU = 'windows/OPEN_START_MENU';
 export const CLOSE_START_MENU = 'windows/CLOSE_START_MENU';
+export const CREATE_FOLDER = 'windows/CREATE_FOLDER';
 
 export const LOAD_STOCKS = 'stock/LOAD_STOCKS';
 export const SEARCH_STOCKS = 'stock/SEARCH_STOCKS';

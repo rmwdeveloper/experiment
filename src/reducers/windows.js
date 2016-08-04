@@ -1,4 +1,4 @@
-import {OPEN_START_MENU, CLOSE_START_MENU} from '../constants';
+import {OPEN_START_MENU, CLOSE_START_MENU, CREATE_FOLDER} from '../constants';
 
 
 const initialState = {
@@ -65,6 +65,8 @@ export default function layout(state = initialState, action) {
       return {...state, startMenuOpened: true};
     case CLOSE_START_MENU:
       return {...state, startMenuOpened: false};
+    case CREATE_FOLDER:
+      return {...state};
     default:
       return state;
   }
