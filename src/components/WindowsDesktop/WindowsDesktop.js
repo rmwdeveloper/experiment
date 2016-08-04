@@ -51,6 +51,7 @@ class WindowsDesktop extends Component {
     const dragboxRect = this.dragbox.getBoundingClientRect();
     for (let i = 0; i < this.icons.length; i++) {
       this.icons[i].style.backgroundColor = 'transparent';
+      this.icons[i].style.outline = 'none';
       const icon = this.icons[i].getBoundingClientRect();
       const overlapping = !(dragboxRect.right < icon.left ||
       dragboxRect.left > icon.right ||
@@ -58,7 +59,8 @@ class WindowsDesktop extends Component {
       dragboxRect.top > icon.bottom);
 
       if ( overlapping ) {
-        this.icons[i].style.backgroundColor = 'yellow';
+        this.icons[i].style.backgroundColor = 'rgba(66,85,101,0.25)';
+        this.icons[i].style.outline = '2px solid rgb(115, 128, 140)';
       }
     }
   }
