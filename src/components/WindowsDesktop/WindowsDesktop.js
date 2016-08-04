@@ -39,24 +39,49 @@ class WindowsDesktop extends Component {
       dragStartY: event.clientY
     });
   }
-  dragSelecting(event) {
-      const deltaX = event.clientX - this.state.dragStartX;
-      const deltaY = event.clientY - this.state.dragStartY;
 
-      this.dragbox.style.width = `${deltaX}px`;
-      this.dragbox.style.height = `${deltaY}px`;
+  dragSelecting(event) {
+    const deltaX = event.clientX - this.state.dragStartX;
+    const deltaY = event.clientY - this.state.dragStartY;
+
+    if ( deltaY < 0 && deltaX < 0 ) {
+      this.dragbox.style.transform = `rotateX(180deg) rotateY(180deg) translateY(${Math.abs(deltaY)}px) translateX(${Math.abs(deltaX)}px)`;
+    } else if ( deltaX < 0 ) {
+      this.dragbox.style.transform = `rotateX(180deg) translateX(${deltaX}px)`;
+    } else if ( deltaY < 0 ){
+      this.dragbox.style.transform = `rotateY(180deg) translateY(${deltaY}px)`;
+    }
+
+    this.dragbox.style.width = `${Math.abs(deltaX)}px`;
+    this.dragbox.style.height = `${Math.abs(deltaY)}px`;
+
+
   }
+
   stopDragSelect() {
     const desktop = document.getElementById('desktop');
     desktop.removeEventListener('mousemove', this.dragSelecting);
+    this.setState({
+      dragSelecting: false,
+      dragStartX: null,
+      dragStartY: null
+    });
+    this.dragbox.remove();
+    this.dragbox.border = 'none';
+    this.dragbox.width = '1px';
+    this.dragbox.height = '1px';
+    this.dragbox.transform = 'none';
+    this.dragbox.left = 0;
+    this.dragbox.top = 0;
   }
+
   render() {
     const { desktopItems } = this.props;
     return (
       <div id="desktop" className={styles.root} onMouseDown={this.startDragSelect} onMouseUp={this.stopDragSelect}>
         {
           desktopItems.map((desktopitem, index) => {
-            return <WindowsDesktopItem  key={index} item={desktopitem}/>;
+            return <WindowsDesktopItem key={index} item={desktopitem}/>;
           })
         }
       </div>
@@ -64,7 +89,5 @@ class WindowsDesktop extends Component {
   }
 }
 
-WindowsDesktop.propTypes = {
-
-};
+WindowsDesktop.propTypes = {};
 export default withStyles(styles)(WindowsDesktop);
