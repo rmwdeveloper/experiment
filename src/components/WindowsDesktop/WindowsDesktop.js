@@ -3,6 +3,8 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './WindowsDesktop.css'; //eslint-disable-line
 
 import WindowsDesktopItem from '../WindowsDesktopItem';
+import WindowsContextMenu from '../WindowsContextMenu';
+
 
 class WindowsDesktop extends Component {
   constructor() {
@@ -11,11 +13,15 @@ class WindowsDesktop extends Component {
     this.stopDragSelect = this.stopDragSelect.bind(this);
     this.dragSelecting = this.dragSelecting.bind(this);
     this.checkForOverlap = this.checkForOverlap.bind(this);
+    this.desktopContextMenu = this.desktopContextMenu.bind(this);
     this.dragbox = null;
     this.icons = [];
     this.selectedIcons = [];
     this.diffNodeLists = this.diffNodeLists.bind(this);
     this.state = {
+      contextMenuX: null,
+      contextMenuY: null,
+      contextMenuActive: false,
       dragSelecting: false,
       dragStartX: null,
       dragStartY: null,
@@ -24,9 +30,16 @@ class WindowsDesktop extends Component {
   }
   componentDidMount() {
     this.icons = document.getElementsByClassName('desktopIcon');
+    window.oncontextmenu = this.desktopContextMenu;
+  }
+  componentWillUnmount() {
+
   }
   shouldComponentUpdate(nextProps, nextState) {
-    return !(this.state.selectedIcons === nextState.selectedIcons);
+    return (this.state.selectedIcons !== nextState.selectedIcons) ||
+      (this.state.contextMenuActive !== nextState.contextMenuActive) ||
+      (this.state.contextMenuX !== nextState.contextMenuX)||
+      (this.state.contextMenuY !== nextState.contextMenuY);
   }
   diffNodeLists(firstNodeList, secondNodeList) {
     const iconsArray = [].slice.call(firstNodeList);
@@ -76,7 +89,14 @@ class WindowsDesktop extends Component {
       }
     }
   }
-
+  desktopContextMenu(event) {
+    event.preventDefault();
+    this.setState({
+      contextMenuX: event.clientX,
+      contextMenuY: event.clientY,
+      contextMenuActive: true,
+    });
+  }
   dragSelecting(event) {
     const deltaX = event.clientX - this.state.dragStartX;
     const deltaY = event.clientY - this.state.dragStartY;
@@ -115,7 +135,7 @@ class WindowsDesktop extends Component {
 
   render() {
     const { desktopItems } = this.props;
-    const { selectedIcons } = this.state;
+    const { selectedIcons, contextMenuX, contextMenuY, contextMenuActive } = this.state;
     let unselectedIcons = desktopItems;
     if (this.icons.length > 0 && selectedIcons.length > 0) {
       unselectedIcons = this.diffNodeLists(this.icons, selectedIcons);
@@ -127,10 +147,15 @@ class WindowsDesktop extends Component {
             return <WindowsDesktopItem key={index} index={index} item={desktopitem}/>;
           })
         }
+        {
+          contextMenuActive ? <WindowsContextMenu contextMenuY={contextMenuY} contextMenuX={contextMenuX}/> : null
+        }
       </div>
     );
     return (
-      <div id="desktop" className={styles.root} onMouseDown={this.startDragSelect} onMouseUp={this.stopDragSelect}>
+      <div id="desktop" className={styles.root} onMouseDown={this.startDragSelect}
+           onMouseUp={this.stopDragSelect}
+      >
         {
           desktopItems.map((desktopitem, index) => {
             return <WindowsDesktopItem key={index} item={desktopitem}/>;
