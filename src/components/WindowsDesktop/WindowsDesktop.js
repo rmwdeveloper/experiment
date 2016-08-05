@@ -33,9 +33,9 @@ class WindowsDesktop extends Component {
   }
   shouldComponentUpdate(nextProps, nextState) {
     return (this.state.selectedIcons !== nextState.selectedIcons) ||
-      (this.state.contextMenuActive !== nextState.contextMenuActive) ||
-      (this.state.contextMenuX !== nextState.contextMenuX)||
-      (this.state.contextMenuY !== nextState.contextMenuY);
+      (this.props.contextMenuActive !== nextProps.contextMenuActive) ||
+      (this.props.contextMenuX !== nextProps.contextMenuX)||
+      (this.props.contextMenuY !== nextProps.contextMenuY);
   }
   diffNodeLists(firstNodeList, secondNodeList) {
     const iconsArray = [].slice.call(firstNodeList);
@@ -87,11 +87,7 @@ class WindowsDesktop extends Component {
   }
   desktopContextMenu(event) {
     event.preventDefault();
-    this.setState({
-      contextMenuX: event.clientX,
-      contextMenuY: event.clientY,
-      contextMenuActive: true,
-    });
+    this.props.openContextMenu(event.clientX, event.clientY);
   }
   dragSelecting(event) {
     const deltaX = event.clientX - this.state.dragStartX;
@@ -111,15 +107,16 @@ class WindowsDesktop extends Component {
   }
 
   stopDragSelect() {
+    const { selectIcons } = this.props;
     const desktop = document.getElementById('desktop');
     desktop.removeEventListener('mousemove', this.dragSelecting);
 
     this.setState({
       dragSelecting: false,
       dragStartX: null,
-      dragStartY: null,
-      selectedIcons: this.selectedIcons
+      dragStartY: null
     });
+    selectIcons(this.selectedIcons);
     this.dragbox.remove();
     this.dragbox.border = 'none';
     this.dragbox.width = '1px';
@@ -130,11 +127,11 @@ class WindowsDesktop extends Component {
   }
 
   render() {
-    const { desktopItems } = this.props;
-    const { selectedIcons, contextMenuX, contextMenuY, contextMenuActive } = this.state;
+    const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, selectedDesktopIcons, clearActives } = this.props;
     let unselectedIcons = desktopItems;
-    if (this.icons.length > 0 && selectedIcons.length > 0) {
-      unselectedIcons = this.diffNodeLists(this.icons, selectedIcons);
+    console.log(this.icons, selectedDesktopIcons);
+    if (this.icons.length > 0 && selectedDesktopIcons.length > 0) {
+      unselectedIcons = this.diffNodeLists(this.icons, selectedDesktopIcons);
     }
     return (
       <div id="desktop" className={styles.root} onMouseDown={this.startDragSelect} onMouseUp={this.stopDragSelect}>
@@ -150,7 +147,7 @@ class WindowsDesktop extends Component {
     );
     return (
       <div id="desktop" className={styles.root} onMouseDown={this.startDragSelect}
-           onMouseUp={this.stopDragSelect}
+           onMouseUp={this.stopDragSelect} onClick={clearActives}
       >
         {
           desktopItems.map((desktopitem, index) => {

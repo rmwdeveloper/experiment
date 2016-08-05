@@ -1,6 +1,6 @@
 import {
   OPEN_START_MENU, CLOSE_START_MENU, CREATE_FOLDER,
-  OPEN_CONTEXT_MENU, SELECT_ICONS
+  OPEN_CONTEXT_MENU, SELECT_ICONS, CLEAR_ACTIVES
 } from '../constants';
 
 
@@ -33,3 +33,8 @@ export function openContextMenu(mouseX, mouseY) {
   };
 }
 
+export function clearActives() {
+  return dispatch => {
+    dispatch({ type: CLEAR_ACTIVES });
+  };
+}

@@ -41,7 +41,8 @@ class Windows extends Component { //eslint-disable-line
     contextMenuActive: PropTypes.bool,
     selectedDesktopIcons: PropTypes.array,
     selectIcons: PropTypes.func,
-    openContextMenu: PropTypes.func
+    openContextMenu: PropTypes.func,
+    clearActives: PropTypes.func
   };
   static contextTypes = {
     setTitle: PropTypes.func.isRequired
@@ -56,8 +57,8 @@ class Windows extends Component { //eslint-disable-line
 
 
   render() {
-    const { startMenuOpened, toggleStartMenu, installedPrograms, desktopItems } = this.props;
-    return (<div className={styles.root} >
+    const { startMenuOpened, toggleStartMenu, installedPrograms, clearActives } = this.props;
+    return (<div className={styles.root} onClick={clearActives} >
       <WindowsDesktop {...this.props} />
       { startMenuOpened ? <WindowsStartMenu installedPrograms={installedPrograms} {...this.props} /> : null }
 
