@@ -45,6 +45,7 @@ class WindowsDesktop extends Component {
     });
   }
   startDragSelect(event) {
+    this.props.clearActives();
     const desktop = document.getElementById('desktop');
     this.dragbox = document.getElementById('dragbox');
     if (!this.dragbox) {
@@ -146,8 +147,7 @@ class WindowsDesktop extends Component {
       </div>
     );
     return (
-      <div id="desktop" className={styles.root} onMouseDown={this.startDragSelect}
-           onMouseUp={this.stopDragSelect} onClick={clearActives}
+      <div id="desktop" className={styles.root} onMouseDown={this.startDragSelect} onMouseUp={this.stopDragSelect}
       >
         {
           desktopItems.map((desktopitem, index) => {
