@@ -58,14 +58,15 @@ class WindowsDesktop extends Component {
 
     this.dragbox.style.top = `${event.clientY}px`;
     this.dragbox.style.left = `${event.clientX}px`;
-    this.dragbox.style.width = '1px';
-    this.dragbox.style.height = '1px';
+    this.dragbox.style.width = '10px';
+    this.dragbox.style.height = '10px';
     desktop.addEventListener('mousemove', this.dragSelecting);
 
     this.setState({
       dragStartX: event.clientX,
       dragStartY: event.clientY
     });
+    this.checkForOverlap();
   }
   checkForOverlap() {
     const dragboxRect = this.dragbox.getBoundingClientRect();
