@@ -4,6 +4,9 @@
   position: absolute;
   box-shadow: 2px 2px 20px #000000;
 }
+.root li {
+  cursor: pointer;
+}
 .root li:hover {
   background-color: #d9d9d9;
 }
@@ -30,7 +33,5 @@
 }
 .menuItem {
   margin: 5px;
-}
-.menuItem:hover {
-  cursor: pointer;
+  display: inline-block;
 }

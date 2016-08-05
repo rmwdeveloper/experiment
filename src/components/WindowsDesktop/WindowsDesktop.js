@@ -128,9 +128,8 @@ class WindowsDesktop extends Component {
   }
 
   render() {
-    const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, selectedDesktopIcons, clearActives } = this.props;
+    const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, selectedDesktopIcons, createFolder } = this.props;
     let unselectedIcons = desktopItems;
-    console.log(this.icons, selectedDesktopIcons);
     if (this.icons.length > 0 && selectedDesktopIcons.length > 0) {
       unselectedIcons = this.diffNodeLists(this.icons, selectedDesktopIcons);
     }
@@ -142,17 +141,7 @@ class WindowsDesktop extends Component {
           })
         }
         {
-          contextMenuActive ? <WindowsContextMenu contextMenuY={contextMenuY} contextMenuX={contextMenuX}/> : null
-        }
-      </div>
-    );
-    return (
-      <div id="desktop" className={styles.root} onMouseDown={this.startDragSelect} onMouseUp={this.stopDragSelect}
-      >
-        {
-          desktopItems.map((desktopitem, index) => {
-            return <WindowsDesktopItem key={index} item={desktopitem}/>;
-          })
+          contextMenuActive ? <WindowsContextMenu createFolder={createFolder} contextMenuY={contextMenuY} contextMenuX={contextMenuX}/> : null
         }
       </div>
     );

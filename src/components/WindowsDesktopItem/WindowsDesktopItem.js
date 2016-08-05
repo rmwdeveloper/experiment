@@ -5,7 +5,7 @@ import cx from 'classnames';
 
 function WindowsDesktopItem({ item  }) {
   return (
-    <div data-index={item.index} className={cx('desktopIcon', styles.root)}>
+    <div data-index={item.index4333333333} className={cx('desktopIcon', styles.root)}>
       <img className={styles.icon} src={item.icon} alt={`${item.name} icon`} />
       <span className={styles.directoryName}> {item.name}</span>
     </div>

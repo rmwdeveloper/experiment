@@ -1,4 +1,11 @@
-import {OPEN_START_MENU,CLEAR_ACTIVES,  CLOSE_START_MENU, CREATE_FOLDER, OPEN_CONTEXT_MENU, SELECT_ICONS} from '../constants';
+import {
+  OPEN_START_MENU,
+  CLEAR_ACTIVES,
+  CLOSE_START_MENU,
+  CREATE_FOLDER,
+  OPEN_CONTEXT_MENU,
+  SELECT_ICONS
+} from '../constants';
 
 
 const initialState = {
@@ -66,17 +73,22 @@ export default function layout(state = initialState, action) {
 
   switch (action.type) {
     case OPEN_START_MENU:
-      return {...state, startMenuOpened: true};
+      return { ...state, startMenuOpened: true };
     case CLOSE_START_MENU:
-      return {...state, startMenuOpened: false};
+      return { ...state, startMenuOpened: false };
     case CREATE_FOLDER:
-      return {...state};
+      const nextEntityId = Object.keys(state.entities).length + 1;
+      const newEntities = { ...state.entities };
+      newEntities[nextEntityId] = { name: 'New Folder', icon: 'emptyFolderXSmall.png' };
+
+
+      return { ...state, entities: newEntities, desktopItems: [...state.desktopItems, nextEntityId] };
     case OPEN_CONTEXT_MENU:
-      return {...state, contextMenuX: action.mouseX, contextMenuY: action.mouseY, contextMenuActive: true};
+      return { ...state, contextMenuX: action.mouseX, contextMenuY: action.mouseY, contextMenuActive: true };
     case SELECT_ICONS:
-      return {...state, selectedDesktopIcons: action.icons};
+      return { ...state, selectedDesktopIcons: action.icons };
     case CLEAR_ACTIVES:
-      return {...state, selectedDesktopIcons: [], contextMenuActive: false};
+      return { ...state, selectedDesktopIcons: [], contextMenuActive: false };
     default:
       return state;
   }

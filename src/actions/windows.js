@@ -15,9 +15,9 @@ export function toggleStartMenu() {
   };
 }
 
-export function createFolder() {
+export function createFolder(location) {
   return dispatch => {
-    dispatch({ type: CREATE_FOLDER });
+    dispatch({ type: CREATE_FOLDER, location });
   };
 }
 

@@ -42,7 +42,8 @@ class Windows extends Component { //eslint-disable-line
     selectedDesktopIcons: PropTypes.array,
     selectIcons: PropTypes.func,
     openContextMenu: PropTypes.func,
-    clearActives: PropTypes.func
+    clearActives: PropTypes.func,
+    createFolder: PropTypes.func
   };
   static contextTypes = {
     setTitle: PropTypes.func.isRequired
