@@ -4,7 +4,8 @@ import {
   CLOSE_START_MENU,
   CREATE_FOLDER,
   OPEN_CONTEXT_MENU,
-  SELECT_ICONS
+  SELECT_ICONS,
+  OPEN_FILE
 } from '../constants';
 
 
@@ -67,7 +68,8 @@ const initialState = {
   contextMenuX: 0,
   contextMenuY: 0,
   contextMenuActive: false,
-  selectedDesktopIcons: []
+  selectedDesktopIcons: [],
+  openedFiles : []
 };
 export default function layout(state = initialState, action) {
 
@@ -89,6 +91,8 @@ export default function layout(state = initialState, action) {
       return { ...state, selectedDesktopIcons: action.icons };
     case CLEAR_ACTIVES:
       return { ...state, selectedDesktopIcons: [], contextMenuActive: false };
+    case OPEN_FILE:
+      return { ...state, openedFiles: [...state.openedFiles, action.itemId]};
     default:
       return state;
   }

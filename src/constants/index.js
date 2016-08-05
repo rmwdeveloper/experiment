@@ -6,6 +6,7 @@ export const CREATE_FOLDER = 'windows/CREATE_FOLDER';
 export const SELECT_ICONS = 'windows/SELECT_ICONS';
 export const OPEN_CONTEXT_MENU = 'windows/OPEN_CONTEXT_MENU';
 export const CLEAR_ACTIVES = 'windows/CLEAR_ACTIVES';
+export const OPEN_FILE = 'windows/OPEN_FILE';
 
 
 export const LOAD_STOCKS = 'stock/LOAD_STOCKS';

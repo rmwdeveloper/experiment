@@ -25,7 +25,8 @@ const title = 'Windows XP';
   contextMenuX: state.windows.contextMenuX,
   contextMenuY: state.windows.contextMenuY,
   contextMenuActive: state.windows.contextMenuActive,
-  selectedDesktopIcons: state.windows.selectedDesktopIcons
+  selectedDesktopIcons: state.windows.selectedDesktopIcons,
+  openedFiles: state.windows.openedFiles
 }), { ...windowsActions })
 class Windows extends Component { //eslint-disable-line
   static propTypes = {
@@ -43,7 +44,9 @@ class Windows extends Component { //eslint-disable-line
     selectIcons: PropTypes.func,
     openContextMenu: PropTypes.func,
     clearActives: PropTypes.func,
-    createFolder: PropTypes.func
+    createFolder: PropTypes.func,
+    openedFiles: PropTypes.array,
+    openFile: PropTypes.func
   };
   static contextTypes = {
     setTitle: PropTypes.func.isRequired

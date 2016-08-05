@@ -129,7 +129,7 @@ class WindowsDesktop extends Component {
   }
 
   render() {
-    const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, selectedDesktopIcons, createFolder } = this.props;
+    const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, selectedDesktopIcons, createFolder, openFile } = this.props;
     let unselectedIcons = desktopItems;
     if (this.icons.length > 0 && selectedDesktopIcons.length > 0) {
       unselectedIcons = this.diffNodeLists(this.icons, selectedDesktopIcons);
@@ -138,7 +138,7 @@ class WindowsDesktop extends Component {
       <div id="desktop" className={styles.root} onMouseDown={this.startDragSelect} onMouseUp={this.stopDragSelect}>
         {
           desktopItems.map((desktopitem, index) => {
-            return <WindowsDesktopItem key={index} index={index} item={desktopitem}/>;
+            return <WindowsDesktopItem key={index} index={index} openFile={openFile} item={desktopitem} />;
           })
         }
         {
