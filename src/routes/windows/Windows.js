@@ -22,6 +22,10 @@ const title = 'Windows XP';
   utilityControls: utilityControlsSelector(state),
   computerSettings: computerSettingsSelector(state),
   desktopItems: desktopItemsSelector(state),
+  contextMenuX: state.windows.contextMenuX,
+  contextMenuY: state.windows.contextMenuY,
+  contextMenuActive: state.windows.contextMenuActive,
+  selectedDesktopIcons: state.windows.selectedDesktopIcons
 }), { ...windowsActions })
 class Windows extends Component { //eslint-disable-line
   static propTypes = {
@@ -31,7 +35,13 @@ class Windows extends Component { //eslint-disable-line
     computerSettings: PropTypes.array,
     desktopItems: PropTypes.array,
     startMenuOpened: PropTypes.bool,
-    toggleStartMenu: PropTypes.func
+    toggleStartMenu: PropTypes.func,
+    contextMenuX: PropTypes.number,
+    contextMenuY: PropTypes.number,
+    contextMenuActive: PropTypes.bool,
+    selectedDesktopIcons: PropTypes.array,
+    selectIcons: PropTypes.func,
+    openContextMenu: PropTypes.func
   };
   static contextTypes = {
     setTitle: PropTypes.func.isRequired
@@ -48,7 +58,7 @@ class Windows extends Component { //eslint-disable-line
   render() {
     const { startMenuOpened, toggleStartMenu, installedPrograms, desktopItems } = this.props;
     return (<div className={styles.root} >
-      <WindowsDesktop desktopItems={desktopItems} />
+      <WindowsDesktop {...this.props} />
       { startMenuOpened ? <WindowsStartMenu installedPrograms={installedPrograms} {...this.props} /> : null }
 
       <WindowsTaskbar toggleStartMenu={toggleStartMenu} />

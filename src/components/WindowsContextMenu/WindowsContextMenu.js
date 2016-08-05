@@ -6,7 +6,7 @@ import cx from 'classnames';
 function WindowsContextMenu({ contextMenuY, contextMenuX  }) {
   return (
     <ul style={{top: `${contextMenuY}px`, left: `${contextMenuX}px`}} className={cx(styles.root, styles.contextMenu)} type="context" id="mymenu">
-      <li>
+      <li className={styles.nested}>
         <span className={styles.menuItem}>New <i className="fa fa-caret-right" /></span>
         <ul className={styles.nestedMenu}>
           <li><span className={styles.menuItem}>Folder</span></li>

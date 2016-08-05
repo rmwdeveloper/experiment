@@ -56,7 +56,11 @@ const initialState = {
   computerSettings: [7, 8],
   utilityControls: [9, 10, 11],
   desktopItems: [1, 2, 3, 4, 6],
-  startMenuOpened: false
+  startMenuOpened: false,
+  contextMenuX: 0,
+  contextMenuY: 0,
+  contextMenuActive: true,
+  selectedDesktopIcons: []
 };
 export default function layout(state = initialState, action) {
 
@@ -68,9 +72,9 @@ export default function layout(state = initialState, action) {
     case CREATE_FOLDER:
       return {...state};
     case OPEN_CONTEXT_MENU:
-      return {...state, contextMenuX: action.mouseX, contextMenuY: action.mouseY};
+      return {...state, contextMenuX: action.mouseX, contextMenuY: action.mouseY, contextMenuActive: true};
     case SELECT_ICONS:
-      return {...state, icons: action.icons};
+      return {...state, selectedDesktopIcons: action.icons};
     default:
       return state;
   }

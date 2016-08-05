@@ -19,13 +19,9 @@ class WindowsDesktop extends Component {
     this.selectedIcons = [];
     this.diffNodeLists = this.diffNodeLists.bind(this);
     this.state = {
-      contextMenuX: null,
-      contextMenuY: null,
-      contextMenuActive: false,
       dragSelecting: false,
       dragStartX: null,
       dragStartY: null,
-      selectedIcons: []
     };
   }
   componentDidMount() {
