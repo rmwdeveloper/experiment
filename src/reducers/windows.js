@@ -90,7 +90,7 @@ export default function layout(state = initialState, action) {
     case CLEAR_ACTIVES:
       return { ...state, selectedDesktopIcons: [], contextMenuActive: false };
     case OPEN_FILE:
-      return { ...state, openedFiles: [...state.openedFiles, action.itemId]};
+      return { ...state, openedFiles: [...state.openedFiles, action.itemId] };
     default:
       return state;
   }

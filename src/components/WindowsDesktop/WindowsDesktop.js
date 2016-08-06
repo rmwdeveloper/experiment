@@ -35,6 +35,7 @@ class WindowsDesktop extends Component {
     return (this.state.selectedIcons !== nextState.selectedIcons) ||
       (this.props.contextMenuActive !== nextProps.contextMenuActive) ||
       (this.props.contextMenuX !== nextProps.contextMenuX)||
+      (this.props.openedFiles !== nextProps.openedFiles) ||
       (this.props.contextMenuY !== nextProps.contextMenuY);
   }
   diffNodeLists(firstNodeList, secondNodeList) {
@@ -116,23 +117,26 @@ class WindowsDesktop extends Component {
     const desktop = document.getElementById('desktop');
     desktop.removeEventListener('mousemove', this.dragSelecting);
 
-    this.setState({
-      dragSelecting: false,
-      dragStartX: null,
-      dragStartY: null
-    });
-    selectIcons(this.selectedIcons);
-    this.dragbox.remove();
-    this.dragbox.border = 'none';
-    this.dragbox.width = '1px';
-    this.dragbox.height = '1px';
-    this.dragbox.transform = 'none';
-    this.dragbox.left = 0;
-    this.dragbox.top = 0;
+    if (this.dragbox) {
+      this.setState({
+        dragSelecting: false,
+        dragStartX: null,
+        dragStartY: null
+      });
+      selectIcons(this.selectedIcons);
+      this.dragbox.remove();
+      this.dragbox.border = 'none';
+      this.dragbox.width = '1px';
+      this.dragbox.height = '1px';
+      this.dragbox.transform = 'none';
+      this.dragbox.left = 0;
+      this.dragbox.top = 0;
+    }
   }
 
   render() {
-    const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, selectedDesktopIcons, createFolder, openFile } = this.props;
+    const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, selectedDesktopIcons, createFolder, openFile,
+    openedFiles } = this.props;
     let unselectedIcons = desktopItems;
     if (this.icons.length > 0 && selectedDesktopIcons.length > 0) {
       unselectedIcons = this.diffNodeLists(this.icons, selectedDesktopIcons);

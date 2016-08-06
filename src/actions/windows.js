@@ -39,7 +39,7 @@ export function clearActives() {
   };
 }
 
-export function openFile(event, itemId) {
+export function openFile(itemId) {
   return dispatch => {
     dispatch({ type: OPEN_FILE, itemId });
   };
