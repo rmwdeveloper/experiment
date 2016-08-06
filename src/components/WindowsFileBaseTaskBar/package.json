@@ -1,6 +1,6 @@
 {
-  "name": "WindowsFileBaseTaskBar",
+  "name": "WindowsFileBaseTaskbar",
   "version": "0.0.0",
   "private": true,
-  "main": "./WindowsFileBaseTaskBar.js"
+  "main": "./WindowsFileBaseTaskbar.js"
 }

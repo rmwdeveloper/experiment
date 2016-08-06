@@ -3,12 +3,13 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './WindowsFolder.css'; //eslint-disable-line
 import cx from 'classnames';
 
-function WindowsFolder({data, className}) {
+import WindowsFileBaseTaskbar from '../WindowsFileBaseTaskbar';
 
+//todo: refactor the base taskbar (min, resize, and close) to a HOC
+function WindowsFolder({entityID}) {
   return (
     <div className={styles.root}>
-      <img className={styles.icon} src={data.icon} alt={`${data.name} icon`} />
-      <span className={cx(styles.directoryName, className)}> {data.name}</span>
+      <WindowsFileBaseTaskbar />
     </div>
   );
 }

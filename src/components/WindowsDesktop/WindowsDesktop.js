@@ -4,7 +4,7 @@ import styles from './WindowsDesktop.css'; //eslint-disable-line
 
 import WindowsDesktopItem from '../WindowsDesktopItem';
 import WindowsContextMenu from '../WindowsContextMenu';
-
+import WindowsFolder from '../WindowsFolder';
 
 class WindowsDesktop extends Component {
   constructor() {
@@ -146,6 +146,11 @@ class WindowsDesktop extends Component {
         {
           desktopItems.map((desktopitem, index) => {
             return <WindowsDesktopItem key={index} index={index} openFile={openFile} item={desktopitem} />;
+          })
+        }
+        {
+          openedFiles.map((openedFiles) => {
+            return <WindowsFolder />;
           })
         }
         {
