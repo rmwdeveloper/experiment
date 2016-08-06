@@ -45,6 +45,9 @@ class WindowsDesktop extends Component {
     });
   }
   startDragSelect(event) {
+    if (event.target !== event.currentTarget) {
+      return;
+    }
     this.props.clearActives();
     const desktop = document.getElementById('desktop');
     this.dragbox = document.getElementById('dragbox');

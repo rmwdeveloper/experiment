@@ -82,9 +82,7 @@ export default function layout(state = initialState, action) {
       const nextEntityId = Object.keys(state.entities).length + 1;
       const newEntities = { ...state.entities };
       newEntities[nextEntityId] = { name: 'New Folder', icon: 'emptyFolderXSmall.png' };
-
-
-      return { ...state, entities: newEntities, desktopItems: [...state.desktopItems, nextEntityId] };
+      return { ...state, entities: newEntities, desktopItems: [...state.desktopItems, nextEntityId], contextMenuActive: false };
     case OPEN_CONTEXT_MENU:
       return { ...state, contextMenuX: action.mouseX, contextMenuY: action.mouseY, contextMenuActive: true };
     case SELECT_ICONS:

@@ -20,7 +20,7 @@ class WindowsContextMenu extends Component {
         <li className={styles.nested}>
           <span className={styles.menuItem}>New <i className="fa fa-caret-right"/></span>
           <ul className={styles.nestedMenu}>
-            <li onMouseDown={this.createFolder}><span className={styles.menuItem}>Folder</span></li>
+            <li onClick={this.createFolder}><span className={styles.menuItem}>Folder</span></li>
             <li><span className={styles.menuItem}>Text Document</span></li>
             <li><span className={styles.menuItem}>Spreadsheet</span></li>
           </ul>
