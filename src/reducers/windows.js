@@ -5,7 +5,10 @@ import {
   CREATE_FOLDER,
   OPEN_CONTEXT_MENU,
   SELECT_ICONS,
-  OPEN_FILE
+  OPEN_FILE_WINDOW,
+  CLOSE_FILE_WINDOW,
+  MAXIMIZE_FILE_WINDOW,
+  MINIMIZE_FILE_WINDOW,
 } from '../constants';
 
 
@@ -81,7 +84,7 @@ export default function layout(state = initialState, action) {
     case CREATE_FOLDER:
       const nextEntityId = Object.keys(state.entities).length + 1;
       const newEntities = { ...state.entities };
-      newEntities[nextEntityId] = { name: 'New Folder', icon: 'emptyFolderXSmall.png' };
+      newEntities[nextEntityId] = { name: 'New Folder', type: 'Folder', icon: 'emptyFolderXSmall.png' };
       return { ...state, entities: newEntities, desktopItems: [...state.desktopItems, nextEntityId], contextMenuActive: false };
     case OPEN_CONTEXT_MENU:
       return { ...state, contextMenuX: action.mouseX, contextMenuY: action.mouseY, contextMenuActive: true };
@@ -89,7 +92,7 @@ export default function layout(state = initialState, action) {
       return { ...state, selectedDesktopIcons: action.icons };
     case CLEAR_ACTIVES:
       return { ...state, selectedDesktopIcons: [], contextMenuActive: false };
-    case OPEN_FILE:
+    case OPEN_FILE_WINDOW:
       return { ...state, openedFiles: [...state.openedFiles, action.itemId] };
     default:
       return state;

@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './WindowsDesktop.css'; //eslint-disable-line
 
+import windowsFileRegistry from '../windowsFileRegistry';
 import WindowsDesktopItem from '../WindowsDesktopItem';
 import WindowsContextMenu from '../WindowsContextMenu';
 import WindowsFolder from '../WindowsFolder';
@@ -149,8 +150,8 @@ class WindowsDesktop extends Component {
           })
         }
         {
-          openedFiles.map((openedFiles) => {
-            return <WindowsFolder />;
+          openedFiles.map((openedFiles, key) => {
+            return React.createElement(windowsFileRegistry.Folder, {key, ...this.props});
           })
         }
         {

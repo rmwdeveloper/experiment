@@ -1,6 +1,9 @@
 import {
   OPEN_START_MENU, CLOSE_START_MENU, CREATE_FOLDER,
-  OPEN_CONTEXT_MENU, SELECT_ICONS, CLEAR_ACTIVES, OPEN_FILE
+  OPEN_CONTEXT_MENU, SELECT_ICONS, CLEAR_ACTIVES, OPEN_FILE_WINDOW,
+  CLOSE_FILE_WINDOW,
+  MAXIMIZE_FILE_WINDOW,
+  MINIMIZE_FILE_WINDOW,
 } from '../constants';
 
 
@@ -41,6 +44,6 @@ export function clearActives() {
 
 export function openFile(itemId) {
   return dispatch => {
-    dispatch({ type: OPEN_FILE, itemId });
+    dispatch({ type: OPEN_FILE_WINDOW, itemId });
   };
 }

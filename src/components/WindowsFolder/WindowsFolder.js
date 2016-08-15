@@ -14,6 +14,4 @@ function WindowsFolder({entityID}) {
   );
 }
 
-
-WindowsFolder.propTypes = {};
 export default withStyles(styles)(WindowsFolder);
