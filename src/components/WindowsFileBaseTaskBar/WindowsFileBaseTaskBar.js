@@ -8,39 +8,18 @@ export default function WindowsFileBaseTaskbar(ComposedComponent) {
   class WindowsFileBaseTaskBar extends Component {
     render() {
       return (<div className={styles.root}>
-         <span className={styles.fileName}> Folder Name!</span>
-         <div className={styles.fileControls}>
-           <i className={cx(styles.minimizeWindowIcon, "fa fa-minus")} />
-           <div className={styles.resizeWindowIcon}>
-             <i className="fa fa-square-o" />
-             <i className="fa fa-square-o" />
-           </div>
-           <i className={cx(styles.closeWindowIcon, "fa fa-remove")} />
-         </div>
+        <span className={styles.fileName}> Folder Name!</span>
+        <div className={styles.fileControls}>
+          <i className={cx(styles.minimizeWindowIcon, "fa fa-minus")} />
+          <div className={styles.resizeWindowIcon}>
+            <i className="fa fa-square-o" />
+            <i className="fa fa-square-o" />
+          </div>
+          <i className={cx(styles.closeWindowIcon, "fa fa-remove")} />
+        </div>
         <ComposedComponent {...this.state} {...this.props} />
-       </div>);
+      </div>);
     }
   }
   return withStyles(styles)(WindowsFileBaseTaskBar);
 }
-
-// function WindowsFileBaseTaskbar() {
-//   return (composedComponent) => class baseFileTaskbar extends Component {
-//     render() {
-//       return (<div className={styles.root}>
-//         <span className={styles.fileName}> Folder Name!</span>
-//         <div className={styles.fileControls}>
-//           <i className={cx(styles.minimizeWindowIcon, "fa fa-minus")} />
-//           <div className={styles.resizeWindowIcon}>
-//             <i className="fa fa-square-o" />
-//             <i className="fa fa-square-o" />
-//           </div>
-//           <i className={cx(styles.closeWindowIcon, "fa fa-remove")} />
-//         </div>
-//       </div>);
-//     }
-//   };
-// }
-
-
-// export default withStyles(styles)(WindowsFileBaseTaskbar);
