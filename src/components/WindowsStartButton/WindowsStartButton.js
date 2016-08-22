@@ -14,6 +14,6 @@ function WindowsStartButton({ toggleStartMenu }) {
 }
 
 WindowsStartButton.propTypes = {
-
+  toggleStartMenu: PropTypes.func
 };
 export default withStyles(styles)(WindowsStartButton);

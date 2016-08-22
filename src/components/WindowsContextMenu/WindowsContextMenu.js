@@ -4,6 +4,11 @@ import styles from './WindowsContextMenu.css'; //eslint-disable-line
 import cx from 'classnames';
 
 class WindowsContextMenu extends Component {
+  static propTypes = {
+    createFolder: PropTypes.func,
+    contextMenuX: PropTypes.number,
+    contextMenuY: PropTypes.number
+  };
   constructor() {
     super();
     this.createFolder = this.createFolder.bind(this);
@@ -30,7 +35,5 @@ class WindowsContextMenu extends Component {
     );
   }
 }
-WindowsContextMenu.propTypes = {
 
-};
 export default withStyles(styles)(WindowsContextMenu);

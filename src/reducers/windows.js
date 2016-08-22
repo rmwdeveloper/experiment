@@ -72,7 +72,7 @@ const initialState = {
   contextMenuY: 0,
   contextMenuActive: false,
   selectedDesktopIcons: [],
-  openedFiles : []
+  openedFiles: []
 };
 export default function layout(state = initialState, action) {
 

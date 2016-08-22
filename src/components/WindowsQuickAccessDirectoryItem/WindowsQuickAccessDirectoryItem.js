@@ -1,10 +1,9 @@
-import React, { PropTypes, Component } from 'react';
+import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './WindowsQuickAccessDirectoryItem.css'; //eslint-disable-line
 import cx from 'classnames';
 
-function WindowsQuickAccessDirectoryItem({data, className}) {
-
+function WindowsQuickAccessDirectoryItem({ data, className }) {
   return (
     <div className={styles.root}>
       <img className={styles.icon} src={data.icon} alt={`${data.name} icon`} />
@@ -13,6 +12,8 @@ function WindowsQuickAccessDirectoryItem({data, className}) {
   );
 }
 
-
-WindowsQuickAccessDirectoryItem.propTypes = {};
+WindowsQuickAccessDirectoryItem.propTypes = {
+  data: PropTypes.object,
+  className: PropTypes.string
+};
 export default withStyles(styles)(WindowsQuickAccessDirectoryItem);

@@ -13,6 +13,7 @@ function WindowsDesktopItem({ item, openFile }) {
 }
 
 WindowsDesktopItem.propTypes = {
-
+  item: PropTypes.object,
+  openFile: PropTypes.func
 };
 export default withStyles(styles)(WindowsDesktopItem);

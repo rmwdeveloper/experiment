@@ -13,6 +13,7 @@ function WindowsDesktopItemGroup({ item, index }) {
 }
 
 WindowsDesktopItemGroup.propTypes = {
-
+  item: PropTypes.object,
+  index: PropTypes.number
 };
 export default withStyles(styles)(WindowsDesktopItemGroup);

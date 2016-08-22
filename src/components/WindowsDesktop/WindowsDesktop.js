@@ -5,9 +5,21 @@ import styles from './WindowsDesktop.css'; //eslint-disable-line
 import windowsFileRegistry from '../windowsFileRegistry';
 import WindowsDesktopItem from '../WindowsDesktopItem';
 import WindowsContextMenu from '../WindowsContextMenu';
-import WindowsFolder from '../WindowsFolder';
+
 
 class WindowsDesktop extends Component {
+  static propTypes = {
+    contextMenuActive: PropTypes.bool,
+    contextMenuX: PropTypes.number,
+    contextMenuY: PropTypes.number,
+    openContextMenu: PropTypes.func,
+    openedFiles: PropTypes.array,
+    selectIcons: PropTypes.func,
+    desktopItems: PropTypes.array,
+    createFolder: PropTypes.func,
+    openFile: PropTypes.func,
+    unselectedIcons: PropTypes.array
+  };
   constructor() {
     super();
     this.startDragSelect = this.startDragSelect.bind(this);
@@ -162,5 +174,4 @@ class WindowsDesktop extends Component {
   }
 }
 
-WindowsDesktop.propTypes = {};
 export default withStyles(styles)(WindowsDesktop);

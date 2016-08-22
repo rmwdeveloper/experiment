@@ -1,17 +1,18 @@
-import React, { PropTypes, Component } from 'react';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import React, { PropTypes } from 'react';
 import styles from './WindowsFolder.css'; //eslint-disable-line
-import cx from 'classnames';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
-import WindowsFileBaseTaskbar from '../WindowsFileBaseTaskbar';
 
-//todo: refactor the base taskbar (min, resize, and close) to a HOC
-function WindowsFolder({entityID}) {
+// todo: refactor the base taskbar (min, resize, and close) to a HOC
+function WindowsFolder({ entityID }) {
   return (
     <div className={styles.root}>
-      Windows Folder
+      Windows Folder {entityID}
     </div>
   );
 }
 
+WindowsFolder.propTypes = {
+  entityID: PropTypes.number
+};
 export default withStyles(styles)(WindowsFolder);

@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import s from './Register.css';
+import s from './Register.css'; //eslint-disable-line
 import sendFormData from '../../core/sendFormData';
 import RegistrationForm from '../../components/RegistrationForm';
 
@@ -16,24 +16,32 @@ class Register extends Component {
       password: ''
     };
   }
+
   shouldComponentUpdate() {
     return false;
   }
+
   usernameChange(event) {
-    this.setState({username: event.target.value});
+    this.setState({ username: event.target.value });
   }
+
   passwordChange(event) {
-    this.setState({password: event.target.value});
+    this.setState({ password: event.target.value });
   }
+
   submitForm(event) {
     event.preventDefault();
-    sendFormData({username: this.state.username, password: this.state.password});
-    
+    sendFormData({ username: this.state.username, password: this.state.password });
   }
+
   render() {
     return (
       <div className={s.root}>
-        <RegistrationForm usernameChange={this.usernameChange} passwordChange={this.passwordChange} submit={this.submitForm} />
+        <RegistrationForm
+          usernameChange={this.usernameChange}
+          passwordChange={this.passwordChange}
+          submit={this.submitForm}
+        />
       </div>
     );
   }

@@ -2,8 +2,8 @@ import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './WindowsInfoHub.css'; //eslint-disable-line
 
-import computerIcon from './xpComputerXSmall.png';
-import SimpleTimer from '../SimpleTimer';
+import computerIcon from './xpComputerXSmall.png'; //eslint-disable-line
+import SimpleTimer from '../SimpleTimer'; //eslint-disable-line
 
 function WindowsInfoHub({ className }) {
   return (
@@ -15,6 +15,6 @@ function WindowsInfoHub({ className }) {
 }
 
 WindowsInfoHub.propTypes = {
-
+  className: PropTypes.string
 };
 export default withStyles(styles)(WindowsInfoHub);

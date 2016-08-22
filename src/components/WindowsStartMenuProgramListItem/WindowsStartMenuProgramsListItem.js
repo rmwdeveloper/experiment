@@ -1,9 +1,9 @@
-import React, { PropTypes, Component } from 'react';
+import React from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './WindowsStartMenuProgramsListItem.css'; //eslint-disable-line
 
 
-function WindowsStartMenuProgramListItem({programData}) {
+function WindowsStartMenuProgramListItem({ programData }) {
   return (
     <div className={styles.root}>
       <div className={styles.iconContainer}>

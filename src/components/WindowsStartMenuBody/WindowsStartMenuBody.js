@@ -25,6 +25,9 @@ class WindowsStartMenuBody extends Component {
 }
 
 WindowsStartMenuBody.propTypes = {
-
+  installedPrograms: PropTypes.array,
+  userDirectories: PropTypes.array,
+  utilityControls: PropTypes.array,
+  computerSettings: PropTypes.array,
 };
 export default withStyles(styles)(WindowsStartMenuBody);

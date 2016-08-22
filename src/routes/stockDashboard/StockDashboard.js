@@ -81,7 +81,8 @@ class StockDashboard extends Component { //eslint-disable-line
     modalBody: PropTypes.string,
     modalFooter: PropTypes.element,
     toggleLayoutPicker: PropTypes.func,
-    layoutPickerVisible: PropTypes.bool
+    layoutPickerVisible: PropTypes.bool,
+    deactivateMergeConfirm: PropTypes.func
     // resizingCell: PropTypes.func,
     // resizingLayoutIndex: PropTypes.string,
     // boundingBox: PropTypes.object,
@@ -98,11 +99,6 @@ class StockDashboard extends Component { //eslint-disable-line
   static contextTypes = {
     setTitle: PropTypes.func.isRequired
   };
-
-  constructor() {
-    super();
-  }
-
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.resizingNeedsConfirm) {
@@ -124,7 +120,7 @@ class StockDashboard extends Component { //eslint-disable-line
   render() {
     const {
       toggleGrid, gridVisible, toggleMode, mode, autosave, layoutPickerVisible,
-      closeModal, modalVisible, modalBody, modalFooter, toggleLayoutPicker
+      modalVisible, modalBody, modalFooter, toggleLayoutPicker
     } = this.props;
     this.context.setTitle(title);
     return (
@@ -139,28 +135,28 @@ class StockDashboard extends Component { //eslint-disable-line
         />
 
         <div id="stockDashboard" className={cx('col-lg-12 col-md-12 col-sm-12 col-xs-12', styles.primaryColumn)}>
-        <div className={cx('col-lg-12 col-md-12 col-sm-12 col-xs-12', styles.primaryColumn)}>
-          <div className={cx(styles.primaryRow, 'row')}>
-            {markup}
-          </div>
+          <div className={cx('col-lg-12 col-md-12 col-sm-12 col-xs-12', styles.primaryColumn)}>
+            <div className={cx(styles.primaryRow, 'row')}>
+              {markup}
+            </div>
 
 
-        <ReactCSSTransitionGroup transitionName={{
+            <ReactCSSTransitionGroup transitionName={{
           enter: styles.exampleEnter, enterActive: styles.exampleEnterActive,
           leave: styles.exampleLeave, exampleLeaveActive: styles.exampleLeaveActive
         }} transitionEnterTimeout={600} transitionLeaveTimeout={600}>
-          { layoutPickerVisible ?
-            <LayoutPicker className={styles.layoutPicker} /> : null }
-        </ReactCSSTransitionGroup>
-        <div id="stockDashboard" className={cx('col-lg-12 col-md-12 col-sm-12 col-xs-12', styles.primaryColumn)}>
+              { layoutPickerVisible ?
+                <LayoutPicker className={styles.layoutPicker}/> : null }
+            </ReactCSSTransitionGroup>
+            <div id="stockDashboard" className={cx('col-lg-12 col-md-12 col-sm-12 col-xs-12', styles.primaryColumn)}>
 
 
-        </div>
-        <Modal id="primaryModal" modalVisible={modalVisible} modalTitle="The title!" modalFooter={modalFooter}
-               modalContent={modalBody}/>
-      </div>
+            </div>
+            <Modal id="primaryModal" modalVisible={modalVisible} modalTitle="The title!" modalFooter={modalFooter}
+                   modalContent={modalBody}/>
           </div>
-        </div>);
+        </div>
+      </div>);
   }
 }
 

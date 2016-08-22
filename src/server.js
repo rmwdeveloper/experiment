@@ -1,7 +1,7 @@
 import 'babel-polyfill';
 import path from 'path';
 import express from 'express';
-import bcrypt from 'bcrypt';
+
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import expressJwt from 'express-jwt';
@@ -9,7 +9,6 @@ import PrettyError from 'pretty-error';
 import passport from './core/passport';
 import ReactDOM from 'react-dom/server';
 import models from './data/models';
-import { User } from './data/models';
 
 import routes from './routes';
 import { resolve } from 'universal-router';
@@ -74,16 +73,16 @@ app.use(passport.initialize());
 //   res.status(200);
 //   res.send();
 // });
-passport.serializeUser(function(user, cb) {
-  cb(null, user.id);
-});
-
-passport.deserializeUser(function(id, cb) {
-  db.users.findById(id, function (err, user) {
-    if (err) { return cb(err); }
-    cb(null, user);
-  });
-});
+// passport.serializeUser(function(user, cb) {
+//   cb(null, user.id);
+// });
+//
+// passport.deserializeUser(function(id, cb) {
+//   db.users.findById(id, function (err, user) {
+//     if (err) { return cb(err); }
+//     cb(null, user);
+//   });
+// });
 // app.set('views', path.join(__dirname, 'views') );
 // app.set('view engine', 'jade');
 
