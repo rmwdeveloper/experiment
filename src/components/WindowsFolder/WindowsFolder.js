@@ -9,7 +9,7 @@ import WindowsFileBaseTaskbar from '../WindowsFileBaseTaskbar';
 function WindowsFolder({entityID}) {
   return (
     <div className={styles.root}>
-      <WindowsFileBaseTaskbar />
+      Windows Folder
     </div>
   );
 }
