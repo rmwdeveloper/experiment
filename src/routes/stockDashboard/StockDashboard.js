@@ -4,7 +4,7 @@ import styles from './stockDashboard.css'; //eslint-disable-line
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { connect } from 'react-redux';
 import shallowCompare from 'react-addons-shallow-compare';
-import StockDashboardNavigation from '../../components/StockDashboardNavigation';
+import StockDashboardNavigation from '../../components/Stocks/StockDashboardNavigation';
 import * as stockActions from '../../actions/stock';
 import * as layoutActions from '../../actions/layout';
 import * as modalActions from '../../actions/modal';

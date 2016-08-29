@@ -1,0 +1,6 @@
+{
+  "name": "InfoHub",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./InfoHub.js"
+}

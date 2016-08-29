@@ -1,6 +1,0 @@
-{
-  "name": "WindowsStartButton",
-  "version": "0.0.0",
-  "private": true,
-  "main": "./WindowsStartButton.js"
-}

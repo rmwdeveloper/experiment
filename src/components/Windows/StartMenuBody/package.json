@@ -1,0 +1,6 @@
+{
+  "name": "StartMenuBody",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./StartMenuBody.js"
+}

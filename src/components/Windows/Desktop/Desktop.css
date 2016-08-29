@@ -1,0 +1,18 @@
+@import '../../variables.css';
+
+.root {
+  height: 95%;
+  background-color: #EEEEEE;
+  padding: 5px;
+  overflow: hidden;
+}
+
+
+@media (--tablet) {
+  .root {
+    /*width: 150px;*/
+  }
+  .startText {
+    display: block;
+  }
+}
