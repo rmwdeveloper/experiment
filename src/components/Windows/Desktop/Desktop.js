@@ -19,6 +19,8 @@ class Desktop extends Component {
     createFolder: PropTypes.func,
     openFile: PropTypes.func,
     closeFile: PropTypes.func,
+    toggleWindowMaximize: PropTypes.func,
+    toggleWindowMinimize: PropTypes.func,
     unselectedIcons: PropTypes.array
   };
   constructor() {
@@ -161,7 +163,8 @@ class Desktop extends Component {
         }
         {
           openedFiles.map((openedFile, index) => {
-            return React.createElement(windowsFileRegistry.Folder, { key: index, filename: entities[openedFile.entityId].name,
+            return React.createElement(windowsFileRegistry.Folder, { key: index, openedFile,
+              filename: entities[openedFile.entityId].name,
               index, ...this.props});
           })
         }

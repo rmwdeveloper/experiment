@@ -3,7 +3,9 @@ import {
   OPEN_CONTEXT_MENU, SELECT_ICONS, CLEAR_ACTIVES, OPEN_FILE_WINDOW,
   CLOSE_FILE_WINDOW,
   MAXIMIZE_FILE_WINDOW,
+  UNMAXIMIZE_FILE_WINDOW,
   MINIMIZE_FILE_WINDOW,
+  UNMINIMIZE_FILE_WINDOW,
 } from '../constants';
 
 
@@ -51,5 +53,29 @@ export function openFile(entityId) {
 export function closeFile(openedFileIndex) {
   return dispatch => {
     dispatch({ type: CLOSE_FILE_WINDOW, openedFileIndex });
+  };
+}
+
+export function toggleWindowMaximize(openedFileIndex) {
+  return (dispatch, getState) => {
+    const { windows: { openedFiles } } = getState();
+    const { maximized } = openedFiles[openedFileIndex];
+    if (maximized) {
+      dispatch({ type: UNMAXIMIZE_FILE_WINDOW, openedFileIndex });
+    } else {
+      dispatch({ type: MAXIMIZE_FILE_WINDOW, openedFileIndex });
+    }
+  };
+}
+
+export function toggleWindowMinimize(openedFileIndex) {
+  return (dispatch, getState) => {
+    const { windows: { openedFiles } } = getState();
+    const { minimizedToTaskbar } = openedFiles[openedFileIndex];
+    if (minimizedToTaskbar) {
+      dispatch({ type: UNMINIMIZE_FILE_WINDOW, openedFileIndex });
+    } else {
+      dispatch({ type: MINIMIZE_FILE_WINDOW, openedFileIndex });
+    }
   };
 }

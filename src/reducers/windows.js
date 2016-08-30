@@ -8,7 +8,9 @@ import {
   OPEN_FILE_WINDOW,
   CLOSE_FILE_WINDOW,
   MAXIMIZE_FILE_WINDOW,
+  UNMAXIMIZE_FILE_WINDOW,
   MINIMIZE_FILE_WINDOW,
+  UNMINIMIZE_FILE_WINDOW
 } from '../constants';
 
 
@@ -75,7 +77,7 @@ const initialState = {
   openedFiles: [], // {entityId, height, width}
 };
 export default function layout(state = initialState, action) {
-
+  const newOpenedFiles = [...state.openedFiles];
   switch (action.type) {
     case OPEN_START_MENU:
       return { ...state, startMenuOpened: true };
@@ -93,10 +95,23 @@ export default function layout(state = initialState, action) {
     case CLEAR_ACTIVES:
       return { ...state, selectedDesktopIcons: [], contextMenuActive: false };
     case OPEN_FILE_WINDOW:
-      return { ...state, openedFiles: [...state.openedFiles, {entityId: action.entityId, height: 300, width: 300 }]};
+      return { ...state, openedFiles: [...state.openedFiles,
+        { entityId: action.entityId, height: 300, width: 300, maximized: false, minimizedToTaskbar: false }] };
     case CLOSE_FILE_WINDOW:
       return { ...state, openedFiles: [...state.openedFiles.slice(0, action.openedFileIndex),
             ...state.openedFiles.slice(action.openedFileIndex + 1)] };
+    case MAXIMIZE_FILE_WINDOW:
+      newOpenedFiles[action.openedFileIndex].maximized = true;
+      return { ...state, openedFiles: newOpenedFiles };
+    case UNMAXIMIZE_FILE_WINDOW:
+      newOpenedFiles[action.openedFileIndex].maximized = false;
+      return { ...state, openedFiles: newOpenedFiles };
+    case MINIMIZE_FILE_WINDOW:
+      newOpenedFiles[action.openedFileIndex].minimizedToTaskbar = true;
+      return { ...state, openedFiles: newOpenedFiles };
+    case UNMINIMIZE_FILE_WINDOW:
+      newOpenedFiles[action.openedFileIndex].minimizedToTaskbar = false;
+      return { ...state, openedFiles: newOpenedFiles };
     default:
       return state;
   }

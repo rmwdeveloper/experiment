@@ -9,7 +9,9 @@ export const CLEAR_ACTIVES = 'windows/CLEAR_ACTIVES';
 export const OPEN_FILE_WINDOW = 'windows/OPEN_FILE';
 export const CLOSE_FILE_WINDOW = 'windows/CLOSE_FILE';
 export const MAXIMIZE_FILE_WINDOW = 'windows/MAXIMIZE_FILE_WINDOW';
+export const UNMAXIMIZE_FILE_WINDOW = 'windows/UNMAXIMIZE_FILE_WINDOW';
 export const MINIMIZE_FILE_WINDOW = 'windows/MINIMIZE_FILE_WINDOW';
+export const UNMINIMIZE_FILE_WINDOW = 'windows/UNMINIMIZE_FILE_WINDOW';
 
 export const LOAD_STOCKS = 'stock/LOAD_STOCKS';
 export const SEARCH_STOCKS = 'stock/SEARCH_STOCKS';
