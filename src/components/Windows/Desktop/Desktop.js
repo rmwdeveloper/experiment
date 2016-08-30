@@ -18,6 +18,7 @@ class Desktop extends Component {
     desktopItems: PropTypes.array,
     createFolder: PropTypes.func,
     openFile: PropTypes.func,
+    closeFile: PropTypes.func,
     unselectedIcons: PropTypes.array
   };
   constructor() {
@@ -40,9 +41,6 @@ class Desktop extends Component {
   componentDidMount() {
     this.icons = document.getElementsByClassName('desktopIcon');
     window.oncontextmenu = this.desktopContextMenu;
-  }
-  componentWillUnmount() {
-
   }
   shouldComponentUpdate(nextProps, nextState) {
     return (this.state.selectedIcons !== nextState.selectedIcons) ||
@@ -162,8 +160,8 @@ class Desktop extends Component {
           })
         }
         {
-          openedFiles.map((openedFiles, key) => {
-            return React.createElement(windowsFileRegistry.Folder, {key, ...this.props});
+          openedFiles.map((openedFile, index) => {
+            return React.createElement(windowsFileRegistry.Folder, { key: index, index, ...this.props});
           })
         }
         {

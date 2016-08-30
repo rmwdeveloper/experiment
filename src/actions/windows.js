@@ -42,8 +42,14 @@ export function clearActives() {
   };
 }
 
-export function openFile(itemId) {
+export function openFile(entityId) {
   return dispatch => {
-    dispatch({ type: OPEN_FILE_WINDOW, itemId });
+    dispatch({ type: OPEN_FILE_WINDOW, entityId });
+  };
+}
+
+export function closeFile(openedFileIndex) {
+  return dispatch => {
+    dispatch({ type: CLOSE_FILE_WINDOW, openedFileIndex });
   };
 }

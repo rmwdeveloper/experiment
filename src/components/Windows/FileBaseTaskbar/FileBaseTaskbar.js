@@ -7,6 +7,7 @@ import cx from 'classnames';
 export default function FileBaseTaskbar(ComposedComponent) {
   class FileBaseTaskbar extends Component {
     render() {
+      const { closeFile, index } = this.props;
       return (
         <div>
           <div className={styles.root}>
@@ -17,7 +18,7 @@ export default function FileBaseTaskbar(ComposedComponent) {
               <i className="fa fa-square-o" />
               <i className="fa fa-square-o" />
             </div>
-            <i className={cx(styles.closeWindowIcon, 'fa fa-remove')} />
+            <i onClick={() => {closeFile(index)}} className={cx(styles.closeWindowIcon, 'fa fa-remove')} />
           </div>
         </div>
           <ComposedComponent {...this.state} {...this.props} />

@@ -71,8 +71,8 @@ const initialState = {
   contextMenuX: 0,
   contextMenuY: 0,
   contextMenuActive: false,
-  selectedDesktopIcons: [],
-  openedFiles: []
+  selectedDesktopIcons: [], // Array of entity IDs
+  openedFiles: [], // {entityId, height, width}
 };
 export default function layout(state = initialState, action) {
 
@@ -93,7 +93,10 @@ export default function layout(state = initialState, action) {
     case CLEAR_ACTIVES:
       return { ...state, selectedDesktopIcons: [], contextMenuActive: false };
     case OPEN_FILE_WINDOW:
-      return { ...state, openedFiles: [...state.openedFiles, action.itemId] };
+      return { ...state, openedFiles: [...state.openedFiles, {entityId: action.entityId, height: 300, width: 300 }]};
+    case CLOSE_FILE_WINDOW:
+      return { ...state, openedFiles: [...state.openedFiles.slice(0, action.openedFileIndex),
+            ...state.openedFiles.slice(action.openedFileIndex + 1)] };
     default:
       return state;
   }
