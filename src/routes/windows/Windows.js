@@ -24,6 +24,7 @@ import WindowsStartMenu from '../../components/Windows/StartMenu';
   contextMenuActive: state.windows.contextMenuActive,
   selectedDesktopIcons: state.windows.selectedDesktopIcons,
   openedFiles: state.windows.openedFiles,
+  entities: state.windows.entities,
 }), { ...windowsActions })
 class Windows extends Component { //eslint-disable-line
   static propTypes = {
@@ -44,7 +45,8 @@ class Windows extends Component { //eslint-disable-line
     createFolder: PropTypes.func,
     openedFiles: PropTypes.array,
     openFile: PropTypes.func,
-    closeFile: PropTypes.func
+    closeFile: PropTypes.func,
+    entities: PropTypes.object
   };
   static contextTypes = {
     setTitle: PropTypes.func.isRequired

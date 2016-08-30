@@ -7,11 +7,11 @@ import cx from 'classnames';
 export default function FileBaseTaskbar(ComposedComponent) {
   class FileBaseTaskbar extends Component {
     render() {
-      const { closeFile, index } = this.props;
+      const { closeFile, index, filename } = this.props;
       return (
         <div>
           <div className={styles.root}>
-          <span className={styles.fileName}> Folder Name!</span>
+          <span className={styles.fileName}>{filename}</span>
           <div className={styles.fileControls}>
             <i className={cx(styles.minimizeWindowIcon, 'fa fa-minus')} />
             <div className={styles.resizeWindowIcon}>
