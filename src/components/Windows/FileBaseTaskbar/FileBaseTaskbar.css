@@ -6,7 +6,6 @@
   flex-direction: row;
   justify-content: space-between;
   padding: 5px;
-  cursor: pointer;
 }
 
 .fileName, .fileControls {

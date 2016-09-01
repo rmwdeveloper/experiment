@@ -73,7 +73,7 @@ class Desktop extends Component {
       this.dragbox.style.position = 'absolute';
     }
 
-    this.dragbox.style.top = `${event.clientY}px`;
+    this.dragbox.style.top = `${event.clientY - 30}px`;
     this.dragbox.style.left = `${event.clientX}px`;
     this.dragbox.style.width = '10px';
     this.dragbox.style.height = '10px';
