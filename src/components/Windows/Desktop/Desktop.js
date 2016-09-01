@@ -73,7 +73,7 @@ class Desktop extends Component {
       this.dragbox.style.position = 'absolute';
     }
 
-    this.dragbox.style.top = `${event.clientY - 30}px`;
+    this.dragbox.style.top = `${event.clientY - 40}px`;
     this.dragbox.style.left = `${event.clientX}px`;
     this.dragbox.style.width = '10px';
     this.dragbox.style.height = '10px';
@@ -169,7 +169,7 @@ class Desktop extends Component {
           })
         }
         {
-          contextMenuActive ? <ContextMenu createFolder={createFolder} contextMenuY={contextMenuY} contextMenuX={contextMenuX}/> : null
+          contextMenuActive ? <ContextMenu createFolder={createFolder} contextMenuY={contextMenuY - 40} contextMenuX={contextMenuX}/> : null
         }
       </div>
     );
