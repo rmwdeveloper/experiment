@@ -6,14 +6,11 @@ import { connect } from 'react-redux';
 import shallowCompare from 'react-addons-shallow-compare';
 
 import * as windowsActions from '../../actions/windows';
-import {installedProgramsSelector, userDirectoriesSelector, desktopItemsSelector,
-  computerSettingsSelector, utilityControlsSelector} from '../../selectors';
-import WindowsDesktop from '../../components/WindowsDesktop';
-import WindowsTaskbar from '../../components/WindowsTaskbar';
-import WindowsStartMenu from '../../components/WindowsStartMenu';
-
-import cx from 'classnames';
-const title = 'Windows XP';
+import { installedProgramsSelector, userDirectoriesSelector, desktopItemsSelector,
+  computerSettingsSelector, utilityControlsSelector } from '../../selectors';
+import WindowsDesktop from '../../components/Windows/Desktop';
+import WindowsTaskbar from '../../components/Windows/Taskbar';
+import WindowsStartMenu from '../../components/Windows/StartMenu';
 
 @connect(state => ({
   startMenuOpened: state.windows.startMenuOpened,
@@ -22,6 +19,12 @@ const title = 'Windows XP';
   utilityControls: utilityControlsSelector(state),
   computerSettings: computerSettingsSelector(state),
   desktopItems: desktopItemsSelector(state),
+  contextMenuX: state.windows.contextMenuX,
+  contextMenuY: state.windows.contextMenuY,
+  contextMenuActive: state.windows.contextMenuActive,
+  selectedDesktopIcons: state.windows.selectedDesktopIcons,
+  openedFiles: state.windows.openedFiles,
+  entities: state.windows.entities,
 }), { ...windowsActions })
 class Windows extends Component { //eslint-disable-line
   static propTypes = {
@@ -31,14 +34,25 @@ class Windows extends Component { //eslint-disable-line
     computerSettings: PropTypes.array,
     desktopItems: PropTypes.array,
     startMenuOpened: PropTypes.bool,
-    toggleStartMenu: PropTypes.func
+    toggleStartMenu: PropTypes.func,
+    contextMenuX: PropTypes.number,
+    contextMenuY: PropTypes.number,
+    contextMenuActive: PropTypes.bool,
+    selectedDesktopIcons: PropTypes.array,
+    selectIcons: PropTypes.func,
+    openContextMenu: PropTypes.func,
+    clearActives: PropTypes.func,
+    createFolder: PropTypes.func,
+    openedFiles: PropTypes.array,
+    openFile: PropTypes.func,
+    closeFile: PropTypes.func,
+    toggleWindowMaximize: PropTypes.func,
+    toggleWindowMinimize: PropTypes.func,
+    entities: PropTypes.object
   };
   static contextTypes = {
     setTitle: PropTypes.func.isRequired
   };
-  constructor() {
-    super();
-  }
 
   shouldComponentUpdate(nextProps) {
     return shallowCompare(this.props, nextProps);
@@ -46,10 +60,11 @@ class Windows extends Component { //eslint-disable-line
 
 
   render() {
-    const { startMenuOpened, toggleStartMenu, installedPrograms, desktopItems } = this.props;
-    return (<div className={styles.root}>
-      <WindowsDesktop desktopItems={desktopItems} />
-      { startMenuOpened ? <WindowsStartMenu installedPrograms={installedPrograms} {...this.props} /> : null }
+    const { startMenuOpened, toggleStartMenu, installedPrograms, clearActives } = this.props;
+    return (<div className={styles.root} onClick={clearActives} >
+      <WindowsDesktop {...this.props} />
+      {startMenuOpened ? <WindowsStartMenu installedPrograms={installedPrograms} {...this.props} />
+        : null}
 
       <WindowsTaskbar toggleStartMenu={toggleStartMenu} />
     </div>);

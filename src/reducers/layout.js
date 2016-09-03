@@ -36,9 +36,9 @@ export default function layout(state = initialState, action) {
       copy[action.cellIndex] = { widgetType: action.widgetType };
       return { ...state, cells: copy };
     case OPEN_LAYOUT_PICKER:
-      return {...state, layoutPickerVisible: true};
+      return { ...state, layoutPickerVisible: true };
     case CLOSE_LAYOUT_PICKER:
-      return {...state, layoutPickerVisible: false};
+      return { ...state, layoutPickerVisible: false };
     // case ADD_COLUMN:
     //   const newColumnCells = [];
     //   for (let iterator = 0; iterator < state.rowCount; iterator++) {

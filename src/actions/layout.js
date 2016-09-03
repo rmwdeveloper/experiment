@@ -14,12 +14,11 @@ export function swapWidgetPosition(source, target) {
 export function toggleLayoutPicker() {
   return (dispatch, getState) => {
     const { layout: { layoutPickerVisible } } = getState();
-    if(layoutPickerVisible) {
+    if (layoutPickerVisible) {
       dispatch({ type: CLOSE_LAYOUT_PICKER });
     } else {
       dispatch({ type: OPEN_LAYOUT_PICKER });
     }
-
   };
 }
 //

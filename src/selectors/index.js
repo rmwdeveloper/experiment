@@ -12,7 +12,9 @@ export const installedProgramsSelector = createSelector(
   [entitiesObject, installedProgramsIndices],
   (entities, installedPrograms) => {
     return installedPrograms.map(index => {
-      return entities[index];
+      const program = { ...entities[index] };
+      program.index = index;
+      return program;
     });
   }
 );
@@ -47,7 +49,10 @@ export const desktopItemsSelector = createSelector(
   [entitiesObject, desktopItemsIndices],
   (entities, desktopItems) => {
     return desktopItems.map(index => {
-      return entities[index];
+      const program = { ...entities[index] };
+      program.index = index;
+      return program;
     });
   }
 );
+

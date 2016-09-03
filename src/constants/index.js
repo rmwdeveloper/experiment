@@ -2,6 +2,16 @@ export const SET_RUNTIME_VARIABLE = 'SET_RUNTIME_VARIABLE';
 
 export const OPEN_START_MENU = 'windows/OPEN_START_MENU';
 export const CLOSE_START_MENU = 'windows/CLOSE_START_MENU';
+export const CREATE_FOLDER = 'windows/CREATE_FOLDER';
+export const SELECT_ICONS = 'windows/SELECT_ICONS';
+export const OPEN_CONTEXT_MENU = 'windows/OPEN_CONTEXT_MENU';
+export const CLEAR_ACTIVES = 'windows/CLEAR_ACTIVES';
+export const OPEN_FILE_WINDOW = 'windows/OPEN_FILE';
+export const CLOSE_FILE_WINDOW = 'windows/CLOSE_FILE';
+export const MAXIMIZE_FILE_WINDOW = 'windows/MAXIMIZE_FILE_WINDOW';
+export const UNMAXIMIZE_FILE_WINDOW = 'windows/UNMAXIMIZE_FILE_WINDOW';
+export const MINIMIZE_FILE_WINDOW = 'windows/MINIMIZE_FILE_WINDOW';
+export const UNMINIMIZE_FILE_WINDOW = 'windows/UNMINIMIZE_FILE_WINDOW';
 
 export const LOAD_STOCKS = 'stock/LOAD_STOCKS';
 export const SEARCH_STOCKS = 'stock/SEARCH_STOCKS';

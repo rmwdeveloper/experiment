@@ -1,7 +1,6 @@
-
 import React, { PropTypes, Component } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import s from './Login.css';
+import s from './Login.css'; //eslint-disable-line
 import querystring from 'querystring';
 const title = 'Log In';
 
@@ -16,16 +15,17 @@ class Login extends Component {
       password: ''
     };
   }
+
   onSubmit(event) {
     event.preventDefault();
     const xHTTP = new XMLHttpRequest();
     const data = new FormData();
     data.username = this.state.username;
     data.password = this.state.password;
-    xHTTP.onreadystatechange = function() {
-      if (xHTTP.readyState === 4 ) {
+    xHTTP.onreadystatechange = function () {
+      if (xHTTP.readyState === 4) {
         const { status, statusText, responseText } = xHTTP;
-        const response = JSON.parse(xHTTP.responseText);
+        // const response = JSON.parse(responseText);
         if (status === 200 && statusText === 'OK') {
           // console.log(responseText);
         } else {
@@ -37,15 +37,19 @@ class Login extends Component {
     xHTTP.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xHTTP.send(querystring.encode(data));
   }
+
   usernameChange(event) {
-    this.setState({username: event.target.value});
+    this.setState({ username: event.target.value });
   }
+
   passwordChange(event) {
-    this.setState({password: event.target.value});
+    this.setState({ password: event.target.value });
   }
+
   shouldComponentUpdate() {
     return false;
   }
+
   render() {
     return (
       <div className={s.root}>
