@@ -48,7 +48,8 @@ class Windows extends Component { //eslint-disable-line
     closeFile: PropTypes.func,
     toggleWindowMaximize: PropTypes.func,
     toggleWindowMinimize: PropTypes.func,
-    entities: PropTypes.object
+    entities: PropTypes.object,
+    dragFileWindow: PropTypes.func
   };
   static contextTypes = {
     setTitle: PropTypes.func.isRequired

@@ -22,12 +22,16 @@ class Desktop extends Component {
     closeFile: PropTypes.func,
     toggleWindowMaximize: PropTypes.func,
     toggleWindowMinimize: PropTypes.func,
-    unselectedIcons: PropTypes.array
+    unselectedIcons: PropTypes.array,
+    dragFileWindow: PropTypes.func
   };
   constructor() {
     super();
     this.startDragSelect = this.startDragSelect.bind(this);
     this.stopDragSelect = this.stopDragSelect.bind(this);
+    this.startDragFileWindow = this.startDragFileWindow.bind(this);
+    this.dragFileWindow = this.dragFileWindow.bind(this);
+    this.stopDragFileWindow = this.stopDragFileWindow.bind(this);
     this.dragSelecting = this.dragSelecting.bind(this);
     this.checkForOverlap = this.checkForOverlap.bind(this);
     this.desktopContextMenu = this.desktopContextMenu.bind(this);
@@ -39,14 +43,16 @@ class Desktop extends Component {
     this.diffNodeLists = this.diffNodeLists.bind(this);
     this.state = {
       dragSelecting: false,
+      draggingFileWindow: false,
       dragStartX: null,
       dragStartY: null,
     };
   }
   componentDidMount() {
     this.icons = document.getElementsByClassName('desktopIcon');
-    window.onmousedown = this.desktopMouseDown;
-    window.onmouseup = this.desktopMouseUp;
+    this.desktop = document.getElementById('desktop');
+    this.desktop.onmousedown = this.desktopMouseDown;
+    this.desktop.onmouseup = this.desktopMouseUp;
     // window.oncontextmenu = this.desktopContextMenu;
 
   }
@@ -66,44 +72,47 @@ class Desktop extends Component {
   }
   desktopMouseDown(event) {
     const { clickclass } = event.target.dataset;
+    // console.log(event.target);
     switch (clickclass) {
       case windowsClickables.desktop:
         this.startDragSelect(event);
         break;
+      case windowsClickables.fileTaskbar:
+        this.startDragFileWindow(event);
+        break;
       case windowsClickables.desktopItem:
-        console.log('icon clicked!');
         break;
       case windowsClickables.desktopItemIcon:
-        console.log('clicked..');
         break;
+
       default:
-        console.log('Unknown click');
+
     }
   }
   desktopMouseUp(event) {
-    if (this.state.dragSelecting) {
-      this.stopDragSelect(event);
-    }
     const { clickclass } = event.target.dataset;
+    const { dragSelecting, draggingFileWindow} = this.state;
+    if (dragSelecting) {
+      this.stopDragSelect(event);
+    } else if (draggingFileWindow) {
+     this.stopDragFileWindow(event);
+    }
     switch (clickclass) {
       case windowsClickables.desktopItem:
-        console.log('icon clicked');
         break;
       case windowsClickables.desktopItemIcon:
-        console.log('clicked..');
         break;
       case windowsClickables.desktopIcon:
       default:
-        console.log(event.currentTarget);
+        // console.log(event.currentTarget);
     }
   }
   startDragSelect(event) {
-    const desktop = document.getElementById('desktop');
     this.dragbox = document.getElementById('dragbox');
     if (!this.dragbox) {
       this.dragbox = document.createElement('div');
       this.dragbox.setAttribute('id', 'dragbox');
-      desktop.appendChild(this.dragbox);
+      this.desktop.appendChild(this.dragbox);
       this.dragbox.style.border = '1px dashed black';
       this.dragbox.style.position = 'absolute';
     }
@@ -112,7 +121,7 @@ class Desktop extends Component {
     this.dragbox.style.left = `${event.clientX}px`;
     this.dragbox.style.width = '10px';
     this.dragbox.style.height = '10px';
-    desktop.addEventListener('mousemove', this.dragSelecting);
+    this.desktop.addEventListener('mousemove', this.dragSelecting);
 
     this.setState({
       dragStartX: event.clientX,
@@ -121,10 +130,10 @@ class Desktop extends Component {
     });
     this.checkForOverlap();
   }
+
   stopDragSelect() {
     const { selectIcons } = this.props;
-    const desktop = document.getElementById('desktop');
-    desktop.removeEventListener('mousemove', this.dragSelecting);
+    this.desktop.removeEventListener('mousemove', this.dragSelecting);
 
     if (this.dragbox) {
       this.setState({
@@ -181,6 +190,17 @@ class Desktop extends Component {
     this.dragbox.style.width = `${Math.abs(deltaX)}px`;
     this.dragbox.style.height = `${Math.abs(deltaY)}px`;
     this.checkForOverlap();
+  }
+  startDragFileWindow() {
+    this.desktop.addEventListener('mousemove', this.dragFileWindow);
+    this.setState({draggingFileWindow: true});
+  }
+  dragFileWindow() {
+    this.props.dragFileWindow();
+  }
+  stopDragFileWindow() {
+    this.desktop.removeEventListener('mousemove', this.dragFileWindow);
+    this.setState({draggingFileWindow: false});
   }
   render() {
     const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, selectedDesktopIcons, createFolder, openFile,

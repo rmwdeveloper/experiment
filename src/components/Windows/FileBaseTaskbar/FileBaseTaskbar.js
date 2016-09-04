@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './FileBaseTaskbar.css'; //eslint-disable-line
 import cx from 'classnames';
-
+import { windowsClickables } from '../../../constants/windows';
 
 export default function FileBaseTaskbar(ComposedComponent) {
   class FileBaseTaskbar extends Component {
@@ -14,23 +14,12 @@ export default function FileBaseTaskbar(ComposedComponent) {
       filename: PropTypes.string,
       openedFile: PropTypes.object
     };
-    constructor() {
-      super();
-      this.startDrag = this.startDrag.bind(this);
-      this.endDrag = this.endDrag.bind(this);
-    }
-    startDrag() {
-      console.log('startDrag!');
-    }
-    endDrag() {
-      console.log('endDrag!');
-    }
     render() {
       const { closeFile, index, filename, toggleWindowMaximize, toggleWindowMinimize,
         openedFile: { maximized, height, width } } = this.props;
       return (
-        <div>
-          <div className={styles.root} onMouseDown={this.startDrag} onMouseUp={this.endDrag}>
+        <div style={{height, width}}>
+          <div data-clickclass={windowsClickables.fileTaskbar} className={styles.root} >
           <span className={styles.fileName}>{filename}</span>
           <div className={styles.fileControls}>
             <i onClick={() => { toggleWindowMinimize(index); }} className={cx(styles.minimizeWindowIcon, 'fa fa-minus')} />

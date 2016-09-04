@@ -6,6 +6,7 @@ import {
   UNMAXIMIZE_FILE_WINDOW,
   MINIMIZE_FILE_WINDOW,
   UNMINIMIZE_FILE_WINDOW,
+  DRAG_FILE_WINDOW
 } from '../constants';
 
 
@@ -78,4 +79,10 @@ export function toggleWindowMinimize(openedFileIndex) {
       dispatch({ type: MINIMIZE_FILE_WINDOW, openedFileIndex });
     }
   };
+}
+
+export function dragFileWindow() { //todo change this name? Same as method in windows/Desktop
+  return dispatch => {
+    dispatch({type: DRAG_FILE_WINDOW});
+  }
 }
