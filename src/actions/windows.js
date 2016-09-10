@@ -45,7 +45,7 @@ export function clearActives() {
   };
 }
 
-export function openFile(entityId) {
+export function openFile(entityId, desktopWidth, desktopHeight) {
   return dispatch => {
     dispatch({ type: OPEN_FILE_WINDOW, entityId });
   };
