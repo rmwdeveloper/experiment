@@ -1,0 +1,6 @@
+{
+  "name": "FileWindow",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./FileWindow.js"
+}

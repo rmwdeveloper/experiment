@@ -7,4 +7,5 @@ export const windowsClickables = {
   desktopItem: 'desktopItem',
   desktopItemIcon: 'desktopItemIcon',
   desktopItemName: 'desktopItemName',
+  fileTaskbar: 'fileTaskbar'
 };

@@ -1,7 +1,7 @@
-import FileBaseTaskbar from './FileBaseTaskbar/FileBaseTaskbar';
+import FileWindow from './FileWindow/FileWindow';
 import Folder from './Folder/Folder';
 
 const windowsRegistry = {};
 
-windowsRegistry.Folder = FileBaseTaskbar(Folder);
+windowsRegistry.Folder = FileWindow(Folder);
 export default windowsRegistry;

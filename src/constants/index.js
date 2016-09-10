@@ -12,6 +12,7 @@ export const MAXIMIZE_FILE_WINDOW = 'windows/MAXIMIZE_FILE_WINDOW';
 export const UNMAXIMIZE_FILE_WINDOW = 'windows/UNMAXIMIZE_FILE_WINDOW';
 export const MINIMIZE_FILE_WINDOW = 'windows/MINIMIZE_FILE_WINDOW';
 export const UNMINIMIZE_FILE_WINDOW = 'windows/UNMINIMIZE_FILE_WINDOW';
+export const DRAG_FILE_WINDOW = 'windows/DRAG_FILE_WINDOW';
 
 export const LOAD_STOCKS = 'stock/LOAD_STOCKS';
 export const SEARCH_STOCKS = 'stock/SEARCH_STOCKS';
