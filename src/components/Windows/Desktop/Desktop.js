@@ -37,7 +37,6 @@ class Desktop extends Component {
     this.desktopContextMenu = this.desktopContextMenu.bind(this);
     this.desktopMouseUp = this.desktopMouseUp.bind(this);
     this.desktopMouseDown = this.desktopMouseDown.bind(this);
-    this.desktopresize = this.desktopResize.bind(this);
     this.dragbox = null;
     this.icons = [];
     this.selectedIcons = [];
@@ -57,7 +56,7 @@ class Desktop extends Component {
     this.desktop = document.getElementById('desktop');
     this.desktop.onmousedown = this.desktopMouseDown;
     this.desktop.onmouseup = this.desktopMouseUp;
-    window.onresize = this.desktopResize;
+    window.onresize = this.desktopResize.bind(this);
     this.setState({desktopWidth: this.desktop.offsetWidth, desktopHeight: this.desktop.offsetHeight});
     // window.oncontextmenu = this.desktopContextMenu;
   }
@@ -79,7 +78,6 @@ class Desktop extends Component {
   }
   desktopMouseDown(event) {
     const { clickclass } = event.target.dataset;
-    // console.log(event.target);
     switch (clickclass) {
       case windowsClickables.desktop:
         this.startDragSelect(event);
@@ -182,7 +180,7 @@ class Desktop extends Component {
     this.props.openContextMenu(event.clientX, event.clientY);
   }
   desktopResize() {
-    console.log('desktop resizing..');
+    this.setState({desktopWidth: this.desktop.offsetWidth, desktopHeight: this.desktop.offsetHeight});
   }
   dragSelecting(event) {
     const deltaX = event.clientX - this.state.dragStartX;
