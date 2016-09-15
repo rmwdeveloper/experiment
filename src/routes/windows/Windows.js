@@ -67,7 +67,7 @@ class Windows extends Component { //eslint-disable-line
       {startMenuOpened ? <WindowsStartMenu installedPrograms={installedPrograms} {...this.props} />
         : null}
 
-      <WindowsTaskbar toggleStartMenu={toggleStartMenu} />
+      <WindowsTaskbar toggleStartMenu={toggleStartMenu} {...this.props} />
     </div>);
   }
 }
