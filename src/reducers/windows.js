@@ -10,7 +10,8 @@ import {
   MAXIMIZE_FILE_WINDOW,
   UNMAXIMIZE_FILE_WINDOW,
   MINIMIZE_FILE_WINDOW,
-  UNMINIMIZE_FILE_WINDOW
+  UNMINIMIZE_FILE_WINDOW,
+  DRAG_FILE_WINDOW
 } from '../constants';
 
 
@@ -114,6 +115,10 @@ export default function layout(state = initialState, action) {
     case UNMINIMIZE_FILE_WINDOW:
       newOpenedFiles[action.openedFileIndex].minimizedToTaskbar = false;
       return { ...state, openedFiles: newOpenedFiles };
+    case DRAG_FILE_WINDOW:
+      newOpenedFiles[parseInt(action.index, 10)].xPosition += action.deltaX;
+      newOpenedFiles[parseInt(action.index, 10)].yPosition += action.deltaY;
+      return { ...state, openedFiles: newOpenedFiles};
     default:
       return state;
   }

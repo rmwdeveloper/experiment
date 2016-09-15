@@ -46,8 +46,11 @@ class Desktop extends Component {
       draggingFileWindow: false,
       dragStartX: null,
       dragStartY: null,
+      fileWindowDragStartX: null,
+      fileWindowDragStartY: null,
       desktopWidth: null,
-      desktopHeight: null
+      desktopHeight: null,
+      itemDragged: null
     };
   }
 
@@ -107,7 +110,6 @@ class Desktop extends Component {
         break;
       case windowsClickables.desktopItemIcon:
         break;
-      case windowsClickables.desktopIcon:
       default:
         // console.log(event.currentTarget);
     }
@@ -198,12 +200,14 @@ class Desktop extends Component {
     this.dragbox.style.height = `${Math.abs(deltaY)}px`;
     this.checkForOverlap();
   }
-  startDragFileWindow() {
+  startDragFileWindow(event) {
     this.desktop.addEventListener('mousemove', this.dragFileWindow);
-    this.setState({draggingFileWindow: true});
+    this.setState({draggingFileWindow: true, itemDragged: event.target.dataset.index,
+      fileWindowDragStartX: event.clientX, fileWindowDragStartY: event.clientY });
   }
-  dragFileWindow() {
-    this.props.dragFileWindow();
+  dragFileWindow(event) {
+    const { fileWindowDragStartX, fileWindowDragStartY, itemDragged } = this.state;
+    this.props.dragFileWindow(itemDragged, fileWindowDragStartX - event.clientX, fileWindowDragStartY - event.clientY);
   }
   stopDragFileWindow() {
     this.desktop.removeEventListener('mousemove', this.dragFileWindow);
