@@ -95,8 +95,10 @@ export default function layout(state = initialState, action) {
     case CLEAR_ACTIVES:
       return { ...state, selectedDesktopIcons: [], contextMenuActive: false };
     case OPEN_FILE_WINDOW:
+      console.log(state.openedFiles.length);
       return { ...state, openedFiles: [...state.openedFiles,
-        { entityId: action.entityId, height: 300, width: 300, xPosition: action.desktopWidth / 2.4, yPosition: action.desktopHeight / 4, maximized: false, minimizedToTaskbar: false }] };
+        { entityId: action.entityId, height: 300, width: 300, xPosition: ((action.desktopWidth / 2.4) + state.openedFiles.length * 5)
+      , yPosition: ((action.desktopHeight / 4) + state.openedFiles.length * 5), maximized: false, minimizedToTaskbar: false }] };
     case CLOSE_FILE_WINDOW:
       return { ...state, openedFiles: [...state.openedFiles.slice(0, action.openedFileIndex),
             ...state.openedFiles.slice(action.openedFileIndex + 1)] };
