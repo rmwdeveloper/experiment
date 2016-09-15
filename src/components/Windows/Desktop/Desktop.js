@@ -46,18 +46,23 @@ class Desktop extends Component {
       draggingFileWindow: false,
       dragStartX: null,
       dragStartY: null,
+      desktopWidth: null,
+      desktopHeight: null
     };
   }
+
   componentDidMount() {
     this.icons = document.getElementsByClassName('desktopIcon');
     this.desktop = document.getElementById('desktop');
     this.desktop.onmousedown = this.desktopMouseDown;
     this.desktop.onmouseup = this.desktopMouseUp;
+    this.setState({desktopWidth: this.desktop.offsetWidth, desktopHeight: this.desktop.offsetHeight});
     // window.oncontextmenu = this.desktopContextMenu;
-
   }
   shouldComponentUpdate(nextProps, nextState) {
     return (this.state.selectedIcons !== nextState.selectedIcons) ||
+      this.state.desktopWidth !== nextState.desktopWidth ||
+      this.state.desktopHeight !== nextState.desktopHeight ||
       (this.props.contextMenuActive !== nextProps.contextMenuActive) ||
       (this.props.contextMenuX !== nextProps.contextMenuX)||
       (this.props.openedFiles !== nextProps.openedFiles) ||
@@ -205,6 +210,7 @@ class Desktop extends Component {
   render() {
     const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, selectedDesktopIcons, createFolder, openFile,
     openedFiles, entities } = this.props;
+    const { desktopWidth, desktopHeight } = this.state;
     let unselectedIcons = desktopItems;
     if (this.icons.length > 0 && selectedDesktopIcons.length > 0) {
       unselectedIcons = this.diffNodeLists(this.icons, selectedDesktopIcons);
@@ -217,7 +223,7 @@ class Desktop extends Component {
       >
         {
           desktopItems.map((desktopitem, index) => {
-            return <DesktopItem key={index} index={index} openFile={openFile} item={desktopitem} />;
+            return <DesktopItem key={index} desktopWidth={desktopWidth} desktopHeight={desktopHeight} index={index} openFile={openFile} item={desktopitem} />;
           })
         }
         {
