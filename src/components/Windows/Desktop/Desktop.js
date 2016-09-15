@@ -207,7 +207,11 @@ class Desktop extends Component {
   }
   dragFileWindow(event) {
     const { fileWindowDragStartX, fileWindowDragStartY, itemDragged } = this.state;
-    this.props.dragFileWindow(itemDragged, fileWindowDragStartX - event.clientX, fileWindowDragStartY - event.clientY);
+    const {clientX, clientY} = event;
+    const xDirection = clientX < fileWindowDragStartX ? 'left' : 'right';
+    const yDirection = clientY < fileWindowDragStartY ? 'up' : 'down';
+    this.props.dragFileWindow(itemDragged, clientX, clientY,
+    xDirection, yDirection);
   }
   stopDragFileWindow() {
     this.desktop.removeEventListener('mousemove', this.dragFileWindow);
