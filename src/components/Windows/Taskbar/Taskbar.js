@@ -22,7 +22,7 @@ class Taskbar extends Component {
         {
           openedFiles.map((openedFile, index) => {
             const { icon, name } = entities[openedFile.entityId];
-            return <img data-clickClass={windowsClickables.desktopItemIcon} className={styles.icon} src={icon} alt={`${name} icon`} />;
+            return <img data-clickClass={windowsClickables.taskbarFileItem} className={styles.icon} src={icon} alt={`${name} icon`} />;
           })
         }
         <InfoHub />
