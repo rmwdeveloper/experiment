@@ -81,8 +81,8 @@ export function toggleWindowMinimize(openedFileIndex) {
   };
 }
 
-export function dragFileWindow(index, deltaX, deltaY, xDirection, yDirection) { // todo change this name? Same as method in windows/Desktop
+export function dragFileWindow(index, deltaX, deltaY) { // todo change this name? Same as method in windows/Desktop
   return dispatch => {
-    dispatch({type: DRAG_FILE_WINDOW, index, deltaX, deltaY, xDirection, yDirection});
+    dispatch({ type: DRAG_FILE_WINDOW, index, deltaX, deltaY });
   }
 }

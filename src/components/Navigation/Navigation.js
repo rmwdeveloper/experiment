@@ -8,7 +8,7 @@ import cx from 'classnames';
 
 function Navigation() {
   return (
-    <header className={`${styles.root} row start-lg center-md center-xs`} role="navigation">
+    <header id="primaryHeader" className={`${styles.root} row start-lg center-md center-xs`} role="navigation">
       <div className={`${styles.linkContainer} col-lg-12 around-lg`}>
         <Link className={styles.link} to="/"> Robert Westenberger </Link>
         <Link className={styles.link} to="/console">Console</Link>
