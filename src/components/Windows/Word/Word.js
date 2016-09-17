@@ -14,7 +14,6 @@ class Word extends Component {
   render() {
     const { editorState } = this.state;
     return <Editor editorState={editorState} onChange={this.onChange} />;
-
   }
 }
 

@@ -21,49 +21,60 @@ const initialState = {
     1: {
       name: 'Microsoft Word',
       subtext: 'Word Processor',
-      icon: 'wordlogoXSmall.png'
+      icon: 'wordlogoXSmall.png',
+      registryKey: 'Word'
     },
     2: {
       name: 'Microsoft Excel',
       subtext: 'Spreadsheet',
-      icon: 'excellogoXSmall.png'
+      icon: 'excellogoXSmall.png',
+      registryKey: 'Folder'
     },
     3: {
       name: 'Internet Explorer',
       subtext: 'Internet',
-      icon: 'ie7.png'
+      icon: 'ie7.png',
+      registryKey: 'Folder'
     },
     4: {
       name: 'My Documents',
-      icon: 'MyDocumentsXSmall.png'
+      icon: 'MyDocumentsXSmall.png',
+      registryKey: 'Folder'
     },
     5: {
       name: 'My Music',
-      icon: 'MyMusicXSmall.png'
+      icon: 'MyMusicXSmall.png',
+      registryKey: 'Folder'
     },
     6: {
       name: 'My Computer',
-      icon: 'MyComputerXSmall.png'
+      icon: 'MyComputerXSmall.png',
+      registryKey: 'Folder'
     },
     7: {
       name: 'Control Panel',
-      icon: 'ControlPanelXSmall.png'
+      icon: 'ControlPanelXSmall.png',
+      registryKey: 'Folder'
     },
     8: {
       name: 'Printer And Faxes',
-      icon: 'printerAndFaxesXsmall.png'
+      icon: 'printerAndFaxesXsmall.png',
+      registryKey: 'Folder'
     },
     9: {
       name: 'Help And Support',
-      icon: 'HelpAndSupportXSmall.png'
+      icon: 'HelpAndSupportXSmall.png',
+      registryKey: 'Folder'
     },
     10: {
       name: 'Search',
-      icon: 'SearchXSmall.png'
+      icon: 'SearchXSmall.png',
+      registryKey: 'Folder'
     },
     11: {
       name: 'Run',
-      icon: 'RunXSmall.png'
+      icon: 'RunXSmall.png',
+      registryKey: 'Folder'
     }
   },
   installedPrograms: [1, 2, 3],
