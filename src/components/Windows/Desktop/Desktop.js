@@ -50,18 +50,20 @@ class Desktop extends Component {
       fileWindowDragStartY: null,
       desktopWidth: null,
       desktopHeight: null,
-      itemDragged: null
+      itemDragged: null,
+      headerHeight: null
     };
   }
-
   componentDidMount() {
     this.icons = document.getElementsByClassName('desktopIcon');
     this.desktop = document.getElementById('desktop');
+    this.header = document.getElementById('primaryHeader');
     this.desktop.onmousedown = this.desktopMouseDown;
     this.desktop.onmouseup = this.desktopMouseUp;
     window.onresize = this.desktopResize.bind(this);
-    this.setState({desktopWidth: this.desktop.offsetWidth, desktopHeight: this.desktop.offsetHeight});
-    // window.oncontextmenu = this.desktopContextMenu;
+    this.setState({desktopWidth: this.desktop.offsetWidth,
+      desktopHeight: this.desktop.offsetHeight,
+      headerHeight: this.header.offsetHeight});
   }
   shouldComponentUpdate(nextProps, nextState) {
     return (this.state.selectedIcons !== nextState.selectedIcons) ||
@@ -124,7 +126,8 @@ class Desktop extends Component {
       this.dragbox.style.position = 'absolute';
     }
 
-    this.dragbox.style.top = `${event.clientY - 40}px`;
+    this.dragbox.style.top = `${event.clientY}px`;
+    this.dragbox.style.top = `${event.clientY}px`;
     this.dragbox.style.left = `${event.clientX}px`;
     this.dragbox.style.width = '10px';
     this.dragbox.style.height = '10px';
@@ -206,12 +209,8 @@ class Desktop extends Component {
       fileWindowDragStartX: event.clientX, fileWindowDragStartY: event.clientY });
   }
   dragFileWindow(event) {
-    const { fileWindowDragStartX, fileWindowDragStartY, itemDragged } = this.state;
-    const {clientX, clientY} = event;
-    const xDirection = clientX < fileWindowDragStartX ? 'left' : 'right';
-    const yDirection = clientY < fileWindowDragStartY ? 'up' : 'down';
-    this.props.dragFileWindow(itemDragged, clientX, clientY,
-    xDirection, yDirection);
+    const { itemDragged, headerHeight } = this.state;
+    this.props.dragFileWindow(itemDragged, event.clientX - 100, event.clientY - headerHeight);
   }
   stopDragFileWindow() {
     this.desktop.removeEventListener('mousemove', this.dragFileWindow);
@@ -244,7 +243,7 @@ class Desktop extends Component {
           })
         }
         {
-          contextMenuActive ? <ContextMenu createFolder={createFolder} contextMenuY={contextMenuY - 40} contextMenuX={contextMenuX}/> : null
+          contextMenuActive ? <ContextMenu createFolder={createFolder} contextMenuY={contextMenuY} contextMenuX={contextMenuX}/> : null
         }
       </div>
     );
