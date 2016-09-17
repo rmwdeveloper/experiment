@@ -116,13 +116,11 @@ export default function layout(state = initialState, action) {
       newOpenedFiles[action.openedFileIndex].minimizedToTaskbar = false;
       return { ...state, openedFiles: newOpenedFiles };
     case DRAG_FILE_WINDOW:
-      // console.log(action.xDirection, action.yDirection);
       console.log(newOpenedFiles[parseInt(action.index, 10)].xPosition, action.deltaX);
       console.log(newOpenedFiles[parseInt(action.index, 10)].yPosition, action.deltaY);
-      // return state;
-      newOpenedFiles[parseInt(action.index, 10)].xPosition = (Math.abs(action.deltaX - 100));
-      newOpenedFiles[parseInt(action.index, 10)].yPosition = (Math.abs(action.deltaY - 100));
-      return { ...state, openedFiles: newOpenedFiles};
+      newOpenedFiles[parseInt(action.index, 10)].xPosition = (Math.abs(action.deltaX));
+      newOpenedFiles[parseInt(action.index, 10)].yPosition = (Math.abs(action.deltaY));
+      return { ...state, openedFiles: newOpenedFiles };
     default:
       return state;
   }
