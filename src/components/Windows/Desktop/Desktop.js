@@ -54,7 +54,6 @@ class Desktop extends Component {
       headerHeight: null
     };
   }
-
   componentDidMount() {
     this.icons = document.getElementsByClassName('desktopIcon');
     this.desktop = document.getElementById('desktop');

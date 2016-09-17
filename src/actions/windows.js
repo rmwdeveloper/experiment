@@ -6,7 +6,8 @@ import {
   UNMAXIMIZE_FILE_WINDOW,
   MINIMIZE_FILE_WINDOW,
   UNMINIMIZE_FILE_WINDOW,
-  DRAG_FILE_WINDOW
+  DRAG_FILE_WINDOW,
+  CLICK_TASKBAR_ITEM
 } from '../constants';
 
 
@@ -84,5 +85,11 @@ export function toggleWindowMinimize(openedFileIndex) {
 export function dragFileWindow(index, deltaX, deltaY) { // todo change this name? Same as method in windows/Desktop
   return dispatch => {
     dispatch({ type: DRAG_FILE_WINDOW, index, deltaX, deltaY });
+  }
+}
+
+export function clickTaskbarItem(index) {
+  return dispatch => {
+    dispatch({ type: CLICK_TASKBAR_ITEM, index });
   }
 }

@@ -11,7 +11,8 @@ import {
   UNMAXIMIZE_FILE_WINDOW,
   MINIMIZE_FILE_WINDOW,
   UNMINIMIZE_FILE_WINDOW,
-  DRAG_FILE_WINDOW
+  DRAG_FILE_WINDOW,
+  CLICK_TASKBAR_ITEM
 } from '../constants';
 
 
@@ -117,6 +118,12 @@ export default function layout(state = initialState, action) {
     case DRAG_FILE_WINDOW:
       newOpenedFiles[parseInt(action.index, 10)].xPosition = (Math.abs(action.deltaX));
       newOpenedFiles[parseInt(action.index, 10)].yPosition = (Math.abs(action.deltaY));
+      return { ...state, openedFiles: newOpenedFiles };
+    case CLICK_TASKBAR_ITEM:
+      const openedFileIndex = state.openedFiles.findIndex( element => {
+        return element.entityId === action.index;
+      });
+      newOpenedFiles[openedFileIndex].minimized = !newOpenedFiles[openedFileIndex].minimized;
       return { ...state, openedFiles: newOpenedFiles };
     default:
       return state;
