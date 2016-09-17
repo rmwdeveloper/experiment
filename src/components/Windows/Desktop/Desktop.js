@@ -46,18 +46,27 @@ class Desktop extends Component {
       draggingFileWindow: false,
       dragStartX: null,
       dragStartY: null,
+      fileWindowDragStartX: null,
+      fileWindowDragStartY: null,
+      desktopWidth: null,
+      desktopHeight: null,
+      itemDragged: null
     };
   }
+
   componentDidMount() {
     this.icons = document.getElementsByClassName('desktopIcon');
     this.desktop = document.getElementById('desktop');
     this.desktop.onmousedown = this.desktopMouseDown;
     this.desktop.onmouseup = this.desktopMouseUp;
+    window.onresize = this.desktopResize.bind(this);
+    this.setState({desktopWidth: this.desktop.offsetWidth, desktopHeight: this.desktop.offsetHeight});
     // window.oncontextmenu = this.desktopContextMenu;
-
   }
   shouldComponentUpdate(nextProps, nextState) {
     return (this.state.selectedIcons !== nextState.selectedIcons) ||
+      this.state.desktopWidth !== nextState.desktopWidth ||
+      this.state.desktopHeight !== nextState.desktopHeight ||
       (this.props.contextMenuActive !== nextProps.contextMenuActive) ||
       (this.props.contextMenuX !== nextProps.contextMenuX)||
       (this.props.openedFiles !== nextProps.openedFiles) ||
@@ -72,7 +81,6 @@ class Desktop extends Component {
   }
   desktopMouseDown(event) {
     const { clickclass } = event.target.dataset;
-    // console.log(event.target);
     switch (clickclass) {
       case windowsClickables.desktop:
         this.startDragSelect(event);
@@ -102,7 +110,6 @@ class Desktop extends Component {
         break;
       case windowsClickables.desktopItemIcon:
         break;
-      case windowsClickables.desktopIcon:
       default:
         // console.log(event.currentTarget);
     }
@@ -130,7 +137,6 @@ class Desktop extends Component {
     });
     this.checkForOverlap();
   }
-
   stopDragSelect() {
     const { selectIcons } = this.props;
     this.desktop.removeEventListener('mousemove', this.dragSelecting);
@@ -175,6 +181,9 @@ class Desktop extends Component {
     event.preventDefault();
     this.props.openContextMenu(event.clientX, event.clientY);
   }
+  desktopResize() {
+    this.setState({desktopWidth: this.desktop.offsetWidth, desktopHeight: this.desktop.offsetHeight});
+  }
   dragSelecting(event) {
     const deltaX = event.clientX - this.state.dragStartX;
     const deltaY = event.clientY - this.state.dragStartY;
@@ -191,12 +200,18 @@ class Desktop extends Component {
     this.dragbox.style.height = `${Math.abs(deltaY)}px`;
     this.checkForOverlap();
   }
-  startDragFileWindow() {
+  startDragFileWindow(event) {
     this.desktop.addEventListener('mousemove', this.dragFileWindow);
-    this.setState({draggingFileWindow: true});
+    this.setState({draggingFileWindow: true, itemDragged: event.target.dataset.index,
+      fileWindowDragStartX: event.clientX, fileWindowDragStartY: event.clientY });
   }
-  dragFileWindow() {
-    this.props.dragFileWindow();
+  dragFileWindow(event) {
+    const { fileWindowDragStartX, fileWindowDragStartY, itemDragged } = this.state;
+    const {clientX, clientY} = event;
+    const xDirection = clientX < fileWindowDragStartX ? 'left' : 'right';
+    const yDirection = clientY < fileWindowDragStartY ? 'up' : 'down';
+    this.props.dragFileWindow(itemDragged, clientX, clientY,
+    xDirection, yDirection);
   }
   stopDragFileWindow() {
     this.desktop.removeEventListener('mousemove', this.dragFileWindow);
@@ -205,6 +220,7 @@ class Desktop extends Component {
   render() {
     const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, selectedDesktopIcons, createFolder, openFile,
     openedFiles, entities } = this.props;
+    const { desktopWidth, desktopHeight } = this.state;
     let unselectedIcons = desktopItems;
     if (this.icons.length > 0 && selectedDesktopIcons.length > 0) {
       unselectedIcons = this.diffNodeLists(this.icons, selectedDesktopIcons);
@@ -217,7 +233,7 @@ class Desktop extends Component {
       >
         {
           desktopItems.map((desktopitem, index) => {
-            return <DesktopItem key={index} index={index} openFile={openFile} item={desktopitem} />;
+            return <DesktopItem key={index} desktopWidth={desktopWidth} desktopHeight={desktopHeight} index={index} openFile={openFile} item={desktopitem} />;
           })
         }
         {

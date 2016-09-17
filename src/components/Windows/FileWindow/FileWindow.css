@@ -1,3 +1,5 @@
 .root {
   position: absolute;
+  overflow: hidden;
+  outline: 1px solid black;
 }

@@ -47,7 +47,7 @@ export function clearActives() {
 
 export function openFile(entityId, desktopWidth, desktopHeight) {
   return dispatch => {
-    dispatch({ type: OPEN_FILE_WINDOW, entityId });
+    dispatch({ type: OPEN_FILE_WINDOW, entityId, desktopWidth, desktopHeight });
   };
 }
 
@@ -81,8 +81,8 @@ export function toggleWindowMinimize(openedFileIndex) {
   };
 }
 
-export function dragFileWindow() { //todo change this name? Same as method in windows/Desktop
+export function dragFileWindow(index, deltaX, deltaY, xDirection, yDirection) { // todo change this name? Same as method in windows/Desktop
   return dispatch => {
-    dispatch({type: DRAG_FILE_WINDOW});
+    dispatch({type: DRAG_FILE_WINDOW, index, deltaX, deltaY, xDirection, yDirection});
   }
 }

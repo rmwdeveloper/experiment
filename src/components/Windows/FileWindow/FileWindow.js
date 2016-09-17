@@ -17,8 +17,14 @@ export default function FileWindow(ComposedComponent) {
     render() {
       const { closeFile, index, filename, toggleWindowMaximize, toggleWindowMinimize,
         openedFile: { maximized, height, width, xPosition, yPosition } } = this.props;
+
+      let windowStyle = {height, width, left: xPosition, top: yPosition};
+
+      if (maximized) {
+        windowStyle = {height: '100%', width: '100%', left: 0, top: 0};
+      }
       return (
-        <div className={styles.root} style={{height, width, left: xPosition, top: yPosition}}>
+        <div className={styles.root} style={windowStyle}>
           <FileBaseTaskbar
             maximized={maximized}
             toggleWindowMaximize={toggleWindowMaximize}

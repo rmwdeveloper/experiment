@@ -10,7 +10,8 @@ import {
   MAXIMIZE_FILE_WINDOW,
   UNMAXIMIZE_FILE_WINDOW,
   MINIMIZE_FILE_WINDOW,
-  UNMINIMIZE_FILE_WINDOW
+  UNMINIMIZE_FILE_WINDOW,
+  DRAG_FILE_WINDOW
 } from '../constants';
 
 
@@ -95,8 +96,10 @@ export default function layout(state = initialState, action) {
     case CLEAR_ACTIVES:
       return { ...state, selectedDesktopIcons: [], contextMenuActive: false };
     case OPEN_FILE_WINDOW:
+      console.log(state.openedFiles.length);
       return { ...state, openedFiles: [...state.openedFiles,
-        { entityId: action.entityId, height: 300, width: 300, xPosition: 800, yPosition: 300, maximized: false, minimizedToTaskbar: false }] };
+        { entityId: action.entityId, height: 300, width: 300, xPosition: ((action.desktopWidth / 2.4) + state.openedFiles.length * 5)
+      , yPosition: ((action.desktopHeight / 4) + state.openedFiles.length * 5), maximized: false, minimizedToTaskbar: false }] };
     case CLOSE_FILE_WINDOW:
       return { ...state, openedFiles: [...state.openedFiles.slice(0, action.openedFileIndex),
             ...state.openedFiles.slice(action.openedFileIndex + 1)] };
@@ -112,6 +115,14 @@ export default function layout(state = initialState, action) {
     case UNMINIMIZE_FILE_WINDOW:
       newOpenedFiles[action.openedFileIndex].minimizedToTaskbar = false;
       return { ...state, openedFiles: newOpenedFiles };
+    case DRAG_FILE_WINDOW:
+      // console.log(action.xDirection, action.yDirection);
+      console.log(newOpenedFiles[parseInt(action.index, 10)].xPosition, action.deltaX);
+      console.log(newOpenedFiles[parseInt(action.index, 10)].yPosition, action.deltaY);
+      // return state;
+      newOpenedFiles[parseInt(action.index, 10)].xPosition = (Math.abs(action.deltaX - 100));
+      newOpenedFiles[parseInt(action.index, 10)].yPosition = (Math.abs(action.deltaY - 100));
+      return { ...state, openedFiles: newOpenedFiles};
     default:
       return state;
   }
