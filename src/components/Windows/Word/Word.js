@@ -1,14 +1,20 @@
 import React, { PropTypes, Component } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Word.css'; //eslint-disable-line
+import {Editor, EditorState} from 'draft-js';
 
 class Word extends Component {
-  static propTypes = {
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      editorState: EditorState.createEmpty()
+    };
+    this.onChange = (editorState) => this.setState({editorState});
+  }
   render() {
-    return (
-      <div className={styles.root}> Word </div>
-    );
+    const { editorState } = this.state;
+    return <Editor editorState={editorState} onChange={this.onChange} />;
+
   }
 }
 
