@@ -22,7 +22,7 @@ class Word extends Component {
   }
   render() {
     const { editorState } = this.state;
-    return <Editor editorState={editorState} onChange={this.onChange} />;
+    return <Editor handleKeyCommand={this.handleKeyCommand} editorState={editorState} onChange={this.onChange} />;
   }
 }
 
