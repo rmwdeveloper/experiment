@@ -4,7 +4,9 @@ import styles from './WordTaskbar.css'; //eslint-disable-line
 
 
 function WordTaskbar({boldClick}) {
-  return <div>Word Taskbar</div>;
+  return (<div>
+    <button onClick={() => {boldClick('BOLD');}}><i className="fa fa-bold"/> </button>
+  </div>);
 }
 
 WordTaskbar.propTypes = {
