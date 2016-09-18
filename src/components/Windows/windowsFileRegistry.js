@@ -1,6 +1,6 @@
 import FileWindow from './FileWindow/FileWindow';
 import Folder from './Folder/Folder';
-import Word from './Word/Word';
+import Word from '../Word/Word/Word';
 
 const windowsRegistry = {};
 
