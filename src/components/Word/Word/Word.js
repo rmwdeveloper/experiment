@@ -13,7 +13,7 @@ class Word extends Component {
     };
     this.onChange = (editorState) => this.setState({ editorState });
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
-    this.onBoldClick = this.onBoldClick.bind(this);
+    this.onFormatClick = this.onFormatClick.bind(this);
   }
   handleKeyCommand(command) {
     const newState = RichUtils.handleKeyCommand(this.state.editorState, command);
@@ -21,15 +21,8 @@ class Word extends Component {
       this.onChange(newState);
       return 'handled';
     }
-    return 'not-handled';
-  }
-  onBoldClick() {
-    this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'BOLD'));
-  }
-  render() {
-    const { editorState } = this.state;
     return (<div className={styles.root}>
-      <WordTaskbar boldClick={this.onBoldClick} />
+      <WordTaskbar boldClick={this.onFormatClick} />
       <Editor handleKeyCommand={this.handleKeyCommand} editorState={editorState} onChange={this.onChange} />
     </div>);
   }
