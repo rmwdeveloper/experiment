@@ -205,12 +205,13 @@ class Desktop extends Component {
   }
   startDragFileWindow(event) {
     this.desktop.addEventListener('mousemove', this.dragFileWindow);
-    this.setState({draggingFileWindow: true, itemDragged: event.target.dataset.index,
-      fileWindowDragStartX: event.clientX, fileWindowDragStartY: event.clientY });
+    this.clickedLocationX = event.target.clientWidth - event.offsetX;
+    this.clickedLocationY = event.target.clientHeight - event.offsetY;
+    this.setState({draggingFileWindow: true, itemDragged: event.target.dataset.index });
   }
   dragFileWindow(event) {
     const { itemDragged, headerHeight } = this.state;
-    this.props.dragFileWindow(itemDragged, event.clientX - 100, event.clientY - headerHeight);
+    this.props.dragFileWindow(itemDragged, event.clientX - this.clickedLocationX, event.clientY - headerHeight - this.clickedLocationY);
   }
   stopDragFileWindow() {
     this.desktop.removeEventListener('mousemove', this.dragFileWindow);
