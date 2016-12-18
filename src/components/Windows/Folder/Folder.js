@@ -1,16 +1,16 @@
 import React, { PropTypes } from 'react';
 import styles from './Folder.css'; //eslint-disable-line
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import DesktopItem from '../DesktopItem';
 
-
-function Folder({openedFile, entities}) {
-  const folderContents = entities[openedFile.entityId].contents.map(entityId => {
-    return entities[entityId];
+function Folder({openedFile, entities, desktopWidth, desktopHeight, openFile}) {
+  const folderContents = entities[openedFile.entityId].contents.map((entityId, index) => {
+    return <DesktopItem key={index} desktopWidth={desktopWidth} desktopHeight={desktopHeight} index={index} openFile={openFile} item={entities[entityId]} />;
   });
 
   return (
     <div className={styles.root}>
-      Windows Folder fasdf
+      {folderContents}
     </div>
   );
 }

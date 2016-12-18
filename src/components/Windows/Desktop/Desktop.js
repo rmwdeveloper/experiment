@@ -282,7 +282,7 @@ class Desktop extends Component {
         {
           openedFiles.map((openedFile, index) => {
             return React.createElement(windowsFileRegistry[entities[openedFile.entityId].registryKey], { key: index, openedFile,
-              filename: entities[openedFile.entityId].name,
+              filename: entities[openedFile.entityId].name, desktopWidth, desktopHeight,
               index, ...this.props});
           })
         }
