@@ -2,6 +2,8 @@
   position: absolute;
   overflow: hidden;
   outline: 1px solid black;
+  min-width: 200px;
+  min-height: 200px;
 }
 .bottomRightResizer, .topRightResizer, .bottomLeftResizer, .topLeftResizer {
   position: absolute;
