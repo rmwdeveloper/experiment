@@ -52,6 +52,8 @@ class Desktop extends Component {
       resizeStartY: null,
       resizeStartHeight: null,
       resizeStartWidth: null,
+      resizeStartTop: null,
+      resizeStartLeft: null,
       resizeCornerClicked: null,
       dragStartX: null,
       dragStartY: null,
@@ -135,22 +137,23 @@ class Desktop extends Component {
     }
   }
   startResizeFileWindow(event) {
+    const windowBeingResized = this.props.openedFiles[parseInt(event.target.dataset.index, 10)];
     this.setState({ resizingFileWindowInProgress: true, resizeStartX: event.clientX, resizeStartY: event.clientY,
     itemResized: event.target.dataset.index, resizeStartHeight: event.target.parentNode.clientHeight,
-      resizeCornerClicked: event.target.dataset.corner,
-      resizeStartWidth: event.target.parentNode.clientWidth });
+      resizeCornerClicked: event.target.dataset.corner, resizeStartLeft: windowBeingResized.xPosition,
+      resizeStartTop: windowBeingResized.yPosition, resizeStartWidth: event.target.parentNode.clientWidth });
     this.desktop.addEventListener('mousemove', this.fileWindowResizing);
   }
   fileWindowResizing(event) {
-    const { itemResized, resizeStartHeight, resizeStartWidth } = this.state;
+    const { itemResized, resizeStartHeight, resizeStartWidth, resizeStartLeft, resizeStartTop } = this.state;
     const deltaX = event.clientX - this.state.resizeStartX;
     const deltaY = event.clientY - this.state.resizeStartY;
-    this.props.resizeFileWindow(itemResized, deltaX, deltaY, resizeStartWidth, resizeStartHeight);
+    this.props.resizeFileWindow(itemResized, deltaX, deltaY, resizeStartWidth, resizeStartHeight, resizeStartLeft, resizeStartTop);
   }
   stopResizeFileWindow() {
     this.desktop.removeEventListener('mousemove', this.fileWindowResizing);
     this.setState({ resizingFileWindowInProgress: false, resizeStartX: null, resizeStartY: null, itemResized: null,
-    resizeStartHeight: null, resizeStartWidth: null, resizeCornerClicked: null});
+    resizeStartHeight: null, resizeStartWidth: null, resizeCornerClicked: null, resizeStartTop: null, resizeStartLeft: null});
   }
   startDragSelect(event) {
     const { headerHeight } = this.state;
