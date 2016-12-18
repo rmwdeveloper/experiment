@@ -131,10 +131,33 @@ export default function layout(state = initialState, action) {
       newOpenedFiles[parseInt(action.index, 10)].xPosition = (Math.abs(action.deltaX));
       newOpenedFiles[parseInt(action.index, 10)].yPosition = (Math.abs(action.deltaY));
       return { ...state, openedFiles: newOpenedFiles };
-    case RESIZE_FILE_WINDOW:
-      if (action.resizeCornerClicked === 'topRight') {
+    case RESIZE_FILE_WINDOW: // todo: Needs refactor. Bulky and repetitive switch case.
+      if (action.resizeCornerClicked === 'topLeft') {
+        if (action.deltaY < 0) {
+          newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + Math.abs(action.deltaY);
+          newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop - Math.abs(action.deltaY);
+        }
+        if (action.deltaY > 0 ) {
+          if (!((action.resizeStartHeight - action.deltaY) < 250)) {
+            newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight - Math.abs(action.deltaY);
+            newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop + Math.abs(action.deltaY);
+          }
+        }
+        if (action.deltaX < 0) {
+          newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + Math.abs(action.deltaX);
+          newOpenedFiles[parseInt(action.index, 10)].xPosition = action.resizeStartLeft - Math.abs(action.deltaX);
+
+        }
+        if (action.deltaX > 0 ) {
+          if (!((action.resizeStartWidth - action.deltaX) < 250)) {
+            newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth - Math.abs(action.deltaX);
+            newOpenedFiles[parseInt(action.index, 10)].xPosition = action.resizeStartLeft + Math.abs(action.deltaX);
+          }
+        }
+      }
+
+      else if (action.resizeCornerClicked === 'topRight') {
         newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + action.deltaX;
-        // newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + action.deltaY;
         if (action.deltaY < 0) {
           newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + Math.abs(action.deltaY);
           newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop - Math.abs(action.deltaY);
@@ -146,11 +169,13 @@ export default function layout(state = initialState, action) {
           }
         }
       }
-      if (action.resizeCornerClicked === 'bottomRight') {
+
+      else if (action.resizeCornerClicked === 'bottomRight') {
         newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + action.deltaX;
         newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + action.deltaY;
       }
-      if (action.resizeCornerClicked === 'bottomLeft') {
+
+      else if (action.resizeCornerClicked === 'bottomLeft') {
 
         newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + action.deltaY;
 
