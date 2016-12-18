@@ -120,6 +120,7 @@ class Desktop extends Component {
     }
   }
   startDragSelect(event) {
+    const { headerHeight } = this.state;
     this.dragbox = document.getElementById('dragbox');
     if (!this.dragbox) {
       this.dragbox = document.createElement('div');
@@ -129,8 +130,8 @@ class Desktop extends Component {
       this.dragbox.style.position = 'absolute';
     }
 
-    this.dragbox.style.top = `${event.clientY}px`;
-    this.dragbox.style.top = `${event.clientY}px`;
+
+    this.dragbox.style.top = `${event.clientY - headerHeight}px`;
     this.dragbox.style.left = `${event.clientX}px`;
     this.dragbox.style.width = '10px';
     this.dragbox.style.height = '10px';
