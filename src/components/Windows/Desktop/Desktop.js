@@ -87,6 +87,9 @@ class Desktop extends Component {
       return null;
     }
     switch (clickclass) {
+      case windowsClickables.fileResizeHandle:
+        console.log(' trying to resize window!');
+        break;
       case windowsClickables.desktop:
         this.startDragSelect(event);
         break;

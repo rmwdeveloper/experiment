@@ -8,5 +8,6 @@ export const windowsClickables = {
   desktopItemIcon: 'desktopItemIcon',
   desktopItemName: 'desktopItemName',
   fileTaskbar: 'fileTaskbar',
-  taskbarFileItem: 'taskbarFileItem'
+  taskbarFileItem: 'taskbarFileItem',
+  fileResizeHandle: 'fileResizeHandle'
 };
