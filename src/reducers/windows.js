@@ -12,7 +12,8 @@ import {
   MINIMIZE_FILE_WINDOW,
   UNMINIMIZE_FILE_WINDOW,
   DRAG_FILE_WINDOW,
-  CLICK_TASKBAR_ITEM
+  CLICK_TASKBAR_ITEM,
+  RESIZE_FILE_WINDOW
 } from '../constants';
 
 
@@ -127,8 +128,69 @@ export default function layout(state = initialState, action) {
       newOpenedFiles[action.openedFileIndex].minimized = false;
       return { ...state, openedFiles: newOpenedFiles };
     case DRAG_FILE_WINDOW:
-      newOpenedFiles[parseInt(action.index, 10)].xPosition = (Math.abs(action.deltaX));
-      newOpenedFiles[parseInt(action.index, 10)].yPosition = (Math.abs(action.deltaY));
+      newOpenedFiles[parseInt(action.index, 10)].xPosition = action.deltaX;
+      newOpenedFiles[parseInt(action.index, 10)].yPosition = action.deltaY;
+      return { ...state, openedFiles: newOpenedFiles };
+    case RESIZE_FILE_WINDOW: // todo: Needs refactor. Bulky and repetitive switch case.
+      if (action.resizeCornerClicked === 'topLeft') {
+        if (action.deltaY < 0) {
+          newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + Math.abs(action.deltaY);
+          newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop - Math.abs(action.deltaY);
+        }
+        if (action.deltaY > 0 ) {
+          if (!((action.resizeStartHeight - action.deltaY) < 250)) {
+            newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight - Math.abs(action.deltaY);
+            newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop + Math.abs(action.deltaY);
+          }
+        }
+        if (action.deltaX < 0) {
+          newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + Math.abs(action.deltaX);
+          newOpenedFiles[parseInt(action.index, 10)].xPosition = action.resizeStartLeft - Math.abs(action.deltaX);
+
+        }
+        if (action.deltaX > 0 ) {
+          if (!((action.resizeStartWidth - action.deltaX) < 250)) {
+            newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth - Math.abs(action.deltaX);
+            newOpenedFiles[parseInt(action.index, 10)].xPosition = action.resizeStartLeft + Math.abs(action.deltaX);
+          }
+        }
+      }
+
+      else if (action.resizeCornerClicked === 'topRight') {
+        newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + action.deltaX;
+        if (action.deltaY < 0) {
+          newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + Math.abs(action.deltaY);
+          newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop - Math.abs(action.deltaY);
+        }
+        if (action.deltaY > 0 ) {
+          if (!((action.resizeStartHeight - action.deltaY) < 250)) {
+            newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight - Math.abs(action.deltaY);
+            newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop + Math.abs(action.deltaY);
+          }
+        }
+      }
+
+      else if (action.resizeCornerClicked === 'bottomRight') {
+        newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + action.deltaX;
+        newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + action.deltaY;
+      }
+
+      else if (action.resizeCornerClicked === 'bottomLeft') {
+
+        newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + action.deltaY;
+
+        if (action.deltaX < 0) {
+          newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + Math.abs(action.deltaX);
+          newOpenedFiles[parseInt(action.index, 10)].xPosition = action.resizeStartLeft - Math.abs(action.deltaX);
+
+        }
+        if (action.deltaX > 0 ) {
+          if (!((action.resizeStartWidth - action.deltaX) < 250)) {
+            newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth - Math.abs(action.deltaX);
+            newOpenedFiles[parseInt(action.index, 10)].xPosition = action.resizeStartLeft + Math.abs(action.deltaX);
+          }
+        }
+      }
       return { ...state, openedFiles: newOpenedFiles };
     case CLICK_TASKBAR_ITEM:
       const openedFileIndex = state.openedFiles.findIndex( element => {

@@ -2,4 +2,32 @@
   position: absolute;
   overflow: hidden;
   outline: 1px solid black;
+  min-width: 200px;
+  min-height: 200px;
+}
+.bottomRightResizer, .topRightResizer, .bottomLeftResizer, .topLeftResizer {
+  position: absolute;
+  height: 10px;
+  width: 10px;
+}
+
+.bottomRightResizer {
+  bottom: -2px;
+  right: -2px;
+  cursor: nwse-resize;
+}
+.bottomLeftResizer {
+  bottom: -2px;
+  left: -2px;
+  cursor: nesw-resize;
+}
+.topLeftResizer{
+  top: -2px;
+  left: -2px;
+  cursor: nwse-resize;
+}
+.topRightResizer{
+  top: -2px;
+  right: -2px;
+  cursor: nesw-resize;
 }

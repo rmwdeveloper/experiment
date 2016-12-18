@@ -37,6 +37,9 @@ class Desktop extends Component {
     this.desktopContextMenu = this.desktopContextMenu.bind(this);
     this.desktopMouseUp = this.desktopMouseUp.bind(this);
     this.desktopMouseDown = this.desktopMouseDown.bind(this);
+    this.startResizeFileWindow = this.startResizeFileWindow.bind(this);
+    this.stopResizeFileWindow = this.stopResizeFileWindow.bind(this);
+    this.fileWindowResizing = this.fileWindowResizing.bind(this);
     this.dragbox = null;
     this.icons = [];
     this.selectedIcons = [];
@@ -44,6 +47,14 @@ class Desktop extends Component {
     this.state = {
       dragSelecting: false,
       draggingFileWindow: false,
+      resizingFileWindowInProgress: false,
+      resizeStartX: null,
+      resizeStartY: null,
+      resizeStartHeight: null,
+      resizeStartWidth: null,
+      resizeStartTop: null,
+      resizeStartLeft: null,
+      resizeCornerClicked: null,
       dragStartX: null,
       dragStartY: null,
       fileWindowDragStartX: null,
@@ -51,6 +62,7 @@ class Desktop extends Component {
       desktopWidth: null,
       desktopHeight: null,
       itemDragged: null,
+      itemResized: null,
       headerHeight: null
     };
   }
@@ -83,7 +95,13 @@ class Desktop extends Component {
   }
   desktopMouseDown(event) {
     const { clickclass } = event.target.dataset;
+    if (event.button === 2) { // Right mouse button clicked
+      return null;
+    }
     switch (clickclass) {
+      case windowsClickables.fileResizeHandle:
+        this.startResizeFileWindow(event);
+        break;
       case windowsClickables.desktop:
         this.startDragSelect(event);
         break;
@@ -101,11 +119,13 @@ class Desktop extends Component {
   }
   desktopMouseUp(event) {
     const { clickclass } = event.target.dataset;
-    const { dragSelecting, draggingFileWindow} = this.state;
+    const { dragSelecting, draggingFileWindow, resizingFileWindowInProgress} = this.state;
     if (dragSelecting) {
       this.stopDragSelect(event);
     } else if (draggingFileWindow) {
      this.stopDragFileWindow(event);
+    } else if (resizingFileWindowInProgress) {
+      this.stopResizeFileWindow(event);
     }
     switch (clickclass) {
       case windowsClickables.desktopItem:
@@ -116,7 +136,29 @@ class Desktop extends Component {
         // console.log(event.currentTarget);
     }
   }
+  startResizeFileWindow(event) {
+    const windowBeingResized = this.props.openedFiles[parseInt(event.target.dataset.index, 10)];
+    this.setState({ resizingFileWindowInProgress: true, resizeStartX: event.clientX, resizeStartY: event.clientY,
+    itemResized: event.target.dataset.index, resizeStartHeight: event.target.parentNode.clientHeight,
+      resizeCornerClicked: event.target.dataset.corner, resizeStartLeft: windowBeingResized.xPosition,
+      resizeStartTop: windowBeingResized.yPosition, resizeStartWidth: event.target.parentNode.clientWidth });
+    this.desktop.addEventListener('mousemove', this.fileWindowResizing);
+  }
+  fileWindowResizing(event) {
+    const { itemResized, resizeStartHeight, resizeStartWidth, resizeCornerClicked, resizeStartLeft, resizeStartTop } = this.state;
+    const deltaX = event.clientX - this.state.resizeStartX;
+    const deltaY = event.clientY - this.state.resizeStartY;
+    this.props.resizeFileWindow(itemResized, resizeCornerClicked, deltaX, deltaY, resizeStartWidth, resizeStartHeight,
+      resizeStartLeft, resizeStartTop);
+  }
+  stopResizeFileWindow() {
+    this.desktop.removeEventListener('mousemove', this.fileWindowResizing);
+    this.setState({ resizingFileWindowInProgress: false, resizeStartX: null, resizeStartY: null, itemResized: null,
+    resizeStartHeight: null, resizeStartWidth: null, resizeCornerClicked: null, resizeStartTop: null, resizeStartLeft: null});
+  }
   startDragSelect(event) {
+    const { headerHeight } = this.state;
+    this.props.clearActives();
     this.dragbox = document.getElementById('dragbox');
     if (!this.dragbox) {
       this.dragbox = document.createElement('div');
@@ -126,8 +168,8 @@ class Desktop extends Component {
       this.dragbox.style.position = 'absolute';
     }
 
-    this.dragbox.style.top = `${event.clientY}px`;
-    this.dragbox.style.top = `${event.clientY}px`;
+
+    this.dragbox.style.top = `${event.clientY - headerHeight}px`;
     this.dragbox.style.left = `${event.clientX}px`;
     this.dragbox.style.width = '10px';
     this.dragbox.style.height = '10px';
@@ -181,8 +223,9 @@ class Desktop extends Component {
     }
   }
   desktopContextMenu(event) {
+    const { headerHeight } = this.state;
     event.preventDefault();
-    this.props.openContextMenu(event.clientX, event.clientY);
+    this.props.openContextMenu(event.clientX, event.clientY - headerHeight);
   }
   desktopResize() {
     this.setState({desktopWidth: this.desktop.offsetWidth, desktopHeight: this.desktop.offsetHeight});
@@ -205,12 +248,13 @@ class Desktop extends Component {
   }
   startDragFileWindow(event) {
     this.desktop.addEventListener('mousemove', this.dragFileWindow);
-    this.setState({draggingFileWindow: true, itemDragged: event.target.dataset.index,
-      fileWindowDragStartX: event.clientX, fileWindowDragStartY: event.clientY });
+    this.clickedLocationX = event.target.clientWidth - event.offsetX;
+    this.clickedLocationY = event.target.clientHeight - event.offsetY;
+    this.setState({draggingFileWindow: true, itemDragged: event.target.dataset.index });
   }
   dragFileWindow(event) {
     const { itemDragged, headerHeight } = this.state;
-    this.props.dragFileWindow(itemDragged, event.clientX - 100, event.clientY - headerHeight);
+    this.props.dragFileWindow(itemDragged, event.clientX - this.clickedLocationX, event.clientY - headerHeight - this.clickedLocationY);
   }
   stopDragFileWindow() {
     this.desktop.removeEventListener('mousemove', this.dragFileWindow);
