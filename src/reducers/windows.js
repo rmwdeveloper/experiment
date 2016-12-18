@@ -131,6 +131,10 @@ export default function layout(state = initialState, action) {
       newOpenedFiles[parseInt(action.index, 10)].xPosition = (Math.abs(action.deltaX));
       newOpenedFiles[parseInt(action.index, 10)].yPosition = (Math.abs(action.deltaY));
       return { ...state, openedFiles: newOpenedFiles };
+    case RESIZE_FILE_WINDOW:
+      newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + action.deltaX;
+      newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + action.deltaY;
+      return { ...state, openedFiles: newOpenedFiles };
     case CLICK_TASKBAR_ITEM:
       const openedFileIndex = state.openedFiles.findIndex( element => {
         return element.entityId === action.index;
