@@ -128,8 +128,8 @@ export default function layout(state = initialState, action) {
       newOpenedFiles[action.openedFileIndex].minimized = false;
       return { ...state, openedFiles: newOpenedFiles };
     case DRAG_FILE_WINDOW:
-      newOpenedFiles[parseInt(action.index, 10)].xPosition = (Math.abs(action.deltaX));
-      newOpenedFiles[parseInt(action.index, 10)].yPosition = (Math.abs(action.deltaY));
+      newOpenedFiles[parseInt(action.index, 10)].xPosition = action.deltaX;
+      newOpenedFiles[parseInt(action.index, 10)].yPosition = action.deltaY;
       return { ...state, openedFiles: newOpenedFiles };
     case RESIZE_FILE_WINDOW: // todo: Needs refactor. Bulky and repetitive switch case.
       if (action.resizeCornerClicked === 'topLeft') {
