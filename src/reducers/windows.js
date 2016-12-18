@@ -132,11 +132,24 @@ export default function layout(state = initialState, action) {
       newOpenedFiles[parseInt(action.index, 10)].yPosition = (Math.abs(action.deltaY));
       return { ...state, openedFiles: newOpenedFiles };
     case RESIZE_FILE_WINDOW:
+      if (action.resizeCornerClicked === 'topRight') {
+        newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + action.deltaX;
+        // newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + action.deltaY;
+        if (action.deltaY < 0) {
+          newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + Math.abs(action.deltaY);
+          newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop - Math.abs(action.deltaY);
+        }
+        if (action.deltaY > 0 ) {
+          if (!((action.resizeStartHeight - action.deltaY) < 250)) {
+            newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight - Math.abs(action.deltaY);
+            newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop + Math.abs(action.deltaY);
+          }
+        }
+      }
       if (action.resizeCornerClicked === 'bottomRight') {
         newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + action.deltaX;
         newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + action.deltaY;
       }
-      console.log(action.deltaX, action.resizeStartWidth, action.resizeStartLeft);
       if (action.resizeCornerClicked === 'bottomLeft') {
 
         newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + action.deltaY;
