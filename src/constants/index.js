@@ -13,6 +13,7 @@ export const UNMAXIMIZE_FILE_WINDOW = 'windows/UNMAXIMIZE_FILE_WINDOW';
 export const MINIMIZE_FILE_WINDOW = 'windows/MINIMIZE_FILE_WINDOW';
 export const UNMINIMIZE_FILE_WINDOW = 'windows/UNMINIMIZE_FILE_WINDOW';
 export const DRAG_FILE_WINDOW = 'windows/DRAG_FILE_WINDOW';
+export const RESIZE_FILE_WINDOW = 'windows/RESIZE_FILE_WINDOW';
 export const CLICK_TASKBAR_ITEM = 'windows/CLICK_TASKBAR_ITEM';
 
 export const LOAD_STOCKS = 'stock/LOAD_STOCKS';

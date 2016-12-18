@@ -50,6 +50,7 @@ class Windows extends Component { //eslint-disable-line
     toggleWindowMinimize: PropTypes.func,
     entities: PropTypes.object,
     dragFileWindow: PropTypes.func,
+    resizeFileWindow: PropTypes.func,
     clickTaskbarItem: PropTypes.func
   };
   static contextTypes = {

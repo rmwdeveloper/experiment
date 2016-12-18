@@ -37,6 +37,7 @@ class Desktop extends Component {
     this.desktopContextMenu = this.desktopContextMenu.bind(this);
     this.desktopMouseUp = this.desktopMouseUp.bind(this);
     this.desktopMouseDown = this.desktopMouseDown.bind(this);
+    this.startResizeFileWindow = this.startResizeFileWindow.bind(this);
     this.dragbox = null;
     this.icons = [];
     this.selectedIcons = [];
@@ -88,7 +89,7 @@ class Desktop extends Component {
     }
     switch (clickclass) {
       case windowsClickables.fileResizeHandle:
-        console.log(' trying to resize window!');
+        this.startResizeFileWindow(event);
         break;
       case windowsClickables.desktop:
         this.startDragSelect(event);
@@ -121,6 +122,10 @@ class Desktop extends Component {
       default:
         // console.log(event.currentTarget);
     }
+  }
+  startResizeFileWindow(event) {
+    console.log('test');
+    console.log(event);
   }
   startDragSelect(event) {
     const { headerHeight } = this.state;
