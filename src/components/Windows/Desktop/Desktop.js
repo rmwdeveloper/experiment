@@ -145,10 +145,11 @@ class Desktop extends Component {
     this.desktop.addEventListener('mousemove', this.fileWindowResizing);
   }
   fileWindowResizing(event) {
-    const { itemResized, resizeStartHeight, resizeStartWidth, resizeStartLeft, resizeStartTop } = this.state;
+    const { itemResized, resizeStartHeight, resizeStartWidth, resizeCornerClicked, resizeStartLeft, resizeStartTop } = this.state;
     const deltaX = event.clientX - this.state.resizeStartX;
     const deltaY = event.clientY - this.state.resizeStartY;
-    this.props.resizeFileWindow(itemResized, deltaX, deltaY, resizeStartWidth, resizeStartHeight, resizeStartLeft, resizeStartTop);
+    this.props.resizeFileWindow(itemResized, resizeCornerClicked, deltaX, deltaY, resizeStartWidth, resizeStartHeight,
+      resizeStartLeft, resizeStartTop);
   }
   stopResizeFileWindow() {
     this.desktop.removeEventListener('mousemove', this.fileWindowResizing);

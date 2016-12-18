@@ -132,8 +132,27 @@ export default function layout(state = initialState, action) {
       newOpenedFiles[parseInt(action.index, 10)].yPosition = (Math.abs(action.deltaY));
       return { ...state, openedFiles: newOpenedFiles };
     case RESIZE_FILE_WINDOW:
-      newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + action.deltaX;
-      newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + action.deltaY;
+      if (action.resizeCornerClicked === 'bottomRight') {
+        newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + action.deltaX;
+        newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + action.deltaY;
+      }
+      console.log(action.deltaX, action.resizeStartWidth, action.resizeStartLeft);
+      if (action.resizeCornerClicked === 'bottomLeft') {
+
+        newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + action.deltaY;
+
+        if (action.deltaX < 0) {
+          newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + Math.abs(action.deltaX);
+          newOpenedFiles[parseInt(action.index, 10)].xPosition = action.resizeStartLeft - Math.abs(action.deltaX);
+
+        }
+        if (action.deltaX > 0 ) {
+          if (!((action.resizeStartWidth - action.deltaX) < 250)) {
+            newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth - Math.abs(action.deltaX);
+            newOpenedFiles[parseInt(action.index, 10)].xPosition = action.resizeStartLeft + Math.abs(action.deltaX);
+          }
+        }
+      }
       return { ...state, openedFiles: newOpenedFiles };
     case CLICK_TASKBAR_ITEM:
       const openedFileIndex = state.openedFiles.findIndex( element => {

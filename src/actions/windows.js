@@ -89,10 +89,10 @@ export function dragFileWindow(index, deltaX, deltaY) { // todo change this name
   };
 }
 
-export function resizeFileWindow(index, deltaX, deltaY, resizeStartWidth, resizeStartHeight, resizeStartLeft, resizeStartTop) {
+export function resizeFileWindow(index, resizeCornerClicked, deltaX, deltaY, resizeStartWidth, resizeStartHeight, resizeStartLeft, resizeStartTop) {
   return dispatch => {
     dispatch({ type: RESIZE_FILE_WINDOW, index, deltaX, deltaY, resizeStartWidth, resizeStartHeight, resizeStartLeft,
-      resizeStartTop });
+      resizeStartTop, resizeCornerClicked });
   };
 }
 export function clickTaskbarItem(index) {
