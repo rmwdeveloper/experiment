@@ -86,11 +86,16 @@ export function toggleWindowMinimize(openedFileIndex) {
 export function dragFileWindow(index, deltaX, deltaY) { // todo change this name? Same as method in windows/Desktop
   return dispatch => {
     dispatch({ type: DRAG_FILE_WINDOW, index, deltaX, deltaY });
-  }
+  };
 }
 
+export function resizeFileWindow(index, deltaX, deltaY) {
+  return dispatch => {
+    dispatch({ type: RESIZE_FILE_WINDOW, index, deltaX, deltaY });
+  };
+}
 export function clickTaskbarItem(index) {
   return dispatch => {
     dispatch({ type: CLICK_TASKBAR_ITEM, index });
-  }
+  };
 }
