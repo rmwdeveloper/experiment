@@ -3,7 +3,11 @@ import styles from './Folder.css'; //eslint-disable-line
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 
-function Folder(props) {
+function Folder({openedFile, entities}) {
+  const folderContents = entities[openedFile.entityId].contents.map(entityId => {
+    return entities[entityId];
+  });
+
   return (
     <div className={styles.root}>
       Windows Folder fasdf
