@@ -3,10 +3,10 @@ import styles from './Folder.css'; //eslint-disable-line
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 
-function Folder({ entityID }) {
+function Folder(props) {
   return (
     <div className={styles.root}>
-      Windows Folder {entityID}
+      Windows Folder fasdf
     </div>
   );
 }

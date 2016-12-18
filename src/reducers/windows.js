@@ -40,7 +40,8 @@ const initialState = {
     4: {
       name: 'My Documents',
       icon: 'MyDocumentsXSmall.png',
-      registryKey: 'Folder'
+      registryKey: 'Folder',
+      contents: [5, 12]
     },
     5: {
       name: 'My Music',
@@ -75,6 +76,11 @@ const initialState = {
     11: {
       name: 'Run',
       icon: 'RunXSmall.png',
+      registryKey: 'Folder'
+    },
+    12: {
+      name: 'My Pictures',
+      icon: 'MyMusicXSmall.png',
       registryKey: 'Folder'
     }
   },
