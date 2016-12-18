@@ -83,6 +83,9 @@ class Desktop extends Component {
   }
   desktopMouseDown(event) {
     const { clickclass } = event.target.dataset;
+    if (event.button === 2) { // Right mouse button clicked
+      return null;
+    }
     switch (clickclass) {
       case windowsClickables.desktop:
         this.startDragSelect(event);
