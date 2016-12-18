@@ -52,6 +52,7 @@ class Desktop extends Component {
       resizeStartY: null,
       resizeStartHeight: null,
       resizeStartWidth: null,
+      resizeCornerClicked: null,
       dragStartX: null,
       dragStartY: null,
       fileWindowDragStartX: null,
@@ -136,6 +137,7 @@ class Desktop extends Component {
   startResizeFileWindow(event) {
     this.setState({ resizingFileWindowInProgress: true, resizeStartX: event.clientX, resizeStartY: event.clientY,
     itemResized: event.target.dataset.index, resizeStartHeight: event.target.parentNode.clientHeight,
+      resizeCornerClicked: event.target.dataset.corner,
       resizeStartWidth: event.target.parentNode.clientWidth });
     this.desktop.addEventListener('mousemove', this.fileWindowResizing);
   }
@@ -147,7 +149,8 @@ class Desktop extends Component {
   }
   stopResizeFileWindow() {
     this.desktop.removeEventListener('mousemove', this.fileWindowResizing);
-    this.setState({ resizingFileWindowInProgress: false, resizeStartX: null, resizeStartY: null, itemResized: null });
+    this.setState({ resizingFileWindowInProgress: false, resizeStartX: null, resizeStartY: null, itemResized: null,
+    resizeStartHeight: null, resizeStartWidth: null, resizeCornerClicked: null});
   }
   startDragSelect(event) {
     const { headerHeight } = this.state;
