@@ -39,6 +39,9 @@ export default function FileWindow(ComposedComponent) {
           />
           <ComposedComponent {...this.state} {...this.props} />
           <div data-clickClass={windowsClickables.fileResizeHandle} data-index={index} className={styles.bottomRightResizer}></div>
+          <div data-clickClass={windowsClickables.fileResizeHandle} data-index={index} className={styles.bottomLeftResizer}></div>
+          <div data-clickClass={windowsClickables.fileResizeHandle} data-index={index} className={styles.topRightResizer}></div>
+          <div data-clickClass={windowsClickables.fileResizeHandle} data-index={index} className={styles.topLeftResizer}></div>
         </div>);
     }
   }
