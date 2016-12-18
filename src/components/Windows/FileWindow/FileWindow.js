@@ -38,6 +38,7 @@ export default function FileWindow(ComposedComponent) {
             closeFile={closeFile}
           />
           <ComposedComponent {...this.state} {...this.props} />
+          <div className={styles.bottomRightResizer}></div>
         </div>);
     }
   }
