@@ -57,6 +57,7 @@ class Desktop extends Component {
       desktopWidth: null,
       desktopHeight: null,
       itemDragged: null,
+      itemResized: null,
       headerHeight: null
     };
   }
@@ -131,17 +132,18 @@ class Desktop extends Component {
     }
   }
   startResizeFileWindow(event) {
-    this.setState({ resizingFileWindowInProgress: true, resizeStartX: event.clientX, resizeStartY: event.clientY });
+    this.setState({ resizingFileWindowInProgress: true, resizeStartX: event.clientX, resizeStartY: event.clientY,
+    itemResized: event.target.dataset.index});
     this.desktop.addEventListener('mousemove', this.fileWindowResizing);
   }
   fileWindowResizing(event) {
     const deltaX = event.clientX - this.state.resizeStartX;
     const deltaY = event.clientY - this.state.resizeStartY;
-
+    this.props.resizeFileWindow(this.state.itemResized, deltaX, deltaY);
   }
   stopResizeFileWindow() {
     this.desktop.removeEventListener('mousemove', this.fileWindowResizing);
-    this.setState({ resizingFileWindowInProgress: false, resizeStartX: null, resizeStartY: null });
+    this.setState({ resizingFileWindowInProgress: false, resizeStartX: null, resizeStartY: null, itemResized: null });
   }
   startDragSelect(event) {
     const { headerHeight } = this.state;
