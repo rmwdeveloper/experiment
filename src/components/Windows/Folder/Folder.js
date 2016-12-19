@@ -9,9 +9,9 @@ function Folder({openedFile, entities, desktopWidth, desktopHeight, openFile}) {
     return <FolderItem key={index} desktopWidth={desktopWidth} desktopHeight={desktopHeight} index={index} openFile={openFile} item={entities[entityId]} />;
   }) : null;
   const windowHeight = openedFile.height - 30;
-  const contentWidth = openedFile.width - 90;
+
   return (
-    <div style={{height: windowHeight}} className={styles.root}>
+    <div style={{minHeight: windowHeight}} className={styles.root}>
       <FolderSidebar />
       <div className={styles.folderContents}>
         {folderContents}
