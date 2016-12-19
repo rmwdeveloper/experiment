@@ -9,5 +9,5 @@
 }
 
 .folderContents {
-
+  overflow-y: auto;
 }
