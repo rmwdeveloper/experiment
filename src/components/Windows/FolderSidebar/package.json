@@ -1,0 +1,6 @@
+{
+  "name": "FolderSidebar",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./FolderSidebar.js"
+}
