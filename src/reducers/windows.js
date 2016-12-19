@@ -181,7 +181,16 @@ export default function layout(state = initialState, action) {
         newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + action.deltaY;
       }
       else if (action.resizeSideClicked === 'left') {
-        console.log('left');
+        if (action.deltaX < 0) {
+          newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + Math.abs(action.deltaX);
+          newOpenedFiles[parseInt(action.index, 10)].xPosition = action.resizeStartLeft - Math.abs(action.deltaX);
+        }
+        if (action.deltaX > 0 ) {
+          if (!((action.resizeStartHeight - action.deltaX) < 250)) {
+            newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth - Math.abs(action.deltaX);
+            newOpenedFiles[parseInt(action.index, 10)].xPosition = action.resizeStartLeft + Math.abs(action.deltaX);
+          }
+        }
       }
 
       else if (action.resizeSideClicked === 'topRight') {
