@@ -3,6 +3,7 @@
 .root {
   padding: 5px;
   background-image: linear-gradient( 0deg, #235AD8 .5%, #235AD8 85%, #4993E6 );
+  height: 22px;
 }
 
 .fileName, .fileControls {
