@@ -163,10 +163,19 @@ export default function layout(state = initialState, action) {
         }
       }
       else if (action.resizeSideClicked === 'top') {
-        console.log('top');
+        if (action.deltaY < 0) {
+          newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + Math.abs(action.deltaY);
+          newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop - Math.abs(action.deltaY);
+        }
+        if (action.deltaY > 0 ) {
+          if (!((action.resizeStartHeight - action.deltaY) < 250)) {
+            newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight - Math.abs(action.deltaY);
+            newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop + Math.abs(action.deltaY);
+          }
+        }
       }
       else if (action.resizeSideClicked === 'right') {
-        console.log('right');
+        newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + action.deltaX;
       }
       else if (action.resizeSideClicked === 'bottom') {
         console.log('bottom');
