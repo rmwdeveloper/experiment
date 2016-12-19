@@ -138,7 +138,7 @@ export default function layout(state = initialState, action) {
       newOpenedFiles[parseInt(action.index, 10)].yPosition = action.deltaY;
       return { ...state, openedFiles: newOpenedFiles };
     case RESIZE_FILE_WINDOW: // todo: Needs refactor. Bulky and repetitive switch case.
-      if (action.resizeCornerClicked === 'topLeft') {
+      if (action.resizeSideClicked === 'topLeft') {
         if (action.deltaY < 0) {
           newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + Math.abs(action.deltaY);
           newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop - Math.abs(action.deltaY);
@@ -162,7 +162,7 @@ export default function layout(state = initialState, action) {
         }
       }
 
-      else if (action.resizeCornerClicked === 'topRight') {
+      else if (action.resizeSideClicked === 'topRight') {
         newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + action.deltaX;
         if (action.deltaY < 0) {
           newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + Math.abs(action.deltaY);
@@ -176,12 +176,12 @@ export default function layout(state = initialState, action) {
         }
       }
 
-      else if (action.resizeCornerClicked === 'bottomRight') {
+      else if (action.resizeSideClicked === 'bottomRight') {
         newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + action.deltaX;
         newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + action.deltaY;
       }
 
-      else if (action.resizeCornerClicked === 'bottomLeft') {
+      else if (action.resizeSideClicked === 'bottomLeft') {
 
         newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + action.deltaY;
 

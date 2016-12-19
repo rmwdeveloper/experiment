@@ -54,7 +54,7 @@ class Desktop extends Component {
       resizeStartWidth: null,
       resizeStartTop: null,
       resizeStartLeft: null,
-      resizeCornerClicked: null,
+      resizeSideClicked: null,
       dragStartX: null,
       dragStartY: null,
       fileWindowDragStartX: null,
@@ -140,21 +140,21 @@ class Desktop extends Component {
     const windowBeingResized = this.props.openedFiles[parseInt(event.target.dataset.index, 10)];
     this.setState({ resizingFileWindowInProgress: true, resizeStartX: event.clientX, resizeStartY: event.clientY,
     itemResized: event.target.dataset.index, resizeStartHeight: event.target.parentNode.clientHeight,
-      resizeCornerClicked: event.target.dataset.corner, resizeStartLeft: windowBeingResized.xPosition,
+      resizeSideClicked: event.target.dataset.side, resizeStartLeft: windowBeingResized.xPosition,
       resizeStartTop: windowBeingResized.yPosition, resizeStartWidth: event.target.parentNode.clientWidth });
     this.desktop.addEventListener('mousemove', this.fileWindowResizing);
   }
   fileWindowResizing(event) {
-    const { itemResized, resizeStartHeight, resizeStartWidth, resizeCornerClicked, resizeStartLeft, resizeStartTop } = this.state;
+    const { itemResized, resizeStartHeight, resizeStartWidth, resizeSideClicked, resizeStartLeft, resizeStartTop } = this.state;
     const deltaX = event.clientX - this.state.resizeStartX;
     const deltaY = event.clientY - this.state.resizeStartY;
-    this.props.resizeFileWindow(itemResized, resizeCornerClicked, deltaX, deltaY, resizeStartWidth, resizeStartHeight,
+    this.props.resizeFileWindow(itemResized, resizeSideClicked, deltaX, deltaY, resizeStartWidth, resizeStartHeight,
       resizeStartLeft, resizeStartTop);
   }
   stopResizeFileWindow() {
     this.desktop.removeEventListener('mousemove', this.fileWindowResizing);
     this.setState({ resizingFileWindowInProgress: false, resizeStartX: null, resizeStartY: null, itemResized: null,
-    resizeStartHeight: null, resizeStartWidth: null, resizeCornerClicked: null, resizeStartTop: null, resizeStartLeft: null});
+    resizeStartHeight: null, resizeStartWidth: null, resizeSideClicked: null, resizeStartTop: null, resizeStartLeft: null});
   }
   startDragSelect(event) {
     const { headerHeight } = this.state;
@@ -268,7 +268,6 @@ class Desktop extends Component {
     if (this.icons.length > 0 && selectedDesktopIcons.length > 0) {
       unselectedIcons = this.diffNodeLists(this.icons, selectedDesktopIcons);
     }
-    console.log(openedFiles);
     return (
       <div id="desktop"
            data-clickClass={windowsClickables.desktop}
