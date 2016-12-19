@@ -11,6 +11,18 @@
   width: 10px;
 }
 
+.topResizer{
+  cursor: ns-resize;
+}
+.bottomResizer {
+  cursor: ns-resize;
+}
+.leftResizer {
+  cursor: ew-resize;
+}
+.rightResizer {
+  cursor: ew-resize;
+}
 .bottomRightResizer {
   bottom: -2px;
   right: -2px;

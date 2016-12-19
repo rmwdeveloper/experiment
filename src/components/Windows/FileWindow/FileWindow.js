@@ -38,10 +38,15 @@ export default function FileWindow(ComposedComponent) {
             closeFile={closeFile}
           />
           <ComposedComponent {...this.state} {...this.props} />
-          {/*<div data-clickClass={windowsClickables.fileResizeHandle} data-index={index} data-corner={'bottomRight'} className={styles.bottomRightResizer}></div>
+          <div data-clickClass={windowsClickables.fileResizeHandle} data-index={index} data-corner={'top'} className={styles.topResizer}></div>
+          <div data-clickClass={windowsClickables.fileResizeHandle} data-index={index} data-corner={'right'} className={styles.rightResizer}></div>
+          <div data-clickClass={windowsClickables.fileResizeHandle} data-index={index} data-corner={'bottom'} className={styles.bottomResizer}></div>
+          <div data-clickClass={windowsClickables.fileResizeHandle} data-index={index} data-corner={'left'} className={styles.leftResizer}></div>
+
+          <div data-clickClass={windowsClickables.fileResizeHandle} data-index={index} data-corner={'bottomRight'} className={styles.bottomRightResizer}></div>
           <div data-clickClass={windowsClickables.fileResizeHandle} data-index={index} data-corner={'bottomLeft'} className={styles.bottomLeftResizer}></div>
           <div data-clickClass={windowsClickables.fileResizeHandle} data-index={index} data-corner={'topRight'} className={styles.topRightResizer}></div>
-          <div data-clickClass={windowsClickables.fileResizeHandle} data-index={index} data-corner={'topLeft'} className={styles.topLeftResizer}></div>*/}
+          <div data-clickClass={windowsClickables.fileResizeHandle} data-index={index} data-corner={'topLeft'} className={styles.topLeftResizer}></div>
         </div>);
     }
   }
