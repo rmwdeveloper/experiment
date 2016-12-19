@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import styles from './Folder.css'; //eslint-disable-line
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import DesktopItem from '../DesktopItem';
+import FolderSidebar from '../FolderSidebar';
 
 function Folder({openedFile, entities, desktopWidth, desktopHeight, openFile}) {
   const folderContents = entities[openedFile.entityId].contents ? entities[openedFile.entityId].contents.map((entityId, index) => {
@@ -10,6 +11,7 @@ function Folder({openedFile, entities, desktopWidth, desktopHeight, openFile}) {
 
   return (
     <div className={styles.root}>
+      <FolderSidebar />
       {folderContents}
     </div>
   );
