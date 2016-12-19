@@ -41,7 +41,7 @@ const initialState = {
       name: 'My Documents',
       icon: 'MyDocumentsXSmall.png',
       registryKey: 'Folder',
-      contents: [5, 12]
+      contents: [5, 12, 5, 5, 5, 5, 5]
     },
     5: {
       name: 'My Music',
