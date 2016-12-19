@@ -4,6 +4,7 @@
   outline: 1px solid black;
   min-width: 200px;
   min-height: 200px;
+  box-shadow: 2px 2px 15px black;
 }
 .topResizer, .rightResizer, .bottomResizer, .leftResizer,
 .bottomRightResizer, .topRightResizer, .bottomLeftResizer, .topLeftResizer{
