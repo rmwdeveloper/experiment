@@ -5,23 +5,39 @@
   min-width: 200px;
   min-height: 200px;
 }
-.bottomRightResizer, .topRightResizer, .bottomLeftResizer, .topLeftResizer {
+.topResizer, .rightResizer, .bottomResizer, .leftResizer,
+.bottomRightResizer, .topRightResizer, .bottomLeftResizer, .topLeftResizer{
   position: absolute;
+}
+.bottomRightResizer, .topRightResizer, .bottomLeftResizer, .topLeftResizer {
   height: 10px;
   width: 10px;
 }
-
 .topResizer{
   cursor: ns-resize;
+  width: 100%;
+  top: -4px;
+  height: 5px;
 }
 .bottomResizer {
   cursor: ns-resize;
+  width: 100%;
+  bottom: -4px;
+  height: 5px;
 }
 .leftResizer {
   cursor: ew-resize;
+  height: 100%;
+  width: 5px;
+  left: -4px;
+  top: 0;
 }
 .rightResizer {
   cursor: ew-resize;
+  height: 100%;
+  width: 5px;
+  right: -4px;
+  top: 0;
 }
 .bottomRightResizer {
   bottom: -2px;
