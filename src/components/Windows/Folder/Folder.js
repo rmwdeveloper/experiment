@@ -6,6 +6,7 @@ import FolderSidebar from '../FolderSidebar';
 
 function Folder({openedFile, entities, desktopWidth, desktopHeight, openFile}) {
   const folderContents = entities[openedFile.entityId].contents ? entities[openedFile.entityId].contents.map((entityId, index) => {
+    entities[entityId].index = entityId;
     return <FolderItem key={index} desktopWidth={desktopWidth} desktopHeight={desktopHeight} index={index} openFile={openFile} item={entities[entityId]} />;
   }) : null;
   const windowHeight = openedFile.height - 30;
