@@ -3,6 +3,7 @@ import styles from './Folder.css'; //eslint-disable-line
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import FolderItem from '../FolderItem';
 import FolderSidebar from '../FolderSidebar';
+import FolderNavigation from '../FolderNavigation';
 
 function Folder({openedFile, entities, desktopWidth, desktopHeight, openFile}) {
   const folderContents = entities[openedFile.entityId].contents ? entities[openedFile.entityId].contents.map((entityId, index) => {
@@ -13,9 +14,12 @@ function Folder({openedFile, entities, desktopWidth, desktopHeight, openFile}) {
 
   return (
     <div style={{minHeight: windowHeight}} className={styles.root}>
-      <FolderSidebar />
-      <div className={styles.folderContents}>
-        {folderContents}
+      <FolderNavigation />
+      <div className={styles.sidebarAndFolderContents}>
+        <FolderSidebar />
+        <div className={styles.folderContents}>
+          {folderContents}
+        </div>
       </div>
     </div>
   );
