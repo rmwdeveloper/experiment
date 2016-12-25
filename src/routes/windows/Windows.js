@@ -11,6 +11,7 @@ import { installedProgramsSelector, userDirectoriesSelector, desktopItemsSelecto
 import WindowsDesktop from '../../components/Windows/Desktop';
 import WindowsTaskbar from '../../components/Windows/Taskbar';
 import WindowsStartMenu from '../../components/Windows/StartMenu';
+import MobileTaskbar from '../../components/Windows/MobileTaskbar';
 
 @connect(state => ({
   startMenuOpened: state.windows.startMenuOpened,
@@ -25,6 +26,10 @@ import WindowsStartMenu from '../../components/Windows/StartMenu';
   selectedDesktopIcons: state.windows.selectedDesktopIcons,
   openedFiles: state.windows.openedFiles,
   entities: state.windows.entities,
+  browserWidth: state.windows.browserWidth,
+  browserHeight: state.windows.browserHeight,
+  desktopWidth: state.windows.browserWidth,
+  desktopHeight: state.windows.browserHeight
 }), { ...windowsActions })
 class Windows extends Component { //eslint-disable-line
   static propTypes = {
@@ -51,7 +56,12 @@ class Windows extends Component { //eslint-disable-line
     entities: PropTypes.object,
     dragFileWindow: PropTypes.func,
     resizeFileWindow: PropTypes.func,
-    clickTaskbarItem: PropTypes.func
+    resizeBrowserWidth: PropTypes.func,
+    clickTaskbarItem: PropTypes.func,
+    browserWidth: PropTypes.number,
+    browserHeight: PropTypes.number,
+    desktopWidth: PropTypes.number,
+    desktopHeight: PropTypes.number
   };
   static contextTypes = {
     setTitle: PropTypes.func.isRequired
@@ -60,16 +70,20 @@ class Windows extends Component { //eslint-disable-line
   shouldComponentUpdate(nextProps) {
     return shallowCompare(this.props, nextProps);
   }
-
-
+  componentDidMount() {
+    this.props.initializeBrowserDimensions(window.innerWidth, window.innerHeight);
+  }
   render() {
     const { startMenuOpened, toggleStartMenu, installedPrograms, clearActives } = this.props;
+
     return (<div className={styles.root} onClick={clearActives} >
       <WindowsDesktop {...this.props} />
-      {startMenuOpened ? <WindowsStartMenu installedPrograms={installedPrograms} {...this.props} />
+      {startMenuOpened  && this.props.browserWidth > 767 ? <WindowsStartMenu installedPrograms={installedPrograms} {...this.props} />
         : null}
+      { this.props.browserWidth > 767 ? <WindowsTaskbar toggleStartMenu={toggleStartMenu} {...this.props} /> :
+        <MobileTaskbar toggleStartMenu={toggleStartMenu} {...this.props} />
+      }
 
-      <WindowsTaskbar toggleStartMenu={toggleStartMenu} {...this.props} />
     </div>);
   }
 }

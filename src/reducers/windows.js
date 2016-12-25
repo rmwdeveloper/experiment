@@ -13,11 +13,15 @@ import {
   UNMINIMIZE_FILE_WINDOW,
   DRAG_FILE_WINDOW,
   CLICK_TASKBAR_ITEM,
-  RESIZE_FILE_WINDOW
+  RESIZE_FILE_WINDOW,
+  RESIZE_BROWSER_WINDOW,
+  INITIALIZE_BROWSER_DIMENSIONS
 } from '../constants';
 
 
 const initialState = {
+  browserWidth: 0,
+  browserHeight: 0,
   entities: {
     1: {
       name: 'Microsoft Word',
@@ -137,6 +141,11 @@ export default function layout(state = initialState, action) {
       newOpenedFiles[parseInt(action.index, 10)].xPosition = action.deltaX;
       newOpenedFiles[parseInt(action.index, 10)].yPosition = action.deltaY;
       return { ...state, openedFiles: newOpenedFiles };
+    case RESIZE_BROWSER_WINDOW:
+      return { ...state, browserWidth: action.browserWidth, browserHeight: action.browserHeight,
+        desktopWidth: action.desktopWidth, desktopHeight: action.desktopHeight };
+    case INITIALIZE_BROWSER_DIMENSIONS:
+      return { ...state, browserWidth: action.browserWidth, browserHeight: action.browserHeight };
     case RESIZE_FILE_WINDOW: // todo: Needs refactor. Bulky and repetitive switch case.
 
       if (action.resizeSideClicked === 'topLeft') {

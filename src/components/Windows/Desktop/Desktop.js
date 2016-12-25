@@ -59,8 +59,6 @@ class Desktop extends Component {
       dragStartY: null,
       fileWindowDragStartX: null,
       fileWindowDragStartY: null,
-      desktopWidth: null,
-      desktopHeight: null,
       itemDragged: null,
       itemResized: null,
       headerHeight: null
@@ -72,15 +70,17 @@ class Desktop extends Component {
     this.header = document.getElementById('primaryHeader');
     this.desktop.onmousedown = this.desktopMouseDown;
     this.desktop.onmouseup = this.desktopMouseUp;
-    window.onresize = this.desktopResize.bind(this);
+
+    window.addEventListener('resize', this.desktopResize.bind(this));
+
     this.setState({desktopWidth: this.desktop.offsetWidth,
       desktopHeight: this.desktop.offsetHeight,
       headerHeight: this.header.offsetHeight});
   }
   shouldComponentUpdate(nextProps, nextState) {
     return (this.state.selectedIcons !== nextState.selectedIcons) ||
-      this.state.desktopWidth !== nextState.desktopWidth ||
-      this.state.desktopHeight !== nextState.desktopHeight ||
+      this.props.desktopWidth !== nextProps.desktopWidth ||
+      this.props.desktopHeight !== nextProps.desktopHeight ||
       (this.props.contextMenuActive !== nextProps.contextMenuActive) ||
       (this.props.contextMenuX !== nextProps.contextMenuX)||
       (this.props.openedFiles !== nextProps.openedFiles) ||
@@ -228,7 +228,7 @@ class Desktop extends Component {
     this.props.openContextMenu(event.clientX, event.clientY - headerHeight);
   }
   desktopResize() {
-    this.setState({desktopWidth: this.desktop.offsetWidth, desktopHeight: this.desktop.offsetHeight});
+    this.props.resizeBrowserWindow(window.innerWidth, window.innerHeight, this.desktop.offsetWidth, this.desktop.offsetHeight)
   }
   dragSelecting(event) {
     const deltaX = event.clientX - this.state.dragStartX;
@@ -262,8 +262,7 @@ class Desktop extends Component {
   }
   render() {
     const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, selectedDesktopIcons, createFolder, openFile,
-    openedFiles, entities } = this.props;
-    const { desktopWidth, desktopHeight } = this.state;
+    openedFiles, entities, desktopWidth, desktopHeight } = this.props;
     let unselectedIcons = desktopItems;
     if (this.icons.length > 0 && selectedDesktopIcons.length > 0) {
       unselectedIcons = this.diffNodeLists(this.icons, selectedDesktopIcons);

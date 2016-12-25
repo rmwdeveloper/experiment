@@ -8,7 +8,9 @@ import {
   UNMINIMIZE_FILE_WINDOW,
   DRAG_FILE_WINDOW,
   CLICK_TASKBAR_ITEM,
-  RESIZE_FILE_WINDOW
+  RESIZE_FILE_WINDOW,
+  RESIZE_BROWSER_WINDOW,
+  INITIALIZE_BROWSER_DIMENSIONS
 } from '../constants';
 
 
@@ -99,4 +101,16 @@ export function clickTaskbarItem(index) {
   return dispatch => {
     dispatch({ type: CLICK_TASKBAR_ITEM, index });
   };
+}
+
+export function resizeBrowserWindow(browserWidth, browserHeight, desktopWidth, desktopHeight) {
+  return dispatch => {
+    dispatch({ type: RESIZE_BROWSER_WINDOW, browserWidth, browserHeight, desktopWidth, desktopHeight});
+  }
+}
+
+export function initializeBrowserDimensions(browserWidth, browserHeight) {
+  return dispatch => {
+    dispatch({ type: INITIALIZE_BROWSER_DIMENSIONS, browserWidth, browserHeight});
+  }
 }

@@ -1,0 +1,30 @@
+@import '../../variables.css';
+
+.root::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  background-size: cover;
+  content: ' ';
+  opacity: 0.4;
+  height: 100%;
+  background-image: url('http://placehold.it/25x25.png');
+  filter: blur(5px);
+}
+.root {
+  background-color: #FFF;
+  height: 48px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.startIcon {
+  font-size: 24px;
+}
+
+
+
+
