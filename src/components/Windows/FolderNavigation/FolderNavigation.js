@@ -7,9 +7,11 @@ function FolderNavigation() {
 
   return (
     <div className={styles.root}>
-      <i className={cx('fa fa-2x fa-arrow-circle-left')} />
-      <i className={cx('fa fa-2x fa-arrow-circle-right')} />
-      <input type="text"></input>
+      <div className={styles.navigationButtons}>
+        <i className={cx('fa fa-2x fa-arrow-circle-left', styles.navigationButton)} />
+        <i className={cx('fa fa-2x fa-arrow-circle-right', styles.navigationButton)} />
+      </div>
+      <input className={styles.navigationInput} type="text"></input>
     </div>
   );
 }

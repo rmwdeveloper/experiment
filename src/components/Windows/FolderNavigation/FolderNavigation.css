@@ -1,5 +1,23 @@
 @import '../../variables.css';
 
 .root {
+  margin-right: 5px;
+  height: 45px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
 
+.navigationButtons {
+  width: 90px;
+  display: flex;
+  justify-content: space-around;
+}
+.navigationInput {
+  width: calc(100% - 90px);
+}
+
+.navigationButton{
+  color: #235AD8;
 }
