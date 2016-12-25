@@ -11,6 +11,7 @@ import { installedProgramsSelector, userDirectoriesSelector, desktopItemsSelecto
 import WindowsDesktop from '../../components/Windows/Desktop';
 import WindowsTaskbar from '../../components/Windows/Taskbar';
 import WindowsStartMenu from '../../components/Windows/StartMenu';
+import MobileTaskbar from '../../components/Windows/MobileTaskbar';
 
 @connect(state => ({
   startMenuOpened: state.windows.startMenuOpened,
@@ -74,12 +75,14 @@ class Windows extends Component { //eslint-disable-line
   }
   render() {
     const { startMenuOpened, toggleStartMenu, installedPrograms, clearActives } = this.props;
-    console.log(this.props.browserWidth, this.props.browserHeight);
+
     return (<div className={styles.root} onClick={clearActives} >
       <WindowsDesktop {...this.props} />
-      {startMenuOpened ? <WindowsStartMenu installedPrograms={installedPrograms} {...this.props} />
+      {startMenuOpened  && this.props.browserWidth > 767 ? <WindowsStartMenu installedPrograms={installedPrograms} {...this.props} />
         : null}
-      { this.props.browserWidth > 767 ? <WindowsTaskbar toggleStartMenu={toggleStartMenu} {...this.props} /> : null }
+      { this.props.browserWidth > 767 ? <WindowsTaskbar toggleStartMenu={toggleStartMenu} {...this.props} /> :
+        <MobileTaskbar toggleStartMenu={toggleStartMenu} {...this.props} />
+      }
 
     </div>);
   }
