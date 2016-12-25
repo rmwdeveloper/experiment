@@ -43,19 +43,19 @@ class ReactPerfButton extends Component {
             case (width < 320):
               return <span>None</span>;
             case (width <= 479 && width >= 320):
-              return <span>Phone Retina</span>;
+              return <span>phoneRetina</span>;
             case (width <= 567 && width >= 480):
               return <span>Phone</span>;
             case (width <= 767 && width >= 568):
-              return <span>Phone Landscape</span>;
+              return <span>phoneLandscape</span>;
             case (width <= 991 && width >= 768):
-              return <span>Tablet</span>;
+              return <span>tablet</span>;
             case (width <= 1023 && width >= 992):
-              return <span>Desktop</span>;
+              return <span>desktop</span>;
             case (width <= 1199 && width >= 1024):
-              return <span>Tablet Landscape / Desktop</span>;
+              return <span>tabletLandscape / desktop</span>;
             case (width >= 1200):
-              return <span>Widescreen</span>;
+              return <span>widescreen</span>;
             default:
               return 'Resize';
           }
