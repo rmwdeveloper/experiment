@@ -25,7 +25,10 @@ class ReactPerfButton extends Component {
     this.setState({ showingMediaBreakpoints: !this.state.showingMediaBreakpoints });
   }
   componentDidMount() {
-    window.onresize =  this.updateMediaQueryDisplay;
+    window.addEventListener('resize', this.updateMediaQueryDisplay);
+  }
+  componentWillUnmount(){
+    window.removeEventListener('resize', this.updateMediaQueryDisplay);
   }
   shouldComponentUpdate(nextProps, nextState) {
     return this.state.width !== nextState.width;

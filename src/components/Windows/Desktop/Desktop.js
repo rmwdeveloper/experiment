@@ -72,7 +72,9 @@ class Desktop extends Component {
     this.header = document.getElementById('primaryHeader');
     this.desktop.onmousedown = this.desktopMouseDown;
     this.desktop.onmouseup = this.desktopMouseUp;
-    window.onresize = this.desktopResize.bind(this);
+
+    window.addEventListener('resize', this.desktopResize.bind(this));
+
     this.setState({desktopWidth: this.desktop.offsetWidth,
       desktopHeight: this.desktop.offsetHeight,
       headerHeight: this.header.offsetHeight});
