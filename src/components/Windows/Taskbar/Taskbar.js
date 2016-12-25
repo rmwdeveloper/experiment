@@ -11,7 +11,6 @@ class Taskbar extends Component {
     entities: PropTypes.object
   };
 
-
   render() {
     const { toggleStartMenu, openedFiles, entities, clickTaskbarItem } = this.props;
     return (

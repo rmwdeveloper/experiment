@@ -8,7 +8,8 @@ import {
   UNMINIMIZE_FILE_WINDOW,
   DRAG_FILE_WINDOW,
   CLICK_TASKBAR_ITEM,
-  RESIZE_FILE_WINDOW
+  RESIZE_FILE_WINDOW,
+  RESIZE_BROWSER_WINDOW
 } from '../constants';
 
 
@@ -99,4 +100,10 @@ export function clickTaskbarItem(index) {
   return dispatch => {
     dispatch({ type: CLICK_TASKBAR_ITEM, index });
   };
+}
+
+export function resizeBrowserWindow(browserWidth, browserHeight) {
+  return dispatch => {
+    dispatch({ type: RESIZE_BROWSER_WINDOW, browserWidth, browserHeight});
+  }
 }

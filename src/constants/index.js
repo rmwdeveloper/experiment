@@ -15,6 +15,7 @@ export const UNMINIMIZE_FILE_WINDOW = 'windows/UNMINIMIZE_FILE_WINDOW';
 export const DRAG_FILE_WINDOW = 'windows/DRAG_FILE_WINDOW';
 export const RESIZE_FILE_WINDOW = 'windows/RESIZE_FILE_WINDOW';
 export const CLICK_TASKBAR_ITEM = 'windows/CLICK_TASKBAR_ITEM';
+export const RESIZE_BROWSER_WINDOW = 'windows/RESIZE_BROWSER_WINDOW';
 
 export const LOAD_STOCKS = 'stock/LOAD_STOCKS';
 export const SEARCH_STOCKS = 'stock/SEARCH_STOCKS';
