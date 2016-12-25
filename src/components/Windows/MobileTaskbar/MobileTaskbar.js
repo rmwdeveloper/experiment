@@ -13,7 +13,7 @@ class MobileTaskbar extends Component {
     // const { toggleStartMenu, openedFiles, entities, clickMobileTaskbarItem } = this.props;
     return (
       <div className={styles.root}>
-        Mobile Taskbar
+        
       </div>
     );
   }
