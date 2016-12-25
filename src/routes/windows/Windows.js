@@ -25,6 +25,10 @@ import WindowsStartMenu from '../../components/Windows/StartMenu';
   selectedDesktopIcons: state.windows.selectedDesktopIcons,
   openedFiles: state.windows.openedFiles,
   entities: state.windows.entities,
+  browserWidth: state.windows.browserWidth,
+  browserHeight: state.windows.browserHeight,
+  desktopWidth: state.windows.browserWidth,
+  desktopHeight: state.windows.browserHeight
 }), { ...windowsActions })
 class Windows extends Component { //eslint-disable-line
   static propTypes = {
@@ -51,7 +55,12 @@ class Windows extends Component { //eslint-disable-line
     entities: PropTypes.object,
     dragFileWindow: PropTypes.func,
     resizeFileWindow: PropTypes.func,
-    clickTaskbarItem: PropTypes.func
+    resizeBrowserWidth: PropTypes.func,
+    clickTaskbarItem: PropTypes.func,
+    browserWidth: PropTypes.number,
+    browserHeight: PropTypes.number,
+    desktopWidth: PropTypes.number,
+    desktopHeight: PropTypes.number
   };
   static contextTypes = {
     setTitle: PropTypes.func.isRequired
@@ -60,17 +69,18 @@ class Windows extends Component { //eslint-disable-line
   shouldComponentUpdate(nextProps) {
     return shallowCompare(this.props, nextProps);
   }
-
-
+  componentDidMount() {
+    this.props.initializeBrowserDimensions(window.innerWidth, window.innerHeight);
+  }
   render() {
     const { startMenuOpened, toggleStartMenu, installedPrograms, clearActives } = this.props;
-
+    console.log(this.props.browserWidth, this.props.browserHeight);
     return (<div className={styles.root} onClick={clearActives} >
       <WindowsDesktop {...this.props} />
       {startMenuOpened ? <WindowsStartMenu installedPrograms={installedPrograms} {...this.props} />
         : null}
+      { this.props.browserWidth > 767 ? <WindowsTaskbar toggleStartMenu={toggleStartMenu} {...this.props} /> : null }
 
-      <WindowsTaskbar toggleStartMenu={toggleStartMenu} {...this.props} />
     </div>);
   }
 }
