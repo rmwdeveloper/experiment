@@ -1,0 +1,7 @@
+@import '../../variables.css';
+
+.root {
+  width: 90px;
+  padding: 10px;
+  text-align: center;
+}

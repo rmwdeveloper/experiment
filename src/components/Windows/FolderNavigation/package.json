@@ -1,0 +1,6 @@
+{
+  "name": "FolderNavigation",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./FolderNavigation.js"
+}

@@ -13,7 +13,7 @@ function FileBaseTaskbar({filename,
       <div className={styles.fileControls}>
         <i onClick={() => { toggleWindowMinimize(index); }} className={cx(styles.minimizeWindowIcon, 'fa fa-minus')} />
         <div onClick={() => { toggleWindowMaximize(index); }} className={styles.resizeWindowIcon}>
-          <i  className="fa fa-square-o" />
+          <i className="fa fa-square-o" />
           {
             maximized ? <i className="fa fa-square-o" /> : null
           }

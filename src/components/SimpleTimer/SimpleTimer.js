@@ -32,16 +32,16 @@ class SimpleTimer extends Component {
     }
   }
   formatTime(digit, interval) {
-    if (digit < 10) {
+    if (digit < 12) {
       digit = `0${digit}`;
-    } else if (digit > 10 && interval === 'hours' ) {
+    } else if (digit > 12 && interval === 'hours' ) {
       digit = Math.abs(12 - digit);
     }
     return digit;
   }
   render() {
     return (
-      <span id="timer" className={styles.root}>12:00 PM</span>
+      <span id="timer" className={styles.root}> </span>
     );
   }
 }

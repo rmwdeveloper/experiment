@@ -19,7 +19,7 @@ function StartMenuQuickAccess({ userDirectories, utilityControls, computerSettin
       <div className={styles.computerSettings}>
         {Object.keys(computerSettings).map(directoryName => {
           return <QuickAccessDirectoryItem key={directoryName} data={computerSettings[directoryName]} />
-        })};
+        })}
       </div>
       <div className={styles.utilityControls}>
         {Object.keys(utilityControls).map(directoryName => {

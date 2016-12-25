@@ -40,7 +40,8 @@ const initialState = {
     4: {
       name: 'My Documents',
       icon: 'MyDocumentsXSmall.png',
-      registryKey: 'Folder'
+      registryKey: 'Folder',
+      contents: [5, 12, 5, 5, 5, 5, 5]
     },
     5: {
       name: 'My Music',
@@ -75,6 +76,11 @@ const initialState = {
     11: {
       name: 'Run',
       icon: 'RunXSmall.png',
+      registryKey: 'Folder'
+    },
+    12: {
+      name: 'My Pictures',
+      icon: 'MyMusicXSmall.png',
       registryKey: 'Folder'
     }
   },
@@ -132,7 +138,8 @@ export default function layout(state = initialState, action) {
       newOpenedFiles[parseInt(action.index, 10)].yPosition = action.deltaY;
       return { ...state, openedFiles: newOpenedFiles };
     case RESIZE_FILE_WINDOW: // todo: Needs refactor. Bulky and repetitive switch case.
-      if (action.resizeCornerClicked === 'topLeft') {
+
+      if (action.resizeSideClicked === 'topLeft') {
         if (action.deltaY < 0) {
           newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + Math.abs(action.deltaY);
           newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop - Math.abs(action.deltaY);
@@ -155,8 +162,38 @@ export default function layout(state = initialState, action) {
           }
         }
       }
+      else if (action.resizeSideClicked === 'top') {
+        if (action.deltaY < 0) {
+          newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + Math.abs(action.deltaY);
+          newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop - Math.abs(action.deltaY);
+        }
+        if (action.deltaY > 0 ) {
+          if (!((action.resizeStartHeight - action.deltaY) < 250)) {
+            newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight - Math.abs(action.deltaY);
+            newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop + Math.abs(action.deltaY);
+          }
+        }
+      }
+      else if (action.resizeSideClicked === 'right') {
+        newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + action.deltaX;
+      }
+      else if (action.resizeSideClicked === 'bottom') {
+        newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + action.deltaY;
+      }
+      else if (action.resizeSideClicked === 'left') {
+        if (action.deltaX < 0) {
+          newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + Math.abs(action.deltaX);
+          newOpenedFiles[parseInt(action.index, 10)].xPosition = action.resizeStartLeft - Math.abs(action.deltaX);
+        }
+        if (action.deltaX > 0 ) {
+          if (!((action.resizeStartHeight - action.deltaX) < 250)) {
+            newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth - Math.abs(action.deltaX);
+            newOpenedFiles[parseInt(action.index, 10)].xPosition = action.resizeStartLeft + Math.abs(action.deltaX);
+          }
+        }
+      }
 
-      else if (action.resizeCornerClicked === 'topRight') {
+      else if (action.resizeSideClicked === 'topRight') {
         newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + action.deltaX;
         if (action.deltaY < 0) {
           newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + Math.abs(action.deltaY);
@@ -170,12 +207,12 @@ export default function layout(state = initialState, action) {
         }
       }
 
-      else if (action.resizeCornerClicked === 'bottomRight') {
+      else if (action.resizeSideClicked === 'bottomRight') {
         newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + action.deltaX;
         newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + action.deltaY;
       }
 
-      else if (action.resizeCornerClicked === 'bottomLeft') {
+      else if (action.resizeSideClicked === 'bottomLeft') {
 
         newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + action.deltaY;
 
