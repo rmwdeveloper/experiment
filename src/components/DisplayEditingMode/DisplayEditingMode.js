@@ -25,6 +25,7 @@ class ReactPerfButton extends Component {
     this.setState({ showingMediaBreakpoints: !this.state.showingMediaBreakpoints });
   }
   componentDidMount() {
+    this.setState({ width: window.innerWidth});
     window.addEventListener('resize', this.updateMediaQueryDisplay);
   }
   componentWillUnmount(){
@@ -57,7 +58,7 @@ class ReactPerfButton extends Component {
             case (width >= 1200):
               return <span>widescreen</span>;
             default:
-              return 'Resize';
+              return 'Resize the window';
           }
         })()}
       </div>
