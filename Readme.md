@@ -23,3 +23,10 @@ is stored flatly in the tree (Permissions, filenames, etc).
     r (read): view contents. w (write) create or remove files from directory. x (execute) CD into
     directory / access directory. p (protect) prevent user from deleting the directory itself. - (unset / disabled) user
     doesnt have particular permission.
+
+* Intended supported file extension supports ( bolded are currently supported )
+    * Executables: .exe . Executables are files that will open up a new window with some unique functionality.
+    * Images: .png .jpg .jpeg .gif . "Executing" an image will open it in an image viewer.
+    * Videos: .mov .mpeg4 .mp4 .avi .wmv .flv .webm .ogg . Executing will open up a video player.
+    * Documents: .txt .sheet . Word Processor and spreadsheet file respectively. 
+    * Shortcuts: .shct

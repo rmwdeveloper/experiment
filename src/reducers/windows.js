@@ -33,7 +33,7 @@ const initialState = {
     8: { name: 'Programs', children: [9], permissions: ['rwx-'] },
     9: { name: 'Office', children: [10], permissions: ['rwx-'] },
     10: { name: 'Word Processor', permissions: ['rwx-'] },
-    11: { name: 'Desktop', permissions: ['rwx-']  }
+    11: { name: 'Desktop', permissions: ['rwx-'] }
   },
   entities: {
     1: {
@@ -58,7 +58,6 @@ const initialState = {
       name: 'My Documents',
       icon: 'MyDocumentsXSmall.png',
       registryKey: 'Folder',
-      contents: [5, 12, 5, 5, 5, 5, 5]
     },
     5: {
       name: 'My Music',
