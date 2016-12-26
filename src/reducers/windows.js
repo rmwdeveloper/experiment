@@ -22,6 +22,20 @@ import {
 const initialState = {
   browserWidth: 0,
   browserHeight: 0,
+  fileSystem: {
+    1: { name: 'System', children: [2], permissions: ['r'] },
+    2: { name: 'C:', children: [3, 9] },
+    3: { name: 'Users', children: [4] },
+    4: { name: 'user', children: [5] },
+    5: { name: 'Word Processor' },
+    6: { name: 'Spreadsheets' },
+    7: { name: 'Browser' },
+    8: { name: 'user', children: [12] },
+    9: { name: 'Programs', children: [10] },
+    10: { name: 'Office', children: [11] },
+    11: { name: 'Word Processor' },
+    12: { name: 'Desktop',  },
+  },
   entities: {
     1: {
       name: 'Microsoft Word',
