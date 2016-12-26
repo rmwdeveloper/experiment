@@ -27,7 +27,7 @@ const initialState = {
     2: { name: 'C:', children: [3, 9], permissions: ['rwxp'] },
     3: { name: 'Users', children: [4], permissions: ['rwxp'] },
     4: { name: 'Guest', children: [11], permissions: ['rwxp'] },
-    5: { name: 'Word Processor', permissions: ['rwx-'], extension: 'exe' },
+    5: { name: 'Word Processor', permissions: ['rwx-'], extension: 'exe', metaData: 1 },
     6: { name: 'Spreadsheets', permissions: ['rwx-'], extension: 'exe' },
     7: { name: 'Browser', permissions: ['rwx-'], extension: 'exe' },
     8: { name: 'Programs', children: [9], permissions: ['rwx-'] },
@@ -101,11 +101,76 @@ const initialState = {
       registryKey: 'Folder'
     }
   },
-  installedPrograms: [1, 2, 3],
-  userDirectories: [4, 5, 6],
-  computerSettings: [7, 8],
-  utilityControls: [9, 10, 11],
-  desktopItems: [1, 2, 3, 4, 6],
+  // entities: {
+  //   1: {
+  //     name: 'Microsoft Word',
+  //     subtext: 'Word Processor',
+  //     icon: 'wordlogoXSmall.png',
+  //     registryKey: 'Word'
+  //   },
+  //   2: {
+  //     name: 'Microsoft Excel',
+  //     subtext: 'Spreadsheet',
+  //     icon: 'excellogoXSmall.png',
+  //     registryKey: 'Folder'
+  //   },
+  //   3: {
+  //     name: 'Internet Explorer',
+  //     subtext: 'Internet',
+  //     icon: 'ie7.png',
+  //     registryKey: 'Folder'
+  //   },
+  //   4: {
+  //     name: 'My Documents',
+  //     icon: 'MyDocumentsXSmall.png',
+  //     registryKey: 'Folder',
+  //   },
+  //   5: {
+  //     name: 'My Music',
+  //     icon: 'MyMusicXSmall.png',
+  //     registryKey: 'Folder'
+  //   },
+  //   6: {
+  //     name: 'My Computer',
+  //     icon: 'MyComputerXSmall.png',
+  //     registryKey: 'Folder'
+  //   },
+  //   7: {
+  //     name: 'Control Panel',
+  //     icon: 'ControlPanelXSmall.png',
+  //     registryKey: 'Folder'
+  //   },
+  //   8: {
+  //     name: 'Printer And Faxes',
+  //     icon: 'printerAndFaxesXsmall.png',
+  //     registryKey: 'Folder'
+  //   },
+  //   9: {
+  //     name: 'Help And Support',
+  //     icon: 'HelpAndSupportXSmall.png',
+  //     registryKey: 'Folder'
+  //   },
+  //   10: {
+  //     name: 'Search',
+  //     icon: 'SearchXSmall.png',
+  //     registryKey: 'Folder'
+  //   },
+  //   11: {
+  //     name: 'Run',
+  //     icon: 'RunXSmall.png',
+  //     registryKey: 'Folder'
+  //   },
+  //   12: {
+  //     name: 'My Pictures',
+  //     icon: 'MyMusicXSmall.png',
+  //     registryKey: 'Folder'
+  //   }
+  // },
+  // installedPrograms: [1, 2, 3],
+  // userDirectories: [4, 5, 6],
+  // computerSettings: [7, 8],
+  // utilityControls: [9, 10, 11],
+  // desktopItems: [1, 2, 3, 4, 6],
   startMenuOpened: false,
   contextMenuX: 0,
   contextMenuY: 0,
