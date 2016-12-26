@@ -26,14 +26,14 @@ const initialState = {
     1: { name: 'System', children: [2], permissions: ['rwxp'] },
     2: { name: 'C:', children: [3, 9], permissions: ['rwxp'] },
     3: { name: 'Users', children: [4], permissions: ['rwxp'] },
-    4: { name: 'user', children: [5], permissions: ['rwxp'] },
+    4: { name: 'Guest', children: [11], permissions: ['rwxp'] },
     5: { name: 'Word Processor', permissions: ['rwx-'] },
     6: { name: 'Spreadsheets', permissions: ['rwx-'] },
     7: { name: 'Browser', permissions: ['rwx-'] },
-    9: { name: 'Programs', children: [10], permissions: ['rwx-'] },
-    10: { name: 'Office', children: [11], permissions: ['rwx-'] },
-    11: { name: 'Word Processor', permissions: ['rwx-'] },
-    12: { name: 'Desktop', permissions: ['rwx-']  }
+    8: { name: 'Programs', children: [9], permissions: ['rwx-'] },
+    9: { name: 'Office', children: [10], permissions: ['rwx-'] },
+    10: { name: 'Word Processor', permissions: ['rwx-'] },
+    11: { name: 'Desktop', permissions: ['rwx-']  }
   },
   entities: {
     1: {
