@@ -28,5 +28,5 @@ is stored flatly in the tree (Permissions, filenames, etc).
     * Executables: .exe . Executables are files that will open up a new window with some unique functionality.
     * Images: .png .jpg .jpeg .gif . "Executing" an image will open it in an image viewer.
     * Videos: .mov .mpeg4 .mp4 .avi .wmv .flv .webm .ogg . Executing will open up a video player.
-    * Documents: .txt .sheet . Word Processor and spreadsheet file respectively. 
+    * Documents: .txt .sheet .pdf . Word Processor and spreadsheet file respectively.
     * Shortcuts: .shct
