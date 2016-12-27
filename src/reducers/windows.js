@@ -22,19 +22,22 @@ import {
 const initialState = {
   browserWidth: 0,
   browserHeight: 0,
-  fileSystem: {
+  fileSystem: { // Indices are always unique.
     1: { name: 'root', children: [2], permissions: ['rwxp'] },
     2: { name: 'drive', children: [3, 8], permissions: ['rwxp'] },
     3: { name: 'Users', children: [4], permissions: ['rwxp'] },
     4: { name: 'Guest', children: [11], permissions: ['rwxp'] },
     5: { name: 'Word Processor', permissions: ['rwx-'], extension: 'exe', metadata: { icon: 'wordlogoXSmall.png' } },
     6: { name: 'Spreadsheets', permissions: ['rwx-'], extension: 'exe', metadata: { icon: 'excellogoXSmall.png' } },
-    7: { name: 'Browser', permissions: ['rwx-'], extension: 'exe', metadata: { icon: 'ie7.png' } },
+    7: { name: 'Webscape', permissions: ['rwx-'], extension: 'exe', metadata: { icon: 'ie7.png' } },
     8: { name: 'Programs', children: [9], permissions: ['rwx-'] },
     9: { name: 'Office', children: [5, 6], permissions: ['rwx-'] },
     10: { name: 'Word Processor', permissions: ['rwx-'], extension: 'shct', metadata: { icon: 'wordlogoXSmall.png' } },
-    11: { name: 'Desktop', permissions: ['rwx-'], children: [10] },
-    12: { name: 'My Documents', permissions: ['rwx-'], children: [] }
+    11: { name: 'Desktop', permissions: ['rwx-'], children: [10, 12, 13, 14, 15] },
+    12: { name: 'Spreadsheets', permissions: ['rwx-'], extension: 'shct', metadata: { icon: 'excellogoXSmall.png' } },
+    13: { name: 'Webscape', permissions: ['rwx-'], extension: 'shct', metadata: { icon: 'ie7.png' } },
+    14: { name: 'My Documents', permissions: ['rwx-'],  children: [], metadata: { icon: 'MyDocumentsXSmall.png' } },
+    15: { name: 'My Computer', permissions: ['rwx-'], metadata: { icon: 'MyComputerXSmall.png' } },
   },
   desktopAbsolutePath: '/root/drive/Users/Guest/Desktop',
   desktopNodeIndex: 11,
