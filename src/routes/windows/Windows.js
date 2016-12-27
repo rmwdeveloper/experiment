@@ -16,9 +16,9 @@ import MobileTaskbar from '../../components/Windows/MobileTaskbar';
 @connect(state => ({
   startMenuOpened: state.windows.startMenuOpened,
   installedPrograms: installedProgramsSelector(state),
-  // userDirectories: userDirectoriesSelector(state),
-  // utilityControls: utilityControlsSelector(state),
-  // computerSettings: computerSettingsSelector(state),
+  userDirectories: userDirectoriesSelector(state),
+  utilityControls: utilityControlsSelector(state),
+  computerSettings: computerSettingsSelector(state),
   desktopItems: desktopItemsSelector(state),
   contextMenuX: state.windows.contextMenuX,
   contextMenuY: state.windows.contextMenuY,
