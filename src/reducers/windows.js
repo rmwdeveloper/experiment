@@ -23,8 +23,8 @@ const initialState = {
   browserWidth: 0,
   browserHeight: 0,
   fileSystem: {
-    1: { name: 'System', children: [2], permissions: ['rwxp'] },
-    2: { name: 'C:', children: [3, 8], permissions: ['rwxp'] },
+    1: { name: 'root', children: [2], permissions: ['rwxp'] },
+    2: { name: 'drive', children: [3, 8], permissions: ['rwxp'] },
     3: { name: 'Users', children: [4], permissions: ['rwxp'] },
     4: { name: 'Guest', children: [11], permissions: ['rwxp'] },
     5: { name: 'Word Processor', permissions: ['rwx-'], extension: 'exe', metadata: { icon: 'wordlogoXSmall.png' } },
@@ -36,7 +36,8 @@ const initialState = {
     11: { name: 'Desktop', permissions: ['rwx-'], children: [10] },
     12: { name: 'My Documents', permissions: ['rwx-'], children: [] }
   },
-  desktopAbsolutePath: 'System/C:/Users/Guest/Desktop',
+  desktopAbsolutePath: '/root/drive/Users/Guest/Desktop',
+  desktopNodeIndex: 11,
   startMenuOpened: false,
   contextMenuX: 0,
   contextMenuY: 0,

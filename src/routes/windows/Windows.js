@@ -19,7 +19,7 @@ import MobileTaskbar from '../../components/Windows/MobileTaskbar';
   // userDirectories: userDirectoriesSelector(state),
   // utilityControls: utilityControlsSelector(state),
   // computerSettings: computerSettingsSelector(state),
-  // desktopItems: desktopItemsSelector(state),
+  desktopItems: desktopItemsSelector(state),
   contextMenuX: state.windows.contextMenuX,
   contextMenuY: state.windows.contextMenuY,
   contextMenuActive: state.windows.contextMenuActive,
@@ -75,7 +75,6 @@ class Windows extends Component { //eslint-disable-line
   }
   render() {
     const { startMenuOpened, toggleStartMenu, installedPrograms, clearActives } = this.props;
-
     return (<div className={styles.root} onClick={clearActives} >
       <WindowsDesktop {...this.props} />
       {startMenuOpened  && this.props.browserWidth > 767 ? <WindowsStartMenu installedPrograms={installedPrograms} {...this.props} />

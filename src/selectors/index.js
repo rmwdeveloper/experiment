@@ -1,12 +1,16 @@
 import { createSelector } from 'reselect';
+import path from 'path';
 
+// const entitiesObject = state => state.windows.entities;
+// const installedProgramsIndices = state => state.windows.installedPrograms;
+// const userDirectoriesIndices = state => state.windows.userDirectories;
+// const computerSettingsIndices = state => state.windows.computerSettings;
+// const utilityControlsIndices = state => state.windows.utilityControls;
+// const desktopItemsIndices = state => state.windows.desktopItems;
 
-const entitiesObject = state => state.windows.entities;
-const installedProgramsIndices = state => state.windows.installedPrograms;
-const userDirectoriesIndices = state => state.windows.userDirectories;
-const computerSettingsIndices = state => state.windows.computerSettings;
-const utilityControlsIndices = state => state.windows.utilityControls;
-const desktopItemsIndices = state => state.windows.desktopItems;
+const fileSystemObject = state => state.windows.fileSystem;
+const desktopAbsolutePath = state => state.windows.desktopAbsolutePath;
+const desktopNodeIndex = state => state.windows.desktopNodeIndex;
 
 // export const installedProgramsSelector = createSelector(
 //   [entitiesObject, installedProgramsIndices],
@@ -45,14 +49,14 @@ const desktopItemsIndices = state => state.windows.desktopItems;
 //   }
 // );
 //
-// export const desktopItemsSelector = createSelector(
-//   [entitiesObject, desktopItemsIndices],
-//   (entities, desktopItems) => {
-//     return desktopItems.map(index => {
-//       const program = { ...entities[index] };
-//       program.index = index;
-//       return program;
-//     });
-//   }
-// );
-//
+export const desktopItemsSelector = createSelector(
+  [fileSystemObject, desktopNodeIndex],
+  (fileSystemObject, desktopNodeIndex) => {
+    const desktopNode = fileSystemObject[desktopNodeIndex];
+    return desktopNode.children.map(childIndex => {
+      return fileSystemObject[childIndex];
+    });
+
+  }
+);
+
