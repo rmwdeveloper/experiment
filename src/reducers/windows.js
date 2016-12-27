@@ -32,7 +32,7 @@ const initialState = {
     7: { name: 'Browser', permissions: ['rwx-'], extension: 'exe', metadata: { icon: 'ie7.png' } },
     8: { name: 'Programs', children: [9], permissions: ['rwx-'] },
     9: { name: 'Office', children: [5, 6], permissions: ['rwx-'] },
-    10: { name: 'Word Processor', permissions: ['rwx-'], extension: 'shct' },
+    10: { name: 'Word Processor', permissions: ['rwx-'], extension: 'shct', metadata: { icon: 'wordlogoXSmall.png' } },
     11: { name: 'Desktop', permissions: ['rwx-'], children: [10] },
     12: { name: 'My Documents', permissions: ['rwx-'], children: [] }
   },
