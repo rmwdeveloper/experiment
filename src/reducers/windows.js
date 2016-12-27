@@ -36,6 +36,7 @@ const initialState = {
     11: { name: 'Desktop', permissions: ['rwx-'], children: [10] },
     12: { name: 'My Documents', permissions: ['rwx-'], children: [] }
   },
+  desktopAbsolutePath: 'System/C:/Users/Guest/Desktop',
   startMenuOpened: false,
   contextMenuX: 0,
   contextMenuY: 0,

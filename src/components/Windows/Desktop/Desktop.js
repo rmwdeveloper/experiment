@@ -273,10 +273,10 @@ class Desktop extends Component {
            className={styles.root}
            onContextMenu={this.desktopContextMenu}
       >
-        {
+        { /*
           desktopItems.map((desktopitem, index) => {
             return <DesktopItem key={index} desktopWidth={desktopWidth} desktopHeight={desktopHeight} index={index} openFile={openFile} item={desktopitem} />;
-          })
+          }) */
         }
         {
           openedFiles.map((openedFile, index) => {

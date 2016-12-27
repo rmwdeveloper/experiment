@@ -16,11 +16,11 @@ class Taskbar extends Component {
     return (
       <div className={styles.root}>
         <StartButton toggleStartMenu={toggleStartMenu} />
-        {
+        { /*
           openedFiles.map((openedFile, index) => {
             const { icon, name } = entities[openedFile.entityId];
             return <img key={index} onClick={() => { clickTaskbarItem(openedFile.entityId)}}  className={styles.icon} src={icon} alt={`${name} icon`} />;
-          })
+          }) */
         }
         <InfoHub />
       </div>
