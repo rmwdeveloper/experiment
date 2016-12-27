@@ -17,7 +17,7 @@ file taskbar.
 ##Filesystem Spec
 
 * For now, simple tree data structure. Nodes with children are directories, and endpoints are files. Metadata
-is stored flatly in the tree (Permissions, filenames, etc).
+is stored flatly in the tree (Permissions, filenames, etc). A node can have an arbitrary number of children.
 
     * Permission setting: 4 letter string, e.g. 'rwx-' would allow user to read write execute on the file directory in question.
     r (read): view contents. w (write) create or remove files from directory. x (execute) CD into
