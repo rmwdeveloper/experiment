@@ -8,21 +8,21 @@ import path from 'path';
 // const utilityControlsIndices = state => state.windows.utilityControls;
 // const desktopItemsIndices = state => state.windows.desktopItems;
 
+const startMenuProgramsIndices = state => state.windows.startMenuProgramsIndices;
+const userDirectoriesIndices = state => state.windows.userDirectoriesIndices;
+const computerSettingsIndices = state => state.windows.computerSettingsIndices;
+const utilityControlsIndices = state => state.windows.utilityControlsIndices;
+  
 const fileSystemObject = state => state.windows.fileSystem;
-const desktopAbsolutePath = state => state.windows.desktopAbsolutePath;
 const desktopNodeIndex = state => state.windows.desktopNodeIndex;
 
-// export const installedProgramsSelector = createSelector(
-//   [entitiesObject, installedProgramsIndices],
-//   (entities, installedPrograms) => {
-//     return installedPrograms.map(index => {
-//       const program = { ...entities[index] };
-//       program.index = index;
-//       return program;
-//     });
-//   }
-// );
-//
+export const installedProgramsSelector = createSelector(
+  [fileSystemObject, startMenuProgramsIndices],
+  (fileSystemObject, startMenuProgramsIndices) => {
+    return startMenuProgramsIndices.map(index => {return fileSystemObject[index]});
+  }
+);
+
 // export const userDirectoriesSelector = createSelector(
 //   [entitiesObject, userDirectoriesIndices],
 //   (entities, userDirectories) => {

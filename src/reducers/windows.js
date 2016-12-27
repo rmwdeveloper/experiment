@@ -45,7 +45,6 @@ const initialState = {
     20: { name: 'Search', permissions: ['rwxp'], extension: 'exe', metadata: { icon: 'SearchXSmall.png' } },
     21: { name: 'Run', permissions: ['rwxp'], extension: 'exe', metadata: { icon: 'RunXSmall.png' } },
   },
-  desktopAbsolutePath: '/root/drive/Users/Guest/Desktop',
   desktopNodeIndex: 11,
   startMenuProgramsIndices: [5, 6, 7],
   userDirectoriesIndices: [14, 15, 16],

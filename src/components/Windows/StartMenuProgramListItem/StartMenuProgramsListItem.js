@@ -7,7 +7,7 @@ function StartMenuProgramListItem({ programData }) {
   return (
     <div className={styles.root}>
       <div className={styles.iconContainer}>
-        <img src={programData.icon} alt={`${programData.name} logo`} />
+        <img src={programData.metadata.icon} alt={`${programData.name} logo`} />
       </div>
       <div className={styles.textContainer}>
         <span className={styles.programName}>{programData.name}</span>

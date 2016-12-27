@@ -13,10 +13,10 @@ class StartMenuProgramsListing extends Component {
     const { installedPrograms } = this.props;
     return (
       <ul className={styles.root}>
-        { /*
+        {
           Object.keys(installedPrograms).map(programName=> {
             return <StartMenuProgramsListItem programData={installedPrograms[programName]} />;
-          }) */
+          }) 
         }
       </ul>
     );
