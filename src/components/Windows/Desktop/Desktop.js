@@ -267,6 +267,7 @@ class Desktop extends Component {
     if (this.icons.length > 0 && selectedDesktopIcons.length > 0) {
       unselectedIcons = this.diffNodeLists(this.icons, selectedDesktopIcons);
     }
+    console.log('desktopitems..', desktopItems);
     return (
       <div id="desktop"
            data-clickClass={windowsClickables.desktop}

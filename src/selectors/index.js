@@ -42,9 +42,10 @@ export const desktopItemsSelector = createSelector(
   (fileSystemObject, desktopNodeIndex) => {
     const desktopNode = fileSystemObject[desktopNodeIndex];
     return desktopNode.children.map(childIndex => {
-      return fileSystemObject[childIndex];
+      const obj = fileSystemObject[childIndex];
+      obj.index = childIndex;
+      return obj;
     });
-
   }
 );
 

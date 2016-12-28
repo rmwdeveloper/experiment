@@ -22,7 +22,7 @@ import {
 const initialState = {
   browserWidth: 0,
   browserHeight: 0,
-  fileSystem: { // Indices are always unique.
+  fileSystem: { // Indices are always unique and static.
     1: { name: 'root', children: [2, 17, 18], permissions: ['rwxp'] },
     2: { name: 'drive', children: [3, 8], permissions: ['rwxp'] },
     3: { name: 'Users', children: [4], permissions: ['rwxp'] },
