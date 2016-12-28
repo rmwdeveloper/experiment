@@ -40,6 +40,7 @@ class Desktop extends Component {
     this.startResizeFileWindow = this.startResizeFileWindow.bind(this);
     this.stopResizeFileWindow = this.stopResizeFileWindow.bind(this);
     this.fileWindowResizing = this.fileWindowResizing.bind(this);
+    this.findAncestorWithClickClass = this.findAncestorWithClickClass.bind(this);
     this.dragbox = null;
     this.icons = [];
     this.selectedIcons = [];
@@ -226,6 +227,8 @@ class Desktop extends Component {
     const { clickclass, index } = event.target.dataset;
     const { headerHeight } = this.state;
     event.preventDefault();
+    this.findAncestorWithClickClass(event.target);
+    console.log(event.target);
     this.props.openContextMenu(event.clientX, event.clientY - headerHeight, clickclass, index);
   }
   desktopResize() {
