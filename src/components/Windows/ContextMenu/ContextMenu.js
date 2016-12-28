@@ -25,7 +25,7 @@ class ContextMenu extends Component {
   }
   render() {
     const { contextMenuX, contextMenuY, contextMenuClickClass, contextMenuIndexClicked } = this.props;
-    console.log(contextMenuClickClass, contextMenuIndexClicked);
+    console.log(contextMenuClickClass, contextMenuIndexClicked); // todo: refactor render
     return (
       <ul style={{top: `${contextMenuY}px`, left: `${contextMenuX}px`}} className={cx(styles.root, styles.contextMenu)}
           type="context" id="mymenu">
@@ -41,7 +41,14 @@ class ContextMenu extends Component {
               </ul>
             </li> : null
         }
-        { contextMenuClickClass === 'desktop' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Properties...</span></li> : null}
+        { contextMenuClickClass === 'desktopItemIcon' || contextMenuClickClass === 'desktopItemName' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Open</span></li> : null}
+        { contextMenuClickClass === 'desktopItemIcon' || contextMenuClickClass === 'desktopItemName' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Pin To Quick Access</span></li> : null}
+        { contextMenuClickClass === 'desktopItemIcon' || contextMenuClickClass === 'desktopItemName' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Download Contents</span></li> : null}
+        { contextMenuClickClass === 'desktopItemIcon' || contextMenuClickClass === 'desktopItemName' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Copy</span></li> : null}
+        { contextMenuClickClass === 'desktopItemIcon' || contextMenuClickClass === 'desktopItemName' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Cut</span></li> : null}
+        { contextMenuClickClass === 'desktopItemIcon' || contextMenuClickClass === 'desktopItemName' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Delete</span></li> : null}
+        { contextMenuClickClass === 'desktopItemIcon' || contextMenuClickClass === 'desktopItemName' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Rename</span></li> : null}
+        { contextMenuClickClass === 'desktop' || contextMenuClickClass === 'desktopItemIcon' || contextMenuClickClass === 'desktopItemName' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Properties...</span></li> : null}
       </ul>
     );
   }
