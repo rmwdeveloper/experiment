@@ -94,8 +94,12 @@ class Desktop extends Component {
       return selectedArray.indexOf(icon) < 0;
     });
   }
-  findAncestorWithClickClass(nodeClicked) {
-    console.log('nodeClicked', nodeClicked);
+  findAncestorWithClickClass(node) {
+    const cls = 'test';
+    while ((node = node.parentElement) && !node.classList.contains(cls)) {
+      console.log(node);
+    };
+    return node;
   }
   desktopMouseDown(event) {
     const { clickclass } = event.target.dataset;
@@ -276,6 +280,7 @@ class Desktop extends Component {
     return (
       <div id="desktop"
            data-clickClass={windowsClickables.desktop}
+           data-topClickable
            className={styles.root}
            onContextMenu={this.desktopContextMenu}
       >
