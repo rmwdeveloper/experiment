@@ -262,7 +262,7 @@ class Desktop extends Component {
   }
   render() {
     const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, selectedDesktopIcons, createFolder, openFile,
-    openedFiles, entities, desktopWidth, desktopHeight } = this.props;
+    openedFiles, fileSystem, desktopWidth, desktopHeight } = this.props;
     let unselectedIcons = desktopItems;
     if (this.icons.length > 0 && selectedDesktopIcons.length > 0) {
       unselectedIcons = this.diffNodeLists(this.icons, selectedDesktopIcons);
@@ -280,8 +280,9 @@ class Desktop extends Component {
         }
         {
           openedFiles.map((openedFile, index) => {
-            return React.createElement(windowsFileRegistry[entities[openedFile.entityId].registryKey], { key: index, openedFile,
-              filename: entities[openedFile.entityId].name, desktopWidth, desktopHeight,
+            console.log(openedFile);
+            return React.createElement(windowsFileRegistry[fileSystem[openedFile.nodeIndex].registryKey], { key: index, openedFile,
+              filename: fileSystem[openedFile.nodeIndex].name, desktopWidth, desktopHeight,
               index, ...this.props});
           })
         }

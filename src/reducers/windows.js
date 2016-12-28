@@ -36,7 +36,7 @@ const initialState = {
     11: { name: 'Desktop', permissions: ['rwx-'], children: [10, 12, 13, 14, 15] },
     12: { name: 'Spreadsheets', permissions: ['rwx-'], extension: 'shct', metadata: { icon: 'excellogoXSmall.png' } },
     13: { name: 'Webscape', permissions: ['rwx-'], extension: 'shct', metadata: { icon: 'ie7.png' } },
-    14: { name: 'My Documents', permissions: ['rwx-'],  children: [16], metadata: { icon: 'MyDocumentsXSmall.png' } },
+    14: { name: 'My Documents', permissions: ['rwx-'],  children: [16], metadata: { icon: 'MyDocumentsXSmall.png' }, registryKey:'Folder' },
     15: { name: 'My Computer', permissions: ['rwx-'], children: [], metadata: { icon: 'MyComputerXSmall.png' } },
     16: { name: 'My Music', permissions: ['rwx-'], children: [], metadata: { icon: 'MyMusicXSmall.png' } },
     17: { name: 'Control Panel', permissions: ['rwx-'], children: [], metadata: { icon: 'ControlPanelXSmall.png' } },
@@ -77,7 +77,7 @@ export default function layout(state = initialState, action) {
       return { ...state, selectedDesktopIcons: [], contextMenuActive: false };
     case OPEN_FILE_WINDOW:
       return { ...state, openedFiles: [...state.openedFiles,
-        { entityId: action.entityId, height: 300, width: 300, xPosition: ((action.desktopWidth / 2.4) + state.openedFiles.length * 5)
+        { nodeIndex: action.nodeIndex, height: 300, width: 300, xPosition: ((action.desktopWidth / 2.4) + state.openedFiles.length * 5)
       , yPosition: ((action.desktopHeight / 4) + state.openedFiles.length * 5), maximized: false, minimized: false }] };
     case CLOSE_FILE_WINDOW:
       return { ...state, openedFiles: [...state.openedFiles.slice(0, action.openedFileIndex),

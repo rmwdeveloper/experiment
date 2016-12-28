@@ -49,9 +49,9 @@ export function clearActives() {
   };
 }
 
-export function openFile(entityId, desktopWidth, desktopHeight) {
+export function openFile(nodeIndex, desktopWidth, desktopHeight) {
   return dispatch => {
-    dispatch({ type: OPEN_FILE_WINDOW, entityId, desktopWidth, desktopHeight });
+    dispatch({ type: OPEN_FILE_WINDOW, nodeIndex, desktopWidth, desktopHeight });
   };
 }
 
