@@ -53,6 +53,8 @@ const initialState = {
   startMenuOpened: false,
   contextMenuX: 0,
   contextMenuY: 0,
+  contextMenuClickClass: '',
+  contextMenuIndexClicked: 0,
   contextMenuActive: false,
   selectedDesktopIcons: [], // Array of entity IDs
   openedFiles: [], // {entityId, height, width}
@@ -70,7 +72,8 @@ export default function layout(state = initialState, action) {
       newEntities[nextEntityId] = { name: 'New Folder', type: 'Folder', icon: 'emptyFolderXSmall.png' };
       return { ...state, entities: newEntities, desktopItems: [...state.desktopItems, nextEntityId], contextMenuActive: false };
     case OPEN_CONTEXT_MENU:
-      return { ...state, contextMenuX: action.mouseX, contextMenuY: action.mouseY, contextMenuActive: true };
+      return { ...state, contextMenuX: action.mouseX, contextMenuY: action.mouseY, contextMenuActive: true,
+        contextMenuClickClass: action.clickclass, contextMenuIndexClicked: action.index };
     case SELECT_ICONS:
       return { ...state, selectedDesktopIcons: action.icons };
     case CLEAR_ACTIVES:

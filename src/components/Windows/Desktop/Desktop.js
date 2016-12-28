@@ -223,9 +223,10 @@ class Desktop extends Component {
     }
   }
   desktopContextMenu(event) {
+    const { clickclass, index } = event.target.dataset;
     const { headerHeight } = this.state;
     event.preventDefault();
-    this.props.openContextMenu(event.clientX, event.clientY - headerHeight);
+    this.props.openContextMenu(event.clientX, event.clientY - headerHeight, clickclass, index);
   }
   desktopResize() {
     this.props.resizeBrowserWindow(window.innerWidth, window.innerHeight, this.desktop.offsetWidth, this.desktop.offsetHeight)
