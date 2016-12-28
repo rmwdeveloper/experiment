@@ -280,8 +280,9 @@ class Desktop extends Component {
         }
         {
           openedFiles.map((openedFile, index) => {
-            console.log(openedFile);
-            return React.createElement(windowsFileRegistry[fileSystem[openedFile.nodeIndex].registryKey], { key: index, openedFile,
+            const openedFileNode = fileSystem[openedFile.nodeIndex];
+            const fileType = openedFileNode.hasOwnProperty('children') ? 'Folder' : openedFileType.extension;
+            return React.createElement(windowsFileRegistry[fileType], { key: index, openedFile,
               filename: fileSystem[openedFile.nodeIndex].name, desktopWidth, desktopHeight,
               index, ...this.props});
           })
