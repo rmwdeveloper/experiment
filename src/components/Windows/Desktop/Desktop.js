@@ -94,6 +94,9 @@ class Desktop extends Component {
       return selectedArray.indexOf(icon) < 0;
     });
   }
+  findAncestorWithClickClass(nodeClicked) {
+    console.log('nodeClicked', nodeClicked);
+  }
   desktopMouseDown(event) {
     const { clickclass } = event.target.dataset;
     if (event.button === 2) { // Right mouse button clicked
@@ -228,7 +231,6 @@ class Desktop extends Component {
     const { headerHeight } = this.state;
     event.preventDefault();
     this.findAncestorWithClickClass(event.target);
-    console.log(event.target);
     this.props.openContextMenu(event.clientX, event.clientY - headerHeight, clickclass, index);
   }
   desktopResize() {
