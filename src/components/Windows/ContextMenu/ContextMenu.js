@@ -7,7 +7,9 @@ class ContextMenu extends Component {
   static propTypes = {
     createFolder: PropTypes.func,
     contextMenuX: PropTypes.number,
-    contextMenuY: PropTypes.number
+    contextMenuY: PropTypes.number,
+    contextMenuClickClass: PropTypes.string,
+    contextMenuIndex: PropTypes.number,
   };
   constructor() {
     super();
@@ -18,7 +20,8 @@ class ContextMenu extends Component {
     this.props.createFolder('desktopItems');
   }
   render() {
-    const { contextMenuX, contextMenuY, createFolder } = this.props;
+    const { contextMenuX, contextMenuY, contextMenuClickClass, contextMenuIndexClicked } = this.props;
+    console.log(contextMenuClickClass, contextMenuIndexClicked);
     return (
       <ul style={{top: `${contextMenuY}px`, left: `${contextMenuX}px`}} className={cx(styles.root, styles.contextMenu)}
           type="context" id="mymenu">

@@ -262,8 +262,8 @@ class Desktop extends Component {
     this.setState({draggingFileWindow: false});
   }
   render() {
-    const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, selectedDesktopIcons, createFolder, openFile,
-    openedFiles, fileSystem, desktopWidth, desktopHeight } = this.props;
+    const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, contextMenuClickClass, contextMenuIndexClicked,
+      selectedDesktopIcons, createFolder, openFile, openedFiles, fileSystem, desktopWidth, desktopHeight } = this.props;
     let unselectedIcons = desktopItems;
     if (this.icons.length > 0 && selectedDesktopIcons.length > 0) {
       unselectedIcons = this.diffNodeLists(this.icons, selectedDesktopIcons);
@@ -289,7 +289,8 @@ class Desktop extends Component {
           })
         }
         {
-          contextMenuActive ? <ContextMenu createFolder={createFolder} contextMenuY={contextMenuY} contextMenuX={contextMenuX}/> : null
+          contextMenuActive ? <ContextMenu contextMenuClickClass={contextMenuClickClass} contextMenuIndexClicked={contextMenuIndexClicked}
+                               createFolder={createFolder} contextMenuY={contextMenuY} contextMenuX={contextMenuX}/> : null
         }
       </div>
     );
