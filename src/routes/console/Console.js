@@ -4,6 +4,7 @@ import styles from './Console.css';
 import ConsoleInput from '../../components/ConsoleInput';
 
 const title = 'Console';
+
 function Console(props, context) {
   context.setTitle(title);
   return (
