@@ -22,80 +22,39 @@ import {
 const initialState = {
   browserWidth: 0,
   browserHeight: 0,
-  entities: {
-    1: {
-      name: 'Microsoft Word',
-      subtext: 'Word Processor',
-      icon: 'wordlogoXSmall.png',
-      registryKey: 'Word'
-    },
-    2: {
-      name: 'Microsoft Excel',
-      subtext: 'Spreadsheet',
-      icon: 'excellogoXSmall.png',
-      registryKey: 'Folder'
-    },
-    3: {
-      name: 'Internet Explorer',
-      subtext: 'Internet',
-      icon: 'ie7.png',
-      registryKey: 'Folder'
-    },
-    4: {
-      name: 'My Documents',
-      icon: 'MyDocumentsXSmall.png',
-      registryKey: 'Folder',
-      contents: [5, 12, 5, 5, 5, 5, 5]
-    },
-    5: {
-      name: 'My Music',
-      icon: 'MyMusicXSmall.png',
-      registryKey: 'Folder'
-    },
-    6: {
-      name: 'My Computer',
-      icon: 'MyComputerXSmall.png',
-      registryKey: 'Folder'
-    },
-    7: {
-      name: 'Control Panel',
-      icon: 'ControlPanelXSmall.png',
-      registryKey: 'Folder'
-    },
-    8: {
-      name: 'Printer And Faxes',
-      icon: 'printerAndFaxesXsmall.png',
-      registryKey: 'Folder'
-    },
-    9: {
-      name: 'Help And Support',
-      icon: 'HelpAndSupportXSmall.png',
-      registryKey: 'Folder'
-    },
-    10: {
-      name: 'Search',
-      icon: 'SearchXSmall.png',
-      registryKey: 'Folder'
-    },
-    11: {
-      name: 'Run',
-      icon: 'RunXSmall.png',
-      registryKey: 'Folder'
-    },
-    12: {
-      name: 'My Pictures',
-      icon: 'MyMusicXSmall.png',
-      registryKey: 'Folder'
-    }
+  fileSystem: { // Indices are always unique and static.
+    1: { name: 'root', children: [2, 17, 18], permissions: ['rwxp'] },
+    2: { name: 'drive', children: [3, 8], permissions: ['rwxp'] },
+    3: { name: 'Users', children: [4], permissions: ['rwxp'] },
+    4: { name: 'Guest', children: [11, 14, 15], permissions: ['rwxp'] },
+    5: { name: 'Word Processor', permissions: ['rwx-'], extension: 'exe', metadata: { icon: 'wordlogoXSmall.png' } },
+    6: { name: 'Spreadsheets', permissions: ['rwx-'], extension: 'exe', metadata: { icon: 'excellogoXSmall.png' } },
+    7: { name: 'Webscape', permissions: ['rwx-'], extension: 'exe', metadata: { icon: 'ie7.png' } },
+    8: { name: 'Programs', children: [9], permissions: ['rwx-'] },
+    9: { name: 'Office', children: [5, 6], permissions: ['rwx-'] },
+    10: { name: 'Word Processor', permissions: ['rwx-'], extension: 'shct', metadata: { icon: 'wordlogoXSmall.png' } },
+    11: { name: 'Desktop', permissions: ['rwx-'], children: [10, 12, 13, 14, 15] },
+    12: { name: 'Spreadsheets', permissions: ['rwx-'], extension: 'shct', metadata: { icon: 'excellogoXSmall.png' } },
+    13: { name: 'Webscape', permissions: ['rwx-'], extension: 'shct', metadata: { icon: 'ie7.png' } },
+    14: { name: 'My Documents', permissions: ['rwx-'], children: [16], metadata: { icon: 'MyDocumentsXSmall.png' }, registryKey:'Folder' },
+    15: { name: 'My Computer', permissions: ['rwx-'], children: [], metadata: { icon: 'MyComputerXSmall.png' } },
+    16: { name: 'My Music', permissions: ['rwx-'], children: [], metadata: { icon: 'MyMusicXSmall.png' } },
+    17: { name: 'Control Panel', permissions: ['rwx-'], children: [], metadata: { icon: 'ControlPanelXSmall.png' } },
+    18: { name: 'Printer And Faxes', permissions: ['rwx-'], metadata: { icon: 'printerAndFaxesXSmall.png' } },
+    19: { name: 'Help And Support', permissions: ['rwxp'], extension: 'exe', metadata: { icon: 'HelpAndSupportXSmall.png' } },
+    20: { name: 'Search', permissions: ['rwxp'], extension: 'exe', metadata: { icon: 'SearchXSmall.png' } },
+    21: { name: 'Run', permissions: ['rwxp'], extension: 'exe', metadata: { icon: 'RunXSmall.png' } },
   },
-  installedPrograms: [1, 2, 3],
-  userDirectories: [4, 5, 6],
-  computerSettings: [7, 8],
-  utilityControls: [9, 10, 11],
-  desktopItems: [1, 2, 3, 4, 6],
+  desktopNodeIndex: 11,
+  startMenuProgramsIndices: [5, 6, 7],
+  userDirectoriesIndices: [14, 15, 16],
+  computerSettingsIndices: [17, 18],
+  utilityControlsIndices: [19, 20, 21],
   startMenuOpened: false,
   contextMenuX: 0,
   contextMenuY: 0,
+  contextMenuClickClass: '',
+  contextMenuIndexClicked: 0,
   contextMenuActive: false,
   selectedDesktopIcons: [], // Array of entity IDs
   openedFiles: [], // {entityId, height, width}
@@ -113,14 +72,15 @@ export default function layout(state = initialState, action) {
       newEntities[nextEntityId] = { name: 'New Folder', type: 'Folder', icon: 'emptyFolderXSmall.png' };
       return { ...state, entities: newEntities, desktopItems: [...state.desktopItems, nextEntityId], contextMenuActive: false };
     case OPEN_CONTEXT_MENU:
-      return { ...state, contextMenuX: action.mouseX, contextMenuY: action.mouseY, contextMenuActive: true };
+      return { ...state, contextMenuX: action.mouseX, contextMenuY: action.mouseY, contextMenuActive: true,
+        contextMenuClickClass: action.clickclass, contextMenuIndexClicked: action.index };
     case SELECT_ICONS:
       return { ...state, selectedDesktopIcons: action.icons };
     case CLEAR_ACTIVES:
       return { ...state, selectedDesktopIcons: [], contextMenuActive: false };
     case OPEN_FILE_WINDOW:
       return { ...state, openedFiles: [...state.openedFiles,
-        { entityId: action.entityId, height: 300, width: 300, xPosition: ((action.desktopWidth / 2.4) + state.openedFiles.length * 5)
+        { nodeIndex: action.nodeIndex, height: 300, width: 300, xPosition: ((action.desktopWidth / 2.4) + state.openedFiles.length * 5)
       , yPosition: ((action.desktopHeight / 4) + state.openedFiles.length * 5), maximized: false, minimized: false }] };
     case CLOSE_FILE_WINDOW:
       return { ...state, openedFiles: [...state.openedFiles.slice(0, action.openedFileIndex),

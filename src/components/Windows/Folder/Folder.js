@@ -5,10 +5,10 @@ import FolderItem from '../FolderItem';
 import FolderSidebar from '../FolderSidebar';
 import FolderNavigation from '../FolderNavigation';
 
-function Folder({openedFile, entities, desktopWidth, desktopHeight, openFile}) {
-  const folderContents = entities[openedFile.entityId].contents ? entities[openedFile.entityId].contents.map((entityId, index) => {
-    entities[entityId].index = entityId;
-    return <FolderItem key={index} desktopWidth={desktopWidth} desktopHeight={desktopHeight} index={index} openFile={openFile} item={entities[entityId]} />;
+function Folder({openedFile, fileSystem, desktopWidth, desktopHeight, openFile}) {
+  const folderContents = fileSystem[openedFile.nodeIndex].children ? fileSystem[openedFile.nodeIndex].children.map((nodeIndex, index) => {
+    fileSystem[nodeIndex].index = nodeIndex;
+    return <FolderItem key={index} desktopWidth={desktopWidth} desktopHeight={desktopHeight} index={index} openFile={openFile} item={fileSystem[nodeIndex]} />;
   }) : null;
   const windowHeight = openedFile.height - 30;
 

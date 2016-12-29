@@ -5,5 +5,9 @@ import Word from '../Word/Word/Word';
 const windowsRegistry = {};
 
 windowsRegistry.Folder = FileWindow(Folder);
-windowsRegistry.Word = FileWindow(Word);
+
+/* Start Works In Progress */
+windowsRegistry.exe = FileWindow(Word);
+windowsRegistry.shct = FileWindow(Word);
+/* End Works In Progress*/
 export default windowsRegistry;

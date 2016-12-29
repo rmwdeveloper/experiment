@@ -40,6 +40,7 @@ class Desktop extends Component {
     this.startResizeFileWindow = this.startResizeFileWindow.bind(this);
     this.stopResizeFileWindow = this.stopResizeFileWindow.bind(this);
     this.fileWindowResizing = this.fileWindowResizing.bind(this);
+    this.findAncestorWithClickClass = this.findAncestorWithClickClass.bind(this);
     this.dragbox = null;
     this.icons = [];
     this.selectedIcons = [];
@@ -92,6 +93,17 @@ class Desktop extends Component {
     return iconsArray.filter(icon => {
       return selectedArray.indexOf(icon) < 0;
     });
+  }
+  findAncestorWithClickClass(node) {
+    if(node.dataset.hasOwnProperty('topclickable')) {
+      return node;
+    }
+    while ((node = node.parentElement)) {
+      if(node.dataset.hasOwnProperty('topclickable')) {
+        return node;
+      }
+    };
+    return node;
   }
   desktopMouseDown(event) {
     const { clickclass } = event.target.dataset;
@@ -223,9 +235,11 @@ class Desktop extends Component {
     }
   }
   desktopContextMenu(event) {
+    const node = this.findAncestorWithClickClass(event.target);
+    const { clickclass, index } = node.dataset;
     const { headerHeight } = this.state;
     event.preventDefault();
-    this.props.openContextMenu(event.clientX, event.clientY - headerHeight);
+    this.props.openContextMenu(event.clientX, event.clientY - headerHeight, clickclass, index);
   }
   desktopResize() {
     this.props.resizeBrowserWindow(window.innerWidth, window.innerHeight, this.desktop.offsetWidth, this.desktop.offsetHeight)
@@ -261,8 +275,8 @@ class Desktop extends Component {
     this.setState({draggingFileWindow: false});
   }
   render() {
-    const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, selectedDesktopIcons, createFolder, openFile,
-    openedFiles, entities, desktopWidth, desktopHeight } = this.props;
+    const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, contextMenuClickClass, contextMenuIndexClicked,
+      selectedDesktopIcons, createFolder, openFile, openedFiles, fileSystem, desktopWidth, desktopHeight } = this.props;
     let unselectedIcons = desktopItems;
     if (this.icons.length > 0 && selectedDesktopIcons.length > 0) {
       unselectedIcons = this.diffNodeLists(this.icons, selectedDesktopIcons);
@@ -270,6 +284,7 @@ class Desktop extends Component {
     return (
       <div id="desktop"
            data-clickClass={windowsClickables.desktop}
+           data-topClickable
            className={styles.root}
            onContextMenu={this.desktopContextMenu}
       >
@@ -280,13 +295,16 @@ class Desktop extends Component {
         }
         {
           openedFiles.map((openedFile, index) => {
-            return React.createElement(windowsFileRegistry[entities[openedFile.entityId].registryKey], { key: index, openedFile,
-              filename: entities[openedFile.entityId].name, desktopWidth, desktopHeight,
+            const openedFileNode = fileSystem[openedFile.nodeIndex];
+            const fileType = openedFileNode.hasOwnProperty('children') ? 'Folder' : openedFileNode.extension;
+            return React.createElement(windowsFileRegistry[fileType], { key: index, openedFile,
+              filename: fileSystem[openedFile.nodeIndex].name, desktopWidth, desktopHeight,
               index, ...this.props});
           })
         }
         {
-          contextMenuActive ? <ContextMenu createFolder={createFolder} contextMenuY={contextMenuY} contextMenuX={contextMenuX}/> : null
+          contextMenuActive ? <ContextMenu contextMenuClickClass={contextMenuClickClass} contextMenuIndexClicked={contextMenuIndexClicked}
+                               createFolder={createFolder} contextMenuY={contextMenuY} contextMenuX={contextMenuX}/> : null
         }
       </div>
     );

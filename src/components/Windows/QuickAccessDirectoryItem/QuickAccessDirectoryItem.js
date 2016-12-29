@@ -6,7 +6,7 @@ import cx from 'classnames';
 function QuickAccessDirectoryItem({ data, className }) {
   return (
     <div className={styles.root}>
-      <img className={styles.icon} src={data.icon} alt={`${data.name} icon`} />
+      <img className={styles.icon} src={data.metadata.icon} alt={`${data.name} icon`} />
       <span className={cx(styles.directoryName, className)}> {data.name}</span>
     </div>
   );

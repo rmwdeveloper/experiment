@@ -19,7 +19,8 @@
   display:inline-block;
   text-align: center;
   height: 50%;
-  width: 80px;
+  width: 100%;
+  white-space: pre-line;
 }
 
 @media (--tablet) {

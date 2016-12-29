@@ -38,15 +38,15 @@ export default function FileWindow(ComposedComponent) {
             closeFile={closeFile}
           />
           <ComposedComponent {...this.state} {...this.props} />
-          <div data-clickClass={windowsClickables.fileResizeHandle} data-index={index} data-side={'top'} className={styles.topResizer}></div>
-          <div data-clickClass={windowsClickables.fileResizeHandle} data-index={index} data-side={'right'} className={styles.rightResizer}></div>
-          <div data-clickClass={windowsClickables.fileResizeHandle} data-index={index} data-side={'bottom'} className={styles.bottomResizer}></div>
-          <div data-clickClass={windowsClickables.fileResizeHandle} data-index={index} data-side={'left'} className={styles.leftResizer}></div>
+          <div data-clickClass={windowsClickables.fileResizeHandle} data-topClickable data-index={index} data-side={'top'} className={styles.topResizer}></div>
+          <div data-clickClass={windowsClickables.fileResizeHandle} data-topClickable data-index={index} data-side={'right'} className={styles.rightResizer}></div>
+          <div data-clickClass={windowsClickables.fileResizeHandle} data-topClickable data-index={index} data-side={'bottom'} className={styles.bottomResizer}></div>
+          <div data-clickClass={windowsClickables.fileResizeHandle} data-topClickable data-index={index} data-side={'left'} className={styles.leftResizer}></div>
 
-          <div data-clickClass={windowsClickables.fileResizeHandle} data-index={index} data-side={'bottomRight'} className={styles.bottomRightResizer}></div>
-          <div data-clickClass={windowsClickables.fileResizeHandle} data-index={index} data-side={'bottomLeft'} className={styles.bottomLeftResizer}></div>
-          <div data-clickClass={windowsClickables.fileResizeHandle} data-index={index} data-side={'topRight'} className={styles.topRightResizer}></div>
-          <div data-clickClass={windowsClickables.fileResizeHandle} data-index={index} data-side={'topLeft'} className={styles.topLeftResizer}></div>
+          <div data-clickClass={windowsClickables.fileResizeHandle} data-topClickable data-index={index} data-side={'bottomRight'} className={styles.bottomRightResizer}></div>
+          <div data-clickClass={windowsClickables.fileResizeHandle} data-topClickable data-index={index} data-side={'bottomLeft'} className={styles.bottomLeftResizer}></div>
+          <div data-clickClass={windowsClickables.fileResizeHandle} data-topClickable data-index={index} data-side={'topRight'} className={styles.topRightResizer}></div>
+          <div data-clickClass={windowsClickables.fileResizeHandle} data-topClickable data-index={index} data-side={'topLeft'} className={styles.topLeftResizer}></div>
         </div>);
     }
   }

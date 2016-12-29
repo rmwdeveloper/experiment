@@ -3,6 +3,7 @@ import path from 'path';
 import express from 'express';
 
 import cookieParser from 'cookie-parser';
+import compression from 'compression';
 import bodyParser from 'body-parser';
 import expressJwt from 'express-jwt';
 import PrettyError from 'pretty-error';
@@ -19,6 +20,7 @@ import { setRuntimeVariable } from './actions/runtime';
 
 const app = express();
 
+app.use(compression());
 //
 // Tell any CSS tooling (such as Material UI) to use all vendor prefixes if the
 // user agent is not known.

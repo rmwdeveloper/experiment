@@ -20,8 +20,11 @@ import MobileTaskbar from '../../components/Windows/MobileTaskbar';
   utilityControls: utilityControlsSelector(state),
   computerSettings: computerSettingsSelector(state),
   desktopItems: desktopItemsSelector(state),
+  fileSystem: state.windows.fileSystem,
   contextMenuX: state.windows.contextMenuX,
   contextMenuY: state.windows.contextMenuY,
+  contextMenuClickClass: state.windows.contextMenuClickClass,
+  contextMenuIndexClicked: state.windows.contextMenuIndexClicked,
   contextMenuActive: state.windows.contextMenuActive,
   selectedDesktopIcons: state.windows.selectedDesktopIcons,
   openedFiles: state.windows.openedFiles,
@@ -42,6 +45,8 @@ class Windows extends Component { //eslint-disable-line
     toggleStartMenu: PropTypes.func,
     contextMenuX: PropTypes.number,
     contextMenuY: PropTypes.number,
+    contextMenuClickClass: PropTypes.string,
+    contextMenuIndexClicked: PropTypes.number,
     contextMenuActive: PropTypes.bool,
     selectedDesktopIcons: PropTypes.array,
     selectIcons: PropTypes.func,
@@ -53,7 +58,7 @@ class Windows extends Component { //eslint-disable-line
     closeFile: PropTypes.func,
     toggleWindowMaximize: PropTypes.func,
     toggleWindowMinimize: PropTypes.func,
-    entities: PropTypes.object,
+    fileSystem: PropTypes.object,
     dragFileWindow: PropTypes.func,
     resizeFileWindow: PropTypes.func,
     resizeBrowserWidth: PropTypes.func,
@@ -75,7 +80,6 @@ class Windows extends Component { //eslint-disable-line
   }
   render() {
     const { startMenuOpened, toggleStartMenu, installedPrograms, clearActives } = this.props;
-
     return (<div className={styles.root} onClick={clearActives} >
       <WindowsDesktop {...this.props} />
       {startMenuOpened  && this.props.browserWidth > 767 ? <WindowsStartMenu installedPrograms={installedPrograms} {...this.props} />
