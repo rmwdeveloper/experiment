@@ -95,9 +95,13 @@ class Desktop extends Component {
     });
   }
   findAncestorWithClickClass(node) {
-    const cls = 'test';
-    while ((node = node.parentElement) && !node.classList.contains(cls)) {
-      console.log(node);
+    if(node.dataset.hasOwnProperty('topclickable')) {
+      return node;
+    }
+    while ((node = node.parentElement)) {
+      if(node.dataset.hasOwnProperty('topclickable')) {
+        return node;
+      }
     };
     return node;
   }
@@ -231,10 +235,10 @@ class Desktop extends Component {
     }
   }
   desktopContextMenu(event) {
-    const { clickclass, index } = event.target.dataset;
+    const node = this.findAncestorWithClickClass(event.target);
+    const { clickclass, index } = node.dataset;
     const { headerHeight } = this.state;
     event.preventDefault();
-    this.findAncestorWithClickClass(event.target);
     this.props.openContextMenu(event.clientX, event.clientY - headerHeight, clickclass, index);
   }
   desktopResize() {
