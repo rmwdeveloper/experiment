@@ -10,7 +10,8 @@ import {
   CLICK_TASKBAR_ITEM,
   RESIZE_FILE_WINDOW,
   RESIZE_BROWSER_WINDOW,
-  INITIALIZE_BROWSER_DIMENSIONS
+  INITIALIZE_BROWSER_DIMENSIONS,
+  OPEN_ERROR_WINDOW
 } from '../constants';
 
 
@@ -112,5 +113,11 @@ export function resizeBrowserWindow(browserWidth, browserHeight, desktopWidth, d
 export function initializeBrowserDimensions(browserWidth, browserHeight) {
   return dispatch => {
     dispatch({ type: INITIALIZE_BROWSER_DIMENSIONS, browserWidth, browserHeight});
+  }
+}
+
+export function openErrorWindow(errorMessage) {
+  return dispatch => {
+    dispatch({ type: OPEN_ERROR_WINDOW, errorMessage});
   }
 }

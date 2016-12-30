@@ -10,6 +10,7 @@ class ContextMenu extends Component {
     contextMenuY: PropTypes.number,
     contextMenuClickClass: PropTypes.string,
     contextMenuIndex: PropTypes.number,
+    openErrorWindow: PropTypes.func
   };
   constructor() {
     super();
@@ -21,7 +22,7 @@ class ContextMenu extends Component {
     this.props.createFolder('desktopItems');
   }
   notImplemented() {
-    console.log('open not implemented Error Window');
+    this.props.openErrorWindow("Sorry, this isn't implemented yet!");
   }
   render() {
     const { contextMenuX, contextMenuY, contextMenuClickClass, contextMenuIndexClicked } = this.props;

@@ -15,7 +15,8 @@ import {
   CLICK_TASKBAR_ITEM,
   RESIZE_FILE_WINDOW,
   RESIZE_BROWSER_WINDOW,
-  INITIALIZE_BROWSER_DIMENSIONS
+  INITIALIZE_BROWSER_DIMENSIONS,
+  OPEN_ERROR_WINDOW
 } from '../constants';
 
 
@@ -58,6 +59,7 @@ const initialState = {
   contextMenuActive: false,
   selectedDesktopIcons: [], // Array of entity IDs
   openedFiles: [], // {entityId, height, width}
+  errorWindows: []
 };
 export default function layout(state = initialState, action) {
   const newOpenedFiles = [...state.openedFiles];
@@ -204,6 +206,8 @@ export default function layout(state = initialState, action) {
       });
       newOpenedFiles[openedFileIndex].minimized = !newOpenedFiles[openedFileIndex].minimized;
       return { ...state, openedFiles: newOpenedFiles };
+    case OPEN_ERROR_WINDOW:
+      return { ...state, errorWindows: [...state.errorWindows, action.errorMessage] };
     default:
       return state;
   }
