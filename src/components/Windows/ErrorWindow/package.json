@@ -1,0 +1,6 @@
+{
+  "name": "ErrorWindow",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./ErrorWindow.js"
+}

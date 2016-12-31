@@ -6,7 +6,7 @@ import windowsFileRegistry from '../windowsFileRegistry';
 import { windowsClickables } from '../../../constants/windows';
 import DesktopItem from '../DesktopItem';
 import ContextMenu from '../ContextMenu';
-
+import ErrorWindow from '../ErrorWindow';
 
 class Desktop extends Component {
   static propTypes = {
@@ -276,11 +276,13 @@ class Desktop extends Component {
   }
   render() {
     const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, contextMenuClickClass, contextMenuIndexClicked,
+      errorWindows,
       selectedDesktopIcons, createFolder, openErrorWindow, openFile, openedFiles, fileSystem, desktopWidth, desktopHeight } = this.props;
     let unselectedIcons = desktopItems;
     if (this.icons.length > 0 && selectedDesktopIcons.length > 0) {
       unselectedIcons = this.diffNodeLists(this.icons, selectedDesktopIcons);
     }
+    console.log(errorWindows);
     return (
       <div id="desktop"
            data-clickClass={windowsClickables.desktop}
@@ -300,6 +302,11 @@ class Desktop extends Component {
             return React.createElement(windowsFileRegistry[fileType], { key: index, openedFile,
               filename: fileSystem[openedFile.nodeIndex].name, desktopWidth, desktopHeight,
               index, ...this.props});
+          })
+        }
+        {
+          errorWindows.map((errorMessage, index) => {
+            return <ErrorWindow errorMessage={errorMessage} />
           })
         }
         {
