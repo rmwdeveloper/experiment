@@ -12,12 +12,14 @@ import {
   MINIMIZE_FILE_WINDOW,
   UNMINIMIZE_FILE_WINDOW,
   DRAG_FILE_WINDOW,
+  DRAG_ERROR_WINDOW,
   CLICK_TASKBAR_ITEM,
   RESIZE_FILE_WINDOW,
   RESIZE_BROWSER_WINDOW,
   INITIALIZE_BROWSER_DIMENSIONS,
   INITIALIZE_DESKTOP_DIMENSIONS,
-  OPEN_ERROR_WINDOW
+  OPEN_ERROR_WINDOW,
+  CLOSE_ERROR_WINDOW
 } from '../constants';
 
 
@@ -66,6 +68,7 @@ const initialState = {
 };
 export default function layout(state = initialState, action) {
   const newOpenedFiles = [...state.openedFiles];
+  const newErrorWindows = [...state.errorWindows];
   switch (action.type) {
     case OPEN_START_MENU:
       return { ...state, startMenuOpened: true };
@@ -88,11 +91,14 @@ export default function layout(state = initialState, action) {
         { nodeIndex: action.nodeIndex, height: 300, width: 300, xPosition: ((action.desktopWidth / 2.4) + state.openedFiles.length * 5)
       ,yPosition: ((action.desktopHeight / 4) + state.openedFiles.length * 5), maximized: false, minimized: false }] };
     case OPEN_ERROR_WINDOW:
-      return { ...state, errorWindows: [...state.errorWindows, { errorMessage: action.errorMessage,
+      return { ...state, errorWindows: [...state.errorWindows, { errorMessage: action.errorMessage, height: 300, width: 400,
         xPosition: (action.desktopWidth / 2.4), yPosition: (action.desktopHeight / 4) }] };
     case CLOSE_FILE_WINDOW:
       return { ...state, openedFiles: [...state.openedFiles.slice(0, action.openedFileIndex),
             ...state.openedFiles.slice(action.openedFileIndex + 1)] };
+    case CLOSE_ERROR_WINDOW:
+      return { ...state, errorWindows: [...state.errorWindows.slice(0, action.errorIndex),
+        ...state.errorWindows.slice(action.errorIndex + 1)] };
     case MAXIMIZE_FILE_WINDOW:
       newOpenedFiles[action.openedFileIndex].maximized = true;
       return { ...state, openedFiles: newOpenedFiles };
@@ -109,6 +115,10 @@ export default function layout(state = initialState, action) {
       newOpenedFiles[parseInt(action.index, 10)].xPosition = action.deltaX;
       newOpenedFiles[parseInt(action.index, 10)].yPosition = action.deltaY;
       return { ...state, openedFiles: newOpenedFiles };
+    case DRAG_ERROR_WINDOW:
+      newErrorWindows[parseInt(action.index, 10)].xPosition = action.deltaX;
+      newErrorWindows[parseInt(action.index, 10)].yPosition = action.deltaY;
+      return { ...state, errorWindows: newErrorWindows };
     case RESIZE_BROWSER_WINDOW:
       return { ...state, browserWidth: action.browserWidth, browserHeight: action.browserHeight,
         desktopWidth: action.desktopWidth, desktopHeight: action.desktopHeight };

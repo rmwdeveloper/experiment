@@ -29,9 +29,9 @@ class Desktop extends Component {
     super();
     this.startDragSelect = this.startDragSelect.bind(this);
     this.stopDragSelect = this.stopDragSelect.bind(this);
-    this.startDragFileWindow = this.startDragFileWindow.bind(this);
-    this.dragFileWindow = this.dragFileWindow.bind(this);
-    this.stopDragFileWindow = this.stopDragFileWindow.bind(this);
+    this.startDragWindow = this.startDragWindow.bind(this);
+    this.dragWindow = this.dragWindow.bind(this);
+    this.stopDragWindow = this.stopDragWindow.bind(this);
     this.dragSelecting = this.dragSelecting.bind(this);
     this.checkForOverlap = this.checkForOverlap.bind(this);
     this.desktopContextMenu = this.desktopContextMenu.bind(this);
@@ -47,7 +47,7 @@ class Desktop extends Component {
     this.diffNodeLists = this.diffNodeLists.bind(this);
     this.state = {
       dragSelecting: false,
-      draggingFileWindow: false,
+      draggingWindow: false,
       resizingFileWindowInProgress: false,
       resizeStartX: null,
       resizeStartY: null,
@@ -86,6 +86,7 @@ class Desktop extends Component {
       (this.props.contextMenuActive !== nextProps.contextMenuActive) ||
       (this.props.contextMenuX !== nextProps.contextMenuX)||
       (this.props.openedFiles !== nextProps.openedFiles) ||
+      (this.props.errorWindows !== nextProps.errorWindows) ||
       (this.props.contextMenuY !== nextProps.contextMenuY);
   }
   diffNodeLists(firstNodeList, secondNodeList) {
@@ -119,7 +120,10 @@ class Desktop extends Component {
         this.startDragSelect(event);
         break;
       case windowsClickables.fileTaskbar:
-        this.startDragFileWindow(event);
+        this.startDragWindow(event, 'file');
+        break;
+      case windowsClickables.errorTaskbar:
+        this.startDragWindow(event, 'error');
         break;
       case windowsClickables.desktopItem:
         break;
@@ -132,11 +136,11 @@ class Desktop extends Component {
   }
   desktopMouseUp(event) {
     const { clickclass } = event.target.dataset;
-    const { dragSelecting, draggingFileWindow, resizingFileWindowInProgress} = this.state;
+    const { dragSelecting, draggingWindow, resizingFileWindowInProgress} = this.state;
     if (dragSelecting) {
       this.stopDragSelect(event);
-    } else if (draggingFileWindow) {
-     this.stopDragFileWindow(event);
+    } else if (draggingWindow) {
+     this.stopDragWindow(event);
     } else if (resizingFileWindowInProgress) {
       this.stopResizeFileWindow(event);
     }
@@ -261,23 +265,24 @@ class Desktop extends Component {
     this.dragbox.style.height = `${Math.abs(deltaY)}px`;
     this.checkForOverlap();
   }
-  startDragFileWindow(event) {
-    this.desktop.addEventListener('mousemove', this.dragFileWindow);
+  startDragWindow(event, type) {
+    this.desktop.dragType = type;
+    this.desktop.addEventListener('mousemove', this.dragWindow);
     this.clickedLocationX = event.offsetX;
     this.clickedLocationY = event.offsetY;
-    this.setState({draggingFileWindow: true, itemDragged: event.target.dataset.index });
+    this.setState({draggingWindow: true, itemDragged: event.target.dataset.index });
   }
-  dragFileWindow(event) {
+  dragWindow(event) {
     const { itemDragged, headerHeight } = this.state;
-    this.props.dragFileWindow(itemDragged, event.clientX - this.clickedLocationX, event.clientY - headerHeight - this.clickedLocationY);
+    this.props.dragWindow(itemDragged, this.desktop.dragType, event.clientX - this.clickedLocationX, event.clientY - headerHeight - this.clickedLocationY);
   }
-  stopDragFileWindow() {
-    this.desktop.removeEventListener('mousemove', this.dragFileWindow);
-    this.setState({draggingFileWindow: false});
+  stopDragWindow() {
+    this.desktop.removeEventListener('mousemove', this.dragWindow);
+    this.setState({draggingWindow: false});
   }
   render() {
     const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, contextMenuClickClass, contextMenuIndexClicked,
-      errorWindows,
+      errorWindows, closeErrorWindow,
       selectedDesktopIcons, createFolder, openErrorWindow, openFile, openedFiles, fileSystem, desktopWidth, desktopHeight } = this.props;
     let unselectedIcons = desktopItems;
     if (this.icons.length > 0 && selectedDesktopIcons.length > 0) {
@@ -306,7 +311,7 @@ class Desktop extends Component {
         }
         {
           errorWindows.map((errorObject, index) => {
-            return <ErrorWindow errorObject={errorObject} key={index} />;
+            return <ErrorWindow errorObject={errorObject} index={index} closeErrorWindow={closeErrorWindow} key={index} />;
           })
         }
         {

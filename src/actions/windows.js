@@ -7,12 +7,14 @@ import {
   MINIMIZE_FILE_WINDOW,
   UNMINIMIZE_FILE_WINDOW,
   DRAG_FILE_WINDOW,
+  DRAG_ERROR_WINDOW,
   CLICK_TASKBAR_ITEM,
   RESIZE_FILE_WINDOW,
   RESIZE_BROWSER_WINDOW,
   INITIALIZE_BROWSER_DIMENSIONS,
   INITIALIZE_DESKTOP_DIMENSIONS,
-  OPEN_ERROR_WINDOW
+  OPEN_ERROR_WINDOW,
+  CLOSE_ERROR_WINDOW
 } from '../constants';
 
 // todo rmw: Remove parameters in actions that can be gotten in state. e.g., openFile desktopWidth
@@ -64,7 +66,11 @@ export function closeFile(openedFileIndex) {
     dispatch({ type: CLOSE_FILE_WINDOW, openedFileIndex });
   };
 }
-
+export function closeErrorWindow(errorIndex) {
+  return dispatch => {
+    dispatch({ type: CLOSE_ERROR_WINDOW, errorIndex });
+  };
+}
 export function toggleWindowMaximize(openedFileIndex) {
   return (dispatch, getState) => {
     const { windows: { openedFiles } } = getState();
@@ -89,9 +95,14 @@ export function toggleWindowMinimize(openedFileIndex) {
   };
 }
 
-export function dragFileWindow(index, deltaX, deltaY) { // todo change this name? Same as method in windows/Desktop
+export function dragWindow(index, dragType, deltaX, deltaY) { // todo change this name? Same as method in windows/Desktop. (Change to dragWindow)
   return dispatch => {
-    dispatch({ type: DRAG_FILE_WINDOW, index, deltaX, deltaY });
+    if (dragType === 'file') {
+      dispatch({ type: DRAG_FILE_WINDOW, dragType, index, deltaX, deltaY });
+    }
+    if (dragType === 'error') {
+      dispatch({ type: DRAG_ERROR_WINDOW, dragType, index, deltaX, deltaY });
+    }
   };
 }
 
@@ -125,8 +136,7 @@ export function initializeDesktopDimensions(desktopWidth, desktopHeight) {
 }
 export function openErrorWindow(errorMessage) {
   return (dispatch, getState) => {
-    const { windows } = getState();
-    console.log(windows);
-    dispatch({ type: OPEN_ERROR_WINDOW, errorMessage});
+    const { windows: {desktopWidth, desktopHeight} } = getState();
+    dispatch({ type: OPEN_ERROR_WINDOW, errorMessage, desktopWidth, desktopHeight});
   }
 }

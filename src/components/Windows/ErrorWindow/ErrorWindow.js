@@ -7,19 +7,16 @@ import ErrorWindowTaskbar from '../ErrorWindowTaskbar';
 // import { windowsClickables } from '../../../constants/windows';
 
 
-function ErrorWindow({errorObject}) {
-  console.log('errorObject', errorObject);
-  return <div>ErrorWindow</div>;
+function ErrorWindow({errorObject, index, closeErrorWindow}) {
+  const { errorMessage, xPosition, yPosition, width, height } = errorObject;
   return (
     <MoveableResizeableWindow
-      maximized={maximized}
-      minimized={minimized}
       height={height}
       width={width} xPosition={xPosition} yPosition={yPosition} index={index}
     >
       <ErrorWindowTaskbar
         index={index}
-        closeFile={closeFile}
+        closeFile={closeErrorWindow}
       />
       {errorMessage}
     </MoveableResizeableWindow>);

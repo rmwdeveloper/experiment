@@ -6,7 +6,7 @@ import { windowsClickables } from '../../../constants/windows';
 
 function ErrorWindowTaskbar({filename, index, closeFile}) {
   return (
-    <div data-clickclass={windowsClickables.fileTaskbar} data-topClickable data-index={index} className={styles.root}>
+    <div data-clickclass={windowsClickables.errorTaskbar} data-topClickable data-index={index} className={styles.root}>
       <span className={styles.fileName}>{filename}</span>
       <div className={styles.fileControls}>
         <i onClick={() => { closeFile(index); }} className={cx(styles.closeWindowIcon, 'fa fa-remove')} />

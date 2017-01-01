@@ -53,6 +53,7 @@ class Windows extends Component { //eslint-disable-line
     selectIcons: PropTypes.func,
     openContextMenu: PropTypes.func,
     openErrorWindow: PropTypes.func,
+    closeErrorWindow: PropTypes.func,
     clearActives: PropTypes.func,
     createFolder: PropTypes.func,
     openedFiles: PropTypes.array,
