@@ -22,7 +22,7 @@ class ContextMenu extends Component {
     this.props.createFolder('desktopItems');
   }
   notImplemented() {
-    this.props.openErrorWindow("Sorry, this isn't implemented yet!");
+    this.props.openErrorWindow("This isn't implemented yet. Sorry!");
   }
   render() {
     const { contextMenuX, contextMenuY, contextMenuClickClass, contextMenuIndexClicked } = this.props;

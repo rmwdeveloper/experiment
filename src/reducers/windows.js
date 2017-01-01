@@ -91,7 +91,7 @@ export default function layout(state = initialState, action) {
         { nodeIndex: action.nodeIndex, height: 300, width: 300, xPosition: ((action.desktopWidth / 2.4) + state.openedFiles.length * 5)
       ,yPosition: ((action.desktopHeight / 4) + state.openedFiles.length * 5), maximized: false, minimized: false }] };
     case OPEN_ERROR_WINDOW:
-      return { ...state, errorWindows: [...state.errorWindows, { errorMessage: action.errorMessage, height: 300, width: 400,
+      return { ...state, errorWindows: [...state.errorWindows, { errorMessage: action.errorMessage, height: 150, width: 400,
         xPosition: (action.desktopWidth / 2.4), yPosition: (action.desktopHeight / 4) }] };
     case CLOSE_FILE_WINDOW:
       return { ...state, openedFiles: [...state.openedFiles.slice(0, action.openedFileIndex),

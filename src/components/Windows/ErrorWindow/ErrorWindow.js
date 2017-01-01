@@ -18,7 +18,9 @@ function ErrorWindow({errorObject, index, closeErrorWindow}) {
         index={index}
         closeFile={closeErrorWindow}
       />
-      {errorMessage}
+      <div className={styles.root}>
+        {errorMessage}
+      </div>
     </MoveableResizeableWindow>);
 }
 
