@@ -32,8 +32,9 @@ export function toggleStartMenu() {
 }
 
 export function createFolder(location) {
-  return dispatch => {
-    dispatch({ type: CREATE_FOLDER, location });
+  return (dispatch, getState) => {
+    const { windows: { desktopNodeIndex } } = getState();
+    dispatch({ type: CREATE_FOLDER, location, desktopNodeIndex });
   };
 }
 

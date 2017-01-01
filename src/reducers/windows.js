@@ -75,10 +75,13 @@ export default function layout(state = initialState, action) {
     case CLOSE_START_MENU:
       return { ...state, startMenuOpened: false };
     case CREATE_FOLDER:
-      const nextEntityId = Object.keys(state.entities).length + 1;
-      const newEntities = { ...state.entities };
-      newEntities[nextEntityId] = { name: 'New Folder', type: 'Folder', icon: 'emptyFolderXSmall.png' };
-      return { ...state, entities: newEntities, desktopItems: [...state.desktopItems, nextEntityId], contextMenuActive: false };
+      const nextNodeIndex = Object.keys(state.fileSystem).length + 1;
+      const newFileSystem = { ...state.fileSystem };
+      newFileSystem[nextNodeIndex] = { children: [], name: 'New Folder', type: 'Folder', metadata: { icon: 'emptyFolderXSmall.png' } };
+      if (action.location === 'desktop') {
+        newFileSystem[action.desktopNodeIndex].children.push(nextNodeIndex);
+      }
+      return { ...state, fileSystem: newFileSystem, contextMenuActive: false };
     case OPEN_CONTEXT_MENU:
       return { ...state, contextMenuX: action.mouseX, contextMenuY: action.mouseY, contextMenuActive: true,
         contextMenuClickClass: action.clickclass, contextMenuIndexClicked: action.index };
