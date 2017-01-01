@@ -1,6 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import styles from './FileWindow.css'; //eslint-disable-line
 import FileBaseTaskbar from '../FileBaseTaskbar';
 import MoveableResizeableWindow from '../MoveableResizeableWindow';
 
@@ -36,6 +34,6 @@ export default function FileWindow(ComposedComponent) {
         </MoveableResizeableWindow>);
     }
   }
-  return withStyles(styles)(FileWindow);
+  return FileWindow
 }
 

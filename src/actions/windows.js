@@ -11,10 +11,13 @@ import {
   RESIZE_FILE_WINDOW,
   RESIZE_BROWSER_WINDOW,
   INITIALIZE_BROWSER_DIMENSIONS,
+  INITIALIZE_DESKTOP_DIMENSIONS,
   OPEN_ERROR_WINDOW
 } from '../constants';
 
-
+// todo rmw: Remove parameters in actions that can be gotten in state. e.g., openFile desktopWidth
+//  and desktop height can be gotten from getState, doesnt need to be required as a function parameter in the
+// component that uses it.
 export function toggleStartMenu() {
   return (dispatch, getState) => {
     const { windows: { startMenuOpened } } = getState();
@@ -115,9 +118,15 @@ export function initializeBrowserDimensions(browserWidth, browserHeight) {
     dispatch({ type: INITIALIZE_BROWSER_DIMENSIONS, browserWidth, browserHeight});
   }
 }
-
-export function openErrorWindow(errorMessage) {
+export function initializeDesktopDimensions(desktopWidth, desktopHeight) {
   return dispatch => {
+    dispatch({ type: INITIALIZE_DESKTOP_DIMENSIONS, desktopWidth, desktopHeight});
+  }
+}
+export function openErrorWindow(errorMessage) {
+  return (dispatch, getState) => {
+    const { windows } = getState();
+    console.log(windows);
     dispatch({ type: OPEN_ERROR_WINDOW, errorMessage});
   }
 }

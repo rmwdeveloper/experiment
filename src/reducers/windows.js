@@ -16,6 +16,7 @@ import {
   RESIZE_FILE_WINDOW,
   RESIZE_BROWSER_WINDOW,
   INITIALIZE_BROWSER_DIMENSIONS,
+  INITIALIZE_DESKTOP_DIMENSIONS,
   OPEN_ERROR_WINDOW
 } from '../constants';
 
@@ -23,6 +24,8 @@ import {
 const initialState = {
   browserWidth: 0,
   browserHeight: 0,
+  desktopWidth: 0,
+  desktopHeight: 0,
   fileSystem: { // Indices are always unique and static.
     1: { name: 'root', children: [2, 17, 18], permissions: ['rwxp'] },
     2: { name: 'drive', children: [3, 8], permissions: ['rwxp'] },
@@ -83,7 +86,10 @@ export default function layout(state = initialState, action) {
     case OPEN_FILE_WINDOW:
       return { ...state, openedFiles: [...state.openedFiles,
         { nodeIndex: action.nodeIndex, height: 300, width: 300, xPosition: ((action.desktopWidth / 2.4) + state.openedFiles.length * 5)
-      , yPosition: ((action.desktopHeight / 4) + state.openedFiles.length * 5), maximized: false, minimized: false }] };
+      ,yPosition: ((action.desktopHeight / 4) + state.openedFiles.length * 5), maximized: false, minimized: false }] };
+    case OPEN_ERROR_WINDOW:
+      return { ...state, errorWindows: [...state.errorWindows, { errorMessage: action.errorMessage,
+        xPosition: (action.desktopWidth / 2.4), yPosition: (action.desktopHeight / 4) }] };
     case CLOSE_FILE_WINDOW:
       return { ...state, openedFiles: [...state.openedFiles.slice(0, action.openedFileIndex),
             ...state.openedFiles.slice(action.openedFileIndex + 1)] };
@@ -108,6 +114,8 @@ export default function layout(state = initialState, action) {
         desktopWidth: action.desktopWidth, desktopHeight: action.desktopHeight };
     case INITIALIZE_BROWSER_DIMENSIONS:
       return { ...state, browserWidth: action.browserWidth, browserHeight: action.browserHeight };
+    case INITIALIZE_DESKTOP_DIMENSIONS:
+      return { ...state, desktopWidth: action.desktopWidth, desktopHeight: action.desktopHeight };
     case RESIZE_FILE_WINDOW: // todo: Needs refactor. Bulky and repetitive switch case.
 
       if (action.resizeSideClicked === 'topLeft') {
@@ -206,8 +214,6 @@ export default function layout(state = initialState, action) {
       });
       newOpenedFiles[openedFileIndex].minimized = !newOpenedFiles[openedFileIndex].minimized;
       return { ...state, openedFiles: newOpenedFiles };
-    case OPEN_ERROR_WINDOW:
-      return { ...state, errorWindows: [...state.errorWindows, action.errorMessage] };
     default:
       return state;
   }

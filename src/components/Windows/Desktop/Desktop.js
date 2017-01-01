@@ -71,7 +71,8 @@ class Desktop extends Component {
     this.header = document.getElementById('primaryHeader');
     this.desktop.onmousedown = this.desktopMouseDown;
     this.desktop.onmouseup = this.desktopMouseUp;
-
+    // todo rmw: desktopWidth and Height is both in the redux store and in component State. Should have it it only 1.
+    this.props.initializeDesktopDimensions(this.desktop.offsetWidth, this.desktop.offsetHeight);
     window.addEventListener('resize', this.desktopResize.bind(this));
 
     this.setState({desktopWidth: this.desktop.offsetWidth,
@@ -282,7 +283,6 @@ class Desktop extends Component {
     if (this.icons.length > 0 && selectedDesktopIcons.length > 0) {
       unselectedIcons = this.diffNodeLists(this.icons, selectedDesktopIcons);
     }
-    console.log(errorWindows);
     return (
       <div id="desktop"
            data-clickClass={windowsClickables.desktop}
@@ -305,8 +305,8 @@ class Desktop extends Component {
           })
         }
         {
-          errorWindows.map((errorMessage, index) => {
-            return <ErrorWindow errorMessage={errorMessage} />
+          errorWindows.map((errorObject, index) => {
+            return <ErrorWindow errorObject={errorObject} key={index} />;
           })
         }
         {
