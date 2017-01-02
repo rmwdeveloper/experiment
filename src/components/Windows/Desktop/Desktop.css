@@ -8,7 +8,15 @@
   position: relative;
 }
 
-
+.selectedBlock {
+  display: inline-block;
+}
+.selectedBlock {
+  margin-bottom: -10px;
+}
+.selectedBlock:not(:first-child) {
+  margin-top: -10px;
+}
 @media (--tablet) {
   .root {
     /*width: 150px;*/

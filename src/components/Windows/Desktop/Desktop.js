@@ -212,7 +212,6 @@ class Desktop extends Component {
         dragStartX: null,
         dragStartY: null
       });
-      console.log(this.selectedIcons);
       selectIcons(this.selectedIcons);
       this.dragbox.remove();
       this.dragbox.border = 'none';
@@ -288,14 +287,34 @@ class Desktop extends Component {
     const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, contextMenuClickClass, contextMenuIndexClicked,
       errorWindows, closeErrorWindow, connectDropTarget,
       selectedDesktopIcons, createFolder, openErrorWindow, openFile, openedFiles, fileSystem, desktopWidth, desktopHeight } = this.props;
-
-    const selectedFiles = selectedDesktopIcons.map(id=> {
-      return fileSystem[id];
+    // todo cleanup this render method, abstract some crap away to helper methods.
+    const desktopItemMarkup = [];
+    const selectedFileIndices = selectedDesktopIcons.map(iconId => {return parseInt(iconId, 10)});
+    const desktopItemIndices = desktopItems.map(desktopItem => { return desktopItem.index});
+    const selectedFiles = selectedFileIndices.map(id=> {
+      const file = fileSystem[id];
+      return <DesktopItem selected key={file.index} desktopWidth={desktopWidth} desktopHeight={desktopHeight} index={file.index} openFile={openFile} item={file} />;
     });
     const unselectedFiles = desktopItems.filter(desktopItem=> {
       return !selectedDesktopIcons.includes(desktopItem.index.toString());
     });
-    console.log(selectedFiles, unselectedFiles);
+    const unselectedFileIndices = unselectedFiles.map(unselectedFile => { return unselectedFile.index;});
+    const renderArray = desktopItemIndices.map(index => {
+      return selectedFileIndices.includes(index) ? 'selected' : index;
+    });
+    const cleanedRenderArray = renderArray.filter((item, position) => {
+      return renderArray.indexOf(item) === position;
+    });
+
+    for (let iterator = 0; iterator < cleanedRenderArray.length; iterator++){
+      if (typeof(cleanedRenderArray[iterator]) === 'number') {
+        const file = fileSystem[cleanedRenderArray[iterator]];
+        desktopItemMarkup.push(<DesktopItem key={file.index} desktopWidth={desktopWidth} desktopHeight={desktopHeight} index={file.index} openFile={openFile} item={file} />);
+      }
+      if (cleanedRenderArray[iterator] === 'selected') {
+        desktopItemMarkup.push(React.createElement('div', {className: styles.selectedBlock}, [selectedFiles]));
+      }
+    }
     return (connectDropTarget(
       <div id="desktop"
            data-clickClass={windowsClickables.desktop}
@@ -303,11 +322,7 @@ class Desktop extends Component {
            className={styles.root}
            onContextMenu={this.desktopContextMenu}
       >
-        {
-          desktopItems.map((desktopitem, index) => {
-            return <DesktopItem key={index} desktopWidth={desktopWidth} desktopHeight={desktopHeight} index={index} openFile={openFile} item={desktopitem} />;
-          })
-        }
+        {desktopItemMarkup}
         {
           openedFiles.map((openedFile, index) => {
             const openedFileNode = fileSystem[openedFile.nodeIndex];
