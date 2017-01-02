@@ -288,16 +288,14 @@ class Desktop extends Component {
     const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, contextMenuClickClass, contextMenuIndexClicked,
       errorWindows, closeErrorWindow, connectDropTarget,
       selectedDesktopIcons, createFolder, openErrorWindow, openFile, openedFiles, fileSystem, desktopWidth, desktopHeight } = this.props;
-    // let unselectedIcons = desktopItems;
-    // if (this.icons.length > 0 && selectedDesktopIcons.length > 0) {
-    //   unselectedIcons = this.diffNodeLists(this.icons, selectedDesktopIcons);
-    // }
+
     const selectedFiles = selectedDesktopIcons.map(id=> {
       return fileSystem[id];
     });
-
-    console.log('selectedIcons', selectedFiles);
-    console.log('desktopItems', desktopItems);
+    const unselectedFiles = desktopItems.filter(desktopItem=> {
+      return !selectedDesktopIcons.includes(desktopItem.index.toString());
+    });
+    console.log(selectedFiles, unselectedFiles);
     return (connectDropTarget(
       <div id="desktop"
            data-clickClass={windowsClickables.desktop}
