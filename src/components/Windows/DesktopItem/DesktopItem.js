@@ -23,17 +23,15 @@ DesktopItem.propTypes = {
 
 const desktopItemSource = {
   beginDrag(props) {
-    console.log('beginDrag');
-    const {id, order, index} = props;
-    return {id, order, index};
+    return {index: props.index};
   },
   endDrag(props, monitor, component) {
-    console.log('endDrag');
     if (!monitor.didDrop()) {
       return;
     }
     const item = monitor.getItem();
     const dropResult = monitor.getDropResult();
+    console.log(item, dropResult);
     if (item !== dropResult) {
       console.log('something was droppeD!');
       // props.reorderCourses(item, dropResult);
@@ -44,7 +42,6 @@ const desktopItemSource = {
   }
 };
 function collectSource(connect, monitor) {
-  console.log('collectSource');
   return {
     connectDragSource: connect.dragSource(),
     isDragging: monitor.isDragging()
@@ -53,10 +50,8 @@ function collectSource(connect, monitor) {
 
 const desktopItemTarget = {
   drop(props) {
-    const {id, order, index} = props;
-    return {id, order, index};
-  }
-
+    return { index: props.index };
+  },
 };
 
 function collectTarget(connect, monitor) {
