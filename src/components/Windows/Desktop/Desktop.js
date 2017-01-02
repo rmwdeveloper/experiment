@@ -1,4 +1,6 @@
 import React, { PropTypes, Component } from 'react';
+import { DropTarget as dropTarget, DragDropContext as dragDropContext  } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Desktop.css'; //eslint-disable-line
 
@@ -282,13 +284,13 @@ class Desktop extends Component {
   }
   render() {
     const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, contextMenuClickClass, contextMenuIndexClicked,
-      errorWindows, closeErrorWindow,
+      errorWindows, closeErrorWindow, connectDropTarget,
       selectedDesktopIcons, createFolder, openErrorWindow, openFile, openedFiles, fileSystem, desktopWidth, desktopHeight } = this.props;
     let unselectedIcons = desktopItems;
     if (this.icons.length > 0 && selectedDesktopIcons.length > 0) {
       unselectedIcons = this.diffNodeLists(this.icons, selectedDesktopIcons);
     }
-    return (
+    return (connectDropTarget(
       <div id="desktop"
            data-clickClass={windowsClickables.desktop}
            data-topClickable
@@ -324,8 +326,26 @@ class Desktop extends Component {
                 contextMenuX={contextMenuX}/> : null
         }
       </div>
-    );
+    ));
   }
 }
 
-export default withStyles(styles)(Desktop);
+
+const desktopTarget = {
+  drop(props) {
+    const {id, order, index} = props;
+    return {id, order, index};
+  }
+
+};
+
+function collectTarget(connect, monitor) {
+  return {
+    connectDropTarget: connect.dropTarget(),
+    isOver: monitor.isOver()
+  };
+}
+
+export default withStyles(styles)(dragDropContext(HTML5Backend)(dropTarget('desktop', desktopTarget, collectTarget)(Desktop)));
+// export default dropTarget(withStyles(styles)(Desktop));
+// export default withStyles(styles)(Desktop);
