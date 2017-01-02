@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { DropTarget as dropTarget, DragDropContext as dragDropContext  } from 'react-dnd';
+import { DropTarget as dropTarget, DragDropContext as dragDropContext, DragSource as dragSource  } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Desktop.css'; //eslint-disable-line
@@ -7,6 +7,7 @@ import styles from './Desktop.css'; //eslint-disable-line
 import windowsFileRegistry from '../windowsFileRegistry';
 import { windowsClickables } from '../../../constants/windows';
 import DesktopItem from '../DesktopItem';
+import DesktopItemsGroup from '../DesktopItemsGroup';
 import ContextMenu from '../ContextMenu';
 import ErrorWindow from '../ErrorWindow';
 
@@ -293,7 +294,8 @@ class Desktop extends Component {
     const desktopItemIndices = desktopItems.map(desktopItem => { return desktopItem.index});
     const selectedFiles = selectedFileIndices.map(id=> {
       const file = fileSystem[id];
-      return <DesktopItem selected key={file.index} desktopWidth={desktopWidth} desktopHeight={desktopHeight} index={file.index} openFile={openFile} item={file} />;
+      return <DesktopItem selected key={file.index}  moveFile={moveFile}
+                          desktopWidth={desktopWidth} desktopHeight={desktopHeight} index={file.index} openFile={openFile} item={file} />;
     });
     const unselectedFiles = desktopItems.filter(desktopItem=> {
       return !selectedDesktopIcons.includes(desktopItem.index.toString());
@@ -313,8 +315,11 @@ class Desktop extends Component {
                          moveFile={moveFile}  openFile={openFile} item={file} />);
       }
       if (cleanedRenderArray[iterator] === 'selected') {
-        desktopItemMarkup.push(React.createElement('div', {className: styles.selectedBlock}, [selectedFiles]));
+        desktopItemMarkup.push(<DesktopItemsGroup fileSystem={fileSystem} selectedFileIndices={selectedFileIndices} />);
       }
+      // if (cleanedRenderArray[iterator] === 'selected') {
+      //   desktopItemMarkup.push(React.createElement('div', { className: styles.selectedBlock }, [selectedFiles]));
+      // }
     }
     return (connectDropTarget(
       <div id="desktop"
