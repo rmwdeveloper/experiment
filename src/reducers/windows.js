@@ -88,7 +88,7 @@ export default function layout(state = initialState, action) {
     case SELECT_ICONS:
       return { ...state, selectedDesktopIcons: action.icons };
     case CLEAR_ACTIVES:
-      return { ...state, selectedDesktopIcons: [], contextMenuActive: false };
+      return { ...state, contextMenuActive: false };
     case OPEN_FILE_WINDOW:
       return { ...state, openedFiles: [...state.openedFiles,
         { nodeIndex: action.nodeIndex, height: 300, width: 300, xPosition: ((action.desktopWidth / 2.4) + state.openedFiles.length * 5)

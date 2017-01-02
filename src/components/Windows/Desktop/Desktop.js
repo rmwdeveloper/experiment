@@ -83,8 +83,9 @@ class Desktop extends Component {
   }
   shouldComponentUpdate(nextProps, nextState) {
     return (this.state.selectedIcons !== nextState.selectedIcons) ||
-      this.props.desktopWidth !== nextProps.desktopWidth ||
-      this.props.desktopHeight !== nextProps.desktopHeight ||
+      (this.props.desktopWidth !== nextProps.desktopWidth) ||
+      (this.props.desktopHeight !== nextProps.desktopHeight) ||
+      (this.props.selectedDesktopIcons !== nextProps.selectedDesktopIcons) ||
       (this.props.contextMenuActive !== nextProps.contextMenuActive) ||
       (this.props.contextMenuX !== nextProps.contextMenuX)||
       (this.props.openedFiles !== nextProps.openedFiles) ||
@@ -211,6 +212,7 @@ class Desktop extends Component {
         dragStartX: null,
         dragStartY: null
       });
+      console.log(this.selectedIcons);
       selectIcons(this.selectedIcons);
       this.dragbox.remove();
       this.dragbox.border = 'none';
@@ -237,7 +239,7 @@ class Desktop extends Component {
       if ( overlapping ) {
         this.icons[i].style.backgroundColor = 'rgba(66,85,101,0.25)';
         this.icons[i].style.outline = '2px solid rgb(115, 128, 140)';
-        this.selectedIcons.push(this.icons[i]);
+        this.selectedIcons.push(this.icons[i].dataset['index']);
       }
     }
   }
@@ -286,10 +288,16 @@ class Desktop extends Component {
     const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, contextMenuClickClass, contextMenuIndexClicked,
       errorWindows, closeErrorWindow, connectDropTarget,
       selectedDesktopIcons, createFolder, openErrorWindow, openFile, openedFiles, fileSystem, desktopWidth, desktopHeight } = this.props;
-    let unselectedIcons = desktopItems;
-    if (this.icons.length > 0 && selectedDesktopIcons.length > 0) {
-      unselectedIcons = this.diffNodeLists(this.icons, selectedDesktopIcons);
-    }
+    // let unselectedIcons = desktopItems;
+    // if (this.icons.length > 0 && selectedDesktopIcons.length > 0) {
+    //   unselectedIcons = this.diffNodeLists(this.icons, selectedDesktopIcons);
+    // }
+    const selectedFiles = selectedDesktopIcons.map(id=> {
+      return fileSystem[id];
+    });
+
+    console.log('selectedIcons', selectedFiles);
+    console.log('desktopItems', desktopItems);
     return (connectDropTarget(
       <div id="desktop"
            data-clickClass={windowsClickables.desktop}
