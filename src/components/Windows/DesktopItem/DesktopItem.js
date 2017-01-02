@@ -31,10 +31,9 @@ const desktopItemSource = {
     }
     const item = monitor.getItem();
     const dropResult = monitor.getDropResult();
-    console.log(item, dropResult);
+
     if (item !== dropResult) {
-      console.log('something was droppeD!');
-      // props.reorderCourses(item, dropResult);
+      props.moveFile(item, dropResult);
     }
     if (props === component) {
       return;

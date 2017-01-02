@@ -21,7 +21,7 @@ export const INITIALIZE_BROWSER_DIMENSIONS = 'windows/INITIALIZE_BROWSER_DIMENSI
 export const INITIALIZE_DESKTOP_DIMENSIONS = 'windows/INITIALIZE_DESKTOP_DIMENSIONS';
 export const OPEN_ERROR_WINDOW = 'windows/OPEN_ERROR_WINDOW';
 export const CLOSE_ERROR_WINDOW = 'windows/CLOSE_ERROR_WINDOW';
-
+export const MOVE_FILE = 'windows/MOVE_FILE';
 
 export const LOAD_STOCKS = 'stock/LOAD_STOCKS';
 export const SEARCH_STOCKS = 'stock/SEARCH_STOCKS';

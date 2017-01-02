@@ -19,7 +19,8 @@ import {
   INITIALIZE_BROWSER_DIMENSIONS,
   INITIALIZE_DESKTOP_DIMENSIONS,
   OPEN_ERROR_WINDOW,
-  CLOSE_ERROR_WINDOW
+  CLOSE_ERROR_WINDOW,
+  MOVE_FILE
 } from '../constants';
 
 
@@ -96,6 +97,8 @@ export default function layout(state = initialState, action) {
     case OPEN_ERROR_WINDOW:
       return { ...state, errorWindows: [...state.errorWindows, { errorMessage: action.errorMessage, height: 150, width: 400,
         xPosition: (action.desktopWidth / 2.4), yPosition: (action.desktopHeight / 4) }] };
+    case MOVE_FILE:
+      return state;
     case CLOSE_FILE_WINDOW:
       return { ...state, openedFiles: [...state.openedFiles.slice(0, action.openedFileIndex),
             ...state.openedFiles.slice(action.openedFileIndex + 1)] };

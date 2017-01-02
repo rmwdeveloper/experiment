@@ -285,7 +285,7 @@ class Desktop extends Component {
   }
   render() {
     const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, contextMenuClickClass, contextMenuIndexClicked,
-      errorWindows, closeErrorWindow, connectDropTarget,
+      errorWindows, closeErrorWindow, connectDropTarget, moveFile,
       selectedDesktopIcons, createFolder, openErrorWindow, openFile, openedFiles, fileSystem, desktopWidth, desktopHeight } = this.props;
     // todo cleanup this render method, abstract some crap away to helper methods.
     const desktopItemMarkup = [];
@@ -309,7 +309,8 @@ class Desktop extends Component {
     for (let iterator = 0; iterator < cleanedRenderArray.length; iterator++){
       if (typeof(cleanedRenderArray[iterator]) === 'number') {
         const file = fileSystem[cleanedRenderArray[iterator]];
-        desktopItemMarkup.push(<DesktopItem key={file.index} desktopWidth={desktopWidth} desktopHeight={desktopHeight} index={file.index} openFile={openFile} item={file} />);
+        desktopItemMarkup.push(<DesktopItem key={file.index} desktopWidth={desktopWidth} desktopHeight={desktopHeight} index={file.index}
+                         moveFile={moveFile}  openFile={openFile} item={file} />);
       }
       if (cleanedRenderArray[iterator] === 'selected') {
         desktopItemMarkup.push(React.createElement('div', {className: styles.selectedBlock}, [selectedFiles]));
@@ -354,7 +355,6 @@ class Desktop extends Component {
 
 const desktopTarget = {
   drop(props) {
-    console.log('item Dropped on desktop..');
     const {id, order, index} = props;
     return {id, order, index};
   }
@@ -362,7 +362,6 @@ const desktopTarget = {
 };
 
 function collectTarget(connect, monitor) {
-  console.log('collectTarget');
   return {
     connectDropTarget: connect.dropTarget(),
     isOver: monitor.isOver()
