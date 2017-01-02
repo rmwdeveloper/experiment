@@ -5,7 +5,6 @@ import cx from 'classnames';
 import { windowsClickables } from '../../../constants/windows';
 
 function DesktopItem({ item, openFile, desktopWidth, desktopHeight }) {
-  console.log()
   return (
     <div data-clickClass={windowsClickables.desktopItem} data-topClickable data-index={item.index} onDoubleClick={() => { openFile(item.index, desktopWidth, desktopHeight); }} className={cx('desktopIcon', styles.root)}>
       <img data-index={item.index} className={styles.icon} src={item.metadata.icon} alt={`${item.name} icon`} />
