@@ -354,6 +354,7 @@ class Desktop extends Component {
 
 const desktopTarget = {
   drop(props) {
+    console.log('item Dropped on desktop..');
     const {id, order, index} = props;
     return {id, order, index};
   }
@@ -361,6 +362,7 @@ const desktopTarget = {
 };
 
 function collectTarget(connect, monitor) {
+  console.log('collectTarget');
   return {
     connectDropTarget: connect.dropTarget(),
     isOver: monitor.isOver()
@@ -368,5 +370,4 @@ function collectTarget(connect, monitor) {
 }
 
 export default withStyles(styles)(dragDropContext(HTML5Backend)(dropTarget('desktop', desktopTarget, collectTarget)(Desktop)));
-// export default dropTarget(withStyles(styles)(Desktop));
-// export default withStyles(styles)(Desktop);
+

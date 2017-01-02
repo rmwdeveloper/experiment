@@ -1,21 +1,71 @@
 import React, { PropTypes } from 'react';
+import { DragSource as dragSource, DropTarget as dropTarget } from 'react-dnd';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './DesktopItem.css'; //eslint-disable-line
 import cx from 'classnames';
 import { windowsClickables } from '../../../constants/windows';
+import flow from 'lodash.flow';
 
-function DesktopItem({ item, openFile, desktopWidth, desktopHeight, selected }) {
+function DesktopItem({ item, openFile, desktopWidth, desktopHeight, selected, connectDragSource, connectDropTarget }) {
   const style = selected ? {backgroundColor: 'rgba(66,85,101,0.25)', outline: '2px solid rgb(115, 128, 140)'} : {};
-  return (
+  return connectDragSource( connectDropTarget(
     <div style={style} data-clickClass={windowsClickables.desktopItem} data-topClickable data-index={item.index} onDoubleClick={() => { openFile(item.index, desktopWidth, desktopHeight); }} className={cx('desktopIcon', styles.root)}>
       <img data-index={item.index} className={styles.icon} src={item.metadata.icon} alt={`${item.name} icon`} />
       <span data-clickClass={windowsClickables.desktopItemName} data-index={item.index} className={styles.directoryName}> {item.name}</span>
     </div>
-  );
+  ));
 }
 
 DesktopItem.propTypes = {
   item: PropTypes.object,
   openFile: PropTypes.func
 };
-export default withStyles(styles)(DesktopItem);
+
+const desktopItemSource = {
+  beginDrag(props) {
+    console.log('beginDrag');
+    const {id, order, index} = props;
+    return {id, order, index};
+  },
+  endDrag(props, monitor, component) {
+    console.log('endDrag');
+    if (!monitor.didDrop()) {
+      return;
+    }
+    const item = monitor.getItem();
+    const dropResult = monitor.getDropResult();
+    if (item !== dropResult) {
+      console.log('something was droppeD!');
+      // props.reorderCourses(item, dropResult);
+    }
+    if (props === component) {
+      return;
+    }
+  }
+};
+function collectSource(connect, monitor) {
+  console.log('collectSource');
+  return {
+    connectDragSource: connect.dragSource(),
+    isDragging: monitor.isDragging()
+  };
+}
+
+const desktopItemTarget = {
+  drop(props) {
+    const {id, order, index} = props;
+    return {id, order, index};
+  }
+
+};
+
+function collectTarget(connect, monitor) {
+  return {
+    connectDropTarget: connect.dropTarget(),
+    isOver: monitor.isOver()
+  };
+}
+
+export default withStyles(styles)(flow(dragSource('desktopItem', desktopItemSource, collectSource),
+  dropTarget('desktopItem', desktopItemTarget, collectTarget))(DesktopItem));
+
