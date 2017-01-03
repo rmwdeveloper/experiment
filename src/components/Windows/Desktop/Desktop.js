@@ -292,15 +292,15 @@ class Desktop extends Component {
     const desktopItemMarkup = [];
     const selectedFileIndices = selectedDesktopIcons.map(iconId => {return parseInt(iconId, 10)});
     const desktopItemIndices = desktopItems.map(desktopItem => { return desktopItem.index});
-    const selectedFiles = selectedFileIndices.map(id=> {
-      const file = fileSystem[id];
-      return <DesktopItem selected key={file.index}  moveFile={moveFile}
-                          desktopWidth={desktopWidth} desktopHeight={desktopHeight} index={file.index} openFile={openFile} item={file} />;
-    });
-    const unselectedFiles = desktopItems.filter(desktopItem=> {
-      return !selectedDesktopIcons.includes(desktopItem.index.toString());
-    });
-    const unselectedFileIndices = unselectedFiles.map(unselectedFile => { return unselectedFile.index;});
+    // const selectedFiles = selectedFileIndices.map(id=> {
+    //   const file = fileSystem[id];
+    //   return <DesktopItem selected key={file.index}  moveFile={moveFile}
+    //                       desktopWidth={desktopWidth} desktopHeight={desktopHeight} index={file.index} openFile={openFile} item={file} />;
+    // });
+    // const unselectedFiles = desktopItems.filter(desktopItem=> {
+    //   return !selectedDesktopIcons.includes(desktopItem.index.toString());
+    // });
+    // const unselectedFileIndices = unselectedFiles.map(unselectedFile => { return unselectedFile.index;});
     const renderArray = desktopItemIndices.map(index => {
       return selectedFileIndices.includes(index) ? 'selected' : index;
     });
@@ -317,9 +317,6 @@ class Desktop extends Component {
       if (cleanedRenderArray[iterator] === 'selected') {
         desktopItemMarkup.push(<DesktopItemsGroup key={iterator} fileSystem={fileSystem} selectedFileIndices={selectedFileIndices} />);
       }
-      // if (cleanedRenderArray[iterator] === 'selected') {
-      //   desktopItemMarkup.push(React.createElement('div', { className: styles.selectedBlock }, [selectedFiles]));
-      // }
     }
     return (connectDropTarget(
       <div id="desktop"
@@ -359,9 +356,12 @@ class Desktop extends Component {
 
 
 const desktopTarget = {
-  drop(props) {
-    const {id, order, index} = props;
-    return {id, order, index};
+  drop(props, monitor, component) {
+    if (monitor.didDrop()) {
+      return;
+    } else {
+      console.log('dropped on desktop');
+    }
   }
 
 };
@@ -373,5 +373,5 @@ function collectTarget(connect, monitor) {
   };
 }
 
-export default withStyles(styles)(dragDropContext(HTML5Backend)(dropTarget('desktop', desktopTarget, collectTarget)(Desktop)));
+export default withStyles(styles)(dragDropContext(HTML5Backend)(dropTarget(['desktopItem', 'desktopItemGroup'], desktopTarget, collectTarget)(Desktop)));
 

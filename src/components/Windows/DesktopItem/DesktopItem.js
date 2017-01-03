@@ -26,6 +26,7 @@ const desktopItemSource = {
     return {index: props.index};
   },
   endDrag(props, monitor, component) {
+    return null;
     if (!monitor.didDrop()) {
       return;
     }
@@ -33,7 +34,7 @@ const desktopItemSource = {
     const dropResult = monitor.getDropResult();
 
     if (item !== dropResult) {
-      props.moveFile(item, dropResult);
+      // props.moveFile(item, dropResult);
     }
     if (props === component) {
       return;
@@ -49,6 +50,7 @@ function collectSource(connect, monitor) {
 
 const desktopItemTarget = {
   drop(props) {
+    console.log('drop on desktopItem..');
     return { index: props.index };
   },
 };
@@ -61,5 +63,5 @@ function collectTarget(connect, monitor) {
 }
 
 export default withStyles(styles)(flow(dragSource('desktopItem', desktopItemSource, collectSource),
-  dropTarget('desktopItem', desktopItemTarget, collectTarget))(DesktopItem));
+  dropTarget(['desktopItem', 'desktopItemGroup'], desktopItemTarget, collectTarget))(DesktopItem));
 
