@@ -115,6 +115,7 @@ class FolderContents extends Component {
       if ( overlapping ) {
         this.icons[i].style.backgroundColor = 'rgba(66,85,101,0.25)';
         this.icons[i].style.outline = '2px solid rgb(115, 128, 140)';
+        // console.log(this.icons[i]);
         this.selectedIcons.push(this.icons[i].dataset['index']);
       }
     }

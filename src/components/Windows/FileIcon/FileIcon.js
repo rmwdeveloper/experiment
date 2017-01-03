@@ -8,6 +8,7 @@ import flow from 'lodash.flow';
 
 function FileIcon({ item, openFile, desktopWidth, desktopHeight, selected, connectDragSource, connectDropTarget, className }) {
   const style = selected ? {backgroundColor: 'rgba(66,85,101,0.25)', outline: '2px solid rgb(115, 128, 140)'} : {};
+  console.log(item);
   return connectDragSource(connectDropTarget(
     <div style={style} data-clickClass={windowsClickables.desktopItem} data-topClickable data-index={item.index} onDoubleClick={() => { openFile(item.index, desktopWidth, desktopHeight); }}
          className={cx(className, styles.root)}>
