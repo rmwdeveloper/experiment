@@ -1,20 +1,22 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes, Component } from 'react';
 import { DropTarget as dropTarget } from 'react-dnd';
 import styles from './FolderContents.css'; //eslint-disable-line
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
-
-function FolderContents({ folderContents, connectDropTarget }) {
-  return connectDropTarget(
-    <div className={styles.root}>
-      {folderContents}
-    </div>
-  );
+class FolderContents extends Component {
+  static propTypes = {
+    folderContents: PropTypes.array,
+    connectDropTarget: PropTypes.func
+  };
+  render() {
+    const { folderContents, connectDropTarget } = this.props;
+    return connectDropTarget(
+      <div className={styles.root}>
+        {folderContents}
+      </div>
+    );
+  }
 }
-
-FolderContents.propTypes = {
-  folderContents: PropTypes.array
-};
 
 const folderTarget = {
   drop(props, monitor) {
