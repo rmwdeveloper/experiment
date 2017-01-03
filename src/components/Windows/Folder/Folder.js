@@ -4,6 +4,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import FolderItem from '../FolderItem';
 import FolderSidebar from '../FolderSidebar';
 import FolderNavigation from '../FolderNavigation';
+import FolderContents from '../FolderContents';
 
 function Folder({openedFile, fileSystem, desktopWidth, desktopHeight, openFile}) {
   const folderContents = fileSystem[openedFile.nodeIndex].children ? fileSystem[openedFile.nodeIndex].children.map((nodeIndex, index) => {
@@ -17,9 +18,7 @@ function Folder({openedFile, fileSystem, desktopWidth, desktopHeight, openFile})
       <FolderNavigation />
       <div className={styles.sidebarAndFolderContents}>
         <FolderSidebar />
-        <div className={styles.folderContents}>
-          {folderContents}
-        </div>
+        <FolderContents folderContents={folderContents} index={openedFile.nodeIndex} />
       </div>
     </div>
   );

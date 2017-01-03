@@ -9,11 +9,6 @@
   min-height: 200px;
 }
 
-.folderContents {
-  overflow-y: auto;
-  width: calc(100% - 90px);
-}
-
 .sidebarAndFolderContents {
   position: relative;
   display: flex;
