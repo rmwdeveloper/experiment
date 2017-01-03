@@ -144,7 +144,7 @@ export function openErrorWindow(errorMessage) {
   }
 }
 
-export function moveFile(fromNodeIndex, toNodeIndex) {
+export function moveFile(fromNodeIndex, fromParentIndex, toNodeIndex) {
   return dispatch => {
     dispatch({ type: MOVE_FILE, fromNodeIndex, toNodeIndex});
   }
