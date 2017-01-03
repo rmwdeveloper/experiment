@@ -30,8 +30,11 @@ class FolderContents extends Component {
   }
   componentDidMount() {
     this.icons = document.getElementsByClassName('folderIcon');
+    this.folderContents = document.getElementById(`folderContents${this.props.index}`);
     this.header = document.getElementById('primaryHeader');
-    this.setState({desktopWidth: this.desktop.offsetWidth, // todo have a workaround for this
+    this.folderContents.onmousedown = this.folderContentsMouseDown;
+    this.folderContents.onmouseup = this.folderContentsMouseUp;
+    this.setState({// todo have a workaround for this
       headerHeight: this.header.offsetHeight});
   }
   startDragSelect(event) {
@@ -41,18 +44,20 @@ class FolderContents extends Component {
     if (!this.dragbox) {
       this.dragbox = document.createElement('div');
       this.dragbox.setAttribute('id', 'dragbox');
-      this.desktop.appendChild(this.dragbox);
+      this.folderContents.appendChild(this.dragbox);
       this.dragbox.style.position = 'absolute';
-      this.dragbox.style.zIndex = 1;
+      this.dragbox.style.zIndex = 3;
       this.dragbox.style.backgroundColor = 'rgba(35, 90, 216, .25)';
     }
 
 
-    this.dragbox.style.top = `${event.clientY - headerHeight}px`;
-    this.dragbox.style.left = `${event.clientX}px`;
+    this.dragbox.style.top = `${event.offsetY}px`;
+    this.dragbox.style.left = `${event.offsetX}px`;
+    // this.dragbox.style.top = `${5}px`;
+    // this.dragbox.style.left = `${5}px`;
     this.dragbox.style.width = '10px';
     this.dragbox.style.height = '10px';
-    this.desktop.addEventListener('mousemove', this.dragSelecting);
+    this.folderContents.addEventListener('mousemove', this.dragSelecting);
 
     this.setState({
       dragStartX: event.clientX,
@@ -63,7 +68,7 @@ class FolderContents extends Component {
   }
   stopDragSelect() {
     const { selectIcons } = this.props;
-    this.desktop.removeEventListener('mousemove', this.dragSelecting);
+    this.folderContents.removeEventListener('mousemove', this.dragSelecting);
 
     if (this.dragbox) {
       this.setState({
@@ -126,9 +131,9 @@ class FolderContents extends Component {
     this.startDragSelect(event);
   }
   render(){
-    const { folderContents, connectDropTarget } = this.props;
+    const { folderContents, connectDropTarget, index } = this.props;
     return connectDropTarget(
-      <div className={styles.root}>
+      <div id={`folderContents${index}`} className={styles.root}>
         {folderContents}
       </div>
     );
