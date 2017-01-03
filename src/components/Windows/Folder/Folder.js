@@ -1,12 +1,12 @@
 import React, { PropTypes } from 'react';
 import styles from './Folder.css'; //eslint-disable-line
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import FolderItem from '../FolderItem';
+import FolderItem from '../FileIcon';
 import FolderSidebar from '../FolderSidebar';
 import FolderNavigation from '../FolderNavigation';
 import FolderContents from '../FolderContents';
 
-function Folder({openedFile, fileSystem, desktopWidth, desktopHeight, openFile}) {
+function Folder({openedFile, fileSystem, desktopWidth, desktopHeight, openFile, moveFile, moveFiles}) {
   const folderContents = fileSystem[openedFile.nodeIndex].children ? fileSystem[openedFile.nodeIndex].children.map((nodeIndex, index) => {
     fileSystem[nodeIndex].index = nodeIndex;
     return <FolderItem key={index} desktopWidth={desktopWidth} desktopHeight={desktopHeight} index={index} openFile={openFile} item={fileSystem[nodeIndex]} />;
@@ -18,7 +18,7 @@ function Folder({openedFile, fileSystem, desktopWidth, desktopHeight, openFile})
       <FolderNavigation />
       <div className={styles.sidebarAndFolderContents}>
         <FolderSidebar />
-        <FolderContents folderContents={folderContents} index={openedFile.nodeIndex} />
+        <FolderContents moveFile={moveFile} moveFile={moveFiles} folderContents={folderContents} index={openedFile.nodeIndex} />
       </div>
     </div>
   );

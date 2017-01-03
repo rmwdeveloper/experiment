@@ -1,12 +1,12 @@
 import React, { PropTypes } from 'react';
 import { DragSource as dragSource, DropTarget as dropTarget } from 'react-dnd';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import styles from './DesktopItem.css'; //eslint-disable-line
+import styles from './FileIcon.css'; //eslint-disable-line
 import cx from 'classnames';
 import { windowsClickables } from '../../../constants/windows';
 import flow from 'lodash.flow';
 
-function DesktopItem({ item, openFile, desktopWidth, desktopHeight, selected, connectDragSource, connectDropTarget }) {
+function FileIcon({ item, openFile, desktopWidth, desktopHeight, selected, connectDragSource, connectDropTarget }) {
   const style = selected ? {backgroundColor: 'rgba(66,85,101,0.25)', outline: '2px solid rgb(115, 128, 140)'} : {};
   return connectDragSource(connectDropTarget(
     <div style={style} data-clickClass={windowsClickables.desktopItem} data-topClickable data-index={item.index} onDoubleClick={() => { openFile(item.index, desktopWidth, desktopHeight); }} className={cx('desktopIcon', styles.root)}>
@@ -16,12 +16,12 @@ function DesktopItem({ item, openFile, desktopWidth, desktopHeight, selected, co
   ));
 }
 
-DesktopItem.propTypes = {
+FileIcon.propTypes = {
   item: PropTypes.object,
   openFile: PropTypes.func
 };
 
-const desktopItemSource = {
+const fileIconSource = {
   beginDrag(props) {
     return {index: props.index};
   },
@@ -47,7 +47,7 @@ function collectSource(connect, monitor) {
   };
 }
 
-const desktopItemTarget = {
+const fileIconTarget = {
   drop(props) {
     return { index: props.index, canDrop: props.item.hasOwnProperty('children') };
   }
@@ -60,6 +60,6 @@ function collectTarget(connect, monitor) {
   };
 }
 
-export default withStyles(styles)(flow(dragSource('desktopItem', desktopItemSource, collectSource),
-  dropTarget(['desktopItem', 'desktopItemGroup'], desktopItemTarget, collectTarget))(DesktopItem));
+export default withStyles(styles)(flow(dragSource('fileIcon', fileIconSource, collectSource),
+  dropTarget(['fileIcon', 'fileIconGroup'], fileIconTarget, collectTarget))(FileIcon));
 
