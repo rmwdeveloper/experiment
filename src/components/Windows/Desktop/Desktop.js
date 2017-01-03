@@ -187,7 +187,7 @@ class Desktop extends Component {
       this.dragbox.setAttribute('id', 'dragbox');
       this.desktop.appendChild(this.dragbox);
       this.dragbox.style.position = 'absolute';
-      this.dragbox.style.zIndex = 1000;
+      this.dragbox.style.zIndex = 1;
       this.dragbox.style.backgroundColor = 'rgba(35, 90, 216, .25)';
     }
 
