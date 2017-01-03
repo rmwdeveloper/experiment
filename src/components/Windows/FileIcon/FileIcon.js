@@ -23,7 +23,7 @@ FileIcon.propTypes = {
 
 const fileIconSource = {
   beginDrag(props) {
-    return {index: props.index};
+    return {index: props.item.index};
   },
   endDrag(props, monitor, component) {
     if (!monitor.didDrop()) {
