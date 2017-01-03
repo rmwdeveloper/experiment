@@ -286,21 +286,12 @@ class Desktop extends Component {
   }
   render() {
     const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, contextMenuClickClass, contextMenuIndexClicked,
-      errorWindows, closeErrorWindow, connectDropTarget, moveFile,
+      errorWindows, closeErrorWindow, connectDropTarget, moveFile, moveFiles,
       selectedDesktopIcons, createFolder, openErrorWindow, openFile, openedFiles, fileSystem, desktopWidth, desktopHeight } = this.props;
     // todo cleanup this render method, abstract some crap away to helper methods.
     const desktopItemMarkup = [];
     const selectedFileIndices = selectedDesktopIcons.map(iconId => {return parseInt(iconId, 10)});
     const desktopItemIndices = desktopItems.map(desktopItem => { return desktopItem.index});
-    // const selectedFiles = selectedFileIndices.map(id=> {
-    //   const file = fileSystem[id];
-    //   return <DesktopItem selected key={file.index}  moveFile={moveFile}
-    //                       desktopWidth={desktopWidth} desktopHeight={desktopHeight} index={file.index} openFile={openFile} item={file} />;
-    // });
-    // const unselectedFiles = desktopItems.filter(desktopItem=> {
-    //   return !selectedDesktopIcons.includes(desktopItem.index.toString());
-    // });
-    // const unselectedFileIndices = unselectedFiles.map(unselectedFile => { return unselectedFile.index;});
     const renderArray = desktopItemIndices.map(index => {
       return selectedFileIndices.includes(index) ? 'selected' : index;
     });
@@ -315,7 +306,7 @@ class Desktop extends Component {
                          moveFile={moveFile}  openFile={openFile} item={file} />);
       }
       if (cleanedRenderArray[iterator] === 'selected') {
-        desktopItemMarkup.push(<DesktopItemsGroup key={iterator} fileSystem={fileSystem} selectedFileIndices={selectedFileIndices} />);
+        desktopItemMarkup.push(<DesktopItemsGroup moveFiles={moveFiles} key={iterator} fileSystem={fileSystem} selectedFileIndices={selectedFileIndices} />);
       }
     }
     return (connectDropTarget(
@@ -360,7 +351,7 @@ const desktopTarget = {
     if (monitor.didDrop()) {
       return;
     }
-    return { index: props.desktopNodeIndex };
+    return { index: props.desktopNodeIndex, canDrop: true };
 
   }
 

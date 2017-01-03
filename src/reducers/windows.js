@@ -20,7 +20,8 @@ import {
   INITIALIZE_DESKTOP_DIMENSIONS,
   OPEN_ERROR_WINDOW,
   CLOSE_ERROR_WINDOW,
-  MOVE_FILE
+  MOVE_FILE,
+  MOVE_FILES
 } from '../constants';
 
 
@@ -98,7 +99,8 @@ export default function layout(state = initialState, action) {
       return { ...state, errorWindows: [...state.errorWindows, { errorMessage: action.errorMessage, height: 150, width: 400,
         xPosition: (action.desktopWidth / 2.4), yPosition: (action.desktopHeight / 4) }] };
     case MOVE_FILE:
-      console.log(`Moving ${state.fileSystem[action.fromNodeIndex].name} to ${state.fileSystem[action.toNodeIndex].name}`);
+      return state;
+    case MOVE_FILES:
       return state;
     case CLOSE_FILE_WINDOW:
       return { ...state, openedFiles: [...state.openedFiles.slice(0, action.openedFileIndex),

@@ -15,7 +15,8 @@ import {
   INITIALIZE_DESKTOP_DIMENSIONS,
   OPEN_ERROR_WINDOW,
   CLOSE_ERROR_WINDOW,
-  MOVE_FILE
+  MOVE_FILE,
+  MOVE_FILES
 } from '../constants';
 
 // todo rmw: Remove parameters in actions that can be gotten in state. e.g., openFile desktopWidth
@@ -146,5 +147,11 @@ export function openErrorWindow(errorMessage) {
 export function moveFile(fromNodeIndex, toNodeIndex) {
   return dispatch => {
     dispatch({ type: MOVE_FILE, fromNodeIndex, toNodeIndex});
+  }
+}
+
+export function moveFiles(fromIndices, toNodeIndex) {
+  return dispatch => {
+    dispatch({ type: MOVE_FILES, fromIndices, toNodeIndex});
   }
 }

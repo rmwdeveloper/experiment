@@ -29,9 +29,10 @@ const desktopItemSource = {
     if (!monitor.didDrop()) {
       return;
     }
+
     const item = monitor.getItem();
     const dropResult = monitor.getDropResult();
-    if (item !== dropResult) {
+    if (item !== dropResult && (dropResult.canDrop)) {
       props.moveFile(item.index, dropResult.index);
     }
     if (props === component) {
@@ -48,8 +49,8 @@ function collectSource(connect, monitor) {
 
 const desktopItemTarget = {
   drop(props) {
-    return { index: props.index };
-  },
+    return { index: props.index, canDrop: props.item.hasOwnProperty('children') };
+  }
 };
 
 function collectTarget(connect, monitor) {
