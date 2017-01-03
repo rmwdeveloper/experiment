@@ -30,7 +30,7 @@ class Desktop extends Component {
   };
   constructor() {
     super();
-    this.startDragSelect = this.startDragSelect.bind(this);
+    this.startDragSelect = this.startDragSelect.bind(this); // todo: dragSelect. refactor this with the method found in FolderContents.
     this.stopDragSelect = this.stopDragSelect.bind(this);
     this.startDragWindow = this.startDragWindow.bind(this);
     this.dragWindow = this.dragWindow.bind(this);
@@ -78,7 +78,7 @@ class Desktop extends Component {
     this.props.initializeDesktopDimensions(this.desktop.offsetWidth, this.desktop.offsetHeight);
     window.addEventListener('resize', this.desktopResize.bind(this));
 
-    this.setState({desktopWidth: this.desktop.offsetWidth,
+    this.setState({desktopWidth: this.desktop.offsetWidth, // todo have a workaround for this
       desktopHeight: this.desktop.offsetHeight,
       headerHeight: this.header.offsetHeight});
   }
