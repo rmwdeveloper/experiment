@@ -11,6 +11,7 @@
 
 .folderContents {
   overflow-y: auto;
+  width: calc(100% - 90px);
 }
 
 .sidebarAndFolderContents {
