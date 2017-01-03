@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react';
 import { DragSource as dragSource } from 'react-dnd';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import styles from './DesktopItemsGroup.css'; //eslint-disable-line
+import styles from './FileIconGroup.css'; //eslint-disable-line
 import cx from 'classnames';
 import { windowsClickables } from '../../../constants/windows';
 
-function DesktopItemGroup({ selectedFileIndices, connectDragSource, fileSystem }) {
+function FileIconGroup({ selectedFileIndices, connectDragSource, fileSystem }) {
   const desktopItems = selectedFileIndices.map(index => {
     const item = fileSystem[index];
     const style = {backgroundColor: 'rgba(66,85,101,0.25)', outline: '2px solid rgb(115, 128, 140)'};
@@ -23,7 +23,7 @@ function DesktopItemGroup({ selectedFileIndices, connectDragSource, fileSystem }
   ));
 }
 
-DesktopItemGroup.propTypes = {
+FileIconGroup.propTypes = {
   item: PropTypes.object,
   index: PropTypes.number
 };
@@ -53,4 +53,4 @@ function collectSource(connect, monitor) {
   };
 }
 
-export default withStyles(styles)(dragSource('desktopItemGroup', desktopItemsGroupSource, collectSource)(DesktopItemGroup));
+export default withStyles(styles)(dragSource('fileIconGroup', desktopItemsGroupSource, collectSource)(FileIconGroup));

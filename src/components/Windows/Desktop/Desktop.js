@@ -7,7 +7,7 @@ import styles from './Desktop.css'; //eslint-disable-line
 import windowsFileRegistry from '../windowsFileRegistry';
 import { windowsClickables } from '../../../constants/windows';
 import DesktopItem from '../FileIcon';
-import DesktopItemsGroup from '../DesktopItemsGroup';
+import DesktopItemsGroup from '../FileIconGroup';
 import ContextMenu from '../ContextMenu';
 import ErrorWindow from '../ErrorWindow';
 
@@ -367,5 +367,5 @@ function collectTarget(connect, monitor) {
   };
 }
 
-export default withStyles(styles)(dragDropContext(HTML5Backend)(dropTarget(['fileIcon', 'desktopItemGroup'], desktopTarget, collectTarget)(Desktop)));
+export default withStyles(styles)(dragDropContext(HTML5Backend)(dropTarget(['fileIcon', 'fileIconGroup'], desktopTarget, collectTarget)(Desktop)));
 
