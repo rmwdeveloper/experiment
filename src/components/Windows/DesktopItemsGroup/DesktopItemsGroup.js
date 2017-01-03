@@ -30,7 +30,7 @@ DesktopItemGroup.propTypes = {
 
 const desktopItemsGroupSource = {
   beginDrag(props) {
-    return {indices: props.selectedFileIndices};
+    return {indices: props.selectedFileIndices, parentIndex: props.parentIndex };
   },
   endDrag(props, monitor, component) {
     if (!monitor.didDrop()) {
@@ -39,8 +39,7 @@ const desktopItemsGroupSource = {
     const item = monitor.getItem();
     const dropResult = monitor.getDropResult();
     if (item !== dropResult) {
-      console.log(item, dropResult);
-      props.moveFiles(item.indices, dropResult.index);
+      props.moveFiles(item.indices, item.parentIndex, dropResult.index);
     }
     if (props === component) {
       return;

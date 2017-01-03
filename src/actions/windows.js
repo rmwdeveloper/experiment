@@ -150,8 +150,8 @@ export function moveFile(fromNodeIndex, toNodeIndex) {
   }
 }
 
-export function moveFiles(fromIndices, toNodeIndex) {
+export function moveFiles(fromIndices, fromParentIndex, toNodeIndex) {
   return dispatch => {
-    dispatch({ type: MOVE_FILES, fromIndices, toNodeIndex});
+    dispatch({ type: MOVE_FILES, fromIndices, fromParentIndex, toNodeIndex});
   }
 }

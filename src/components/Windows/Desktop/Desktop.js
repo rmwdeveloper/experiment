@@ -288,7 +288,7 @@ class Desktop extends Component {
   }
   render() {
     const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, contextMenuClickClass, contextMenuIndexClicked,
-      errorWindows, closeErrorWindow, connectDropTarget, moveFile, moveFiles,
+      errorWindows, closeErrorWindow, connectDropTarget, moveFile, moveFiles, desktopNodeIndex,
       selectedDesktopIcons, createFolder, openErrorWindow, openFile, openedFiles, fileSystem, desktopWidth, desktopHeight } = this.props;
     // todo cleanup this render method, abstract some crap away to helper methods.
     const desktopItemMarkup = [];
@@ -308,7 +308,8 @@ class Desktop extends Component {
                          moveFile={moveFile}  openFile={openFile} item={file} />);
       }
       if (cleanedRenderArray[iterator] === 'selected') {
-        desktopItemMarkup.push(<DesktopItemsGroup moveFiles={moveFiles} key={iterator} fileSystem={fileSystem} selectedFileIndices={selectedFileIndices} />);
+        desktopItemMarkup.push(<DesktopItemsGroup parentIndex={desktopNodeIndex}
+                                moveFiles={moveFiles} key={iterator} fileSystem={fileSystem} selectedFileIndices={selectedFileIndices} />);
       }
     }
     return (connectDropTarget(

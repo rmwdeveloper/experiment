@@ -115,6 +115,7 @@ export default function layout(state = initialState, action) {
       newFileSystem[action.toNodeIndex].children.push(action.fromNodeIndex);
       return {...state, fileSystem: newFileSystem};
     case MOVE_FILES:
+      console.log(action);
       return state;
     case CLOSE_FILE_WINDOW:
       return { ...state, openedFiles: [...state.openedFiles.slice(0, action.openedFileIndex),
