@@ -53,8 +53,6 @@ class FolderContents extends Component {
 
     this.dragbox.style.top = `${event.offsetY}px`;
     this.dragbox.style.left = `${event.offsetX}px`;
-    // this.dragbox.style.top = `${5}px`;
-    // this.dragbox.style.left = `${5}px`;
     this.dragbox.style.width = '10px';
     this.dragbox.style.height = '10px';
     this.folderContents.addEventListener('mousemove', this.dragSelecting);
