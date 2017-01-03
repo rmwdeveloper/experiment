@@ -304,11 +304,11 @@ class Desktop extends Component {
     for (let iterator = 0; iterator < cleanedRenderArray.length; iterator++){
       if (typeof(cleanedRenderArray[iterator]) === 'number') {
         const file = fileSystem[cleanedRenderArray[iterator]];
-        desktopItemMarkup.push(<DesktopItem key={file.index} desktopWidth={desktopWidth} desktopHeight={desktopHeight} index={file.index}
+        desktopItemMarkup.push(<DesktopItem className='desktopIcon' key={file.index} desktopWidth={desktopWidth} desktopHeight={desktopHeight} index={file.index}
                          moveFile={moveFile}  openFile={openFile} item={file} />);
       }
       if (cleanedRenderArray[iterator] === 'selected') {
-        desktopItemMarkup.push(<DesktopItemsGroup parentIndex={desktopNodeIndex}
+        desktopItemMarkup.push(<DesktopItemsGroup parentIndex={desktopNodeIndex} className='desktopIcon'
                                 moveFiles={moveFiles} key={iterator} fileSystem={fileSystem} selectedFileIndices={selectedFileIndices} />);
       }
     }

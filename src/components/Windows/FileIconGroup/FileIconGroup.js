@@ -5,12 +5,12 @@ import styles from './FileIconGroup.css'; //eslint-disable-line
 import cx from 'classnames';
 import { windowsClickables } from '../../../constants/windows';
 
-function FileIconGroup({ selectedFileIndices, connectDragSource, fileSystem }) {
+function FileIconGroup({ selectedFileIndices, connectDragSource, fileSystem, className }) {
   const desktopItems = selectedFileIndices.map(index => {
     const item = fileSystem[index];
     const style = {backgroundColor: 'rgba(66,85,101,0.25)', outline: '2px solid rgb(115, 128, 140)'};
     return (
-      <div data-clickClass={windowsClickables.desktopItem} data-topClickable data-index={item.index} style={style} key={item.index} className={cx('desktopIcon', styles.desktopItem)}>
+      <div data-clickClass={windowsClickables.desktopItem} data-topClickable data-index={item.index} style={style} key={item.index} className={cx(className, styles.desktopItem)}>
         <img data-index={item.index} className={styles.icon} src={item.metadata.icon} alt={`${item.name} icon`} />
         <span className={styles.directoryName}> {item.name}</span>
       </div>
