@@ -365,5 +365,5 @@ function collectTarget(connect, monitor) {
   };
 }
 
-export default withStyles(styles)(dragDropContext(HTML5Backend)(dropTarget(['desktopItem', 'desktopItemGroup'], desktopTarget, collectTarget)(Desktop)));
+export default withStyles(styles)(dragDropContext(HTML5Backend)(dropTarget(['fileIcon', 'desktopItemGroup'], desktopTarget, collectTarget)(Desktop)));
 

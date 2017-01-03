@@ -9,7 +9,8 @@ import FolderContents from '../FolderContents';
 function Folder({openedFile, fileSystem, desktopWidth, desktopHeight, openFile, moveFile, moveFiles}) {
   const folderContents = fileSystem[openedFile.nodeIndex].children ? fileSystem[openedFile.nodeIndex].children.map((nodeIndex, index) => {
     fileSystem[nodeIndex].index = nodeIndex;
-    return <FolderItem key={index} desktopWidth={desktopWidth} desktopHeight={desktopHeight} index={index} openFile={openFile} item={fileSystem[nodeIndex]} />;
+    return <FolderItem moveFile={moveFile} moveFiles={moveFiles}
+                       key={index} desktopWidth={desktopWidth} desktopHeight={desktopHeight} index={index} openFile={openFile} item={fileSystem[nodeIndex]} />;
   }) : null;
   const windowHeight = openedFile.height - 30;
 

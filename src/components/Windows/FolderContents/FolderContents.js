@@ -32,4 +32,4 @@ function collectTarget(connect, monitor) {
   };
 }
 
-export default withStyles(styles)(dropTarget(['desktopItem', 'desktopItemGroup'], folderTarget, collectTarget)(FolderContents));
+export default withStyles(styles)(dropTarget(['fileIcon', 'desktopItemGroup'], folderTarget, collectTarget)(FolderContents));
