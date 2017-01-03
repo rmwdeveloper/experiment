@@ -9,7 +9,7 @@ function DesktopItemGroup({ selectedFileIndices, connectDragSource, fileSystem }
     const item = fileSystem[index];
     const style = {backgroundColor: 'rgba(66,85,101,0.25)', outline: '2px solid rgb(115, 128, 140)'};
     return (
-      <div style={style} className={cx('desktopIcon', styles.desktopItem)}>
+      <div style={style} key={item.index} className={cx('desktopIcon', styles.desktopItem)}>
         <img data-index={item.index} className={styles.icon} src={item.metadata.icon} alt={`${item.name} icon`} />
         <span className={styles.directoryName}> {item.name}</span>
       </div>
@@ -32,6 +32,7 @@ const desktopItemsGroupSource = {
     return {index: props.selectedFileIndices};
   },
   endDrag(props, monitor, component) {
+    console.log(props, monitor, component);
     if (!monitor.didDrop()) {
       return;
     }

@@ -315,7 +315,7 @@ class Desktop extends Component {
                          moveFile={moveFile}  openFile={openFile} item={file} />);
       }
       if (cleanedRenderArray[iterator] === 'selected') {
-        desktopItemMarkup.push(<DesktopItemsGroup fileSystem={fileSystem} selectedFileIndices={selectedFileIndices} />);
+        desktopItemMarkup.push(<DesktopItemsGroup key={iterator} fileSystem={fileSystem} selectedFileIndices={selectedFileIndices} />);
       }
       // if (cleanedRenderArray[iterator] === 'selected') {
       //   desktopItemMarkup.push(React.createElement('div', { className: styles.selectedBlock }, [selectedFiles]));
