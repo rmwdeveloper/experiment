@@ -3,9 +3,11 @@
 .root {
   width: 95px;
   height: 95px;
+  overflow: hidden;
   margin: 10px;
-  display: inline-block;
-  float: left;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   cursor: pointer;
 }
 
