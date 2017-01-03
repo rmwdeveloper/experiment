@@ -356,12 +356,12 @@ class Desktop extends Component {
 
 
 const desktopTarget = {
-  drop(props, monitor, component) {
+  drop(props, monitor) {
     if (monitor.didDrop()) {
       return;
-    } else {
-      console.log('dropped on desktop');
     }
+    return { index: props.desktopNodeIndex };
+
   }
 
 };
