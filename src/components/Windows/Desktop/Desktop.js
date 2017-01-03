@@ -90,6 +90,7 @@ class Desktop extends Component {
       (this.props.contextMenuActive !== nextProps.contextMenuActive) ||
       (this.props.contextMenuX !== nextProps.contextMenuX)||
       (this.props.openedFiles !== nextProps.openedFiles) ||
+      (this.props.fileSystem !== nextProps.fileSystem) ||
       (this.props.errorWindows !== nextProps.errorWindows) ||
       (this.props.contextMenuY !== nextProps.contextMenuY);
   }

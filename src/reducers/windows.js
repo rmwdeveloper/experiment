@@ -30,7 +30,7 @@ const initialState = {
   browserHeight: 0,
   desktopWidth: 0,
   desktopHeight: 0,
-  fileSystem: { // Indices are always unique and static.
+  fileSystem: { // Indices are always unique and static. A node only ever has one parent.
     1: { name: 'root', children: [2, 17, 18], permissions: ['rwxp'] },
     2: { name: 'drive', children: [3, 8], permissions: ['rwxp'] },
     3: { name: 'Users', children: [4], permissions: ['rwxp'] },
@@ -41,10 +41,10 @@ const initialState = {
     8: { name: 'Programs', children: [9], permissions: ['rwx-'] },
     9: { name: 'Office', children: [5, 6], permissions: ['rwx-'] },
     10: { name: 'Word Processor', permissions: ['rwx-'], extension: 'shct', metadata: { icon: 'wordlogoXSmall.png' } },
-    11: { name: 'Desktop', permissions: ['rwx-'], children: [10, 12, 13, 14, 15] },
+    11: { name: 'Desktop', permissions: ['rwx-'], children: [10, 12, 13, 14, 15, 22] },
     12: { name: 'Spreadsheets', permissions: ['rwx-'], extension: 'shct', metadata: { icon: 'excellogoXSmall.png' } },
     13: { name: 'Webscape', permissions: ['rwx-'], extension: 'shct', metadata: { icon: 'ie7.png' } },
-    14: { name: 'My Documents', permissions: ['rwx-'], children: [16], metadata: { icon: 'MyDocumentsXSmall.png' }, registryKey:'Folder' },
+    14: { name: 'My Documents', permissions: ['rwx-'], children: [16, 23], metadata: { icon: 'MyDocumentsXSmall.png' }, registryKey:'Folder' },
     15: { name: 'My Computer', permissions: ['rwx-'], children: [], metadata: { icon: 'MyComputerXSmall.png' } },
     16: { name: 'My Music', permissions: ['rwx-'], children: [], metadata: { icon: 'MyMusicXSmall.png' } },
     17: { name: 'Control Panel', permissions: ['rwx-'], children: [], metadata: { icon: 'ControlPanelXSmall.png' } },
@@ -73,6 +73,7 @@ const initialState = {
 export default function layout(state = initialState, action) {
   const newOpenedFiles = [...state.openedFiles];
   const newErrorWindows = [...state.errorWindows];
+  const newFileSystem = { ...state.fileSystem };
   switch (action.type) {
     case OPEN_START_MENU:
       return { ...state, startMenuOpened: true };
@@ -80,7 +81,6 @@ export default function layout(state = initialState, action) {
       return { ...state, startMenuOpened: false };
     case CREATE_FOLDER:
       const nextNodeIndex = Object.keys(state.fileSystem).length + 1;
-      const newFileSystem = { ...state.fileSystem };
       newFileSystem[nextNodeIndex] = { children: [], name: 'New Folder', type: 'Folder', metadata: { icon: 'emptyFolderXSmall.png' } };
       if (action.location === 'desktop') {
         newFileSystem[action.desktopNodeIndex].children.push(nextNodeIndex);
@@ -101,7 +101,19 @@ export default function layout(state = initialState, action) {
       return { ...state, errorWindows: [...state.errorWindows, { errorMessage: action.errorMessage, height: 150, width: 400,
         xPosition: (action.desktopWidth / 2.4), yPosition: (action.desktopHeight / 4) }] };
     case MOVE_FILE:
-      return state;
+      // todo : move this util function (getParent) to a helpers file
+      const originsParentIndex = Object.keys(state.fileSystem).find(key=> {
+        if (state.fileSystem.hasOwnProperty(key)) {
+          if (state.fileSystem[key].hasOwnProperty('children')) {
+            return state.fileSystem[key].children.includes(action.fromNodeIndex);
+          }
+        }
+      });
+      const parentalIndex = newFileSystem[originsParentIndex].children.indexOf(parseInt(action.fromNodeIndex, 10));
+      newFileSystem[originsParentIndex].children = [...newFileSystem[originsParentIndex].children.slice(0, parentalIndex),
+        ...newFileSystem[originsParentIndex].children.slice(parentalIndex + 1)];
+      newFileSystem[action.toNodeIndex].children.push(action.fromNodeIndex);
+      return {...state, fileSystem: newFileSystem};
     case MOVE_FILES:
       return state;
     case CLOSE_FILE_WINDOW:
