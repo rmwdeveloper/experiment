@@ -7,7 +7,6 @@ import styles from './Desktop.css'; //eslint-disable-line
 import windowsFileRegistry from '../windowsFileRegistry';
 import { windowsClickables } from '../../../constants/windows';
 import DesktopItem from '../FileIcon';
-import DesktopItemsGroup from '../FileIconGroup';
 import ContextMenu from '../ContextMenu';
 import ErrorWindow from '../ErrorWindow';
 
