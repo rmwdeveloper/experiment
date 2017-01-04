@@ -14,7 +14,9 @@ import {
   INITIALIZE_BROWSER_DIMENSIONS,
   INITIALIZE_DESKTOP_DIMENSIONS,
   OPEN_ERROR_WINDOW,
-  CLOSE_ERROR_WINDOW
+  CLOSE_ERROR_WINDOW,
+  MOVE_FILE,
+  MOVE_FILES
 } from '../constants';
 
 // todo rmw: Remove parameters in actions that can be gotten in state. e.g., openFile desktopWidth
@@ -139,5 +141,17 @@ export function openErrorWindow(errorMessage) {
   return (dispatch, getState) => {
     const { windows: {desktopWidth, desktopHeight} } = getState();
     dispatch({ type: OPEN_ERROR_WINDOW, errorMessage, desktopWidth, desktopHeight});
+  }
+}
+
+export function moveFile(fromNodeIndex, toNodeIndex) {
+  return dispatch => {
+    dispatch({ type: MOVE_FILE, fromNodeIndex, toNodeIndex});
+  }
+}
+
+export function moveFiles(fromIndices, fromParentIndex, toNodeIndex) {
+  return dispatch => {
+    dispatch({ type: MOVE_FILES, fromIndices, fromParentIndex, toNodeIndex});
   }
 }

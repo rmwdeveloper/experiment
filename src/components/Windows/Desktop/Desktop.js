@@ -1,10 +1,13 @@
 import React, { PropTypes, Component } from 'react';
+import { DropTarget as dropTarget, DragDropContext as dragDropContext, DragSource as dragSource  } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Desktop.css'; //eslint-disable-line
 
 import windowsFileRegistry from '../windowsFileRegistry';
 import { windowsClickables } from '../../../constants/windows';
-import DesktopItem from '../DesktopItem';
+import DesktopItem from '../FileIcon';
+import DesktopItemsGroup from '../FileIconGroup';
 import ContextMenu from '../ContextMenu';
 import ErrorWindow from '../ErrorWindow';
 
@@ -27,7 +30,7 @@ class Desktop extends Component {
   };
   constructor() {
     super();
-    this.startDragSelect = this.startDragSelect.bind(this);
+    this.startDragSelect = this.startDragSelect.bind(this); // todo: dragSelect. refactor this with the method found in FolderContents.
     this.stopDragSelect = this.stopDragSelect.bind(this);
     this.startDragWindow = this.startDragWindow.bind(this);
     this.dragWindow = this.dragWindow.bind(this);
@@ -75,17 +78,19 @@ class Desktop extends Component {
     this.props.initializeDesktopDimensions(this.desktop.offsetWidth, this.desktop.offsetHeight);
     window.addEventListener('resize', this.desktopResize.bind(this));
 
-    this.setState({desktopWidth: this.desktop.offsetWidth,
+    this.setState({desktopWidth: this.desktop.offsetWidth, // todo have a workaround for this
       desktopHeight: this.desktop.offsetHeight,
       headerHeight: this.header.offsetHeight});
   }
   shouldComponentUpdate(nextProps, nextState) {
     return (this.state.selectedIcons !== nextState.selectedIcons) ||
-      this.props.desktopWidth !== nextProps.desktopWidth ||
-      this.props.desktopHeight !== nextProps.desktopHeight ||
+      (this.props.desktopWidth !== nextProps.desktopWidth) ||
+      (this.props.desktopHeight !== nextProps.desktopHeight) ||
+      (this.props.selectedDesktopIcons !== nextProps.selectedDesktopIcons) ||
       (this.props.contextMenuActive !== nextProps.contextMenuActive) ||
       (this.props.contextMenuX !== nextProps.contextMenuX)||
       (this.props.openedFiles !== nextProps.openedFiles) ||
+      (this.props.fileSystem !== nextProps.fileSystem) ||
       (this.props.errorWindows !== nextProps.errorWindows) ||
       (this.props.contextMenuY !== nextProps.contextMenuY);
   }
@@ -181,8 +186,9 @@ class Desktop extends Component {
       this.dragbox = document.createElement('div');
       this.dragbox.setAttribute('id', 'dragbox');
       this.desktop.appendChild(this.dragbox);
-      this.dragbox.style.border = '1px dashed black';
       this.dragbox.style.position = 'absolute';
+      this.dragbox.style.zIndex = 1;
+      this.dragbox.style.backgroundColor = 'rgba(35, 90, 216, .25)';
     }
 
 
@@ -235,7 +241,7 @@ class Desktop extends Component {
       if ( overlapping ) {
         this.icons[i].style.backgroundColor = 'rgba(66,85,101,0.25)';
         this.icons[i].style.outline = '2px solid rgb(115, 128, 140)';
-        this.selectedIcons.push(this.icons[i]);
+        this.selectedIcons.push(this.icons[i].dataset['index']);
       }
     }
   }
@@ -282,24 +288,38 @@ class Desktop extends Component {
   }
   render() {
     const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, contextMenuClickClass, contextMenuIndexClicked,
-      errorWindows, closeErrorWindow,
+      errorWindows, closeErrorWindow, connectDropTarget, moveFile, moveFiles, desktopNodeIndex,
       selectedDesktopIcons, createFolder, openErrorWindow, openFile, openedFiles, fileSystem, desktopWidth, desktopHeight } = this.props;
-    let unselectedIcons = desktopItems;
-    if (this.icons.length > 0 && selectedDesktopIcons.length > 0) {
-      unselectedIcons = this.diffNodeLists(this.icons, selectedDesktopIcons);
+    // todo cleanup this render method, abstract some crap away to helper methods.
+    const desktopItemMarkup = [];
+    const selectedFileIndices = selectedDesktopIcons.map(iconId => {return parseInt(iconId, 10)});
+    const desktopItemIndices = desktopItems.map(desktopItem => { return desktopItem.index});
+    const renderArray = desktopItemIndices.map(index => {
+      return selectedFileIndices.includes(index) ? 'selected' : index;
+    });
+    const cleanedRenderArray = renderArray.filter((item, position) => {
+      return renderArray.indexOf(item) === position;
+    });
+
+    for (let iterator = 0; iterator < cleanedRenderArray.length; iterator++){
+      if (typeof(cleanedRenderArray[iterator]) === 'number') {
+        const file = fileSystem[cleanedRenderArray[iterator]];
+        desktopItemMarkup.push(<DesktopItem className='desktopIcon' key={file.index} desktopWidth={desktopWidth} desktopHeight={desktopHeight} index={file.index}
+                         moveFile={moveFile}  openFile={openFile} item={file} />);
+      }
+      if (cleanedRenderArray[iterator] === 'selected') {
+        desktopItemMarkup.push(<DesktopItemsGroup parentIndex={desktopNodeIndex} className='desktopIcon'
+                                moveFiles={moveFiles} key={iterator} fileSystem={fileSystem} selectedFileIndices={selectedFileIndices} />);
+      }
     }
-    return (
+    return (connectDropTarget(
       <div id="desktop"
            data-clickClass={windowsClickables.desktop}
            data-topClickable
            className={styles.root}
            onContextMenu={this.desktopContextMenu}
       >
-        {
-          desktopItems.map((desktopitem, index) => {
-            return <DesktopItem key={index} desktopWidth={desktopWidth} desktopHeight={desktopHeight} index={index} openFile={openFile} item={desktopitem} />;
-          })
-        }
+        {desktopItemMarkup}
         {
           openedFiles.map((openedFile, index) => {
             const openedFileNode = fileSystem[openedFile.nodeIndex];
@@ -324,8 +344,28 @@ class Desktop extends Component {
                 contextMenuX={contextMenuX}/> : null
         }
       </div>
-    );
+    ));
   }
 }
 
-export default withStyles(styles)(Desktop);
+
+const desktopTarget = {
+  drop(props, monitor) {
+    if (monitor.didDrop()) {
+      return;
+    }
+    return { index: props.desktopNodeIndex, canDrop: true };
+
+  }
+
+};
+
+function collectTarget(connect, monitor) {
+  return {
+    connectDropTarget: connect.dropTarget(),
+    isOver: monitor.isOver()
+  };
+}
+
+export default withStyles(styles)(dragDropContext(HTML5Backend)(dropTarget(['fileIcon', 'fileIconGroup'], desktopTarget, collectTarget)(Desktop)));
+

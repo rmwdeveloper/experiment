@@ -1,0 +1,6 @@
+{
+  "name": "FileIconGroup",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./FileIconGroup.js"
+}

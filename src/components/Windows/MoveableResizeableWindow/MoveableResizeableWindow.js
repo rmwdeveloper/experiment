@@ -25,6 +25,7 @@ class MoveableResizeableWindow extends Component {
       if (minimized) {
         windowStyle = { height: 0, width: 0, left: 0, top: 0 };
       }
+      windowStyle.zIndex = 2;
       return (
         <div className={styles.root} style={windowStyle}>
           {children}
