@@ -11,7 +11,7 @@ function Folder({openedFile, selectedDesktopIcons, clearActives, fileSystem, sel
   const selectedIds = selectedDesktopIcons.map(id => {return parseInt(id, 10)});
   const folderContents = fileSystem[openedFile.nodeIndex].children ? fileSystem[openedFile.nodeIndex].children.map((nodeIndex, index) => {
     fileSystem[nodeIndex].index = nodeIndex;
-    return <FolderItem moveFile={moveFile} moveFiles={moveFiles} className="folderIcon" parentIndex={openedFile.nodeIndex} selected={selectedIds.includes(desktopitem.index)}
+    return <FolderItem moveFile={moveFile} moveFiles={moveFiles} className="folderIcon" parentIndex={openedFile.nodeIndex} selected={selectedIds.includes(nodeIndex)}
                        key={index} desktopWidth={desktopWidth} desktopHeight={desktopHeight} index={index} openFile={openFile} item={fileSystem[nodeIndex]} />;
   }) : null;
   const windowHeight = openedFile.height - 30;
