@@ -124,6 +124,7 @@ export default function layout(state = initialState, action) {
       newFileSystem[action.fromParentIndex].children = newFileSystem[action.fromParentIndex].children.filter(value=>{
         return !selectedIds.includes(value);
       });
+      newFileSystem[action.toNodeIndex].children = [...newFileSystem[action.toNodeIndex].children, ...selectedIds];
       return {...state, fileSystem: newFileSystem};
     case CLOSE_FILE_WINDOW:
       return { ...state, openedFiles: [...state.openedFiles.slice(0, action.openedFileIndex),
