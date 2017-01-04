@@ -7,12 +7,16 @@ import { windowsClickables } from '../../../constants/windows';
 import flow from 'lodash.flow';
 
 function FileIcon({ item, openFile, desktopWidth, desktopHeight, selected, connectDragSource, connectDropTarget, className }) {
-  const style = selected ? {backgroundColor: 'rgba(66,85,101,0.25)', outline: '2px solid rgb(115, 128, 140)'} : {};
-  console.log(item);
+  const style = {background: `url(${item.metadata.icon})`};
+  if (item.metadata.sprite) {
+    style.backgroundSize = '425px';
+    style.backgroundPosition = item.metadata.backgroundPosition;
+  }
   return connectDragSource(connectDropTarget(
-    <div style={style} data-clickClass={windowsClickables.desktopItem} data-topClickable data-index={item.index} onDoubleClick={() => { openFile(item.index, desktopWidth, desktopHeight); }}
+    <div data-clickClass={windowsClickables.desktopItem} data-topClickable data-index={item.index} onDoubleClick={() => { openFile(item.index, desktopWidth, desktopHeight); }}
          className={cx(className, styles.root)}>
-      <img data-index={item.index} className={styles.icon} src={item.metadata.icon} alt={`${item.name} icon`} />
+      <div style={style} data-index={item.index} className={cx(styles.icon)}></div>
+      {/*<img data-index={item.index} className={styles.icon} src={item.metadata.icon} alt={`${item.name} icon`} />*/}
       <span data-clickClass={windowsClickables.desktopItemName} data-index={item.index} className={styles.directoryName}> {item.name}</span>
     </div>
   ));
@@ -25,7 +29,7 @@ FileIcon.propTypes = {
 
 const fileIconSource = {
   beginDrag(props) {
-    return {index: props.item.index};
+    return {index: props.item.index, selected: props.selected, parentIndex: props.parentIndex};
   },
   endDrag(props, monitor, component) {
     if (!monitor.didDrop()) {
@@ -35,7 +39,11 @@ const fileIconSource = {
     const item = monitor.getItem();
     const dropResult = monitor.getDropResult();
     if (item !== dropResult && (dropResult.canDrop)) {
-      props.moveFile(item.index, dropResult.index);
+      if(item.selected) {
+        props.moveFiles(item.parentIndex, dropResult.index);
+      } else{
+        props.moveFile(item.index, dropResult.index);
+      }
     }
     if (props === component) {
       return;

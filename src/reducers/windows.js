@@ -41,10 +41,10 @@ const initialState = {
     8: { name: 'Programs', children: [9], permissions: ['rwx-'] },
     9: { name: 'Office', children: [5, 6], permissions: ['rwx-'] },
     10: { name: 'Word Processor', permissions: ['rwx-'], extension: 'shct', metadata: { icon: 'wordlogoXSmall.png' } },
-    11: { name: 'Desktop', permissions: ['rwx-'], children: [10, 12, 13, 14, 15, 22] },
+    11: { name: 'Desktop', permissions: ['rwx-'], children: [10, 12, 13, 14, 15, 22, 23, 24, 25, 26, 27, 28] },
     12: { name: 'Spreadsheets', permissions: ['rwx-'], extension: 'shct', metadata: { icon: 'excellogoXSmall.png' } },
     13: { name: 'Webscape', permissions: ['rwx-'], extension: 'shct', metadata: { icon: 'ie7.png' } },
-    14: { name: 'My Documents', permissions: ['rwx-'], children: [16, 23, 24], metadata: { icon: 'MyDocumentsXSmall.png' }, registryKey:'Folder' },
+    14: { name: 'My Documents', permissions: ['rwx-'], children: [16], metadata: { icon: 'MyDocumentsXSmall.png' }, registryKey:'Folder' },
     15: { name: 'My Computer', permissions: ['rwx-'], children: [], metadata: { icon: 'MyComputerXSmall.png' } },
     16: { name: 'My Music', permissions: ['rwx-'], children: [], metadata: { icon: 'MyMusicXSmall.png' } },
     17: { name: 'Control Panel', permissions: ['rwx-'], children: [], metadata: { icon: 'ControlPanelXSmall.png' } },
@@ -53,8 +53,12 @@ const initialState = {
     20: { name: 'Search', permissions: ['rwxp'], extension: 'exe', metadata: { icon: 'SearchXSmall.png' } },
     21: { name: 'Run', permissions: ['rwxp'], extension: 'exe', metadata: { icon: 'RunXSmall.png' } },
     22: { name: 'test', permissions: ['rwx-'], extension: 'txt', metadata: { icon: 'RunXSmall.png' } },
-    23: { name: 'test(2)', permissions: ['rwx-'], extension: 'txt', metadata: { icon: 'RunXSmall.png' } },
-    24: { name: 'test(3)', permissions: ['rwx-'], extension: 'txt', metadata: { icon: 'RunXSmall.png' } },
+    23: { name: 'my lil painting', permissions: ['rwx-'], extension: 'jpg', metadata: { sprite: true, icon: 'iconsSprite.gif', backgroundPosition: '53px 42px' } },
+    24: { name: 'Mailr', permissions: ['rwx-'], extension: 'txt', metadata: { sprite: true, icon: 'iconsSprite.gif', backgroundPosition: '200px 210px' } },
+    25: { name: 'some text', permissions: ['rwx-'], extension: 'txt', metadata: { sprite: true, icon: 'iconsSprite.gif', backgroundPosition: '200px 100px' } },
+    26: { name: 'anothjer image', permissions: ['rwx-'], extension: 'jpg', metadata: { sprite: true, icon: 'iconsSprite.gif', backgroundPosition: '53px 42px' } },
+    27: { name: 'printer settings', permissions: ['rwx-'], extension: 'txt', metadata: { sprite: true, icon: 'iconsSprite.gif', backgroundPosition: '200px 50px' } },
+    28: { name: 'some text(2)', permissions: ['rwx-'], extension: 'txt', metadata: { sprite: true, icon: 'iconsSprite.gif', backgroundPosition: '200px 100px' } },
   },
   desktopNodeIndex: 11,
   startMenuProgramsIndices: [5, 6, 7],
@@ -116,8 +120,12 @@ export default function layout(state = initialState, action) {
       newFileSystem[action.toNodeIndex].children.push(action.fromNodeIndex);
       return {...state, fileSystem: newFileSystem};
     case MOVE_FILES:
-      console.log(action);
-      return state;
+      const selectedIds = action.fromIndices.map(id => {return parseInt(id, 10)});
+      newFileSystem[action.fromParentIndex].children = newFileSystem[action.fromParentIndex].children.filter(value=>{
+        return !selectedIds.includes(value);
+      });
+      newFileSystem[action.toNodeIndex].children = [...newFileSystem[action.toNodeIndex].children, ...selectedIds];
+      return {...state, fileSystem: newFileSystem};
     case CLOSE_FILE_WINDOW:
       return { ...state, openedFiles: [...state.openedFiles.slice(0, action.openedFileIndex),
             ...state.openedFiles.slice(action.openedFileIndex + 1)] };
