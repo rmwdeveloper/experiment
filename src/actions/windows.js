@@ -145,14 +145,24 @@ export function openErrorWindow(errorMessage) {
 }
 
 export function moveFile(fromNodeIndex, toNodeIndex) {
-  return dispatch => {
+  return (dispatch, getState) => {
+    const { windows: { selectedDesktopIcons, desktopWidth, desktopHeight } } = getState();
+    if (fromNodeIndex === toNodeIndex) {
+      dispatch({ type: OPEN_ERROR_WINDOW, errorMessage: "Cant move a folder inside itself.", desktopWidth, desktopHeight});
+      return null;
+    }
     dispatch({ type: MOVE_FILE, fromNodeIndex, toNodeIndex});
   }
 }
 
 export function moveFiles(fromParentIndex, toNodeIndex) {
   return (dispatch, getState) => {
-    const { windows: { selectedDesktopIcons } } = getState();
+    const { windows: { selectedDesktopIcons, desktopWidth, desktopHeight } } = getState();
+    const selectedIds = selectedDesktopIcons.map(id => {return parseInt(id, 10)});
+    if (selectedIds.includes(toNodeIndex)) {
+      dispatch({ type: OPEN_ERROR_WINDOW, errorMessage: "Cant move a folder inside itself.", desktopWidth, desktopHeight});
+      return null;
+    }
     dispatch({ type: MOVE_FILES, fromIndices: selectedDesktopIcons, fromParentIndex, toNodeIndex});
   }
 }
