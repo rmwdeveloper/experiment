@@ -290,6 +290,7 @@ class Desktop extends Component {
     const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, contextMenuClickClass, contextMenuIndexClicked,
       errorWindows, closeErrorWindow, connectDropTarget, moveFile, moveFiles, desktopNodeIndex,
       selectedDesktopIcons, createFolder, openErrorWindow, openFile, openedFiles, fileSystem, desktopWidth, desktopHeight } = this.props;
+    const selectedIds = selectedDesktopIcons.map(id => {return parseInt(id, 10)});
     // todo cleanup this render method, abstract some crap away to helper methods.
     // const desktopItemMarkup = [];
     // const selectedFileIndices = selectedDesktopIcons.map(iconId => {return parseInt(iconId, 10)});
@@ -321,7 +322,9 @@ class Desktop extends Component {
       >
         {
           desktopItems.map((desktopitem, index) => {
-            return <DesktopItem className='desktopIcon' key={desktopitem.index} desktopWidth={desktopWidth} desktopHeight={desktopHeight} index={desktopitem.index}
+            return <DesktopItem selected={selectedIds.includes(desktopitem.index)} className='desktopIcon'
+                                key={desktopitem.index} desktopWidth={desktopWidth} desktopHeight={desktopHeight}
+                                index={desktopitem.index} moveFiles={moveFiles} parentIndex={desktopNodeIndex}
                                 moveFile={moveFile}  openFile={openFile} item={desktopitem} />
           })
         }

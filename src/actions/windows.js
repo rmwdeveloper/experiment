@@ -150,8 +150,9 @@ export function moveFile(fromNodeIndex, toNodeIndex) {
   }
 }
 
-export function moveFiles(fromIndices, fromParentIndex, toNodeIndex) {
-  return dispatch => {
-    dispatch({ type: MOVE_FILES, fromIndices, fromParentIndex, toNodeIndex});
+export function moveFiles(fromParentIndex, toNodeIndex) {
+  return (dispatch, getState) => {
+    const { windows: { selectedDesktopIcons } } = getState();
+    dispatch({ type: MOVE_FILES, fromIndices: selectedDesktopIcons, fromParentIndex, toNodeIndex});
   }
 }

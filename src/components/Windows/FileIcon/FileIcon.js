@@ -29,7 +29,7 @@ FileIcon.propTypes = {
 
 const fileIconSource = {
   beginDrag(props) {
-    return {index: props.item.index};
+    return {index: props.item.index, selected: props.selected, parentIndex: props.parentIndex};
   },
   endDrag(props, monitor, component) {
     if (!monitor.didDrop()) {
@@ -39,7 +39,11 @@ const fileIconSource = {
     const item = monitor.getItem();
     const dropResult = monitor.getDropResult();
     if (item !== dropResult && (dropResult.canDrop)) {
-      props.moveFile(item.index, dropResult.index);
+      if(item.selected) {
+        props.moveFiles(item.parentIndex, dropResult.index);
+      } else{
+        props.moveFile(item.index, dropResult.index);
+      }
     }
     if (props === component) {
       return;
