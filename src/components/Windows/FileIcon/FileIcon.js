@@ -8,6 +8,10 @@ import flow from 'lodash.flow';
 
 function FileIcon({ item, openFile, desktopWidth, desktopHeight, selected, connectDragSource, connectDropTarget, className }) {
   const style = {background: `url(${item.metadata.icon})`};
+  if (item.metadata.sprite) {
+    style.backgroundSize = '425px';
+    style.backgroundPosition = item.metadata.backgroundPosition;
+  }
   return connectDragSource(connectDropTarget(
     <div data-clickClass={windowsClickables.desktopItem} data-topClickable data-index={item.index} onDoubleClick={() => { openFile(item.index, desktopWidth, desktopHeight); }}
          className={cx(className, styles.root)}>
