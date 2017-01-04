@@ -120,8 +120,11 @@ export default function layout(state = initialState, action) {
       newFileSystem[action.toNodeIndex].children.push(action.fromNodeIndex);
       return {...state, fileSystem: newFileSystem};
     case MOVE_FILES:
-      console.log(action);
-      return state;
+      const selectedIds = action.fromIndices.map(id => {return parseInt(id, 10)});
+      newFileSystem[action.fromParentIndex].children = newFileSystem[action.fromParentIndex].children.filter(value=>{
+        return !selectedIds.includes(value);
+      });
+      return {...state, fileSystem: newFileSystem};
     case CLOSE_FILE_WINDOW:
       return { ...state, openedFiles: [...state.openedFiles.slice(0, action.openedFileIndex),
             ...state.openedFiles.slice(action.openedFileIndex + 1)] };
