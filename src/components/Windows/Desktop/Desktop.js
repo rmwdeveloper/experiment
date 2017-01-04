@@ -291,27 +291,27 @@ class Desktop extends Component {
       errorWindows, closeErrorWindow, connectDropTarget, moveFile, moveFiles, desktopNodeIndex,
       selectedDesktopIcons, createFolder, openErrorWindow, openFile, openedFiles, fileSystem, desktopWidth, desktopHeight } = this.props;
     // todo cleanup this render method, abstract some crap away to helper methods.
-    const desktopItemMarkup = [];
-    const selectedFileIndices = selectedDesktopIcons.map(iconId => {return parseInt(iconId, 10)});
-    const desktopItemIndices = desktopItems.map(desktopItem => { return desktopItem.index});
-    const renderArray = desktopItemIndices.map(index => {
-      return selectedFileIndices.includes(index) ? 'selected' : index;
-    });
-    const cleanedRenderArray = renderArray.filter((item, position) => {
-      return renderArray.indexOf(item) === position;
-    });
-
-    for (let iterator = 0; iterator < cleanedRenderArray.length; iterator++){
-      if (typeof(cleanedRenderArray[iterator]) === 'number') {
-        const file = fileSystem[cleanedRenderArray[iterator]];
-        desktopItemMarkup.push(<DesktopItem className='desktopIcon' key={file.index} desktopWidth={desktopWidth} desktopHeight={desktopHeight} index={file.index}
-                         moveFile={moveFile}  openFile={openFile} item={file} />);
-      }
-      if (cleanedRenderArray[iterator] === 'selected') {
-        desktopItemMarkup.push(<DesktopItemsGroup parentIndex={desktopNodeIndex} className='desktopIcon'
-                                moveFiles={moveFiles} key={iterator} fileSystem={fileSystem} selectedFileIndices={selectedFileIndices} />);
-      }
-    }
+    // const desktopItemMarkup = [];
+    // const selectedFileIndices = selectedDesktopIcons.map(iconId => {return parseInt(iconId, 10)});
+    // const desktopItemIndices = desktopItems.map(desktopItem => { return desktopItem.index});
+    // const renderArray = desktopItemIndices.map(index => {
+    //   return selectedFileIndices.includes(index) ? 'selected' : index;
+    // });
+    // const cleanedRenderArray = renderArray.filter((item, position) => {
+    //   return renderArray.indexOf(item) === position;
+    // });
+    //
+    // for (let iterator = 0; iterator < cleanedRenderArray.length; iterator++){
+    //   if (typeof(cleanedRenderArray[iterator]) === 'number') {
+    //     const file = fileSystem[cleanedRenderArray[iterator]];
+    //     desktopItemMarkup.push(<DesktopItem className='desktopIcon' key={file.index} desktopWidth={desktopWidth} desktopHeight={desktopHeight} index={file.index}
+    //                      moveFile={moveFile}  openFile={openFile} item={file} />);
+    //   }
+    //   if (cleanedRenderArray[iterator] === 'selected') {
+    //     desktopItemMarkup.push(<DesktopItemsGroup parentIndex={desktopNodeIndex} className='desktopIcon'
+    //                             moveFiles={moveFiles} key={iterator} fileSystem={fileSystem} selectedFileIndices={selectedFileIndices} />);
+    //   }
+    // }
     return (connectDropTarget(
       <div id="desktop"
            data-clickClass={windowsClickables.desktop}
