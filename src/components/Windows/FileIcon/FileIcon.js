@@ -7,12 +7,12 @@ import { windowsClickables } from '../../../constants/windows';
 import flow from 'lodash.flow';
 
 function FileIcon({ item, openFile, desktopWidth, desktopHeight, selected, connectDragSource, connectDropTarget, className }) {
-  const style = selected ? {backgroundColor: 'rgba(66,85,101,0.25)', outline: '2px solid rgb(115, 128, 140)'} : {};
-  console.log(item);
+  const style = {background: `url(${item.metadata.icon})`};
   return connectDragSource(connectDropTarget(
-    <div style={style} data-clickClass={windowsClickables.desktopItem} data-topClickable data-index={item.index} onDoubleClick={() => { openFile(item.index, desktopWidth, desktopHeight); }}
+    <div data-clickClass={windowsClickables.desktopItem} data-topClickable data-index={item.index} onDoubleClick={() => { openFile(item.index, desktopWidth, desktopHeight); }}
          className={cx(className, styles.root)}>
-      <img data-index={item.index} className={styles.icon} src={item.metadata.icon} alt={`${item.name} icon`} />
+      <div style={style} data-index={item.index} className={cx(styles.icon)}></div>
+      {/*<img data-index={item.index} className={styles.icon} src={item.metadata.icon} alt={`${item.name} icon`} />*/}
       <span data-clickClass={windowsClickables.desktopItemName} data-index={item.index} className={styles.directoryName}> {item.name}</span>
     </div>
   ));

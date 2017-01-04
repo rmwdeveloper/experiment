@@ -41,7 +41,7 @@ const initialState = {
     8: { name: 'Programs', children: [9], permissions: ['rwx-'] },
     9: { name: 'Office', children: [5, 6], permissions: ['rwx-'] },
     10: { name: 'Word Processor', permissions: ['rwx-'], extension: 'shct', metadata: { icon: 'wordlogoXSmall.png' } },
-    11: { name: 'Desktop', permissions: ['rwx-'], children: [10, 12, 13, 14, 15, 22] },
+    11: { name: 'Desktop', permissions: ['rwx-'], children: [10, 12, 13, 14, 15, 22, 25] },
     12: { name: 'Spreadsheets', permissions: ['rwx-'], extension: 'shct', metadata: { icon: 'excellogoXSmall.png' } },
     13: { name: 'Webscape', permissions: ['rwx-'], extension: 'shct', metadata: { icon: 'ie7.png' } },
     14: { name: 'My Documents', permissions: ['rwx-'], children: [16, 23, 24], metadata: { icon: 'MyDocumentsXSmall.png' }, registryKey:'Folder' },
@@ -55,6 +55,7 @@ const initialState = {
     22: { name: 'test', permissions: ['rwx-'], extension: 'txt', metadata: { icon: 'RunXSmall.png' } },
     23: { name: 'test(2)', permissions: ['rwx-'], extension: 'txt', metadata: { icon: 'RunXSmall.png' } },
     24: { name: 'test(3)', permissions: ['rwx-'], extension: 'txt', metadata: { icon: 'RunXSmall.png' } },
+    25: { name: 'test(4)', permissions: ['rwx-'], extension: 'txt', metadata: { icon: 'iconsSprite.gif' } }
   },
   desktopNodeIndex: 11,
   startMenuProgramsIndices: [5, 6, 7],
