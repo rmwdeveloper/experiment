@@ -58,7 +58,7 @@ const initialState = {
     25: { name: 'some text', permissions: ['rwx-'], extension: 'txt', metadata: { sprite: true, icon: 'iconsSprite.gif', backgroundPosition: '200px 100px' } },
     26: { name: 'anothjer image', permissions: ['rwx-'], extension: 'jpg', metadata: { sprite: true, icon: 'iconsSprite.gif', backgroundPosition: '53px 42px' } },
     27: { name: 'printer settings', permissions: ['rwx-'], extension: 'txt', metadata: { sprite: true, icon: 'iconsSprite.gif', backgroundPosition: '200px 50px' } },
-    28: { name: 'some text', permissions: ['rwx-'], extension: 'txt', metadata: { sprite: true, icon: 'iconsSprite.gif', backgroundPosition: '200px 100px' } },
+    28: { name: 'some text(2)', permissions: ['rwx-'], extension: 'txt', metadata: { sprite: true, icon: 'iconsSprite.gif', backgroundPosition: '200px 100px' } },
   },
   desktopNodeIndex: 11,
   startMenuProgramsIndices: [5, 6, 7],

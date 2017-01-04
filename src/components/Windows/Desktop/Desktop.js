@@ -319,7 +319,12 @@ class Desktop extends Component {
            className={styles.root}
            onContextMenu={this.desktopContextMenu}
       >
-        {desktopItemMarkup}
+        {
+          desktopItems.map((desktopitem, index) => {
+            return <DesktopItem className='desktopIcon' key={desktopitem.index} desktopWidth={desktopWidth} desktopHeight={desktopHeight} index={desktopitem.index}
+                                moveFile={moveFile}  openFile={openFile} item={desktopitem} />
+          })
+        }
         {
           openedFiles.map((openedFile, index) => {
             const openedFileNode = fileSystem[openedFile.nodeIndex];

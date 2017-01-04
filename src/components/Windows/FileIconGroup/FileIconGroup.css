@@ -2,6 +2,7 @@
 
 .root {
   display: inline-block;
+  outline: 1px solid red;
 }
 .root {
   margin-bottom: -10px;
