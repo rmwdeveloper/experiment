@@ -7,7 +7,10 @@ const UserLogin = Model.define('UserLogin', {
     type: DataType.STRING(50),
     primaryKey: true,
   },
-
+  password: {
+    type: DataType.STRING,
+    notNull: true,
+  },
   key: {
     type: DataType.STRING(100),
     primaryKey: true,
