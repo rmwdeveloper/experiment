@@ -1,5 +1,11 @@
-import { database_name, database_username, database_password,
-  database_host, database_dialect } from './secret';
+import { database_name_secret, database_username_secret, database_password_secret,
+  database_host_secret, database_dialect_secret } from './secret';
+
+export const database_name = database_name_secret;
+export const database_username = database_username_secret;
+export const database_password = database_password_secret;
+export const database_host = database_host_secret;
+export const database_dialect = database_dialect_secret;
 
 export const port = process.env.PORT || 8080;
 export const host = process.env.WEBSITE_HOSTNAME || `localhost:${port}`;
