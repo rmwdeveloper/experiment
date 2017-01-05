@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react';
+import Dropzone from 'react-dropzone';
 import { DropTarget as dropTarget, DragDropContext as dragDropContext, DragSource as dragSource  } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
@@ -9,6 +10,8 @@ import { windowsClickables } from '../../../constants/windows';
 import DesktopItem from '../FileIcon';
 import ContextMenu from '../ContextMenu';
 import ErrorWindow from '../ErrorWindow';
+import Uploader from '../Uploader';
+
 
 class Desktop extends Component {
   static propTypes = {
@@ -43,6 +46,10 @@ class Desktop extends Component {
     this.stopResizeFileWindow = this.stopResizeFileWindow.bind(this);
     this.fileWindowResizing = this.fileWindowResizing.bind(this);
     this.findAncestorWithClickClass = this.findAncestorWithClickClass.bind(this);
+    this.desktopDropHandler = this.desktopDropHandler.bind(this);
+    this.desktopDragoverHandler = this.desktopDragoverHandler.bind(this);
+    this.desktopDragendHandler = this.desktopDragendHandler.bind(this);
+    this.desktopDropHandler = this.desktopDropHandler.bind(this);
     this.dragbox = null;
     this.icons = [];
     this.selectedIcons = [];
@@ -285,42 +292,34 @@ class Desktop extends Component {
     this.desktop.removeEventListener('mousemove', this.dragWindow);
     this.setState({draggingWindow: false});
   }
+  desktopDropHandler() {
+    console.log('drop handler');
+    console.log(arguments);
+  }
+  desktopDragoverHandler() {
+    console.log('dragover handler');
+    console.log(arguments);
+  }
+  desktopDragendHandler() {
+    console.log('dragend handler');
+    console.log(arguments);
+  }
   render() {
     const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, contextMenuClickClass, contextMenuIndexClicked,
       errorWindows, closeErrorWindow, connectDropTarget, moveFile, moveFiles, desktopNodeIndex,
       selectedDesktopIcons, createFolder, openErrorWindow, openFile, openedFiles, fileSystem, desktopWidth, desktopHeight } = this.props;
     const selectedIds = selectedDesktopIcons.map(id => {return parseInt(id, 10)});
-    // todo cleanup this render method, abstract some crap away to helper methods.
-    // const desktopItemMarkup = [];
-    // const selectedFileIndices = selectedDesktopIcons.map(iconId => {return parseInt(iconId, 10)});
-    // const desktopItemIndices = desktopItems.map(desktopItem => { return desktopItem.index});
-    // const renderArray = desktopItemIndices.map(index => {
-    //   return selectedFileIndices.includes(index) ? 'selected' : index;
-    // });
-    // const cleanedRenderArray = renderArray.filter((item, position) => {
-    //   return renderArray.indexOf(item) === position;
-    // });
-    //
-    // for (let iterator = 0; iterator < cleanedRenderArray.length; iterator++){
-    //   if (typeof(cleanedRenderArray[iterator]) === 'number') {
-    //     const file = fileSystem[cleanedRenderArray[iterator]];
-    //     desktopItemMarkup.push(<DesktopItem className='desktopIcon' key={file.index} desktopWidth={desktopWidth} desktopHeight={desktopHeight} index={file.index}
-    //                      moveFile={moveFile}  openFile={openFile} item={file} />);
-    //   }
-    //   if (cleanedRenderArray[iterator] === 'selected') {
-    //     desktopItemMarkup.push(<DesktopItemsGroup parentIndex={desktopNodeIndex} className='desktopIcon'
-    //                             moveFiles={moveFiles} key={iterator} fileSystem={fileSystem} selectedFileIndices={selectedFileIndices} />);
-    //   }
-    // }
     return (connectDropTarget(
       <div id="desktop"
            data-clickClass={windowsClickables.desktop}
            data-topClickable
            className={styles.root}
+           onDrop={this.desktopDropHandler}
            onContextMenu={this.desktopContextMenu}
       >
+        {/*<Dropzone className={styles.dropzone} disableClick onDrop={()=>{console.log('dropzone onDrop method');}} ref="dropzone" accept="*" /> */}
         {
-          desktopItems.map((desktopitem, index) => {
+          desktopItems.map((desktopitem) => {
             return <DesktopItem selected={selectedIds.includes(desktopitem.index)} className='desktopIcon'
                                 key={desktopitem.index} desktopWidth={desktopWidth} desktopHeight={desktopHeight}
                                 index={desktopitem.index} moveFiles={moveFiles} parentIndex={desktopNodeIndex}
