@@ -77,12 +77,13 @@ class Desktop extends Component {
     this.icons = document.getElementsByClassName('desktopIcon');
     this.desktop = document.getElementById('desktop');
     this.header = document.getElementById('primaryHeader');
-    this.dropzone = new Dropzone('div#desktop');
+    this.dropzone = new Dropzone('div#desktop', {url: this.desktopDropHandler,
+    clickable: false}); // todo : dropzone script is in index.jade. Should be packed with webpack. b
     this.desktop.onmousedown = this.desktopMouseDown;
     this.desktop.onmouseup = this.desktopMouseUp;
     this.desktop.ondrop = this.desktopDropHandler;
-    this.desktop.ondragover = this.desktopDragoverHandler;
-    this.desktop.ondragend = this.desktopDragendHandler
+    // this.desktop.ondragover = this.desktopDragoverHandler;
+    // this.desktop.ondragend = this.desktopDragendHandler
 
     // todo rmw: desktopWidth and Height is both in the redux store and in component State. Should have it it only 1.
     this.props.initializeDesktopDimensions(this.desktop.offsetWidth, this.desktop.offsetHeight);
@@ -303,26 +304,9 @@ class Desktop extends Component {
     this.desktop.removeEventListener('mousemove', this.dragWindow);
     this.setState({draggingWindow: false});
   }
-  desktopDropHandler(event) {
-    console.log("Drop");
-    event.preventDefault();
-    // If dropped items aren't files, reject them
-    var dt = event.dataTransfer;
-    console.log(dt);
-    if (dt.items) {
-      // Use DataTransferItemList interface to access the file(s)
-      for (var i=0; i < dt.items.length; i++) {
-        if (dt.items[i].kind == "file") {
-          var f = dt.items[i].getAsFile();
-          console.log("... file[" + i + "].name = " + f.name);
-        }
-      }
-    } else {
-      // Use DataTransfer interface to access the file(s)
-      for (var i=0; i < dt.files.length; i++) {
-        console.log("... file[" + i + "].name = " + dt.files[i].name);
-      }
-    }
+  desktopDropHandler(prop) {
+    console.log(prop);
+
   }
   desktopDragoverHandler(event) {
     event.preventDefault();
