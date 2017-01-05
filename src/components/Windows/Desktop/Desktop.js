@@ -77,7 +77,7 @@ class Desktop extends Component {
     this.icons = document.getElementsByClassName('desktopIcon');
     this.desktop = document.getElementById('desktop');
     this.header = document.getElementById('primaryHeader');
-    // this.dropzone = new Dropzone('div#desktop', {url: this.desktopDropHandler, clickable: false}); // todo : dropzone script is in index.jade. Should be packed with webpack. b
+    this.dropzone = new Dropzone('div#desktop', {url: this.desktopDropHandler, clickable: false}); // todo : dropzone script is in index.jade. Should be packed with webpack
     this.desktop.onmousedown = this.desktopMouseDown;
     this.desktop.onmouseup = this.desktopMouseUp;
     // this.desktop.ondrop = this.desktopDropHandler;
