@@ -1,5 +1,4 @@
 import React, { PropTypes, Component } from 'react';
-import Dropzone from 'react-dropzone';
 import { DropTarget as dropTarget, DragDropContext as dragDropContext, DragSource as dragSource  } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
@@ -78,11 +77,23 @@ class Desktop extends Component {
     this.icons = document.getElementsByClassName('desktopIcon');
     this.desktop = document.getElementById('desktop');
     this.header = document.getElementById('primaryHeader');
+    this.dropzone = new Dropzone('div#desktop');
     this.desktop.onmousedown = this.desktopMouseDown;
     this.desktop.onmouseup = this.desktopMouseUp;
+    this.desktop.ondrop = this.desktopDropHandler;
+    this.desktop.ondragover = this.desktopDragoverHandler;
+    this.desktop.ondragend = this.desktopDragendHandler
+
     // todo rmw: desktopWidth and Height is both in the redux store and in component State. Should have it it only 1.
     this.props.initializeDesktopDimensions(this.desktop.offsetWidth, this.desktop.offsetHeight);
     window.addEventListener('resize', this.desktopResize.bind(this));
+    // if (window) {
+    //   try {
+    //     this.dropzone = new Dropzone('div#desktop');
+    //   } catch (e) {
+    //     console.log(e);
+    //   }
+    // }
 
     this.setState({desktopWidth: this.desktop.offsetWidth, // todo have a workaround for this
       desktopHeight: this.desktop.offsetHeight,
@@ -292,17 +303,34 @@ class Desktop extends Component {
     this.desktop.removeEventListener('mousemove', this.dragWindow);
     this.setState({draggingWindow: false});
   }
-  desktopDropHandler() {
-    console.log('drop handler');
-    console.log(arguments);
+  desktopDropHandler(event) {
+    console.log("Drop");
+    event.preventDefault();
+    // If dropped items aren't files, reject them
+    var dt = event.dataTransfer;
+    console.log(dt);
+    if (dt.items) {
+      // Use DataTransferItemList interface to access the file(s)
+      for (var i=0; i < dt.items.length; i++) {
+        if (dt.items[i].kind == "file") {
+          var f = dt.items[i].getAsFile();
+          console.log("... file[" + i + "].name = " + f.name);
+        }
+      }
+    } else {
+      // Use DataTransfer interface to access the file(s)
+      for (var i=0; i < dt.files.length; i++) {
+        console.log("... file[" + i + "].name = " + dt.files[i].name);
+      }
+    }
   }
-  desktopDragoverHandler() {
+  desktopDragoverHandler(event) {
+    event.preventDefault();
     console.log('dragover handler');
-    console.log(arguments);
   }
-  desktopDragendHandler() {
+  desktopDragendHandler(event) {
+    event.preventDefault();
     console.log('dragend handler');
-    console.log(arguments);
   }
   render() {
     const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, contextMenuClickClass, contextMenuIndexClicked,
@@ -314,7 +342,6 @@ class Desktop extends Component {
            data-clickClass={windowsClickables.desktop}
            data-topClickable
            className={styles.root}
-           onDrop={this.desktopDropHandler}
            onContextMenu={this.desktopContextMenu}
       >
         {/*<Dropzone className={styles.dropzone} disableClick onDrop={()=>{console.log('dropzone onDrop method');}} ref="dropzone" accept="*" /> */}
