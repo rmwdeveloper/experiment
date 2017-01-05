@@ -1,6 +1,10 @@
+import { database_name, database_username, database_password,
+  database_host, database_dialect } from './secret';
+
 export const port = process.env.PORT || 8080;
 export const host = process.env.WEBSITE_HOSTNAME || `localhost:${port}`;
 export const aws_url = process.env.AWS_URL || 'Https://s3.amazonaws.com';
+
 export const analytics = {
 
   // https://analytics.google.com/
