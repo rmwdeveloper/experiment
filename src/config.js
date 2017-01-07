@@ -1,11 +1,26 @@
-import { database_name_secret, database_username_secret, database_password_secret,
-  database_host_secret, database_dialect_secret } from './secret';
+import { database_name_secret,
+  database_username_secret,
+  database_password_secret,
+  database_host_secret,
+  database_dialect_secret,
+  aws_signer_url_secret,
+  aws_key_secret,
+  aws_bucket_name_secret,
+  aws_region_secret,
+  aws_time_url_secret
+  } from './secret';
 
 export const database_name = database_name_secret;
 export const database_username = database_username_secret;
 export const database_password = database_password_secret;
 export const database_host = database_host_secret;
 export const database_dialect = database_dialect_secret;
+
+export const aws_signer_url = aws_signer_url_secret;
+export const aws_key = aws_key_secret;
+export const aws_bucket_name = aws_bucket_name_secret;
+export const aws_region = aws_region_secret;
+export const aws_time_url = aws_time_url_secret;
 
 export const port = process.env.PORT || 8080;
 export const host = process.env.WEBSITE_HOSTNAME || `localhost:${port}`;

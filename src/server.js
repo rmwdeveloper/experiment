@@ -153,7 +153,12 @@ app.post('/upload', (req, res) => {
   res.send('Got an upload request!');
 });
 
-
+app.get('/server_time', (req, res) => {
+  res.send('server time!!');
+});
+app.get('/sign_url', (req, res) => {
+  res.send('sign url');
+});
 //
 // Error handling
 // -----------------------------------------------------------------------------
