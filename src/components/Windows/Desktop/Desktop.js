@@ -76,28 +76,31 @@ class Desktop extends Component {
     this.desktop = document.getElementById('desktop');
     this.header = document.getElementById('primaryHeader');
 
-    // START EVAP STUFF todo: abstract this away like dropzone stuff below..
-    this.evap = Evaporate.create(evap_config)
-      .then(
-        evaporate => {
-          evaporate.add(add_config)
-            .then(
-              awsKey => { console.log('Successfully uploaded:', awsKey); },
-              reason => { console.log('Failed to upload:', reason); }
-            )
-        },
-        reason => {
-          console.log('Evaporate failed to initialize:', reason);
-        });
-
-    //END EVAP STUFF
 
     // START dropzone stuff. todo: abstract this crap away to a HOC
     // todo : dropzone script is in index.jade. Should be packed with webpack
     this.dropzone = new Dropzone('div#desktop', {url: '/upload', clickable: false, createImageThumbnails: false,
       previewsContainer: null,
-    addedfile: file => { console.log(file); },
-
+    addedfile: file => {
+      const { name, size, type } = file;
+      Evaporate.create(evap_config)
+        .then(
+          evaporate => {
+            evaporate.add({
+              name: 'test.png',
+              file,
+              xAmzHeadersAtInitiate : {
+                'x-amz-acl': 'public-read'
+              }})
+              .then(
+                awsKey => { console.log('Successfully uploaded:', awsKey); },
+                reason => { console.log('Failed to upload:', reason); }
+              )
+          },
+          reason => {
+            console.log('Evaporate failed to initialize:', reason);
+          });
+    }
     });
 
 
