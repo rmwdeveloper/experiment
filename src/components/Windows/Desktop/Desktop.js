@@ -45,10 +45,6 @@ class Desktop extends Component {
     this.stopResizeFileWindow = this.stopResizeFileWindow.bind(this);
     this.fileWindowResizing = this.fileWindowResizing.bind(this);
     this.findAncestorWithClickClass = this.findAncestorWithClickClass.bind(this);
-    this.desktopDropHandler = this.desktopDropHandler.bind(this);
-    this.desktopDragoverHandler = this.desktopDragoverHandler.bind(this);
-    this.desktopDragendHandler = this.desktopDragendHandler.bind(this);
-    this.desktopDropHandler = this.desktopDropHandler.bind(this);
     this.dragbox = null;
     this.icons = [];
     this.selectedIcons = [];
@@ -77,7 +73,6 @@ class Desktop extends Component {
     this.icons = document.getElementsByClassName('desktopIcon');
     this.desktop = document.getElementById('desktop');
     this.header = document.getElementById('primaryHeader');
-    this.previewTemplate = document.getElementById('prevew-template').innerHTML; // todo : move this somewhere.
     this.dropzone = new Dropzone('div#desktop', {url: this.desktopDropHandler, clickable: false, createImageThumbnails: false}); // todo : dropzone script is in index.jade. Should be packed with webpack
     this.desktop.onmousedown = this.desktopMouseDown;
     this.desktop.onmouseup = this.desktopMouseUp;
@@ -304,17 +299,6 @@ class Desktop extends Component {
     this.desktop.removeEventListener('mousemove', this.dragWindow);
     this.setState({draggingWindow: false});
   }
-  desktopDropHandler(arg) {
-    console.log(arg);
-  }
-  desktopDragoverHandler(event) {
-    event.preventDefault();
-    console.log('dragover handler');
-  }
-  desktopDragendHandler(event) {
-    event.preventDefault();
-    console.log('dragend handler');
-  }
   render() {
     const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, contextMenuClickClass, contextMenuIndexClicked,
       errorWindows, closeErrorWindow, connectDropTarget, moveFile, moveFiles, desktopNodeIndex,
@@ -359,40 +343,6 @@ class Desktop extends Component {
                 contextMenuY={contextMenuY}
                 contextMenuX={contextMenuX}/> : null
         }
-        <div id="preview-template" style={{display: 'none'}}>
-        <div className="table table-striped" className="files" id="previews">
-
-          <div id="template" className="file-row">
-            <div>
-              <span className="preview"><img data-dz-thumbnail /></span>
-            </div>
-            <div>
-              <p className="name" data-dz-name></p>
-              <strong className="error text-danger" data-dz-errormessage></strong>
-            </div>
-            <div>
-              <p className="size" data-dz-size></p>
-              <div className="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                <div className="progress-bar progress-bar-success" style={{width: '0%'}} data-dz-uploadprogress></div>
-              </div>
-            </div>
-            <div>
-              <button className="btn btn-primary start">
-                <i className="glyphicon glyphicon-upload"></i>
-                <span>Start</span>
-              </button>
-              <button data-dz-remove className="btn btn-warning cancel">
-                <i className="glyphicon glyphicon-ban-circle"></i>
-                <span>Cancel</span>
-              </button>
-              <button data-dz-remove className="btn btn-danger delete">
-                <i className="glyphicon glyphicon-trash"></i>
-                <span>Delete</span>
-              </button>
-            </div>
-          </div>
-        </div>
-        </div> { /* end preview container. todo: move this somewhere else. */}
       </div>
     ));
   }
