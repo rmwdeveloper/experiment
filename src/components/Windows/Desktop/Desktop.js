@@ -10,6 +10,7 @@ import { windowsClickables } from '../../../constants/windows';
 import DesktopItem from '../FileIcon';
 import ContextMenu from '../ContextMenu';
 import ErrorWindow from '../ErrorWindow';
+import Evaporate from 'evaporate';
 import Uploader from '../Uploader';
 
 
@@ -76,7 +77,19 @@ class Desktop extends Component {
     this.header = document.getElementById('primaryHeader');
 
     // START EVAP STUFF todo: abstract this away like dropzone stuff below..
-    this.evap = new Evaporate(evap_config);
+    this.evap = Evaporate.create(evap_config)
+      .then(
+        evaporate => {
+          evaporate.add(add_config)
+            .then(
+              awsKey => { console.log('Successfully uploaded:', awsKey); },
+              reason => { console.log('Failed to upload:', reason); }
+            )
+        },
+        reason => {
+          console.log('Evaporate failed to initialize:', reason);
+        });
+
     //END EVAP STUFF
 
     // START dropzone stuff. todo: abstract this crap away to a HOC
