@@ -22,22 +22,12 @@ export const aws_bucket_name = aws_bucket_name_secret;
 export const aws_region = aws_region_secret;
 export const aws_time_url = aws_time_url_secret;
 
+export const evap_config = {signerUrl: aws_signer_url, aws_key, bucket: aws_bucket_name,
+  aws_url: `https://s3-${aws_region}.amazonaws.com`, timeUrl: aws_time_url, maxConcurrentParts: 10, logging: false };
+
 export const port = process.env.PORT || 8080;
 export const host = process.env.WEBSITE_HOSTNAME || `localhost:${port}`;
-export const aws_url = process.env.AWS_URL || 'Https://s3.amazonaws.com';
 
-
-export const evap_config = {
-  signerUrl: awsInfo.signerUrl,
-  aws_key: awsInfo.aws_key,
-  bucket: awsInfo.bucket_name,
-  aws_url: `https://s3-${awsInfo.aws_region}.amazonaws.com`,
-  timeUrl: awsInfo.timeUrl,
-  maxConcurrentParts: 10,
-  // computeContentMd5: true,
-  // allowS3ExistenceOptimization: true,
-  logging: false,
-};
 
 export const analytics = {
 
