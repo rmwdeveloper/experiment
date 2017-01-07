@@ -4,6 +4,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Desktop.css'; //eslint-disable-line
 
+import { evap_config } from '../../../config';
 import windowsFileRegistry from '../windowsFileRegistry';
 import { windowsClickables } from '../../../constants/windows';
 import DesktopItem from '../FileIcon';
@@ -73,7 +74,21 @@ class Desktop extends Component {
     this.icons = document.getElementsByClassName('desktopIcon');
     this.desktop = document.getElementById('desktop');
     this.header = document.getElementById('primaryHeader');
-    this.dropzone = new Dropzone('div#desktop', {url: this.desktopDropHandler, clickable: false, createImageThumbnails: false}); // todo : dropzone script is in index.jade. Should be packed with webpack
+
+    // START EVAP STUFF todo: abstract this away like dropzone stuff below..
+    this.evap = new Evaporate(evap_config);
+    //END EVAP STUFF
+
+    // START dropzone stuff. todo: abstract this crap away to a HOC
+    // todo : dropzone script is in index.jade. Should be packed with webpack
+    this.dropzone = new Dropzone('div#desktop', {url: '/upload', clickable: false, createImageThumbnails: false,
+      previewsContainer: null,
+    addedfile: file => { console.log(file); },
+
+    });
+
+
+    // EMD DROPZONE STUFF
     this.desktop.onmousedown = this.desktopMouseDown;
     this.desktop.onmouseup = this.desktopMouseUp;
     // this.desktop.ondrop = this.desktopDropHandler;

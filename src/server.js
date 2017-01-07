@@ -148,6 +148,12 @@ app.get('*', async(req, res, next) => {
   }
 });
 
+// Upload route
+app.post('/upload', (req, res) => {
+  res.send('Got an upload request!');
+});
+
+
 //
 // Error handling
 // -----------------------------------------------------------------------------

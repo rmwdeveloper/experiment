@@ -11,6 +11,19 @@ export const port = process.env.PORT || 8080;
 export const host = process.env.WEBSITE_HOSTNAME || `localhost:${port}`;
 export const aws_url = process.env.AWS_URL || 'Https://s3.amazonaws.com';
 
+
+export const evap_config = {
+  signerUrl: awsInfo.signerUrl,
+  aws_key: awsInfo.aws_key,
+  bucket: awsInfo.bucket_name,
+  aws_url: `https://s3-${awsInfo.aws_region}.amazonaws.com`,
+  timeUrl: awsInfo.timeUrl,
+  maxConcurrentParts: 10,
+  // computeContentMd5: true,
+  // allowS3ExistenceOptimization: true,
+  logging: false,
+};
+
 export const analytics = {
 
   // https://analytics.google.com/
