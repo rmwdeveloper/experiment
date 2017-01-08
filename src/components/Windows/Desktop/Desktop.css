@@ -13,6 +13,9 @@
   display: flex;
 }
 
+.dropzone {
+  position: absolute;
+}
 
 @media (--tablet) {
   .root {

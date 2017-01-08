@@ -1,7 +1,7 @@
 import 'babel-polyfill';
 import path from 'path';
 import express from 'express';
-
+import crypto from 'crypto';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
 import bodyParser from 'body-parser';
@@ -13,7 +13,7 @@ import models from './data/models';
 
 import routes from './routes';
 import { resolve } from 'universal-router';
-import { port, analytics, auth } from './config';
+import { port, analytics, auth, aws_secret_key } from './config';
 import assets from './assets';
 import configureStore from './store/configureStore';
 import { setRuntimeVariable } from './actions/runtime';
@@ -98,6 +98,18 @@ app.use(passport.initialize());
 //   pretty: process.env.NODE_ENV !== 'production',
 // })));
 
+
+app.get('/server_time', (req, res) => {
+  console.log('in server time');
+  res.send('server time!!');
+});
+app.get('/sign_aws', (req, res) => {
+  res.send(crypto
+    .createHmac('sha1', aws_secret_key)
+    .update(req.query.to_sign)
+    .digest('base64')
+  );
+});
 //
 // Register server-side rendering middleware
 // -----------------------------------------------------------------------------
@@ -147,6 +159,12 @@ app.get('*', async(req, res, next) => {
     next(err);
   }
 });
+
+// Upload route
+app.post('/upload', (req, res) => {
+  res.send('Got an upload request!');
+});
+
 
 //
 // Error handling

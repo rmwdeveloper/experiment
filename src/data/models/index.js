@@ -1,7 +1,6 @@
 import sequelize from '../sequelize';
 import User from './User';
 import UserLogin from './UserLogin';
-import UserClaim from './UserClaim';
 import UserProfile from './UserProfile';
 
 User.hasMany(UserLogin, {
@@ -11,12 +10,6 @@ User.hasMany(UserLogin, {
   onDelete: 'cascade',
 });
 
-User.hasMany(UserClaim, {
-  foreignKey: 'userId',
-  as: 'claims',
-  onUpdate: 'cascade',
-  onDelete: 'cascade',
-});
 
 User.hasOne(UserProfile, {
   foreignKey: 'userId',
@@ -30,4 +23,4 @@ function sync(...args) {
 }
 
 export default { sync };
-export { User, UserLogin, UserClaim, UserProfile };
+export { User, UserLogin, UserProfile };

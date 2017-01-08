@@ -59,8 +59,11 @@ const initialState = {
     26: { name: 'anothjer image', permissions: ['rwx-'], extension: 'jpg', metadata: { sprite: true, icon: 'iconsSprite.gif', backgroundPosition: '53px 42px' } },
     27: { name: 'printer settings', permissions: ['rwx-'], extension: 'txt', metadata: { sprite: true, icon: 'iconsSprite.gif', backgroundPosition: '200px 50px' } },
     28: { name: 'some text(2)', permissions: ['rwx-'], extension: 'txt', metadata: { sprite: true, icon: 'iconsSprite.gif', backgroundPosition: '200px 100px' } },
+    29: { name: 'Authenticator', permissions: ['rwxp'], extension: 'exe' },
   },
-  desktopNodeIndex: 11,
+  desktopNodeIndex: 11, //indices are in state, and not searchable by name because user can make duplicate names
+  userIndex: 4, // Users personal index. Username will be fileSystem[userIndex].name  . Default is "Guest"
+  authenticatorIndex: 29,
   startMenuProgramsIndices: [5, 6, 7],
   userDirectoriesIndices: [14, 15, 16],
   computerSettingsIndices: [17, 18],
@@ -97,7 +100,7 @@ export default function layout(state = initialState, action) {
     case SELECT_ICONS:
       return { ...state, selectedDesktopIcons: action.icons };
     case CLEAR_ACTIVES:
-      return { ...state, contextMenuActive: false };
+      return { ...state, contextMenuActive: false};
     case OPEN_FILE_WINDOW:
       return { ...state, openedFiles: [...state.openedFiles,
         { nodeIndex: action.nodeIndex, height: 300, width: 300, xPosition: ((action.desktopWidth / 2.4) + state.openedFiles.length * 5)

@@ -4,11 +4,15 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Desktop.css'; //eslint-disable-line
 
+import { evap_config } from '../../../config';
 import windowsFileRegistry from '../windowsFileRegistry';
 import { windowsClickables } from '../../../constants/windows';
 import DesktopItem from '../FileIcon';
 import ContextMenu from '../ContextMenu';
 import ErrorWindow from '../ErrorWindow';
+import Evaporate from 'evaporate';
+import Uploader from '../Uploader';
+
 
 class Desktop extends Component {
   static propTypes = {
@@ -71,11 +75,55 @@ class Desktop extends Component {
     this.icons = document.getElementsByClassName('desktopIcon');
     this.desktop = document.getElementById('desktop');
     this.header = document.getElementById('primaryHeader');
+
+
+    // START dropzone stuff. todo: abstract this crap away to a HOC
+    // todo : dropzone script is in index.jade. Should be packed with webpack
+    this.dropzone = new Dropzone('div#desktop', {url: '/upload', autoProcessQueue:false, clickable: false, createImageThumbnails: false,
+      previewsContainer: null,
+    addedfile: file => {
+      const { name, size, type } = file;
+      Evaporate.create(evap_config)
+        .then(
+          evaporate => {
+            evaporate.add({
+              name: 'test.png',
+              file,
+              xAmzHeadersAtInitiate : {
+                'x-amz-acl': 'public-read'
+              },
+              // progress: progressVal => {console.log('progress!!', progressVal)},
+              info: info => {console.log('info!!', info)},
+              error: error => {console.log('error!!', error)},
+              warn: warn => {console.log('warn!!', warn)},
+            })
+              .then(
+                awsKey => { },
+                reason => { }
+              ).catch(error=>{console.log(error);})
+          },
+          reason => {});
+    }
+    });
+
+
+    // EMD DROPZONE STUFF
     this.desktop.onmousedown = this.desktopMouseDown;
     this.desktop.onmouseup = this.desktopMouseUp;
+    // this.desktop.ondrop = this.desktopDropHandler;
+    // this.desktop.ondragover = this.desktopDragoverHandler;
+    // this.desktop.ondragend = this.desktopDragendHandler
+
     // todo rmw: desktopWidth and Height is both in the redux store and in component State. Should have it it only 1.
     this.props.initializeDesktopDimensions(this.desktop.offsetWidth, this.desktop.offsetHeight);
     window.addEventListener('resize', this.desktopResize.bind(this));
+    // if (window) {
+    //   try {
+    //     this.dropzone = new Dropzone('div#desktop');
+    //   } catch (e) {
+    //     console.log(e);
+    //   }
+    // }
 
     this.setState({desktopWidth: this.desktop.offsetWidth, // todo have a workaround for this
       desktopHeight: this.desktop.offsetHeight,
@@ -180,6 +228,7 @@ class Desktop extends Component {
   startDragSelect(event) {
     const { headerHeight } = this.state;
     this.props.clearActives();
+    this.props.closeStartMenu();
     this.dragbox = document.getElementById('dragbox');
     if (!this.dragbox) {
       this.dragbox = document.createElement('div');
@@ -290,28 +339,6 @@ class Desktop extends Component {
       errorWindows, closeErrorWindow, connectDropTarget, moveFile, moveFiles, desktopNodeIndex,
       selectedDesktopIcons, createFolder, openErrorWindow, openFile, openedFiles, fileSystem, desktopWidth, desktopHeight } = this.props;
     const selectedIds = selectedDesktopIcons.map(id => {return parseInt(id, 10)});
-    // todo cleanup this render method, abstract some crap away to helper methods.
-    // const desktopItemMarkup = [];
-    // const selectedFileIndices = selectedDesktopIcons.map(iconId => {return parseInt(iconId, 10)});
-    // const desktopItemIndices = desktopItems.map(desktopItem => { return desktopItem.index});
-    // const renderArray = desktopItemIndices.map(index => {
-    //   return selectedFileIndices.includes(index) ? 'selected' : index;
-    // });
-    // const cleanedRenderArray = renderArray.filter((item, position) => {
-    //   return renderArray.indexOf(item) === position;
-    // });
-    //
-    // for (let iterator = 0; iterator < cleanedRenderArray.length; iterator++){
-    //   if (typeof(cleanedRenderArray[iterator]) === 'number') {
-    //     const file = fileSystem[cleanedRenderArray[iterator]];
-    //     desktopItemMarkup.push(<DesktopItem className='desktopIcon' key={file.index} desktopWidth={desktopWidth} desktopHeight={desktopHeight} index={file.index}
-    //                      moveFile={moveFile}  openFile={openFile} item={file} />);
-    //   }
-    //   if (cleanedRenderArray[iterator] === 'selected') {
-    //     desktopItemMarkup.push(<DesktopItemsGroup parentIndex={desktopNodeIndex} className='desktopIcon'
-    //                             moveFiles={moveFiles} key={iterator} fileSystem={fileSystem} selectedFileIndices={selectedFileIndices} />);
-    //   }
-    // }
     return (connectDropTarget(
       <div id="desktop"
            data-clickClass={windowsClickables.desktop}
@@ -319,8 +346,9 @@ class Desktop extends Component {
            className={styles.root}
            onContextMenu={this.desktopContextMenu}
       >
+        {/*<Dropzone className={styles.dropzone} disableClick onDrop={()=>{console.log('dropzone onDrop method');}} ref="dropzone" accept="*" /> */}
         {
-          desktopItems.map((desktopitem, index) => {
+          desktopItems.map((desktopitem) => {
             return <DesktopItem selected={selectedIds.includes(desktopitem.index)} className='desktopIcon'
                                 key={desktopitem.index} desktopWidth={desktopWidth} desktopHeight={desktopHeight}
                                 index={desktopitem.index} moveFiles={moveFiles} parentIndex={desktopNodeIndex}

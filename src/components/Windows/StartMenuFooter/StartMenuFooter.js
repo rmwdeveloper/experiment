@@ -6,8 +6,14 @@ import logoffIcon from './xpLogoffIcon.png';
 import shutdownIcon from './xpShutdownButton.png';
 class StartMenuFooter extends Component {
   render() {
+    const { authenticator, openFile, closeStartMenu } = this.props;
+
     return (
       <div className={styles.root}>
+        <div onClick={ () => {closeStartMenu(); openFile(authenticator.index)} } className={styles.footerButton}>
+          <i className="fa fa-user fa-2x" />
+          <span>Switch User</span>
+        </div>
         <div className={styles.footerButton}>
           <img src={logoffIcon} height="33" width="33" alt="Small key" />
           <span>Log Off</span>
