@@ -98,13 +98,11 @@ class Desktop extends Component {
               warn: warn => {console.log('warn!!', warn)},
             })
               .then(
-                awsKey => { console.log('Successfully uploaded:', awsKey); },
-                reason => { console.log('Failed to upload:', reason); }
+                awsKey => { },
+                reason => { }
               ).catch(error=>{console.log(error);})
           },
-          reason => {
-            console.log('Evaporate failed to initialize:', reason);
-          });
+          reason => {});
     }
     });
 

@@ -61,6 +61,7 @@ const initialState = {
     28: { name: 'some text(2)', permissions: ['rwx-'], extension: 'txt', metadata: { sprite: true, icon: 'iconsSprite.gif', backgroundPosition: '200px 100px' } },
   },
   desktopNodeIndex: 11,
+  userIndex: 4, // Users personal index. Username will be fileSystem[userIndex].name  . Default is "Guest"
   startMenuProgramsIndices: [5, 6, 7],
   userDirectoriesIndices: [14, 15, 16],
   computerSettingsIndices: [17, 18],
