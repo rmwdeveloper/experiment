@@ -79,7 +79,7 @@ class Desktop extends Component {
 
     // START dropzone stuff. todo: abstract this crap away to a HOC
     // todo : dropzone script is in index.jade. Should be packed with webpack
-    this.dropzone = new Dropzone('div#desktop', {url: '/upload', clickable: false, createImageThumbnails: false,
+    this.dropzone = new Dropzone('div#desktop', {url: '/upload', autoProcessQueue:false, clickable: false, createImageThumbnails: false,
       previewsContainer: null,
     addedfile: file => {
       const { name, size, type } = file;
@@ -91,11 +91,16 @@ class Desktop extends Component {
               file,
               xAmzHeadersAtInitiate : {
                 'x-amz-acl': 'public-read'
-              }})
+              },
+              // progress: progressVal => {console.log('progress!!', progressVal)},
+              info: info => {console.log('info!!', info)},
+              error: error => {console.log('error!!', error)},
+              warn: warn => {console.log('warn!!', warn)},
+            })
               .then(
                 awsKey => { console.log('Successfully uploaded:', awsKey); },
                 reason => { console.log('Failed to upload:', reason); }
-              )
+              ).catch(error=>{console.log(error);})
           },
           reason => {
             console.log('Evaporate failed to initialize:', reason);

@@ -25,7 +25,7 @@ export const aws_region = aws_region_secret;
 export const aws_time_url = aws_time_url_secret;
 
 export const evap_config = {signerUrl: aws_signer_url, aws_key, bucket: aws_bucket_name, awsSignatureVersion: 2,
-  aws_url: `https://s3-${aws_region}.amazonaws.com`,  maxConcurrentParts: 10, logging: false,
+  aws_url: `https://s3-${aws_region}.amazonaws.com`, maxConcurrentParts: 10, logging: true,
   };
 
 export const port = process.env.PORT || 8080;
