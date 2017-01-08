@@ -228,6 +228,7 @@ class Desktop extends Component {
   startDragSelect(event) {
     const { headerHeight } = this.state;
     this.props.clearActives();
+    this.props.closeStartMenu();
     this.dragbox = document.getElementById('dragbox');
     if (!this.dragbox) {
       this.dragbox = document.createElement('div');

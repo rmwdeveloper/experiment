@@ -6,14 +6,14 @@ import cx from 'classnames';
 import { windowsClickables } from '../../../constants/windows';
 import flow from 'lodash.flow';
 
-function FileIcon({ item, openFile, desktopWidth, desktopHeight, selected, connectDragSource, connectDropTarget, className }) {
+function FileIcon({ item, openFile, connectDragSource, connectDropTarget, className }) {
   const style = {background: `url(${item.metadata.icon})`};
   if (item.metadata.sprite) {
     style.backgroundSize = '425px';
     style.backgroundPosition = item.metadata.backgroundPosition;
   }
   return connectDragSource(connectDropTarget(
-    <div data-clickClass={windowsClickables.desktopItem} data-topClickable data-index={item.index} onDoubleClick={() => { openFile(item.index, desktopWidth, desktopHeight); }}
+    <div data-clickClass={windowsClickables.desktopItem} data-topClickable data-index={item.index} onDoubleClick={() => { openFile(item.index); }}
          className={cx(className, styles.root)}>
       <div style={style} data-index={item.index} className={cx(styles.icon)}></div>
       {/*<img data-index={item.index} className={styles.icon} src={item.metadata.icon} alt={`${item.name} icon`} />*/}

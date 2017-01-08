@@ -32,7 +32,11 @@ export function toggleStartMenu() {
     }
   };
 }
-
+export function closeStartMenu() {
+  return dispatch => {
+      dispatch({ type: CLOSE_START_MENU });
+  };
+}
 export function createFolder(location) {
   return (dispatch, getState) => {
     const { windows: { desktopNodeIndex } } = getState();
@@ -58,8 +62,9 @@ export function clearActives() {
   };
 }
 
-export function openFile(nodeIndex, desktopWidth, desktopHeight) {
-  return dispatch => {
+export function openFile(nodeIndex) {
+  return (dispatch, getState) => {
+    const { windows: {desktopWidth, desktopHeight} } = getState();
     dispatch({ type: OPEN_FILE_WINDOW, nodeIndex, desktopWidth, desktopHeight });
   };
 }

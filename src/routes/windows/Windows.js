@@ -7,7 +7,7 @@ import shallowCompare from 'react-addons-shallow-compare';
 
 import * as windowsActions from '../../actions/windows';
 import { installedProgramsSelector, userDirectoriesSelector, desktopItemsSelector,
-  computerSettingsSelector, utilityControlsSelector } from '../../selectors';
+  computerSettingsSelector, utilityControlsSelector, authenticatorSelector } from '../../selectors';
 import WindowsDesktop from '../../components/Windows/Desktop';
 import WindowsTaskbar from '../../components/Windows/Taskbar';
 import WindowsStartMenu from '../../components/Windows/StartMenu';
@@ -19,6 +19,7 @@ import MobileTaskbar from '../../components/Windows/MobileTaskbar';
   userDirectories: userDirectoriesSelector(state),
   utilityControls: utilityControlsSelector(state),
   computerSettings: computerSettingsSelector(state),
+  authenticator: authenticatorSelector(state),
   desktopItems: desktopItemsSelector(state),
   fileSystem: state.windows.fileSystem,
   desktopNodeIndex: state.windows.desktopNodeIndex,
@@ -46,6 +47,7 @@ class Windows extends Component { //eslint-disable-line
     desktopItems: PropTypes.array,
     startMenuOpened: PropTypes.bool,
     toggleStartMenu: PropTypes.func,
+    closeStartMenu: PropTypes.func,
     contextMenuX: PropTypes.number,
     contextMenuY: PropTypes.number,
     contextMenuClickClass: PropTypes.string,
@@ -67,6 +69,7 @@ class Windows extends Component { //eslint-disable-line
     fileSystem: PropTypes.object,
     desktopNodeIndex: PropTypes.number,
     userIndex: PropTypes.number,
+    authenticator: PropTypes.object,
     dragFileWindow: PropTypes.func,
     moveFile: PropTypes.func,
     moveFiles: PropTypes.func,
