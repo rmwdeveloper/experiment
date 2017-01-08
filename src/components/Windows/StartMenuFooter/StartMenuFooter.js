@@ -9,6 +9,10 @@ class StartMenuFooter extends Component {
     return (
       <div className={styles.root}>
         <div className={styles.footerButton}>
+          <i className="fa fa-user fa-2x" />
+          <span>Switch User</span>
+        </div>
+        <div className={styles.footerButton}>
           <img src={logoffIcon} height="33" width="33" alt="Small key" />
           <span>Log Off</span>
         </div>
