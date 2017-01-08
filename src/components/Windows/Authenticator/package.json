@@ -1,0 +1,6 @@
+{
+  "name": "Authenticator",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./Authenticator.js"
+}
