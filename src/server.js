@@ -2,6 +2,7 @@ import 'babel-polyfill';
 import path from 'path';
 import express from 'express';
 import crypto from 'crypto';
+import bcrypt from 'bcrypt';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
 import bodyParser from 'body-parser';
@@ -55,21 +56,25 @@ app.use(expressJwt({
   /* jscs:enable requireCamelCaseOrUpperCaseIdentifiers */
 }));
 app.use(passport.initialize());
+app.use(passport.session());
 
-// app.post('/register', (req, res) => {
-//   bcrypt.genSalt(10, (err, salt) => {
-//     bcrypt.hash(req.body.password, salt, (err, hash) => {
-//       if ( err ) {
-//         res.status(400);
-//         res.send('Error');
-//       }
-//       else if ( hash ) {
-//         res.status(200);
-//         User.create({username: req.body.username, password: hash});
-//       }
-//     });
-//   });
-// });
+app.post('/register', (req, res) => {
+  console.log('req body stuff..', req.body.password, req.body, req);
+
+  bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.hash(req.body.password, salt, (err, hash) => {
+      if ( err ) {
+        res.status(400);
+        res.send('Error');
+        console.log(err);
+      }
+      else if ( hash ) {
+        res.status(200);
+        User.create({username: req.body.username, password: hash});
+      }
+    });
+  });
+});
 // app.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => {
 //   res.redirect('/');
 //   res.status(200);
@@ -164,6 +169,7 @@ app.get('*', async(req, res, next) => {
 app.post('/upload', (req, res) => {
   res.send('Got an upload request!');
 });
+
 
 
 //

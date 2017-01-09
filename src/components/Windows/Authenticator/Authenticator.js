@@ -9,7 +9,7 @@ function registerCallback(event) { // todo: Move somewhere lse.
     console.log('Request Finished!');
   }
   else {
-    console.log(request.status, request.statusText, request.response);
+    // console.log(request.status, request.statusText, request.response);
   }
 }
 class Authenticator extends Component {
