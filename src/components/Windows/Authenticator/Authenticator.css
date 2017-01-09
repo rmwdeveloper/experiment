@@ -4,7 +4,7 @@
   height: calc(100% - 26px);
   background-color: #FFF;
 }
-.root form {
+#registrationForm {
   width: 100%;
   height: 100%;
   display: flex;

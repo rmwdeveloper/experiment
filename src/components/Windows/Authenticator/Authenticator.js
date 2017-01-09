@@ -8,15 +8,21 @@ class Authenticator extends Component {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  handleSubmit() {
-    console.log('handleSubmit');
+  handleSubmit(event) {
+    event.preventDefault();
+    const form = document.getElementById(styles.registrationForm);
+    const data = new FormData(form);
+    console.log( form, data);
+    for ( let key of data.keys()) {
+      console.log(key);
+    }
   }
   render() {
     const { registering, toggleRegisterMode } = this.props;
     const mode = registering ? 'Register' : 'Login';
 
     return <div className={styles.root}>
-      <form onSubmit={this.handleSubmit}>
+      <form id={styles.registrationForm} onSubmit={this.handleSubmit}>
         <div className={styles.controlGroup}>
           <label htmlFor={styles.registerEmail}>Email</label>
           <input type="email" id={styles.registerEmail} />
