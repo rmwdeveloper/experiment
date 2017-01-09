@@ -3,9 +3,10 @@ import Model from '../sequelize';
 
 const User = Model.define('User', {
   id: {
-    type: DataType.UUID,
-    defaultValue: DataType.UUIDV1,
+    type: DataType.INTEGER,
+    defaultValue: 1,
     primaryKey: true,
+    autoIncrement: true
   },
   username: {
     type: DataType.STRING(30)

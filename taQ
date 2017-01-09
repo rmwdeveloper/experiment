@@ -1,0 +1,42 @@
+[1mdiff --git a/portfolio b/portfolio[m
+[1mindex bc69628..30bfdde 100644[m
+Binary files a/portfolio and b/portfolio differ
+[1mdiff --git a/src/data/models/User.js b/src/data/models/User.js[m
+[1mindex 8f76b6d..87f9dd8 100644[m
+[1m--- a/src/data/models/User.js[m
+[1m+++ b/src/data/models/User.js[m
+[36m@@ -3,9 +3,10 @@[m [mimport Model from '../sequelize';[m
+ [m
+ const User = Model.define('User', {[m
+   id: {[m
+[31m-    type: DataType.UUID,[m
+[31m-    defaultValue: DataType.UUIDV1,[m
+[32m+[m[32m    type: DataType.INTEGER,[m
+[32m+[m[32m    defaultValue: 1,[m
+     primaryKey: true,[m
+[32m+[m[32m    autoIncrement: true[m
+   },[m
+   username: {[m
+     type: DataType.STRING(30)[m
+[1mdiff --git a/src/server.js b/src/server.js[m
+[1mindex 6e0148c..bc9b120 100755[m
+[1m--- a/src/server.js[m
+[1m+++ b/src/server.js[m
+[36m@@ -11,7 +11,7 @@[m [mimport expressJwt from 'express-jwt';[m
+ import PrettyError from 'pretty-error';[m
+ import passport from './core/passport';[m
+ import ReactDOM from 'react-dom/server';[m
+[31m-import models from './data/models';[m
+[32m+[m[32mimport models, { User } from './data/models';[m
+ [m
+ import routes from './routes';[m
+ import { resolve } from 'universal-router';[m
+[36m@@ -69,7 +69,7 @@[m [mapp.post('/register', (req, res) => {[m
+       }[m
+       else if ( hash ) {[m
+         res.status(200);[m
+[31m-        models.User.create({username: req.body.username, password: hash});[m
+[32m+[m[32m        User.create({username: req.body.username, email:req.body.email,  password: hash});[m
+       }[m
+     });[m
+   });[m
