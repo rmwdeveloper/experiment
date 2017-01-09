@@ -9,7 +9,8 @@ const User = Model.define('User', {
     autoIncrement: true
   },
   username: {
-    type: DataType.STRING(30)
+    type: DataType.STRING(30),
+    unique: true
   },
   password: {
     type: DataType.STRING(128)
@@ -17,6 +18,7 @@ const User = Model.define('User', {
   email: {
     type: DataType.STRING(256),
     validate: { isEmail: true },
+    unique: true
   },
 
   emailConfirmed: {
