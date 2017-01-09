@@ -24,7 +24,8 @@ class Authenticator extends Component {
     const xhr = new XMLHttpRequest();
     xhr.open('POST', '/register', true);
     xhr.onreadystatechange = registerCallback;
-    xhr.send(data);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(JSON.stringify({ email: data.get('email'), username: data.get('username'), password: data.get('password') }));
   }
   render() {
     const { registering, toggleRegisterMode } = this.props;

@@ -1,6 +1,7 @@
 import 'babel-polyfill';
 import path from 'path';
 import express from 'express';
+import multer from 'multer';
 import crypto from 'crypto';
 import bcrypt from 'bcrypt';
 import cookieParser from 'cookie-parser';
@@ -20,7 +21,7 @@ import configureStore from './store/configureStore';
 import { setRuntimeVariable } from './actions/runtime';
 
 const app = express();
-
+const upload = multer();
 app.use(compression());
 //
 // Tell any CSS tooling (such as Material UI) to use all vendor prefixes if the
@@ -59,7 +60,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.post('/register', (req, res) => {
-  console.log('req body stuff..', req.body.password, req.body, req);
+  console.log('req body stuff..', req.body.password, req.body);
 
   bcrypt.genSalt(10, (err, salt) => {
     bcrypt.hash(req.body.password, salt, (err, hash) => {
