@@ -1,6 +1,7 @@
 @import '../../variables.css';
 
 .root {
-
+  height: calc(100% - 26px);
+  background-color: #FFF;
 }
 
