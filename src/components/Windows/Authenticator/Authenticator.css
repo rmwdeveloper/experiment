@@ -3,7 +3,6 @@
 .root {
   height: calc(100% - 26px);
   background-color: #FFF;
-
 }
 .root form {
   width: 100%;
@@ -33,4 +32,8 @@
   color: #FFF;
   border: none;
   border-radius: 3px;
+}
+.toggleMode {
+  margin-top: 5px;
+  cursor: pointer;
 }

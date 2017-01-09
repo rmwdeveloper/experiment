@@ -131,6 +131,7 @@ class Desktop extends Component {
   }
   shouldComponentUpdate(nextProps, nextState) {
     return (this.state.selectedIcons !== nextState.selectedIcons) ||
+      (this.props.registering !== nextProps.registering) ||
       (this.props.desktopWidth !== nextProps.desktopWidth) ||
       (this.props.desktopHeight !== nextProps.desktopHeight) ||
       (this.props.selectedDesktopIcons !== nextProps.selectedDesktopIcons) ||

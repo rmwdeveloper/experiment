@@ -6,12 +6,15 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 class Authenticator extends Component {
   constructor() {
     super();
-    this.state = {
-      mode: 'Login'
-    }
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  handleSubmit() {
+    console.log('handleSubmit');
   }
   render() {
-    const { mode } = this.state;
+    const { registering, toggleRegisterMode } = this.props;
+    const mode = registering ? 'Register' : 'Login';
+
     return <div className={styles.root}>
       <form onSubmit={this.handleSubmit}>
         <div className={styles.controlGroup}>
@@ -19,7 +22,7 @@ class Authenticator extends Component {
           <input type="email" id={styles.registerEmail} />
         </div>
         {
-          mode === 'Register' ?
+           registering ?
              <div className={styles.controlGroup}>
               <label htmlFor={styles.registerUsername}>Username</label>
               <input type="text" id={styles.registerUsername} />
@@ -30,6 +33,7 @@ class Authenticator extends Component {
           <input type="password" id={styles.registerPassword} />
         </div>
         <button id={styles.submitButton} type="submit">{mode}</button>
+        <span className={styles.toggleMode} onClick={toggleRegisterMode}>Don't have an account? Click here to register. </span>
       </form>
     </div>;
   }
