@@ -7,7 +7,7 @@ class Authenticator extends Component {
   constructor() {
     super();
     this.state = {
-      mode: 'login'
+      mode: 'Login'
     }
   }
   render() {
@@ -15,21 +15,21 @@ class Authenticator extends Component {
     return <div className={styles.root}>
       <form onSubmit={this.handleSubmit}>
         <div className={styles.controlGroup}>
-          <label for={styles.registerEmail}>Email</label>
+          <label htmlFor={styles.registerEmail}>Email</label>
           <input type="email" id={styles.registerEmail} />
         </div>
         {
-          mode === 'register' ?
+          mode === 'Register' ?
              <div className={styles.controlGroup}>
-              <label for={styles.registerUsername}>Username</label>
+              <label htmlFor={styles.registerUsername}>Username</label>
               <input type="text" id={styles.registerUsername} />
             </div> : null
         }
         <div className={styles.controlGroup}>
-          <label for={styles.registerPassword}>Password</label>
+          <label htmlFor={styles.registerPassword}>Password</label>
           <input type="password" id={styles.registerPassword} />
         </div>
-        <input type="submit" value="Submit" />
+        <button id={styles.submitButton} type="submit">{mode}</button>
       </form>
     </div>;
   }

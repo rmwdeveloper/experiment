@@ -3,5 +3,34 @@
 .root {
   height: calc(100% - 26px);
   background-color: #FFF;
+
+}
+.root form {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.controlGroup {
+  margin-bottom: 18px;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
+#registerEmail, #registerUsername, #registerPassword, .controlGroup label {
+  display: block;
+}
+#submitButton {
+  background-color: var(--primary-color);
+  width: 90%;
+  margin: 10px 0 0;
+  display: inline-block;
+  line-height: 35px;
+  color: #FFF;
+  border: none;
+  border-radius: 3px;
+}
