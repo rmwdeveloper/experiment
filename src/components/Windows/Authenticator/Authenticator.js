@@ -10,7 +10,7 @@ function registerCallback(event) { // todo: Move somewhere lse.
       console.log('success');
     } else {
       const errors = JSON.parse(response.response);
-      
+
     }
   }
 }
@@ -32,7 +32,6 @@ class Authenticator extends Component {
   render() {
     const { registering, toggleRegisterMode } = this.props;
     const mode = registering ? 'Register' : 'Login';
-
     return <div className={styles.root}>
       <form id={styles.registrationForm} onSubmit={this.handleSubmit}>
         <div className={styles.controlGroup}>

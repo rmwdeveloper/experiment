@@ -1,5 +1,6 @@
 import {
-  TOGGLE_REGISTER_MODE
+  TOGGLE_REGISTER_MODE,
+  
 } from '../constants';
 
 export function toggleRegisterMode() {
