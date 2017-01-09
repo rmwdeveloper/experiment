@@ -131,6 +131,7 @@ class Desktop extends Component {
   }
   shouldComponentUpdate(nextProps, nextState) {
     return (this.state.selectedIcons !== nextState.selectedIcons) ||
+      (this.props.registering !== nextProps.registering) ||
       (this.props.desktopWidth !== nextProps.desktopWidth) ||
       (this.props.desktopHeight !== nextProps.desktopHeight) ||
       (this.props.selectedDesktopIcons !== nextProps.selectedDesktopIcons) ||
@@ -359,7 +360,7 @@ class Desktop extends Component {
           openedFiles.map((openedFile, index) => {
             const openedFileNode = fileSystem[openedFile.nodeIndex];
             const fileType = openedFileNode.hasOwnProperty('children') ? 'Folder' : openedFileNode.extension;
-            return React.createElement(windowsFileRegistry[fileType], { key: index, openedFile,
+            return React.createElement(windowsFileRegistry(fileType, openedFileNode), { key: index, openedFile,
               filename: fileSystem[openedFile.nodeIndex].name, desktopWidth, desktopHeight,
               index, ...this.props});
           })

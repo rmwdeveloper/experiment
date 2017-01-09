@@ -1,11 +1,15 @@
+import {
+  TOGGLE_REGISTER_MODE
+} from '../constants';
+
 const initialState = {
-  first: 'Robert',
-  last: 'W',
-  handle: '@rwestenb1'
+  registering: false
 };
 
 export default function auth(state = initialState, action) {
   switch (action.type) {
+    case TOGGLE_REGISTER_MODE:
+      return {...state, registering: !state.registering};
     default:
       return state;
   }

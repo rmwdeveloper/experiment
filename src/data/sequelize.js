@@ -2,18 +2,21 @@ import Sequelize from 'sequelize';
 import { database_name, database_username, database_password,
 database_host, database_dialect} from '../config';
 
-const sequelize = new Sequelize(database_name, database_username, database_password, {
+const sequelizeConfig = {
   host: database_host,
   dialect: database_dialect,
   pool: {
     max: 5,
     min: 0,
     idle: 10000
-  }
-  // define: {
-  //   freezeTableName: true,
-  // },
-});
+  },
+  storage: './portfolio'
+};
+if (database_dialect === 'sqlite') {
+  sequelizeConfig.storage = './portfolio';
+}
+
+const sequelize = new Sequelize(database_name, database_username, database_password, sequelizeConfig);
 
 
 sequelize

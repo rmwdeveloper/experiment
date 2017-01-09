@@ -1,7 +1,9 @@
 import 'babel-polyfill';
 import path from 'path';
 import express from 'express';
+import multer from 'multer';
 import crypto from 'crypto';
+import bcrypt from 'bcrypt';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
 import bodyParser from 'body-parser';
@@ -9,7 +11,7 @@ import expressJwt from 'express-jwt';
 import PrettyError from 'pretty-error';
 import passport from './core/passport';
 import ReactDOM from 'react-dom/server';
-import models from './data/models';
+import models, { User } from './data/models';
 
 import routes from './routes';
 import { resolve } from 'universal-router';
@@ -19,7 +21,7 @@ import configureStore from './store/configureStore';
 import { setRuntimeVariable } from './actions/runtime';
 
 const app = express();
-
+const upload = multer();
 app.use(compression());
 //
 // Tell any CSS tooling (such as Material UI) to use all vendor prefixes if the
@@ -55,21 +57,30 @@ app.use(expressJwt({
   /* jscs:enable requireCamelCaseOrUpperCaseIdentifiers */
 }));
 app.use(passport.initialize());
+app.use(passport.session());
 
-// app.post('/register', (req, res) => {
-//   bcrypt.genSalt(10, (err, salt) => {
-//     bcrypt.hash(req.body.password, salt, (err, hash) => {
-//       if ( err ) {
-//         res.status(400);
-//         res.send('Error');
-//       }
-//       else if ( hash ) {
-//         res.status(200);
-//         User.create({username: req.body.username, password: hash});
-//       }
-//     });
-//   });
-// });
+app.post('/register', (req, res) => {
+
+  bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.hash(req.body.password, salt, (err, hash) => {
+      if ( err ) {
+        res.status(400);
+        res.send('Error');
+      }
+      else if ( hash ) {
+        User.create({username: req.body.username, email:req.body.email,  password: hash})
+          .then(item => {
+            res.status(200);
+            res.send('Success');
+          })
+          .catch(errorObject => {
+            res.status(400);
+            res.send(errorObject.errors);
+          });
+      }
+    });
+  });
+});
 // app.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => {
 //   res.redirect('/');
 //   res.status(200);
@@ -164,6 +175,7 @@ app.get('*', async(req, res, next) => {
 app.post('/upload', (req, res) => {
   res.send('Got an upload request!');
 });
+
 
 
 //
