@@ -4,12 +4,14 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 
 function registerCallback(event) { // todo: Move somewhere lse.
-  const request = event.target;
-  if(request.readyState == XMLHttpRequest.DONE && request.status == 200) {
-    console.log('Request Finished!');
-  }
-  else {
-    // console.log(request.status, request.statusText, request.response);
+  const response = event.target;
+  if(response.readyState == XMLHttpRequest.DONE) {
+    if (response.status === 200) {
+      console.log('success');
+    } else {
+      const errors = JSON.parse(response.response);
+      
+    }
   }
 }
 class Authenticator extends Component {

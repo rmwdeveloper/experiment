@@ -68,13 +68,14 @@ app.post('/register', (req, res) => {
         res.send('Error');
       }
       else if ( hash ) {
-        res.status(200);
         User.create({username: req.body.username, email:req.body.email,  password: hash})
           .then(item => {
-            console.log(item);
+            res.status(200);
+            res.send('Success');
           })
-          .catch(err => {
-            console.log(err);
+          .catch(errorObject => {
+            res.status(400);
+            res.send(errorObject.errors);
           });
       }
     });
