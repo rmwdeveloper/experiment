@@ -3,6 +3,15 @@ import styles from './Authenticator.css'; //eslint-disable-line
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 
+function registerCallback(event) { // todo: Move somewhere lse.
+  const request = event.target;
+  if(request.readyState == XMLHttpRequest.DONE && request.status == 200) {
+    console.log('Request Finished!');
+  }
+  else {
+    console.log(request.status, request.statusText, request.response);
+  }
+}
 class Authenticator extends Component {
   constructor() {
     super();
@@ -12,10 +21,10 @@ class Authenticator extends Component {
     event.preventDefault();
     const form = document.getElementById(styles.registrationForm);
     const data = new FormData(form);
-    console.log( form, data);
-    for ( let key of data.keys()) {
-      console.log(key);
-    }
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/register', true);
+    xhr.onreadystatechange = registerCallback;
+    xhr.send(data);
   }
   render() {
     const { registering, toggleRegisterMode } = this.props;
@@ -25,18 +34,18 @@ class Authenticator extends Component {
       <form id={styles.registrationForm} onSubmit={this.handleSubmit}>
         <div className={styles.controlGroup}>
           <label htmlFor={styles.registerEmail}>Email</label>
-          <input type="email" id={styles.registerEmail} />
+          <input name="email" type="email" id={styles.registerEmail} />
         </div>
         {
            registering ?
              <div className={styles.controlGroup}>
               <label htmlFor={styles.registerUsername}>Username</label>
-              <input type="text" id={styles.registerUsername} />
+              <input name="username" type="text" id={styles.registerUsername} />
             </div> : null
         }
         <div className={styles.controlGroup}>
           <label htmlFor={styles.registerPassword}>Password</label>
-          <input type="password" id={styles.registerPassword} />
+          <input name="password" type="password" id={styles.registerPassword} />
         </div>
         <button id={styles.submitButton} type="submit">{mode}</button>
         <span className={styles.toggleMode} onClick={toggleRegisterMode}>Don't have an account? Click here to register. </span>
