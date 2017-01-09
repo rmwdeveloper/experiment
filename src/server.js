@@ -60,18 +60,16 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.post('/register', (req, res) => {
-  console.log('req body stuff..', req.body.password, req.body);
 
   bcrypt.genSalt(10, (err, salt) => {
     bcrypt.hash(req.body.password, salt, (err, hash) => {
       if ( err ) {
         res.status(400);
         res.send('Error');
-        console.log(err);
       }
       else if ( hash ) {
         res.status(200);
-        User.create({username: req.body.username, password: hash});
+        models.User.create({username: req.body.username, password: hash});
       }
     });
   });
