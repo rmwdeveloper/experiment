@@ -69,7 +69,13 @@ app.post('/register', (req, res) => {
       }
       else if ( hash ) {
         res.status(200);
-        User.create({username: req.body.username, email:req.body.email,  password: hash});
+        User.create({username: req.body.username, email:req.body.email,  password: hash})
+          .then(item => {
+            console.log(item);
+          })
+          .catch(err => {
+            console.log(err);
+          });
       }
     });
   });

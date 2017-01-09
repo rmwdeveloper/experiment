@@ -4,9 +4,9 @@ import Model from '../sequelize';
 const User = Model.define('User', {
   id: {
     type: DataType.INTEGER,
-    defaultValue: 1,
     primaryKey: true,
-    autoIncrement: true
+    autoIncrement: true,
+    validate: {isInt: true, notNull: true, min: 1}
   },
   username: {
     type: DataType.STRING(30),
