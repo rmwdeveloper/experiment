@@ -30,7 +30,7 @@ class Authenticator extends Component {
     xhr.send(JSON.stringify({ email: data.get('email'), username: data.get('username'), password: data.get('password') }));
   }
   render() {
-    const { registering } = this.props;
+    const { registering, toggleRegisterMode } = this.props;
     const mode = registering ? 'Register' : 'Login';
     return <div className={styles.root}>
       <form id={styles.registrationForm} onSubmit={this.handleSubmit}>
@@ -50,7 +50,7 @@ class Authenticator extends Component {
           <input name="password" type="password" id={styles.registerPassword} />
         </div>
         <button id={styles.submitButton} type="submit">{mode}</button>
-        <span className={styles.toggleMode} onClick={()=>{console.log('hello World')}}>Don't have an account? Click here to register. </span>
+        <span className={styles.toggleMode} onClick={toggleRegisterMode}>Don't have an account? Click here to register. </span>
       </form>
     </div>;
   }
