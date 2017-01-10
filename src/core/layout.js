@@ -4,92 +4,92 @@ export function sortLayout(a, b) {
 
 export function resizeWindow(resizeNode, sideClicked, deltaX, deltaY, resizeStartWidth, resizeStartHeight,
   resizeStartLeft, resizeStartTop) {
-  if (action.resizeSideClicked === 'topLeft') {
-    if (action.deltaY < 0) {
-      newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + Math.abs(action.deltaY);
-      newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop - Math.abs(action.deltaY);
+  if (sideClicked === 'topLeft') {
+    if (deltaY < 0) {
+      newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + Math.abs(deltaY);
+      newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop - Math.abs(deltaY);
     }
-    if (action.deltaY > 0 ) {
-      if (!((action.resizeStartHeight - action.deltaY) < 250)) {
-        newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight - Math.abs(action.deltaY);
-        newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop + Math.abs(action.deltaY);
+    if (deltaY > 0 ) {
+      if (!((action.resizeStartHeight - deltaY) < 250)) {
+        newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight - Math.abs(deltaY);
+        newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop + Math.abs(deltaY);
       }
     }
-    if (action.deltaX < 0) {
-      newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + Math.abs(action.deltaX);
-      newOpenedFiles[parseInt(action.index, 10)].xPosition = action.resizeStartLeft - Math.abs(action.deltaX);
+    if (deltaX < 0) {
+      newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + Math.abs(deltaX);
+      newOpenedFiles[parseInt(action.index, 10)].xPosition = action.resizeStartLeft - Math.abs(deltaX);
 
     }
-    if (action.deltaX > 0 ) {
-      if (!((action.resizeStartWidth - action.deltaX) < 250)) {
-        newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth - Math.abs(action.deltaX);
-        newOpenedFiles[parseInt(action.index, 10)].xPosition = action.resizeStartLeft + Math.abs(action.deltaX);
+    if (deltaX > 0 ) {
+      if (!((action.resizeStartWidth - deltaX) < 250)) {
+        newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth - Math.abs(deltaX);
+        newOpenedFiles[parseInt(action.index, 10)].xPosition = action.resizeStartLeft + Math.abs(deltaX);
       }
     }
   }
-  else if (action.resizeSideClicked === 'top') {
-    if (action.deltaY < 0) {
-      newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + Math.abs(action.deltaY);
-      newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop - Math.abs(action.deltaY);
+  else if (sideClicked === 'top') {
+    if (deltaY < 0) {
+      newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + Math.abs(deltaY);
+      newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop - Math.abs(deltaY);
     }
-    if (action.deltaY > 0 ) {
-      if (!((action.resizeStartHeight - action.deltaY) < 250)) {
-        newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight - Math.abs(action.deltaY);
-        newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop + Math.abs(action.deltaY);
+    if (deltaY > 0 ) {
+      if (!((action.resizeStartHeight - deltaY) < 250)) {
+        newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight - Math.abs(deltaY);
+        newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop + Math.abs(deltaY);
       }
     }
   }
-  else if (action.resizeSideClicked === 'right') {
-    newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + action.deltaX;
+  else if (sideClicked === 'right') {
+    newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + deltaX;
   }
-  else if (action.resizeSideClicked === 'bottom') {
-    newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + action.deltaY;
+  else if (sideClicked === 'bottom') {
+    newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + deltaY;
   }
-  else if (action.resizeSideClicked === 'left') {
-    if (action.deltaX < 0) {
-      newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + Math.abs(action.deltaX);
-      newOpenedFiles[parseInt(action.index, 10)].xPosition = action.resizeStartLeft - Math.abs(action.deltaX);
+  else if (sideClicked === 'left') {
+    if (deltaX < 0) {
+      newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + Math.abs(deltaX);
+      newOpenedFiles[parseInt(action.index, 10)].xPosition = action.resizeStartLeft - Math.abs(deltaX);
     }
-    if (action.deltaX > 0 ) {
-      if (!((action.resizeStartHeight - action.deltaX) < 250)) {
-        newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth - Math.abs(action.deltaX);
-        newOpenedFiles[parseInt(action.index, 10)].xPosition = action.resizeStartLeft + Math.abs(action.deltaX);
-      }
-    }
-  }
-
-  else if (action.resizeSideClicked === 'topRight') {
-    newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + action.deltaX;
-    if (action.deltaY < 0) {
-      newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + Math.abs(action.deltaY);
-      newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop - Math.abs(action.deltaY);
-    }
-    if (action.deltaY > 0 ) {
-      if (!((action.resizeStartHeight - action.deltaY) < 250)) {
-        newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight - Math.abs(action.deltaY);
-        newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop + Math.abs(action.deltaY);
+    if (deltaX > 0 ) {
+      if (!((action.resizeStartHeight - deltaX) < 250)) {
+        newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth - Math.abs(deltaX);
+        newOpenedFiles[parseInt(action.index, 10)].xPosition = action.resizeStartLeft + Math.abs(deltaX);
       }
     }
   }
 
-  else if (action.resizeSideClicked === 'bottomRight') {
-    newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + action.deltaX;
-    newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + action.deltaY;
+  else if (sideClicked === 'topRight') {
+    newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + deltaX;
+    if (deltaY < 0) {
+      newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + Math.abs(deltaY);
+      newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop - Math.abs(deltaY);
+    }
+    if (deltaY > 0 ) {
+      if (!((action.resizeStartHeight - deltaY) < 250)) {
+        newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight - Math.abs(deltaY);
+        newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop + Math.abs(deltaY);
+      }
+    }
   }
 
-  else if (action.resizeSideClicked === 'bottomLeft') {
+  else if (sideClicked === 'bottomRight') {
+    newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + deltaX;
+    newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + deltaY;
+  }
 
-    newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + action.deltaY;
+  else if (sideClicked === 'bottomLeft') {
 
-    if (action.deltaX < 0) {
-      newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + Math.abs(action.deltaX);
-      newOpenedFiles[parseInt(action.index, 10)].xPosition = action.resizeStartLeft - Math.abs(action.deltaX);
+    newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + deltaY;
+
+    if (deltaX < 0) {
+      newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + Math.abs(deltaX);
+      newOpenedFiles[parseInt(action.index, 10)].xPosition = action.resizeStartLeft - Math.abs(deltaX);
 
     }
-    if (action.deltaX > 0 ) {
-      if (!((action.resizeStartWidth - action.deltaX) < 250)) {
-        newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth - Math.abs(action.deltaX);
-        newOpenedFiles[parseInt(action.index, 10)].xPosition = action.resizeStartLeft + Math.abs(action.deltaX);
+    if (deltaX > 0 ) {
+      if (!((action.resizeStartWidth - deltaX) < 250)) {
+        newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth - Math.abs(deltaX);
+        newOpenedFiles[parseInt(action.index, 10)].xPosition = action.resizeStartLeft + Math.abs(deltaX);
       }
     }
   }
