@@ -4,92 +4,93 @@ export function sortLayout(a, b) {
 
 export function resizeWindow(resizeNode, sideClicked, deltaX, deltaY, resizeStartWidth, resizeStartHeight,
   resizeStartLeft, resizeStartTop) {
+  console.log(resizeStartHeight, deltaY, resizeStartWidth, deltaX);
   if (sideClicked === 'topLeft') {
     if (deltaY < 0) {
-      resizeNode.styles.height = resizeStartHeight + Math.abs(deltaY);
-      resizeNode.styles.yPosition = resizeStartTop - Math.abs(deltaY);
+      resizeNode.style.height = `${resizeStartHeight + Math.abs(deltaY)}px`;
+      resizeNode.style.top = `${resizeStartTop - Math.abs(deltaY)}px`;
     }
     if (deltaY > 0 ) {
       if (!((resizeStartHeight - deltaY) < 250)) {
-        resizeNode.styles.height = resizeStartHeight - Math.abs(deltaY);
-        resizeNode.styles.yPosition = resizeStartTop + Math.abs(deltaY);
+        resizeNode.style.height = `${resizeStartHeight + Math.abs(deltaY)}px`;
+        resizeNode.style.top = `${resizeStartTop - Math.abs(deltaY)}px`;
       }
     }
     if (deltaX < 0) {
-      resizeNode.styles.width = resizeStartWidth + Math.abs(deltaX);
-      resizeNode.styles.xPosition = resizeStartLeft - Math.abs(deltaX);
+      resizeNode.style.width = `${resizeStartWidth + Math.abs(deltaX)}px`;
+      resizeNode.style.left = `${resizeStartLeft - Math.abs(deltaX)}px`;
 
     }
     if (deltaX > 0 ) {
       if (!((resizeStartWidth - deltaX) < 250)) {
-        resizeNode.styles.width = resizeStartWidth - Math.abs(deltaX);
-        resizeNode.styles.xPosition = resizeStartLeft + Math.abs(deltaX);
+        resizeNode.style.width = `${resizeStartWidth - Math.abs(deltaX)}px`;
+        resizeNode.style.left = `${resizeStartLeft + Math.abs(deltaX)}px`;
       }
     }
   }
   else if (sideClicked === 'top') {
     if (deltaY < 0) {
-      resizeNode.styles.height = resizeStartHeight + Math.abs(deltaY);
-      resizeNode.styles.yPosition = resizeStartTop - Math.abs(deltaY);
+      resizeNode.style.height = `${resizeStartHeight + Math.abs(deltaY)}px`;
+      resizeNode.style.top = `${resizeStartTop + Math.abs(deltaY)}px`;
     }
     if (deltaY > 0 ) {
       if (!((resizeStartHeight - deltaY) < 250)) {
-        resizeNode.styles.height = resizeStartHeight - Math.abs(deltaY);
-        resizeNode.styles.yPosition = resizeStartTop + Math.abs(deltaY);
+        resizeNode.style.height = `${resizeStartHeight - Math.abs(deltaY)}px`;
+        resizeNode.style.top = `${resizeStartTop + Math.abs(deltaY)}px`;
       }
     }
   }
   else if (sideClicked === 'right') {
-    resizeNode.styles.width = resizeStartWidth + deltaX;
+    resizeNode.style.width = `${resizeStartWidth + deltaX}px`;
   }
   else if (sideClicked === 'bottom') {
-    resizeNode.styles.height = resizeStartHeight + deltaY;
+    resizeNode.style.height = `${resizeStartHeight + deltaY}px`;
   }
   else if (sideClicked === 'left') {
     if (deltaX < 0) {
-      resizeNode.styles.width = resizeStartWidth + Math.abs(deltaX);
-      resizeNode.styles.xPosition = resizeStartLeft - Math.abs(deltaX);
+      resizeNode.style.width = `${resizeStartWidth + Math.abs(deltaX)}px`;
+      resizeNode.style.left = `${resizeStartLeft - Math.abs(deltaX)}px`;
     }
     if (deltaX > 0 ) {
       if (!((resizeStartHeight - deltaX) < 250)) {
-        resizeNode.styles.width = resizeStartWidth - Math.abs(deltaX);
-        resizeNode.styles.xPosition = resizeStartLeft + Math.abs(deltaX);
+        resizeNode.style.width = `${resizeStartWidth - Math.abs(deltaX)}px`;
+        resizeNode.style.left = `${resizeStartLeft + Math.abs(deltaX)}px`;
       }
     }
   }
 
   else if (sideClicked === 'topRight') {
-    resizeNode.styles.width = resizeStartWidth + deltaX;
+    resizeNode.style.width = `${resizeStartWidth + deltaX}px`;
     if (deltaY < 0) {
-      resizeNode.styles.height = resizeStartHeight + Math.abs(deltaY);
-      resizeNode.styles.yPosition = resizeStartTop - Math.abs(deltaY);
+      resizeNode.style.height = `${resizeStartHeight + Math.abs(deltaY)}`;
+      resizeNode.style.top = `${resizeStartTop + Math.abs(deltaX)}`;
     }
     if (deltaY > 0 ) {
       if (!((resizeStartHeight - deltaY) < 250)) {
-        resizeNode.styles.height = resizeStartHeight - Math.abs(deltaY);
-        resizeNode.styles.yPosition = resizeStartTop + Math.abs(deltaY);
+        resizeNode.style.height = `${resizeStartHeight + Math.abs(deltaY)}px`;
+        resizeNode.style.top = `${resizeStartTop + Math.abs(deltaY)}px`;
       }
     }
   }
 
   else if (sideClicked === 'bottomRight') {
-    resizeNode.styles.width = resizeStartWidth + deltaX;
-    resizeNode.styles.height = resizeStartHeight + deltaY;
+    resizeNode.style.width = `${resizeStartWidth + deltaX}px`;
+    resizeNode.style.height = `${resizeStartHeight + deltaY}px`;
   }
 
   else if (sideClicked === 'bottomLeft') {
 
-    resizeNode.styles.height = resizeStartHeight + deltaY;
+    resizeNode.style.height = `${resizeStartHeight + deltaY}px`;
 
     if (deltaX < 0) {
-      resizeNode.styles.width = resizeStartWidth + Math.abs(deltaX);
-      resizeNode.styles.xPosition = resizeStartLeft - Math.abs(deltaX);
+      resizeNode.style.width = `${resizeStartWidth + Math.abs(deltaX)}px`;
+      resizeNode.style.left = `${resizeStartLeft - Math.abs(deltaX)}px`;
 
     }
     if (deltaX > 0 ) {
       if (!((resizeStartWidth - deltaX) < 250)) {
-        resizeNode.styles.width = resizeStartWidth - Math.abs(deltaX);
-        resizeNode.styles.xPosition = resizeStartLeft + Math.abs(deltaX);
+        resizeNode.style.width = `${resizeStartWidth - Math.abs(deltaX)}px`;
+        resizeNode.style.left = `${resizeStartLeft + Math.abs(deltaX)}px`;
       }
     }
   }
