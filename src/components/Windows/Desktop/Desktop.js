@@ -13,7 +13,7 @@ import ErrorWindow from '../ErrorWindow';
 import Evaporate from 'evaporate';
 import { resizeWindow } from '../../../core/layout'
 
-
+// todo: desktopwidth / desktopheight still neceessary?
 class Desktop extends Component {
   static propTypes = {
     contextMenuActive: PropTypes.bool,
@@ -343,7 +343,7 @@ class Desktop extends Component {
   render() {
     const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, contextMenuClickClass, contextMenuIndexClicked,
       errorWindows, closeErrorWindow, connectDropTarget, moveFile, moveFiles, desktopNodeIndex,
-      selectedDesktopIcons, createFolder, openErrorWindow, openFile, openedFiles, fileSystem, desktopWidth, desktopHeight } = this.props;
+      selectedDesktopIcons, createFolder, openErrorWindow, openFile, openedFiles, fileSystem } = this.props;
     const selectedIds = selectedDesktopIcons.map(id => {return parseInt(id, 10)});
     return (connectDropTarget(
       <div id="desktop"
@@ -356,17 +356,17 @@ class Desktop extends Component {
         {
           desktopItems.map((desktopitem) => {
             return <DesktopItem selected={selectedIds.includes(desktopitem.index)} className='desktopIcon'
-                                key={desktopitem.index} desktopWidth={desktopWidth} desktopHeight={desktopHeight}
+                                key={desktopitem.index}
                                 index={desktopitem.index} moveFiles={moveFiles} parentIndex={desktopNodeIndex}
                                 moveFile={moveFile}  openFile={openFile} item={desktopitem} />
           })
         }
         {
           openedFiles.map((openedFile, index) => {
-            const openedFileNode = fileSystem[openedFile.nodeIndex];
+            const openedFileNode = fileSystem[openedFile];
             const fileType = openedFileNode.hasOwnProperty('children') ? 'Folder' : openedFileNode.extension;
             return React.createElement(windowsFileRegistry(fileType, openedFileNode), { key: index, openedFile,
-              filename: fileSystem[openedFile.nodeIndex].name, desktopWidth, desktopHeight,
+              filename: fileSystem[openedFile].name,
               index, ...this.props});
           })
         }

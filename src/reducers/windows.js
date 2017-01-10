@@ -75,12 +75,13 @@ const initialState = {
   contextMenuIndexClicked: 0,
   contextMenuActive: false,
   selectedDesktopIcons: [], // Array of entity IDs todo: maybe rename this to selectedIcons if this can be used for both desktop and folder...
-  openedFiles: [{ nodeIndex: 29, height: 300, width: 300, xPosition: 360 //todo remove automatically opened auth..
-    ,yPosition: 230, maximized: false, minimized: false }], // {entityId, height, width}
+  openedFiles: [], // {entityId, height, width}
+  openedFileDimensions: {},
   errorWindows: []
 };
 export default function layout(state = initialState, action) {
   const newOpenedFiles = [...state.openedFiles];
+  const newOpenedFileDimensions = {...state.openedFileDimensions};
   const newErrorWindows = [...state.errorWindows];
   const newFileSystem = { ...state.fileSystem };
   switch (action.type) {
@@ -103,9 +104,11 @@ export default function layout(state = initialState, action) {
     case CLEAR_ACTIVES:
       return { ...state, contextMenuActive: false};
     case OPEN_FILE_WINDOW:
-      return { ...state, openedFiles: [...state.openedFiles,
-        { nodeIndex: action.nodeIndex, height: 300, width: 300, xPosition: ((action.desktopWidth / 2.4) + state.openedFiles.length * 5)
-      ,yPosition: ((action.desktopHeight / 4) + state.openedFiles.length * 5), maximized: false, minimized: false }] };
+      newOpenedFileDimensions[action.nodeIndex] = { height: 300, width: 300,
+        xPosition: ((action.desktopWidth / 2.4) + state.openedFiles.length * 5)
+        ,yPosition: ((action.desktopHeight / 4) + state.openedFiles.length * 5), maximized: false, minimized: false };
+      return { ...state, openedFiles: [...state.openedFiles, action.nodeIndex], openedFileDimensions: newOpenedFileDimensions };
+
     case OPEN_ERROR_WINDOW:
       return { ...state, errorWindows: [...state.errorWindows, { errorMessage: action.errorMessage, height: 150, width: 400,
         xPosition: (action.desktopWidth / 2.4), yPosition: (action.desktopHeight / 4) }] };
