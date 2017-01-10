@@ -109,23 +109,15 @@ class Desktop extends Component {
     });
 
 
-    // EMD DROPZONE STUFF
+    // END DROPZONE STUFF
     this.desktop.onmousedown = this.desktopMouseDown;
     this.desktop.onmouseup = this.desktopMouseUp;
-    // this.desktop.ondrop = this.desktopDropHandler;
-    // this.desktop.ondragover = this.desktopDragoverHandler;
-    // this.desktop.ondragend = this.desktopDragendHandler
+
 
     // todo rmw: desktopWidth and Height is both in the redux store and in component State. Should have it it only 1.
     this.props.initializeDesktopDimensions(this.desktop.offsetWidth, this.desktop.offsetHeight);
     window.addEventListener('resize', this.desktopResize.bind(this));
-    // if (window) {
-    //   try {
-    //     this.dropzone = new Dropzone('div#desktop');
-    //   } catch (e) {
-    //     console.log(e);
-    //   }
-    // }
+
 
     this.setState({desktopWidth: this.desktop.offsetWidth, // todo have a workaround for this
       desktopHeight: this.desktop.offsetHeight,
@@ -134,8 +126,8 @@ class Desktop extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     return (this.state.selectedIcons !== nextState.selectedIcons) ||
       (this.props.registering !== nextProps.registering) ||
-      (this.props.desktopWidth !== nextProps.desktopWidth) ||
-      (this.props.desktopHeight !== nextProps.desktopHeight) ||
+      // (this.props.desktopWidth !== nextProps.desktopWidth) ||
+      // (this.props.desktopHeight !== nextProps.desktopHeight) ||
       (this.props.selectedDesktopIcons !== nextProps.selectedDesktopIcons) ||
       (this.props.contextMenuActive !== nextProps.contextMenuActive) ||
       (this.props.contextMenuX !== nextProps.contextMenuX)||
