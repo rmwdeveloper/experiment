@@ -7,12 +7,12 @@ import FolderNavigation from '../FolderNavigation';
 import FolderContents from '../FolderContents';
 
 
-function Folder({openedFile, selectedDesktopIcons, clearActives, fileSystem, selectIcons, desktopWidth, desktopHeight, openFile, moveFile, moveFiles}) {
+function Folder({openedFile, selectedDesktopIcons, clearActives, fileSystem, selectIcons, openFile, moveFile, moveFiles}) {
   const selectedIds = selectedDesktopIcons.map(id => {return parseInt(id, 10)});
   const folderContents = fileSystem[openedFile.nodeIndex].children ? fileSystem[openedFile.nodeIndex].children.map((nodeIndex, index) => {
     fileSystem[nodeIndex].index = nodeIndex;
     return <FolderItem moveFile={moveFile} moveFiles={moveFiles} className="folderIcon" parentIndex={openedFile.nodeIndex} selected={selectedIds.includes(nodeIndex)}
-                       key={index} desktopWidth={desktopWidth} desktopHeight={desktopHeight} index={index} openFile={openFile} item={fileSystem[nodeIndex]} />;
+                       key={index} index={index} openFile={openFile} item={fileSystem[nodeIndex]} />;
   }) : null;
   const windowHeight = openedFile.height - 30;
 
