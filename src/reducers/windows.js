@@ -170,93 +170,92 @@ export default function layout(state = initialState, action) {
     case INITIALIZE_DESKTOP_DIMENSIONS:
       return { ...state, desktopWidth: action.desktopWidth, desktopHeight: action.desktopHeight };
     case RESIZE_FILE_WINDOW: // todo: Needs refactor. Bulky and repetitive switch case.
-
       if (action.resizeSideClicked === 'topLeft') {
         if (action.deltaY < 0) {
-          newOpenedFileDimensions[parseInt(action.index, 10)].height = action.resizeStartHeight + Math.abs(action.deltaY);
-          newOpenedFileDimensions[parseInt(action.index, 10)].yPosition = action.resizeStartTop - Math.abs(action.deltaY);
+          newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].height = action.resizeStartHeight + Math.abs(action.deltaY);
+          newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].yPosition = action.resizeStartTop - Math.abs(action.deltaY);
         }
         if (action.deltaY > 0 ) {
           if (!((action.resizeStartHeight - action.deltaY) < 200)) {
-            newOpenedFileDimensions[parseInt(action.index, 10)].height = action.resizeStartHeight - Math.abs(action.deltaY);
-            newOpenedFileDimensions[parseInt(action.index, 10)].yPosition = action.resizeStartTop + Math.abs(action.deltaY);
+            newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].height = action.resizeStartHeight - Math.abs(action.deltaY);
+            newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].yPosition = action.resizeStartTop + Math.abs(action.deltaY);
           }
         }
         if (action.deltaX < 0) {
-          newOpenedFileDimensions[parseInt(action.index, 10)].width = action.resizeStartWidth + Math.abs(action.deltaX);
-          newOpenedFileDimensions[parseInt(action.index, 10)].xPosition = action.resizeStartLeft - Math.abs(action.deltaX);
+          newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].width = action.resizeStartWidth + Math.abs(action.deltaX);
+          newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].xPosition = action.resizeStartLeft - Math.abs(action.deltaX);
 
         }
         if (action.deltaX > 0 ) {
           if (!((action.resizeStartWidth - action.deltaX) < 200)) {
-            newOpenedFileDimensions[parseInt(action.index, 10)].width = action.resizeStartWidth - Math.abs(action.deltaX);
-            newOpenedFileDimensions[parseInt(action.index, 10)].xPosition = action.resizeStartLeft + Math.abs(action.deltaX);
+            newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].width = action.resizeStartWidth - Math.abs(action.deltaX);
+            newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].xPosition = action.resizeStartLeft + Math.abs(action.deltaX);
           }
         }
       }
       else if (action.resizeSideClicked === 'top') {
         if (action.deltaY < 0) {
-          newOpenedFileDimensions[parseInt(action.index, 10)].height = action.resizeStartHeight + Math.abs(action.deltaY);
-          newOpenedFileDimensions[parseInt(action.index, 10)].yPosition = action.resizeStartTop - Math.abs(action.deltaY);
+          newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].height = action.resizeStartHeight + Math.abs(action.deltaY);
+          newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].yPosition = action.resizeStartTop - Math.abs(action.deltaY);
         }
         if (action.deltaY > 0 ) {
           if (!((action.resizeStartHeight - action.deltaY) < 200)) {
-            newOpenedFileDimensions[parseInt(action.index, 10)].height = action.resizeStartHeight - Math.abs(action.deltaY);
-            newOpenedFileDimensions[parseInt(action.index, 10)].yPosition = action.resizeStartTop + Math.abs(action.deltaY);
+            newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].height = action.resizeStartHeight - Math.abs(action.deltaY);
+            newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].yPosition = action.resizeStartTop + Math.abs(action.deltaY);
           }
         }
       }
       else if (action.resizeSideClicked === 'right') {
-        newOpenedFileDimensions[parseInt(action.index, 10)].width = action.resizeStartWidth + action.deltaX;
+        newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].width = action.resizeStartWidth + action.deltaX;
       }
       else if (action.resizeSideClicked === 'bottom') {
-        newOpenedFileDimensions[parseInt(action.index, 10)].height = action.resizeStartHeight + action.deltaY;
+        newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].height = action.resizeStartHeight + action.deltaY;
       }
       else if (action.resizeSideClicked === 'left') {
         if (action.deltaX < 0) {
-          newOpenedFileDimensions[parseInt(action.index, 10)].width = action.resizeStartWidth + Math.abs(action.deltaX);
-          newOpenedFileDimensions[parseInt(action.index, 10)].xPosition = action.resizeStartLeft - Math.abs(action.deltaX);
+          newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].width = action.resizeStartWidth + Math.abs(action.deltaX);
+          newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].xPosition = action.resizeStartLeft - Math.abs(action.deltaX);
         }
         if (action.deltaX > 0 ) {
           if (!((action.resizeStartHeight - action.deltaX) < 200)) {
-            newOpenedFileDimensions[parseInt(action.index, 10)].width = action.resizeStartWidth - Math.abs(action.deltaX);
-            newOpenedFileDimensions[parseInt(action.index, 10)].xPosition = action.resizeStartLeft + Math.abs(action.deltaX);
+            newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].width = action.resizeStartWidth - Math.abs(action.deltaX);
+            newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].xPosition = action.resizeStartLeft + Math.abs(action.deltaX);
           }
         }
       }
 
       else if (action.resizeSideClicked === 'topRight') {
-        newOpenedFileDimensions[parseInt(action.index, 10)].width = action.resizeStartWidth + action.deltaX;
+        newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].width = action.resizeStartWidth + action.deltaX;
         if (action.deltaY < 0) {
-          newOpenedFileDimensions[parseInt(action.index, 10)].height = action.resizeStartHeight + Math.abs(action.deltaY);
-          newOpenedFileDimensions[parseInt(action.index, 10)].yPosition = action.resizeStartTop - Math.abs(action.deltaX);
+          newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].height = action.resizeStartHeight + Math.abs(action.deltaY);
+          newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].yPosition = action.resizeStartTop - Math.abs(action.deltaX);
         }
         if (action.deltaY > 0 ) {
           if (!((action.resizeStartHeight - action.deltaY) < 200)) {
-            newOpenedFileDimensions[parseInt(action.index, 10)].height = action.resizeStartHeight - Math.abs(action.deltaY);
-            newOpenedFileDimensions[parseInt(action.index, 10)].yPosition = action.resizeStartTop + Math.abs(action.deltaY);
+            newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].height = action.resizeStartHeight - Math.abs(action.deltaY);
+            newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].yPosition = action.resizeStartTop + Math.abs(action.deltaY);
           }
         }
       }
 
       else if (action.resizeSideClicked === 'bottomRight') {
-        newOpenedFileDimensions[parseInt(action.index, 10)].width = action.resizeStartWidth + action.deltaX;
-        newOpenedFileDimensions[parseInt(action.index, 10)].height = action.resizeStartHeight + action.deltaY;
+        newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].width = action.resizeStartWidth + action.deltaX;
+        newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].height = action.resizeStartHeight + action.deltaY;
       }
 
       else if (action.resizeSideClicked === 'bottomLeft') {
 
-        newOpenedFileDimensions[parseInt(action.index, 10)].height = action.resizeStartHeight + action.deltaY;
+        newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].height = action.resizeStartHeight + action.deltaY;
 
         if (action.deltaX < 0) {
-          newOpenedFileDimensions[parseInt(action.index, 10)].width = action.resizeStartWidth + Math.abs(action.deltaX);
-          newOpenedFileDimensions[parseInt(action.index, 10)].xPosition = action.resizeStartLeft - Math.abs(action.deltaX);
+          newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].width = action.resizeStartWidth + Math.abs(action.deltaX);
+          newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].xPosition = action.resizeStartLeft - Math.abs(action.deltaX);
 
         }
         if (action.deltaX > 0 ) {
           if (!((action.resizeStartWidth - action.deltaX) < 200)) {
-            newOpenedFileDimensions[parseInt(action.index, 10)].width = action.resizeStartWidth - Math.abs(action.deltaX);
-            newOpenedFileDimensions[parseInt(action.index, 10)].xPosition = action.resizeStartLeft + Math.abs(action.deltaX);
+            newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].width = action.resizeStartWidth - Math.abs(action.deltaX);
+            newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].xPosition = action.resizeStartLeft + Math.abs(action.deltaX);
           }
         }
       }
