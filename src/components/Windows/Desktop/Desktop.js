@@ -11,7 +11,7 @@ import DesktopItem from '../FileIcon';
 import ContextMenu from '../ContextMenu';
 import ErrorWindow from '../ErrorWindow';
 import Evaporate from 'evaporate';
-import Uploader from '../Uploader';
+import { resizeWindow } from '../../../core/layout'
 
 
 class Desktop extends Component {
@@ -48,6 +48,8 @@ class Desktop extends Component {
     this.fileWindowResizing = this.fileWindowResizing.bind(this);
     this.findAncestorWithClickClass = this.findAncestorWithClickClass.bind(this);
     this.dragbox = null;
+    this.draggedItem = null;
+    this.resizedItem = null;
     this.icons = [];
     this.selectedIcons = [];
     this.diffNodeLists = this.diffNodeLists.bind(this);
@@ -131,6 +133,7 @@ class Desktop extends Component {
   }
   shouldComponentUpdate(nextProps, nextState) {
     return (this.state.selectedIcons !== nextState.selectedIcons) ||
+      (this.props.registering !== nextProps.registering) ||
       (this.props.desktopWidth !== nextProps.desktopWidth) ||
       (this.props.desktopHeight !== nextProps.desktopHeight) ||
       (this.props.selectedDesktopIcons !== nextProps.selectedDesktopIcons) ||
@@ -160,7 +163,7 @@ class Desktop extends Component {
     return node;
   }
   desktopMouseDown(event) {
-    const { clickclass } = event.target.dataset;
+    const {clickclass} = event.target.dataset;
     if (event.button === 2) { // Right mouse button clicked
       return null;
     }
@@ -183,7 +186,7 @@ class Desktop extends Component {
         break;
 
       default:
-
+        return null;
     }
   }
   desktopMouseUp(event) {
@@ -207,6 +210,8 @@ class Desktop extends Component {
   }
   startResizeFileWindow(event) {
     const windowBeingResized = this.props.openedFiles[parseInt(event.target.dataset.index, 10)];
+    this.resizedItem = event.target.parentNode; // todo: Change how parent node is retrieved.
+
     this.setState({ resizingFileWindowInProgress: true, resizeStartX: event.clientX, resizeStartY: event.clientY,
     itemResized: event.target.dataset.index, resizeStartHeight: event.target.parentNode.clientHeight,
       resizeSideClicked: event.target.dataset.side, resizeStartLeft: windowBeingResized.xPosition,
@@ -217,10 +222,15 @@ class Desktop extends Component {
     const { itemResized, resizeStartHeight, resizeStartWidth, resizeSideClicked, resizeStartLeft, resizeStartTop } = this.state;
     const deltaX = event.clientX - this.state.resizeStartX;
     const deltaY = event.clientY - this.state.resizeStartY;
-    this.props.resizeFileWindow(itemResized, resizeSideClicked, deltaX, deltaY, resizeStartWidth, resizeStartHeight,
-      resizeStartLeft, resizeStartTop);
+    this.resizeDeltaX = event.clientX - this.state.resizeStartX;
+    this.resizeDeltaY = event.clientY - this.state.resizeStartY;
+    resizeWindow(this.resizedItem, resizeSideClicked, deltaX, deltaY, resizeStartWidth, resizeStartHeight,
+     resizeStartLeft, resizeStartTop);
   }
-  stopResizeFileWindow() {
+  stopResizeFileWindow(event) {
+    const { itemResized, resizeStartHeight, resizeStartWidth, resizeSideClicked, resizeStartLeft, resizeStartTop } = this.state;
+    this.props.resizeFileWindow(itemResized, resizeSideClicked,  event.clientX - this.state.resizeStartX, event.clientY - this.state.resizeStartY, resizeStartWidth, resizeStartHeight,
+      resizeStartLeft, resizeStartTop);
     this.desktop.removeEventListener('mousemove', this.fileWindowResizing);
     this.setState({ resizingFileWindowInProgress: false, resizeStartX: null, resizeStartY: null, itemResized: null,
     resizeStartHeight: null, resizeStartWidth: null, resizeSideClicked: null, resizeStartTop: null, resizeStartLeft: null});
@@ -324,14 +334,18 @@ class Desktop extends Component {
     this.desktop.addEventListener('mousemove', this.dragWindow);
     this.clickedLocationX = event.offsetX;
     this.clickedLocationY = event.offsetY;
+    this.draggedItem = event.target.parentNode;
     this.setState({draggingWindow: true, itemDragged: event.target.dataset.index });
   }
   dragWindow(event) {
     const { itemDragged, headerHeight } = this.state;
-    this.props.dragWindow(itemDragged, this.desktop.dragType, event.clientX - this.clickedLocationX, event.clientY - headerHeight - this.clickedLocationY);
+    this.draggedItem.style.left = `${event.clientX - this.clickedLocationX}px`;
+    this.draggedItem.style.top = `${event.clientY - this.clickedLocationY - headerHeight}px`;
   }
   stopDragWindow() {
+    const { itemDragged, headerHeight } = this.state;
     this.desktop.removeEventListener('mousemove', this.dragWindow);
+    this.props.dragWindow(itemDragged, this.desktop.dragType, event.clientX - this.clickedLocationX, event.clientY - headerHeight - this.clickedLocationY);
     this.setState({draggingWindow: false});
   }
   render() {
@@ -359,7 +373,7 @@ class Desktop extends Component {
           openedFiles.map((openedFile, index) => {
             const openedFileNode = fileSystem[openedFile.nodeIndex];
             const fileType = openedFileNode.hasOwnProperty('children') ? 'Folder' : openedFileNode.extension;
-            return React.createElement(windowsFileRegistry[fileType], { key: index, openedFile,
+            return React.createElement(windowsFileRegistry(fileType, openedFileNode), { key: index, openedFile,
               filename: fileSystem[openedFile.nodeIndex].name, desktopWidth, desktopHeight,
               index, ...this.props});
           })

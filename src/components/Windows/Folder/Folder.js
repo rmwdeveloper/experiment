@@ -18,7 +18,6 @@ function Folder({openedFile, selectedDesktopIcons, clearActives, fileSystem, sel
 
   return (
     <div style={{minHeight: windowHeight}} className={styles.root}>
-      <div id="uploader"></div>
       <FolderNavigation />
       <div className={styles.sidebarAndFolderContents}>
         <FolderSidebar />
