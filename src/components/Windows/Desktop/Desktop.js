@@ -11,7 +11,7 @@ import DesktopItem from '../FileIcon';
 import ContextMenu from '../ContextMenu';
 import ErrorWindow from '../ErrorWindow';
 import Evaporate from 'evaporate';
-import Uploader from '../Uploader';
+import { resize_window } from '../../../core/layout'
 
 
 class Desktop extends Component {
@@ -222,6 +222,8 @@ class Desktop extends Component {
     const { itemResized, resizeStartHeight, resizeStartWidth, resizeSideClicked, resizeStartLeft, resizeStartTop } = this.state;
     const deltaX = event.clientX - this.state.resizeStartX;
     const deltaY = event.clientY - this.state.resizeStartY;
+    resize_window(this.resizedItem, itemResized, resizeSideClicked, deltaX, deltaY, resizeStartWidth, resizeStartHeight,
+     resizeStartLeft, resizeStartTop);
     // this.props.resizeFileWindow(itemResized, resizeSideClicked, deltaX, deltaY, resizeStartWidth, resizeStartHeight,
     //   resizeStartLeft, resizeStartTop);
   }
