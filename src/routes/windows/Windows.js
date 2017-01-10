@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import shallowCompare from 'react-addons-shallow-compare';
 
 import * as windowsActions from '../../actions/windows';
+import * as authActions from '../../actions/auth';
 import { installedProgramsSelector, userDirectoriesSelector, desktopItemsSelector,
   computerSettingsSelector, utilityControlsSelector, authenticatorSelector } from '../../selectors';
 import WindowsDesktop from '../../components/Windows/Desktop';
@@ -14,6 +15,7 @@ import WindowsStartMenu from '../../components/Windows/StartMenu';
 import MobileTaskbar from '../../components/Windows/MobileTaskbar';
 
 @connect(state => ({
+  registering: state.auth.registering,
   startMenuOpened: state.windows.startMenuOpened,
   installedPrograms: installedProgramsSelector(state),
   userDirectories: userDirectoriesSelector(state),
@@ -37,9 +39,11 @@ import MobileTaskbar from '../../components/Windows/MobileTaskbar';
   browserHeight: state.windows.browserHeight,
   desktopWidth: state.windows.browserWidth,
   desktopHeight: state.windows.browserHeight
-}), { ...windowsActions })
+}), { ...windowsActions, ...authActions })
 class Windows extends Component { //eslint-disable-line
   static propTypes = {
+    registering: PropTypes.bool,
+    toggleRegisterMode: PropTypes.func,
     installedPrograms: PropTypes.array,
     userDirectories: PropTypes.array,
     utilityControls: PropTypes.array,

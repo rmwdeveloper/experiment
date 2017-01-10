@@ -131,6 +131,7 @@ class Desktop extends Component {
   }
   shouldComponentUpdate(nextProps, nextState) {
     return (this.state.selectedIcons !== nextState.selectedIcons) ||
+      (this.props.registering !== nextProps.registering) ||
       (this.props.desktopWidth !== nextProps.desktopWidth) ||
       (this.props.desktopHeight !== nextProps.desktopHeight) ||
       (this.props.selectedDesktopIcons !== nextProps.selectedDesktopIcons) ||
@@ -160,7 +161,9 @@ class Desktop extends Component {
     return node;
   }
   desktopMouseDown(event) {
-    const { clickclass } = event.target.dataset;
+    console.log(event.target);
+    const node = this.findAncestorWithClickClass(event.target);
+    const { clickclass } = node.dataset;
     if (event.button === 2) { // Right mouse button clicked
       return null;
     }
@@ -324,14 +327,18 @@ class Desktop extends Component {
     this.desktop.addEventListener('mousemove', this.dragWindow);
     this.clickedLocationX = event.offsetX;
     this.clickedLocationY = event.offsetY;
+    this.draggedItem = event.target.parentNode;
     this.setState({draggingWindow: true, itemDragged: event.target.dataset.index });
   }
   dragWindow(event) {
     const { itemDragged, headerHeight } = this.state;
-    this.props.dragWindow(itemDragged, this.desktop.dragType, event.clientX - this.clickedLocationX, event.clientY - headerHeight - this.clickedLocationY);
+    this.draggedItem.style.left = `${event.clientX - this.clickedLocationX}px`;
+    this.draggedItem.style.top = `${event.clientY - this.clickedLocationY - headerHeight}px`;
   }
   stopDragWindow() {
+    const { itemDragged, headerHeight } = this.state;
     this.desktop.removeEventListener('mousemove', this.dragWindow);
+    this.props.dragWindow(itemDragged, this.desktop.dragType, event.clientX - this.clickedLocationX, event.clientY - headerHeight - this.clickedLocationY);
     this.setState({draggingWindow: false});
   }
   render() {
@@ -359,7 +366,7 @@ class Desktop extends Component {
           openedFiles.map((openedFile, index) => {
             const openedFileNode = fileSystem[openedFile.nodeIndex];
             const fileType = openedFileNode.hasOwnProperty('children') ? 'Folder' : openedFileNode.extension;
-            return React.createElement(windowsFileRegistry[fileType], { key: index, openedFile,
+            return React.createElement(windowsFileRegistry(fileType, openedFileNode), { key: index, openedFile,
               filename: fileSystem[openedFile.nodeIndex].name, desktopWidth, desktopHeight,
               index, ...this.props});
           })

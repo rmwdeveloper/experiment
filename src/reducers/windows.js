@@ -75,7 +75,8 @@ const initialState = {
   contextMenuIndexClicked: 0,
   contextMenuActive: false,
   selectedDesktopIcons: [], // Array of entity IDs todo: maybe rename this to selectedIcons if this can be used for both desktop and folder...
-  openedFiles: [], // {entityId, height, width}
+  openedFiles: [{ nodeIndex: 29, height: 300, width: 300, xPosition: 360 //todo remove automatically opened auth..
+    ,yPosition: 230, maximized: false, minimized: false }], // {entityId, height, width}
   errorWindows: []
 };
 export default function layout(state = initialState, action) {
@@ -148,9 +149,12 @@ export default function layout(state = initialState, action) {
       newOpenedFiles[action.openedFileIndex].minimized = false;
       return { ...state, openedFiles: newOpenedFiles };
     case DRAG_FILE_WINDOW:
-      newOpenedFiles[parseInt(action.index, 10)].xPosition = action.deltaX;
-      newOpenedFiles[parseInt(action.index, 10)].yPosition = action.deltaY;
-      return { ...state, openedFiles: newOpenedFiles };
+      if (action.index) { // todo : after close index is undefined: fix this bug.
+          newOpenedFiles[parseInt(action.index, 10)].xPosition = action.deltaX;
+          newOpenedFiles[parseInt(action.index, 10)].yPosition = action.deltaY;
+        return { ...state, openedFiles: newOpenedFiles };
+      }
+      return state;
     case DRAG_ERROR_WINDOW:
       newErrorWindows[parseInt(action.index, 10)].xPosition = action.deltaX;
       newErrorWindows[parseInt(action.index, 10)].yPosition = action.deltaY;

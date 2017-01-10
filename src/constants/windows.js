@@ -10,5 +10,6 @@ export const windowsClickables = {
   fileTaskbar: 'fileTaskbar',
   taskbarFileItem: 'taskbarFileItem',
   fileResizeHandle: 'fileResizeHandle',
-  errorTaskbar: 'errorTaskbar'
+  errorTaskbar: 'errorTaskbar',
+  folderContents: 'folderContents'
 };

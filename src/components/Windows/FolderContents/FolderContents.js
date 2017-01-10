@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { DropTarget as dropTarget } from 'react-dnd';
 import styles from './FolderContents.css'; //eslint-disable-line
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import { windowsClickables } from '../../../constants/windows';
 
 class FolderContents extends Component {
   static propTypes = {
@@ -127,12 +128,19 @@ class FolderContents extends Component {
     }
   }
   folderContentsMouseDown(event) {
-    this.startDragSelect(event);
+    const { clickclass } = event.target.dataset;
+    switch(clickclass) {
+      case windowsClickables.folderContents:
+        this.startDragSelect(event);
+        break;
+      default:
+        return null;
+    }
   }
   render(){
     const { folderContents, connectDropTarget, index } = this.props;
     return connectDropTarget(
-      <div id={`folderContents${index}`} className={styles.root}>
+      <div id={`folderContents${index}`} data-clickClass={windowsClickables.folderContents} data-topClickable data-index={index} className={styles.root}>
         {folderContents}
       </div>
     );
