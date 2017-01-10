@@ -6,90 +6,90 @@ export function resizeWindow(resizeNode, sideClicked, deltaX, deltaY, resizeStar
   resizeStartLeft, resizeStartTop) {
   if (sideClicked === 'topLeft') {
     if (deltaY < 0) {
-      newOpenedFiles[parseInt(action.index, 10)].height = resizeStartHeight + Math.abs(deltaY);
-      newOpenedFiles[parseInt(action.index, 10)].yPosition = resizeStartTop - Math.abs(deltaY);
+      resizeNode.styles.height = resizeStartHeight + Math.abs(deltaY);
+      resizeNode.styles.yPosition = resizeStartTop - Math.abs(deltaY);
     }
     if (deltaY > 0 ) {
       if (!((resizeStartHeight - deltaY) < 250)) {
-        newOpenedFiles[parseInt(action.index, 10)].height = resizeStartHeight - Math.abs(deltaY);
-        newOpenedFiles[parseInt(action.index, 10)].yPosition = resizeStartTop + Math.abs(deltaY);
+        resizeNode.styles.height = resizeStartHeight - Math.abs(deltaY);
+        resizeNode.styles.yPosition = resizeStartTop + Math.abs(deltaY);
       }
     }
     if (deltaX < 0) {
-      newOpenedFiles[parseInt(action.index, 10)].width = resizeStartWidth + Math.abs(deltaX);
-      newOpenedFiles[parseInt(action.index, 10)].xPosition = resizeStartLeft - Math.abs(deltaX);
+      resizeNode.styles.width = resizeStartWidth + Math.abs(deltaX);
+      resizeNode.styles.xPosition = resizeStartLeft - Math.abs(deltaX);
 
     }
     if (deltaX > 0 ) {
       if (!((resizeStartWidth - deltaX) < 250)) {
-        newOpenedFiles[parseInt(action.index, 10)].width = resizeStartWidth - Math.abs(deltaX);
-        newOpenedFiles[parseInt(action.index, 10)].xPosition = resizeStartLeft + Math.abs(deltaX);
+        resizeNode.styles.width = resizeStartWidth - Math.abs(deltaX);
+        resizeNode.styles.xPosition = resizeStartLeft + Math.abs(deltaX);
       }
     }
   }
   else if (sideClicked === 'top') {
     if (deltaY < 0) {
-      newOpenedFiles[parseInt(action.index, 10)].height = resizeStartHeight + Math.abs(deltaY);
-      newOpenedFiles[parseInt(action.index, 10)].yPosition = resizeStartTop - Math.abs(deltaY);
+      resizeNode.styles.height = resizeStartHeight + Math.abs(deltaY);
+      resizeNode.styles.yPosition = resizeStartTop - Math.abs(deltaY);
     }
     if (deltaY > 0 ) {
       if (!((resizeStartHeight - deltaY) < 250)) {
-        newOpenedFiles[parseInt(action.index, 10)].height = resizeStartHeight - Math.abs(deltaY);
-        newOpenedFiles[parseInt(action.index, 10)].yPosition = resizeStartTop + Math.abs(deltaY);
+        resizeNode.styles.height = resizeStartHeight - Math.abs(deltaY);
+        resizeNode.styles.yPosition = resizeStartTop + Math.abs(deltaY);
       }
     }
   }
   else if (sideClicked === 'right') {
-    newOpenedFiles[parseInt(action.index, 10)].width = resizeStartWidth + deltaX;
+    resizeNode.styles.width = resizeStartWidth + deltaX;
   }
   else if (sideClicked === 'bottom') {
-    newOpenedFiles[parseInt(action.index, 10)].height = resizeStartHeight + deltaY;
+    resizeNode.styles.height = resizeStartHeight + deltaY;
   }
   else if (sideClicked === 'left') {
     if (deltaX < 0) {
-      newOpenedFiles[parseInt(action.index, 10)].width = resizeStartWidth + Math.abs(deltaX);
-      newOpenedFiles[parseInt(action.index, 10)].xPosition = resizeStartLeft - Math.abs(deltaX);
+      resizeNode.styles.width = resizeStartWidth + Math.abs(deltaX);
+      resizeNode.styles.xPosition = resizeStartLeft - Math.abs(deltaX);
     }
     if (deltaX > 0 ) {
       if (!((resizeStartHeight - deltaX) < 250)) {
-        newOpenedFiles[parseInt(action.index, 10)].width = resizeStartWidth - Math.abs(deltaX);
-        newOpenedFiles[parseInt(action.index, 10)].xPosition = resizeStartLeft + Math.abs(deltaX);
+        resizeNode.styles.width = resizeStartWidth - Math.abs(deltaX);
+        resizeNode.styles.xPosition = resizeStartLeft + Math.abs(deltaX);
       }
     }
   }
 
   else if (sideClicked === 'topRight') {
-    newOpenedFiles[parseInt(action.index, 10)].width = resizeStartWidth + deltaX;
+    resizeNode.styles.width = resizeStartWidth + deltaX;
     if (deltaY < 0) {
-      newOpenedFiles[parseInt(action.index, 10)].height = resizeStartHeight + Math.abs(deltaY);
-      newOpenedFiles[parseInt(action.index, 10)].yPosition = resizeStartTop - Math.abs(deltaY);
+      resizeNode.styles.height = resizeStartHeight + Math.abs(deltaY);
+      resizeNode.styles.yPosition = resizeStartTop - Math.abs(deltaY);
     }
     if (deltaY > 0 ) {
       if (!((resizeStartHeight - deltaY) < 250)) {
-        newOpenedFiles[parseInt(action.index, 10)].height = resizeStartHeight - Math.abs(deltaY);
-        newOpenedFiles[parseInt(action.index, 10)].yPosition = resizeStartTop + Math.abs(deltaY);
+        resizeNode.styles.height = resizeStartHeight - Math.abs(deltaY);
+        resizeNode.styles.yPosition = resizeStartTop + Math.abs(deltaY);
       }
     }
   }
 
   else if (sideClicked === 'bottomRight') {
-    newOpenedFiles[parseInt(action.index, 10)].width = resizeStartWidth + deltaX;
-    newOpenedFiles[parseInt(action.index, 10)].height = resizeStartHeight + deltaY;
+    resizeNode.styles.width = resizeStartWidth + deltaX;
+    resizeNode.styles.height = resizeStartHeight + deltaY;
   }
 
   else if (sideClicked === 'bottomLeft') {
 
-    newOpenedFiles[parseInt(action.index, 10)].height = resizeStartHeight + deltaY;
+    resizeNode.styles.height = resizeStartHeight + deltaY;
 
     if (deltaX < 0) {
-      newOpenedFiles[parseInt(action.index, 10)].width = resizeStartWidth + Math.abs(deltaX);
-      newOpenedFiles[parseInt(action.index, 10)].xPosition = resizeStartLeft - Math.abs(deltaX);
+      resizeNode.styles.width = resizeStartWidth + Math.abs(deltaX);
+      resizeNode.styles.xPosition = resizeStartLeft - Math.abs(deltaX);
 
     }
     if (deltaX > 0 ) {
       if (!((resizeStartWidth - deltaX) < 250)) {
-        newOpenedFiles[parseInt(action.index, 10)].width = resizeStartWidth - Math.abs(deltaX);
-        newOpenedFiles[parseInt(action.index, 10)].xPosition = resizeStartLeft + Math.abs(deltaX);
+        resizeNode.styles.width = resizeStartWidth - Math.abs(deltaX);
+        resizeNode.styles.xPosition = resizeStartLeft + Math.abs(deltaX);
       }
     }
   }
