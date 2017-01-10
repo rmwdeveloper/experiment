@@ -4,7 +4,6 @@ export function sortLayout(a, b) {
 
 export function resizeWindow(resizeNode, sideClicked, deltaX, deltaY, resizeStartWidth, resizeStartHeight,
   resizeStartLeft, resizeStartTop) {
-  console.log(resizeStartHeight, deltaY, resizeStartWidth, deltaX);
   if (sideClicked === 'topLeft') {
     if (deltaY < 0) {
       resizeNode.style.height = `${resizeStartHeight + Math.abs(deltaY)}px`;
@@ -12,8 +11,8 @@ export function resizeWindow(resizeNode, sideClicked, deltaX, deltaY, resizeStar
     }
     if (deltaY > 0 ) {
       if (!((resizeStartHeight - deltaY) < 250)) {
-        resizeNode.style.height = `${resizeStartHeight + Math.abs(deltaY)}px`;
-        resizeNode.style.top = `${resizeStartTop - Math.abs(deltaY)}px`;
+        resizeNode.style.height = `${resizeStartHeight - Math.abs(deltaY)}px`;
+        resizeNode.style.top = `${resizeStartTop + Math.abs(deltaY)}px`;
       }
     }
     if (deltaX < 0) {
@@ -31,7 +30,7 @@ export function resizeWindow(resizeNode, sideClicked, deltaX, deltaY, resizeStar
   else if (sideClicked === 'top') {
     if (deltaY < 0) {
       resizeNode.style.height = `${resizeStartHeight + Math.abs(deltaY)}px`;
-      resizeNode.style.top = `${resizeStartTop + Math.abs(deltaY)}px`;
+      resizeNode.style.top = `${resizeStartTop - Math.abs(deltaY)}px`;
     }
     if (deltaY > 0 ) {
       if (!((resizeStartHeight - deltaY) < 250)) {
@@ -62,12 +61,12 @@ export function resizeWindow(resizeNode, sideClicked, deltaX, deltaY, resizeStar
   else if (sideClicked === 'topRight') {
     resizeNode.style.width = `${resizeStartWidth + deltaX}px`;
     if (deltaY < 0) {
-      resizeNode.style.height = `${resizeStartHeight + Math.abs(deltaY)}`;
-      resizeNode.style.top = `${resizeStartTop + Math.abs(deltaX)}`;
+      resizeNode.style.height = `${resizeStartHeight + Math.abs(deltaY)}px`;
+      resizeNode.style.top = `${resizeStartTop - Math.abs(deltaX)}px`;
     }
     if (deltaY > 0 ) {
       if (!((resizeStartHeight - deltaY) < 250)) {
-        resizeNode.style.height = `${resizeStartHeight + Math.abs(deltaY)}px`;
+        resizeNode.style.height = `${resizeStartHeight - Math.abs(deltaY)}px`;
         resizeNode.style.top = `${resizeStartTop + Math.abs(deltaY)}px`;
       }
     }
