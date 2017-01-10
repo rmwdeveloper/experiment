@@ -45,3 +45,6 @@ build
 /build
 
 secret.js
+
+/portfolio
+/database.sqlite
