@@ -336,7 +336,7 @@ class Desktop extends Component {
   stopDragWindow() {
     const { itemDragged, headerHeight } = this.state;
     this.desktop.removeEventListener('mousemove', this.dragWindow);
-    // this.props.dragWindow(itemDragged, this.desktop.dragType, event.clientX - this.clickedLocationX, event.clientY - headerHeight - this.clickedLocationY);
+    this.props.dragWindow(itemDragged, this.desktop.dragType, event.clientX - this.clickedLocationX, event.clientY - headerHeight - this.clickedLocationY);
     this.setState({draggingWindow: false});
   }
   render() {
