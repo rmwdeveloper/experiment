@@ -10,7 +10,7 @@ export function resizeWindow(resizeNode, sideClicked, deltaX, deltaY, resizeStar
       resizeNode.style.top = `${resizeStartTop - Math.abs(deltaY)}px`;
     }
     if (deltaY > 0 ) {
-      if (!((resizeStartHeight - deltaY) < 250)) {
+      if (!((resizeStartHeight - deltaY) < 200)) {
         resizeNode.style.height = `${resizeStartHeight - Math.abs(deltaY)}px`;
         resizeNode.style.top = `${resizeStartTop + Math.abs(deltaY)}px`;
       }
@@ -21,7 +21,7 @@ export function resizeWindow(resizeNode, sideClicked, deltaX, deltaY, resizeStar
 
     }
     if (deltaX > 0 ) {
-      if (!((resizeStartWidth - deltaX) < 250)) {
+      if (!((resizeStartWidth - deltaX) < 200)) {
         resizeNode.style.width = `${resizeStartWidth - Math.abs(deltaX)}px`;
         resizeNode.style.left = `${resizeStartLeft + Math.abs(deltaX)}px`;
       }
@@ -33,7 +33,7 @@ export function resizeWindow(resizeNode, sideClicked, deltaX, deltaY, resizeStar
       resizeNode.style.top = `${resizeStartTop - Math.abs(deltaY)}px`;
     }
     if (deltaY > 0 ) {
-      if (!((resizeStartHeight - deltaY) < 250)) {
+      if (!((resizeStartHeight - deltaY) < 200)) {
         resizeNode.style.height = `${resizeStartHeight - Math.abs(deltaY)}px`;
         resizeNode.style.top = `${resizeStartTop + Math.abs(deltaY)}px`;
       }
@@ -51,7 +51,7 @@ export function resizeWindow(resizeNode, sideClicked, deltaX, deltaY, resizeStar
       resizeNode.style.left = `${resizeStartLeft - Math.abs(deltaX)}px`;
     }
     if (deltaX > 0 ) {
-      if (!((resizeStartHeight - deltaX) < 250)) {
+      if (!((resizeStartHeight - deltaX) < 200)) {
         resizeNode.style.width = `${resizeStartWidth - Math.abs(deltaX)}px`;
         resizeNode.style.left = `${resizeStartLeft + Math.abs(deltaX)}px`;
       }
@@ -65,7 +65,7 @@ export function resizeWindow(resizeNode, sideClicked, deltaX, deltaY, resizeStar
       resizeNode.style.top = `${resizeStartTop - Math.abs(deltaX)}px`;
     }
     if (deltaY > 0 ) {
-      if (!((resizeStartHeight - deltaY) < 250)) {
+      if (!((resizeStartHeight - deltaY) < 200)) {
         resizeNode.style.height = `${resizeStartHeight - Math.abs(deltaY)}px`;
         resizeNode.style.top = `${resizeStartTop + Math.abs(deltaY)}px`;
       }
@@ -87,7 +87,7 @@ export function resizeWindow(resizeNode, sideClicked, deltaX, deltaY, resizeStar
 
     }
     if (deltaX > 0 ) {
-      if (!((resizeStartWidth - deltaX) < 250)) {
+      if (!((resizeStartWidth - deltaX) < 200)) {
         resizeNode.style.width = `${resizeStartWidth - Math.abs(deltaX)}px`;
         resizeNode.style.left = `${resizeStartLeft + Math.abs(deltaX)}px`;
       }

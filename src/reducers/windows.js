@@ -174,7 +174,7 @@ export default function layout(state = initialState, action) {
           newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop - Math.abs(action.deltaY);
         }
         if (action.deltaY > 0 ) {
-          if (!((action.resizeStartHeight - action.deltaY) < 250)) {
+          if (!((action.resizeStartHeight - action.deltaY) < 200)) {
             newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight - Math.abs(action.deltaY);
             newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop + Math.abs(action.deltaY);
           }
@@ -185,7 +185,7 @@ export default function layout(state = initialState, action) {
 
         }
         if (action.deltaX > 0 ) {
-          if (!((action.resizeStartWidth - action.deltaX) < 250)) {
+          if (!((action.resizeStartWidth - action.deltaX) < 200)) {
             newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth - Math.abs(action.deltaX);
             newOpenedFiles[parseInt(action.index, 10)].xPosition = action.resizeStartLeft + Math.abs(action.deltaX);
           }
@@ -197,7 +197,7 @@ export default function layout(state = initialState, action) {
           newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop - Math.abs(action.deltaY);
         }
         if (action.deltaY > 0 ) {
-          if (!((action.resizeStartHeight - action.deltaY) < 250)) {
+          if (!((action.resizeStartHeight - action.deltaY) < 200)) {
             newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight - Math.abs(action.deltaY);
             newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop + Math.abs(action.deltaY);
           }
@@ -215,7 +215,7 @@ export default function layout(state = initialState, action) {
           newOpenedFiles[parseInt(action.index, 10)].xPosition = action.resizeStartLeft - Math.abs(action.deltaX);
         }
         if (action.deltaX > 0 ) {
-          if (!((action.resizeStartHeight - action.deltaX) < 250)) {
+          if (!((action.resizeStartHeight - action.deltaX) < 200)) {
             newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth - Math.abs(action.deltaX);
             newOpenedFiles[parseInt(action.index, 10)].xPosition = action.resizeStartLeft + Math.abs(action.deltaX);
           }
@@ -229,7 +229,7 @@ export default function layout(state = initialState, action) {
           newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop - Math.abs(action.deltaX);
         }
         if (action.deltaY > 0 ) {
-          if (!((action.resizeStartHeight - action.deltaY) < 250)) {
+          if (!((action.resizeStartHeight - action.deltaY) < 200)) {
             newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight - Math.abs(action.deltaY);
             newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop + Math.abs(action.deltaY);
           }
@@ -251,7 +251,7 @@ export default function layout(state = initialState, action) {
 
         }
         if (action.deltaX > 0 ) {
-          if (!((action.resizeStartWidth - action.deltaX) < 250)) {
+          if (!((action.resizeStartWidth - action.deltaX) < 200)) {
             newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth - Math.abs(action.deltaX);
             newOpenedFiles[parseInt(action.index, 10)].xPosition = action.resizeStartLeft + Math.abs(action.deltaX);
           }
