@@ -48,6 +48,8 @@ class Desktop extends Component {
     this.fileWindowResizing = this.fileWindowResizing.bind(this);
     this.findAncestorWithClickClass = this.findAncestorWithClickClass.bind(this);
     this.dragbox = null;
+    this.draggedItem = null;
+    this.resizedItem = null;
     this.icons = [];
     this.selectedIcons = [];
     this.diffNodeLists = this.diffNodeLists.bind(this);
@@ -208,6 +210,8 @@ class Desktop extends Component {
   }
   startResizeFileWindow(event) {
     const windowBeingResized = this.props.openedFiles[parseInt(event.target.dataset.index, 10)];
+    this.resizedItem = event.target.parentNode; // todo: Change how parent node is retrieved.
+    console.log(this.);
     this.setState({ resizingFileWindowInProgress: true, resizeStartX: event.clientX, resizeStartY: event.clientY,
     itemResized: event.target.dataset.index, resizeStartHeight: event.target.parentNode.clientHeight,
       resizeSideClicked: event.target.dataset.side, resizeStartLeft: windowBeingResized.xPosition,
