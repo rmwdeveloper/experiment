@@ -1,5 +1,7 @@
 export const SET_RUNTIME_VARIABLE = 'SET_RUNTIME_VARIABLE';
 
+export const TOGGLE_REGISTER_MODE = 'auth/TOGGLE_REGISTER_MODE';
+
 export const OPEN_START_MENU = 'windows/OPEN_START_MENU';
 export const CLOSE_START_MENU = 'windows/CLOSE_START_MENU';
 export const CREATE_FOLDER = 'windows/CREATE_FOLDER';
