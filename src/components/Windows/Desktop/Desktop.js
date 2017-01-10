@@ -201,7 +201,8 @@ class Desktop extends Component {
     }
   }
   startResizeFileWindow(event) {
-    const windowBeingResized = this.props.openedFiles[parseInt(event.target.dataset.index, 10)];
+    const { openedFiles, openedFileDimensions } = this.props;
+    const windowBeingResized = openedFileDimensions[openedFiles[parseInt(event.target.dataset.index, 10)]];
     this.resizedItem = event.target.parentNode; // todo: Change how parent node is retrieved.
 
     this.setState({ resizingFileWindowInProgress: true, resizeStartX: event.clientX, resizeStartY: event.clientY,
@@ -221,7 +222,7 @@ class Desktop extends Component {
   }
   stopResizeFileWindow(event) {
     const { itemResized, resizeStartHeight, resizeStartWidth, resizeSideClicked, resizeStartLeft, resizeStartTop } = this.state;
-    this.props.resizeFileWindow(itemResized, resizeSideClicked,  event.clientX - this.state.resizeStartX, event.clientY - this.state.resizeStartY, resizeStartWidth, resizeStartHeight,
+    this.props.resizeFileWindow(itemResized, resizeSideClicked, this.resizeDeltaX, this.resizeDeltaY, resizeStartWidth, resizeStartHeight,
       resizeStartLeft, resizeStartTop);
     this.desktop.removeEventListener('mousemove', this.fileWindowResizing);
     this.setState({ resizingFileWindowInProgress: false, resizeStartX: null, resizeStartY: null, itemResized: null,
