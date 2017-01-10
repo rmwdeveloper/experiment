@@ -161,9 +161,7 @@ class Desktop extends Component {
     return node;
   }
   desktopMouseDown(event) {
-    console.log(event.target);
-    const node = this.findAncestorWithClickClass(event.target);
-    const { clickclass } = node.dataset;
+    const {clickclass} = event.target.dataset;
     if (event.button === 2) { // Right mouse button clicked
       return null;
     }
@@ -186,7 +184,7 @@ class Desktop extends Component {
         break;
 
       default:
-
+        return null;
     }
   }
   desktopMouseUp(event) {

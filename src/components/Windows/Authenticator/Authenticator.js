@@ -50,7 +50,7 @@ class Authenticator extends Component {
           <input name="password" type="password" id={styles.registerPassword} />
         </div>
         <button id={styles.submitButton} type="submit">{mode}</button>
-        <span className={styles.toggleMode}>Don't have an account? Click here to register. </span>
+        <span className={styles.toggleMode} onClick={()=>{console.log('hello World')}}>Don't have an account? Click here to register. </span>
       </form>
     </div>;
   }
