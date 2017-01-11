@@ -27,10 +27,11 @@ class Authenticator extends Component {
   }
   handleSubmit(event) {
     event.preventDefault();
+    const mode = registering ? 'register' : 'login';
     const form = document.getElementById(styles.registrationForm);
     const data = new FormData(form);
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/register', true);
+    xhr.open('POST', `/${mode}`, true);
     xhr.onreadystatechange = this.registrationCallback;
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(JSON.stringify({ email: data.get('email'), username: data.get('username'), password: data.get('password') }));
