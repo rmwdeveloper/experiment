@@ -10,15 +10,20 @@ class Authenticator extends Component {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
     this.registrationCallback = this.registrationCallback.bind(this);
+    this.loginCallback = this.loginCallback.bind(this);
     this.state = {
       errors: []
     }
+  }
+  loginCallback() {
+    const response = event.target;
+    console.log(response);
   }
   registrationCallback() {
     const response = event.target;
     if(response.readyState == XMLHttpRequest.DONE) {
       if (response.status === 200) {
-        console.log('success');
+        this.setState({errors: []});
       } else {
         const errors = JSON.parse(response.response);
         this.setState({errors});
@@ -32,7 +37,7 @@ class Authenticator extends Component {
     const data = new FormData(form);
     const xhr = new XMLHttpRequest();
     xhr.open('POST', `/${mode}`, true);
-    xhr.onreadystatechange = this.registrationCallback;
+    xhr.onreadystatechange = this.props.registering ? this.registrationCallback : this.loginCallback;
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(JSON.stringify({ email: data.get('email'), username: data.get('username'), password: data.get('password') }));
   }

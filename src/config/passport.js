@@ -1,4 +1,4 @@
-import LocalStrategy from 'passport-local';
+import { Strategy } from 'passport-local';
 import { User } from '../data/models';
 
 export default function passportConfig(passport) {
@@ -12,7 +12,7 @@ export default function passportConfig(passport) {
     });
   });
 
-  passport.use('local-signup', new LocalStrategy({
+  passport.use('local-signup', new Strategy({
       // by default, local strategy uses username and password, we will override with email
       usernameField : 'email',
       passwordField : 'password',

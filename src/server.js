@@ -1,6 +1,8 @@
 import 'babel-polyfill';
 import path from 'path';
 import express from 'express';
+import session from 'express-session';
+import flash from 'connect-flash';
 import multer from 'multer';
 import crypto from 'crypto';
 import bcrypt from 'bcrypt';
@@ -15,8 +17,9 @@ import models, { User } from './data/models';
 
 import routes from './routes';
 import { resolve } from 'universal-router';
-import { port, analytics, auth, aws_secret_key } from './config';
-import passportConfig from './config/passport';
+import { port, analytics, auth, aws_secret_key, session_secret } from './config';
+import { Strategy } from 'passport-local';
+
 
 import assets from './assets';
 import configureStore from './store/configureStore';
@@ -47,6 +50,10 @@ global.navigator.userAgent = global.navigator.userAgent || 'all';
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public', 'windows')));
 app.use(cookieParser());
+app.use(session({ cookie: { maxAge: 60000, secure: true},  secret: session_secret, resave: true, saveUninitialized: false }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 // app.use(allowCrossDomain);
@@ -58,8 +65,66 @@ app.use(expressJwt({
   getToken: req => req.cookies.id_token,
   /* jscs:enable requireCamelCaseOrUpperCaseIdentifiers */
 }));
-app.use(passport.initialize());
-app.use(passport.session());
+
+
+export default function passportConfig(passport) {
+  passport.serializeUser(function(user, done) {
+    done(null, user.id);
+  });
+
+  passport.deserializeUser(function(id, done) {
+    User.findById(id, function(err, user) {
+      done(err, user);
+    });
+  });
+
+  passport.use('local-signup', new Strategy({
+      // by default, local strategy uses username and password, we will override with email
+      usernameField : 'email',
+      passwordField : 'password',
+      passReqToCallBack : true // allows us to pass back the entire request to the callback
+    },
+    function(req, email, password, done) {
+
+      // asynchronous
+      // User.findOne wont fire unless data is sent back
+      process.nextTick(function() {
+
+        // find a user whose email is the same as the forms email
+        // we are checking to see if the user trying to login already exists
+        User.findOne({ 'local.email' :  email }, function(err, user) {
+          // if there are any errors, return the error
+          if (err)
+            return done(err);
+
+          // check to see if theres already a user with that email
+          if (user) {
+            return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+          } else {
+
+            // if there is no user with that email
+            // create the user
+            var newUser            = new User();
+
+            // set the user's local credentials
+            newUser.local.email    = email;
+            newUser.local.password = newUser.generateHash(password);
+
+            // save the user
+            newUser.save(function(err) {
+              if (err)
+                throw err;
+              return done(null, newUser);
+            });
+          }
+
+        });
+
+      });
+
+    }));
+
+};
 
 app.post('/register', (req, res) => {
 
@@ -83,11 +148,16 @@ app.post('/register', (req, res) => {
     });
   });
 });
-app.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => {
-  res.redirect('/');
-  res.status(200);
-  res.send();
-});
+app.post('/login',
+  passport.authenticate('local', { successRedirect: '/',
+    failureRedirect: '/',
+    failureFlash: true })
+);
+// app.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => {
+//   res.redirect('/');
+//   res.status(200);
+//   res.send();
+// });
 // passport.serializeUser(function(user, cb) {
 //   cb(null, user.id);
 // });
