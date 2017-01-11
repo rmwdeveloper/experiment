@@ -7,14 +7,14 @@ import FolderNavigation from '../FolderNavigation';
 import FolderContents from '../FolderContents';
 
 
-function Folder({openedFile, selectedDesktopIcons, clearActives, fileSystem, selectIcons, desktopWidth, desktopHeight, openFile, moveFile, moveFiles}) {
+function Folder({openedFile, openedFileDimensions, selectedDesktopIcons, clearActives, fileSystem, selectIcons, openFile, moveFile, moveFiles}) {
   const selectedIds = selectedDesktopIcons.map(id => {return parseInt(id, 10)});
-  const folderContents = fileSystem[openedFile.nodeIndex].children ? fileSystem[openedFile.nodeIndex].children.map((nodeIndex, index) => {
+  const folderContents = fileSystem[openedFile].children ? fileSystem[openedFile].children.map((nodeIndex, index) => {
     fileSystem[nodeIndex].index = nodeIndex;
-    return <FolderItem moveFile={moveFile} moveFiles={moveFiles} className="folderIcon" parentIndex={openedFile.nodeIndex} selected={selectedIds.includes(nodeIndex)}
-                       key={index} desktopWidth={desktopWidth} desktopHeight={desktopHeight} index={index} openFile={openFile} item={fileSystem[nodeIndex]} />;
+    return <FolderItem moveFile={moveFile} moveFiles={moveFiles} className="folderIcon" parentIndex={openedFile} selected={selectedIds.includes(nodeIndex)}
+                       key={index} index={index} openFile={openFile} item={fileSystem[nodeIndex]} />;
   }) : null;
-  const windowHeight = openedFile.height - 30;
+  const windowHeight = openedFileDimensions[openedFile].height - 30;
 
   return (
     <div style={{minHeight: windowHeight}} className={styles.root}>
@@ -22,7 +22,7 @@ function Folder({openedFile, selectedDesktopIcons, clearActives, fileSystem, sel
       <div className={styles.sidebarAndFolderContents}>
         <FolderSidebar />
         <FolderContents clearActives={clearActives} selectIcons={selectIcons}
-          moveFile={moveFile} moveFile={moveFiles} folderContents={folderContents} index={openedFile.nodeIndex} />
+          moveFile={moveFile} moveFile={moveFiles} folderContents={folderContents} index={openedFile} />
       </div>
     </div>
   );

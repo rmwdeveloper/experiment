@@ -10,23 +10,18 @@ export default function FileWindow(ComposedComponent) {
       toggleWindowMaximize: PropTypes.func,
       toggleWindowMinimize: PropTypes.func,
       filename: PropTypes.string,
-      openedFile: PropTypes.object
+      openedFile: PropTypes.number
     };
     render() {
       const { index, filename, closeFile, toggleWindowMaximize, toggleWindowMinimize,
-        openedFile: { maximized, minimized, height, width, xPosition, yPosition } } = this.props;
-
+        openedFile, openedFileDimensions } = this.props;
+      // todo: make sure FileBaseTaskbar min/max button reflects minimization maximization state
       return (
-        <MoveableResizeableWindow
-          maximized={maximized}
-          minimized={minimized}
-          height={height}
-          width={width} xPosition={xPosition} yPosition={yPosition} index={index} >
+        <MoveableResizeableWindow index={index} dimensions={openedFileDimensions[openedFile]} >
           <FileBaseTaskbar
             toggleWindowMaximize={toggleWindowMaximize}
             toggleWindowMinimize={toggleWindowMinimize}
             index={index}
-            maximized={maximized}
             filename={filename}
             closeFile={closeFile}
           />

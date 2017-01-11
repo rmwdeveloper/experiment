@@ -15,8 +15,9 @@ class MoveableResizeableWindow extends Component {
       children: PropTypes.array
     };
     render() {
-      const { index, minimized, maximized, height, width, xPosition, yPosition, children } = this.props;
-
+      const { index, children, dimensions } = this.props;
+      // TODO : perfect resize action. Make it smoother.
+      const {maximized, minimized, height, width, xPosition, yPosition } = dimensions;
       let windowStyle = { height, width, left: xPosition, top: yPosition };
 
       if (maximized) {

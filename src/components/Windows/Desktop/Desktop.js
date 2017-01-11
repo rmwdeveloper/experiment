@@ -13,7 +13,7 @@ import ErrorWindow from '../ErrorWindow';
 import Evaporate from 'evaporate';
 import { resizeWindow } from '../../../core/layout'
 
-
+// todo: desktopwidth / desktopheight still neceessary?
 class Desktop extends Component {
   static propTypes = {
     contextMenuActive: PropTypes.bool,
@@ -109,23 +109,15 @@ class Desktop extends Component {
     });
 
 
-    // EMD DROPZONE STUFF
+    // END DROPZONE STUFF
     this.desktop.onmousedown = this.desktopMouseDown;
     this.desktop.onmouseup = this.desktopMouseUp;
-    // this.desktop.ondrop = this.desktopDropHandler;
-    // this.desktop.ondragover = this.desktopDragoverHandler;
-    // this.desktop.ondragend = this.desktopDragendHandler
+
 
     // todo rmw: desktopWidth and Height is both in the redux store and in component State. Should have it it only 1.
     this.props.initializeDesktopDimensions(this.desktop.offsetWidth, this.desktop.offsetHeight);
     window.addEventListener('resize', this.desktopResize.bind(this));
-    // if (window) {
-    //   try {
-    //     this.dropzone = new Dropzone('div#desktop');
-    //   } catch (e) {
-    //     console.log(e);
-    //   }
-    // }
+
 
     this.setState({desktopWidth: this.desktop.offsetWidth, // todo have a workaround for this
       desktopHeight: this.desktop.offsetHeight,
@@ -134,8 +126,8 @@ class Desktop extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     return (this.state.selectedIcons !== nextState.selectedIcons) ||
       (this.props.registering !== nextProps.registering) ||
-      (this.props.desktopWidth !== nextProps.desktopWidth) ||
-      (this.props.desktopHeight !== nextProps.desktopHeight) ||
+      // (this.props.desktopWidth !== nextProps.desktopWidth) ||
+      // (this.props.desktopHeight !== nextProps.desktopHeight) ||
       (this.props.selectedDesktopIcons !== nextProps.selectedDesktopIcons) ||
       (this.props.contextMenuActive !== nextProps.contextMenuActive) ||
       (this.props.contextMenuX !== nextProps.contextMenuX)||
@@ -209,7 +201,8 @@ class Desktop extends Component {
     }
   }
   startResizeFileWindow(event) {
-    const windowBeingResized = this.props.openedFiles[parseInt(event.target.dataset.index, 10)];
+    const { openedFiles, openedFileDimensions } = this.props;
+    const windowBeingResized = openedFileDimensions[openedFiles[parseInt(event.target.dataset.index, 10)]];
     this.resizedItem = event.target.parentNode; // todo: Change how parent node is retrieved.
 
     this.setState({ resizingFileWindowInProgress: true, resizeStartX: event.clientX, resizeStartY: event.clientY,
@@ -229,7 +222,7 @@ class Desktop extends Component {
   }
   stopResizeFileWindow(event) {
     const { itemResized, resizeStartHeight, resizeStartWidth, resizeSideClicked, resizeStartLeft, resizeStartTop } = this.state;
-    this.props.resizeFileWindow(itemResized, resizeSideClicked,  event.clientX - this.state.resizeStartX, event.clientY - this.state.resizeStartY, resizeStartWidth, resizeStartHeight,
+    this.props.resizeFileWindow(itemResized, resizeSideClicked, this.resizeDeltaX, this.resizeDeltaY, resizeStartWidth, resizeStartHeight,
       resizeStartLeft, resizeStartTop);
     this.desktop.removeEventListener('mousemove', this.fileWindowResizing);
     this.setState({ resizingFileWindowInProgress: false, resizeStartX: null, resizeStartY: null, itemResized: null,
@@ -351,7 +344,7 @@ class Desktop extends Component {
   render() {
     const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, contextMenuClickClass, contextMenuIndexClicked,
       errorWindows, closeErrorWindow, connectDropTarget, moveFile, moveFiles, desktopNodeIndex,
-      selectedDesktopIcons, createFolder, openErrorWindow, openFile, openedFiles, fileSystem, desktopWidth, desktopHeight } = this.props;
+      selectedDesktopIcons, createFolder, openErrorWindow, openFile, openedFiles, fileSystem } = this.props;
     const selectedIds = selectedDesktopIcons.map(id => {return parseInt(id, 10)});
     return (connectDropTarget(
       <div id="desktop"
@@ -364,17 +357,17 @@ class Desktop extends Component {
         {
           desktopItems.map((desktopitem) => {
             return <DesktopItem selected={selectedIds.includes(desktopitem.index)} className='desktopIcon'
-                                key={desktopitem.index} desktopWidth={desktopWidth} desktopHeight={desktopHeight}
+                                key={desktopitem.index}
                                 index={desktopitem.index} moveFiles={moveFiles} parentIndex={desktopNodeIndex}
                                 moveFile={moveFile}  openFile={openFile} item={desktopitem} />
           })
         }
         {
           openedFiles.map((openedFile, index) => {
-            const openedFileNode = fileSystem[openedFile.nodeIndex];
+            const openedFileNode = fileSystem[openedFile];
             const fileType = openedFileNode.hasOwnProperty('children') ? 'Folder' : openedFileNode.extension;
             return React.createElement(windowsFileRegistry(fileType, openedFileNode), { key: index, openedFile,
-              filename: fileSystem[openedFile.nodeIndex].name, desktopWidth, desktopHeight,
+              filename: fileSystem[openedFile].name,
               index, ...this.props});
           })
         }
