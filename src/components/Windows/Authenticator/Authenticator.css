@@ -19,7 +19,9 @@
   justify-content: center;
   flex-direction: column;
 }
-
+.controlGroupError {
+  color: red;
+}
 #registerEmail, #registerUsername, #registerPassword, .controlGroup label {
   display: block;
 }
