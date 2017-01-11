@@ -16,6 +16,8 @@ import models, { User } from './data/models';
 import routes from './routes';
 import { resolve } from 'universal-router';
 import { port, analytics, auth, aws_secret_key } from './config';
+import passportConfig from './config/passport';
+
 import assets from './assets';
 import configureStore from './store/configureStore';
 import { setRuntimeVariable } from './actions/runtime';
