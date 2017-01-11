@@ -10,7 +10,10 @@ const User = Model.define('User', {
   },
   username: {
     type: DataType.STRING(30),
-    unique: true
+    unique: true,
+    validate: {
+      is: /^[a-z]+$/i,
+    }
   },
   password: {
     type: DataType.STRING(128)
