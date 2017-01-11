@@ -81,11 +81,11 @@ app.post('/register', (req, res) => {
     });
   });
 });
-// app.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => {
-//   res.redirect('/');
-//   res.status(200);
-//   res.send();
-// });
+app.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => {
+  res.redirect('/');
+  res.status(200);
+  res.send();
+});
 // passport.serializeUser(function(user, cb) {
 //   cb(null, user.id);
 // });

@@ -27,7 +27,7 @@ class Authenticator extends Component {
   }
   handleSubmit(event) {
     event.preventDefault();
-    const mode = registering ? 'register' : 'login';
+    const mode = this.props.registering ? 'register' : 'login';
     const form = document.getElementById(styles.registrationForm);
     const data = new FormData(form);
     const xhr = new XMLHttpRequest();
