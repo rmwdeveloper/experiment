@@ -12,7 +12,15 @@ const User = Model.define('User', {
     type: DataType.STRING(30),
     unique: true,
     validate: {
-      is: /^[a-z]+$/i,
+      len: {
+        args: [6, 30],
+        msg: 'Username must be between 6 and 30 characters'
+      },
+      is: {
+        args: /^[\w.@+-]+$/i,
+        msg: 'Enter a valid username. This value may contain only letters, ' +
+        'numbers, and  @/./+/-/_ characters.'
+      }
     }
   },
   password: {
