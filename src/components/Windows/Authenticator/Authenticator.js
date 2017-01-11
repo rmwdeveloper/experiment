@@ -64,11 +64,21 @@ class Authenticator extends Component {
            registering ?
              <div className={usernameClassnames}>
               <label htmlFor={styles.registerUsername}>Username</label>
+               {
+                 usernameErrors.map( errorObject => {
+                   return <span className={styles.errorMessage}>{errorObject.message}</span>;
+                 })
+               }
               <input name="username" type="text" id={styles.registerUsername} />
             </div> : null
         }
         <div className={passwordClassnames}>
           <label htmlFor={styles.registerPassword}>Password</label>
+          {
+            passwordErrors.map( errorObject => {
+              return <span className={styles.errorMessage}>{errorObject.message}</span>;
+            })
+          }
           <input name="password" type="password" id={styles.registerPassword} />
         </div>
         <button id={styles.submitButton} type="submit">{mode}</button>

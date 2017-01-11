@@ -22,6 +22,9 @@
 .controlGroupError {
   color: red;
 }
+.errorMessage {
+  font-size: 12px;
+}
 #registerEmail, #registerUsername, #registerPassword, .controlGroup label {
   display: block;
 }
