@@ -51,30 +51,33 @@ global.navigator.userAgent = global.navigator.userAgent || 'all';
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public', 'windows')));
 app.use(cookieParser());
-app.use(session({ cookie: { maxAge: 60000, secure: true},  secret: session_secret, resave: true, saveUninitialized: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(session({ cookie: { secure: false },  secret: 'test secret'})); // todo: figure out how the hell cookies work with SSL
 app.use(passport.initialize());
 app.use(passport.session());
 // app.use(flash());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+
 // app.use(allowCrossDomain);
 
-app.use(expressJwt({
-  secret: auth.jwt.secret,
-  credentialsRequired: false,
-  /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
-  getToken: req => req.cookies.id_token,
-  /* jscs:enable requireCamelCaseOrUpperCaseIdentifiers */
-}));
+// app.use(expressJwt({
+//   secret: auth.jwt.secret,
+//   credentialsRequired: false,
+//   /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
+//   getToken: req => req.cookies.id_token,
+//   /* jscs:enable requireCamelCaseOrUpperCaseIdentifiers */
+// }));
 
 passport.serializeUser(function(user, done) {
-  done(null, user.id);
+  done(null, user.dataValues.id);
 });
-
+//
 passport.deserializeUser(function(id, done) {
-  User.findById(id, function(err, user) {
-    done(err, user);
-  });
+  console.log('id', id);
+  done(null, {test: 'hello World'});
+  // User.find(id, function(err, user) {
+  //   done(err, user);
+  // });
 });
 
 
@@ -119,7 +122,7 @@ app.post('/register', (req, res) => {
   });
 });
 app.post('/login',
-  passport.authenticate('login', { successRedirect: '/success', failureRedirect: '/failure' })
+  passport.authenticate('login', { successRedirect: '/success', failureRedirect: '/failure', session: true })
 );
 // app.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => {
 //   res.redirect('/');
@@ -164,11 +167,13 @@ app.get('/sign_aws', (req, res) => {
 //
 // Register server-side rendering middleware
 // -----------------------------------------------------------------------------
-app.get('/success', async(req, res, next) => {
+app.get('/success', async(req, res) => {
+  console.log('success', req.user);
   res.send('success');
 });
 
-app.get('/failure', async(req, res, next) => {
+app.get('/failure', async(req, res) => {
+  console.log(req.user);
   res.send('failure');
 });
 app.get('*', async(req, res, next) => {
