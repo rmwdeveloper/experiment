@@ -91,9 +91,8 @@ passport.use('login', new LocalStrategy({
       bcrypt.compare(password, user.password, (err, res) => {
         if (res) {
           return cb(null, user);
-        } else if (err) {
-          return cb(null, false);
         }
+        return cb(null, false);
       });
     });
 }));

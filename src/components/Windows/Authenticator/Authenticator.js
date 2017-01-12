@@ -40,6 +40,7 @@ class Authenticator extends Component {
     const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = this.props.registering ? this.registrationCallback : this.loginCallback;
     xhr.open('POST', `/${mode}`, true);
+    xhr.timeout = 1000;
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(JSON.stringify({ email: data.get('email'), username: data.get('username'), password: data.get('password') }));
   }
