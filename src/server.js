@@ -82,22 +82,19 @@ passport.use('login', new LocalStrategy({
   usernameField: 'email',
   passwordField: 'password'
 },
-  function(username, password, cb) {
-    User.findOne({where: { email: username} })
+  (username, password, cb) => {
+    User.findOne({ where: { email: username } })
     .then(user => {
-      if ( user === null) {
+      if (user === null) {
         return cb(null, false);
       }
-      bcrypt.compare(password, user.password, function (err, res) {
+      bcrypt.compare(password, user.password, (err, res) => {
         if (res) {
           return cb(null, user);
         } else if (err) {
           return cb(null, false);
         }
       });
-    })
-    .catch(err => {
-      return cb(null, false);
     });
 }));
 
@@ -123,11 +120,8 @@ app.post('/register', (req, res) => {
   });
 });
 app.post('/login',
-  passport.authenticate('login', { successRedirect: '/success', failureRedirect: '/failure' }),
-  function(req, res) {
-    res.send('test, line 135');
-    res.redirect('/');
-  });
+  passport.authenticate('login', { successRedirect: '/success', failureRedirect: '/failure' })
+);
 // app.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => {
 //   res.redirect('/');
 //   res.status(200);
@@ -171,6 +165,13 @@ app.get('/sign_aws', (req, res) => {
 //
 // Register server-side rendering middleware
 // -----------------------------------------------------------------------------
+app.get('/success', async(req, res, next) => {
+  res.send('success');
+});
+
+app.get('/failure', async(req, res, next) => {
+  res.send('failure');
+});
 app.get('*', async(req, res, next) => {
   try {
     let css = [];
