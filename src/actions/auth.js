@@ -9,8 +9,8 @@ export function toggleRegisterMode() {
   };
 }
 
-export function login() {
+export function login(user) {
   return dispatch => {
-    dispatch({ type: LOGIN });
+    dispatch({ type: LOGIN, user });
   };
 }
