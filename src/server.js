@@ -88,7 +88,16 @@ passport.use(new LocalStrategy({
     console.log('u', u, 'u');
     console.log('username', username, 'username');
     User.findOne({email:username}, (err, user) => {
-
+      if (user === null) {
+        return cb(null, false);
+      }
+      bcrypt.compare(password, user.password, function (err, res) {
+        if (res) {
+          return cb(null, user);
+        } else if (err) {
+          return cb(null, false);
+        }
+      });
     });
   }));
 
