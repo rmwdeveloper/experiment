@@ -15,7 +15,7 @@ class Authenticator extends Component {
       errors: []
     }
   }
-  loginCallback() {
+  loginCallback(event) {
     const response = event.target;
     console.log(response);
   }
