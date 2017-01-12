@@ -12,7 +12,7 @@ class Authenticator extends Component {
     this.registrationCallback = this.registrationCallback.bind(this);
     this.loginCallback = this.loginCallback.bind(this);
     this.state = {
-      errors: []
+      registrationErrors: []
     }
   }
   loginCallback(event) {
@@ -29,10 +29,10 @@ class Authenticator extends Component {
     const response = event.target;
     if(response.readyState == XMLHttpRequest.DONE) {
       if (response.status === 200) {
-        this.setState({errors: []});
+        this.setState({registrationErrors: []});
       } else {
-        const errors = JSON.parse(response.response);
-        this.setState({errors});
+        const registrationErrors = JSON.parse(response.response);
+        this.setState({registrationErrors});
       }
     }
   }
@@ -50,10 +50,10 @@ class Authenticator extends Component {
   }
   render() {
     const { registering, toggleRegisterMode } = this.props; // todo: refactor this bulky render.
-    const { errors } = this.state;
-    const usernameErrors = errors.filter(value => { return value.path === 'username'; });
-    const emailErrors = errors.filter(value => { return value.path === 'email'; });
-    const passwordErrors = errors.filter(value => { return value.path === 'password'; });
+    const { registrationErrors } = this.state;
+    const usernameErrors = registrationErrors.filter(value => { return value.path === 'username'; });
+    const emailErrors = registrationErrors.filter(value => { return value.path === 'email'; });
+    const passwordErrors = registrationErrors.filter(value => { return value.path === 'password'; });
     const mode = registering ? 'Register' : 'Login';
     let usernameClassnames = styles.controlGroup;
     let emailClassnames = styles.controlGroup;
