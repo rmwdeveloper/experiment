@@ -78,7 +78,7 @@ passport.deserializeUser(function(id, done) {
 });
 
 
-passport.use(new LocalStrategy({
+passport.use('login', new LocalStrategy({
   usernameField: 'email',
   passwordField: 'password'
 },
@@ -88,10 +88,10 @@ passport.use(new LocalStrategy({
     // console.log('cb', cb, 'cb');
     User.findOne({where: {username} })
     .then(user => {
-      console.log(user);
+      console.log('user',user);
     })
     .catch(err => {
-      console.log(err);
+      console.log('err', err);
     });
 }));
 
@@ -117,7 +117,7 @@ app.post('/register', (req, res) => {
   });
 });
 app.post('/login',
-  passport.authenticate('local', { successRedirect: '/success', failureRedirect: '/failure' }),
+  passport.authenticate('login', { successRedirect: '/success', failureRedirect: '/failure' }),
   function(req, res) {
     res.send('test, line 135');
     res.redirect('/');
