@@ -2,7 +2,7 @@ import 'babel-polyfill';
 import path from 'path';
 import express from 'express';
 import session from 'express-session';
-import flash from 'connect-flash';
+
 import multer from 'multer';
 import crypto from 'crypto';
 import bcrypt from 'bcrypt';
@@ -12,7 +12,7 @@ import bodyParser from 'body-parser';
 import expressJwt from 'express-jwt';
 import PrettyError from 'pretty-error';
 import passport from 'passport';
-// import passport from './core/passport';
+
 import ReactDOM from 'react-dom/server';
 import models, { User } from './data/models';
 
@@ -128,23 +128,6 @@ app.post('/register', (req, res) => {
 app.post('/login',
   passport.authenticate('login', { successRedirect: '/success', failureRedirect: '/failure', session: true })
 );
-// app.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => {
-//   res.redirect('/');
-//   res.status(200);
-//   res.send();
-// });
-// passport.serializeUser(function(user, cb) {
-//   cb(null, user.id);
-// });
-//
-// passport.deserializeUser(function(id, cb) {
-//   db.users.findById(id, function (err, user) {
-//     if (err) { return cb(err); }
-//     cb(null, user);
-//   });
-// });
-// app.set('views', path.join(__dirname, 'views') );
-// app.set('view engine', 'jade');
 
 //
 // Register API middleware
@@ -155,7 +138,6 @@ app.post('/login',
 //   rootValue: { request: req },
 //   pretty: process.env.NODE_ENV !== 'production',
 // })));
-
 
 app.get('/server_time', (req, res) => {
   console.log('in server time');

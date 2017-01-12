@@ -18,7 +18,11 @@ class Authenticator extends Component {
   loginCallback(event) {
     const response = event.target;
     if(response.readyState == XMLHttpRequest.DONE) {
-      console.log(response.response);
+      if (response.status === 200) {
+        console.log('Logged in!');
+      } else {
+        console.log('Login Failure');
+      }
     }
   }
   registrationCallback() {
