@@ -80,20 +80,17 @@ passport.deserializeUser(function(id, done) {
 
 passport.use(new LocalStrategy({
   usernameField: 'email',
-  passwordField: 'password'
+  passwordField: 'password',
+  passReqToCallback: true
 },
   function(username, password, cb) {
     console.log('username', username, 'username');
-    console.log('password', password, 'password');
-    console.log('cb', cb, 'cb');
-    User.findOne({ where: { email: username } , function(err, user) {
-      if (err) { console.log('err', err); return cb(err); }
-      if (!user) { console.log('no user'); return cb(null, false); }
-      if (user.password != password) { console.log('password doesnt match'); return cb(null, false); }
-      console.log('returning CB');
-      return cb(null, user);
+    console.log('u', u, 'u');
+    console.log('username', username, 'username');
+    User.findOne({email:username}, (err, user) => {
+
     });
-}));
+  }));
 
 app.post('/register', (req, res) => {
   bcrypt.genSalt(10, (err, salt) => {
