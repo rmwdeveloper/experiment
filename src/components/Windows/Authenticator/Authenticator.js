@@ -12,7 +12,8 @@ class Authenticator extends Component {
     this.registrationCallback = this.registrationCallback.bind(this);
     this.loginCallback = this.loginCallback.bind(this);
     this.state = {
-      registrationErrors: []
+      registrationErrors: [],
+      loginError: ''
     }
   }
   loginCallback(event) {
@@ -21,7 +22,7 @@ class Authenticator extends Component {
       if (response.status === 200) {
         console.log('Logged in!');
       } else {
-        console.log('Login Failure');
+        this.setState({loginError: 'Bzzt! Invalid Authentication Errors!'});
       }
     }
   }
@@ -50,7 +51,7 @@ class Authenticator extends Component {
   }
   render() {
     const { registering, toggleRegisterMode } = this.props; // todo: refactor this bulky render.
-    const { registrationErrors } = this.state;
+    const { registrationErrors, loginError } = this.state;
     const usernameErrors = registrationErrors.filter(value => { return value.path === 'username'; });
     const emailErrors = registrationErrors.filter(value => { return value.path === 'email'; });
     const passwordErrors = registrationErrors.filter(value => { return value.path === 'password'; });
@@ -64,6 +65,7 @@ class Authenticator extends Component {
 
     return <div className={styles.root}>
       <form id={styles.registrationForm} onSubmit={this.handleSubmit}>
+        { loginError ? <span className={styles.errorMessage} >{loginError}</span> : null}
         <div className={emailClassnames}>
           <label htmlFor={styles.registerEmail}>Email</label>
           {
