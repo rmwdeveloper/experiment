@@ -172,13 +172,12 @@ app.get('/sign_aws', (req, res) => {
 // Register server-side rendering middleware
 // -----------------------------------------------------------------------------
 app.get('/success', async(req, res) => {
-  console.log('success', req.user);
-  res.send('success');
+  res.status(200).send(req.user);
 });
 
 app.get('/failure', async(req, res) => {
-  console.log(req.user);
-  res.send('failure');
+
+  res.status(403).send('failure');
 });
 app.get('*', async(req, res, next) => {
   try {
