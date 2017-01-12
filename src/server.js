@@ -74,11 +74,14 @@ passport.serializeUser(function(user, done) {
 });
 //
 passport.deserializeUser(function(id, done) {
-  console.log('id', id);
-  done(null, {test: 'hello World'});
-  // User.find(id, function(err, user) {
-  //   done(err, user);
-  // });
+  User.findOne({ where: { id } })
+    .then(user => {
+      const {username, email, emailConfirmed} = user.dataValues;
+      done(null, {username, email, emailConfirmed});
+    })
+    .catch(err => {
+      done(err, null);
+    });
 });
 
 
