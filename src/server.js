@@ -83,12 +83,21 @@ passport.use('login', new LocalStrategy({
   passwordField: 'password'
 },
   function(username, password, cb) {
-    // console.log('username', username, 'username');
-    // console.log('password', password, 'password');
-    // console.log('cb', cb, 'cb');
-    User.findOne({where: {username} })
+    User.findOne({where: { email: username} })
     .then(user => {
-      console.log('user',user);
+      if ( user === null) {
+        console.log('No User Found');
+        return cb(null, false);
+      }
+      bcrypt.compare(password, user.password, function (err, res) {
+        if (res) {
+          console.log('User found, password is valid');
+          return cb(null, user);
+        } else if (err) {
+          console.log('Incorrect Password');
+          return cb(null, false);
+        }
+      });
     })
     .catch(err => {
       console.log('err', err);
