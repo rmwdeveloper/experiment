@@ -74,7 +74,7 @@ passport.serializeUser(function(user, done) {
 });
 //
 passport.deserializeUser(function(id, done) {
-  User.findOne({ where: { id } })
+  User.findById(id)
     .then(user => {
       const {username, email, emailConfirmed} = user.dataValues;
       done(null, {username, email, emailConfirmed});
