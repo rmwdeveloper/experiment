@@ -26,6 +26,7 @@ import assets from './assets';
 import configureStore from './store/configureStore';
 import { setRuntimeVariable } from './actions/runtime';
 
+// todo: Make configuration handle both http (local development) and https (production)
 const app = express();
 const upload = multer();
 app.use(compression());
