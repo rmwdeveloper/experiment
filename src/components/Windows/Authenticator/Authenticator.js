@@ -20,7 +20,7 @@ class Authenticator extends Component {
     const response = event.target;
     if(response.readyState == XMLHttpRequest.DONE) {
       if (response.status === 200) {
-        console.log('Logged in!');
+        this.props.login();
       } else {
         this.setState({loginError: 'Bzzt! Invalid Authentication Errors!'});
       }
