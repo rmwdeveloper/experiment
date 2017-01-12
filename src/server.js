@@ -54,7 +54,7 @@ app.use(cookieParser());
 app.use(session({ cookie: { maxAge: 60000, secure: true},  secret: session_secret, resave: true, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(flash());
+// app.use(flash());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 // app.use(allowCrossDomain);
@@ -80,26 +80,20 @@ passport.deserializeUser(function(id, done) {
 
 passport.use(new LocalStrategy({
   usernameField: 'email',
-  passwordField: 'password',
-  passReqToCallback: true
+  passwordField: 'password'
 },
   function(username, password, cb) {
-    console.log('username', username, 'username');
-    console.log('u', u, 'u');
-    console.log('username', username, 'username');
-    User.findOne({email:username}, (err, user) => {
-      if (user === null) {
-        return cb(null, false);
-      }
-      bcrypt.compare(password, user.password, function (err, res) {
-        if (res) {
-          return cb(null, user);
-        } else if (err) {
-          return cb(null, false);
-        }
-      });
+    // console.log('username', username, 'username');
+    // console.log('password', password, 'password');
+    // console.log('cb', cb, 'cb');
+    User.findOne({where: {username} })
+    .then(user => {
+      console.log(user);
+    })
+    .catch(err => {
+      console.log(err);
     });
-  }));
+}));
 
 app.post('/register', (req, res) => {
   bcrypt.genSalt(10, (err, salt) => {
@@ -123,9 +117,9 @@ app.post('/register', (req, res) => {
   });
 });
 app.post('/login',
-  passport.authenticate('local', { failureRedirect: '/failure' }),
+  passport.authenticate('local', { successRedirect: '/success', failureRedirect: '/failure' }),
   function(req, res) {
-    res.send('test');
+    res.send('test, line 135');
     res.redirect('/');
   });
 // app.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => {
