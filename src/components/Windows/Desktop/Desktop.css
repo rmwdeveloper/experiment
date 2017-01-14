@@ -1,7 +1,7 @@
 @import '../../variables.css';
 
 .root {
-  height: 94%;
+  height: calc(100% - 65px);
   background-color: #EEEEEE;
   padding: 5px;
   overflow: hidden;
