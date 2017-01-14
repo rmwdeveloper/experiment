@@ -78,7 +78,8 @@ const initialState = {
   selectedDesktopIcons: [], // Array of entity IDs todo: maybe rename this to selectedIcons if this can be used for both desktop and folder...
   openedFiles: [], // {entityId, height, width}
   openedFileDimensions: {},
-  errorWindows: []
+  errorWindows: [],
+  diskSpace: 50, // MB
 };
 export default function layout(state = initialState, action) {
   const newOpenedFiles = [...state.openedFiles];
