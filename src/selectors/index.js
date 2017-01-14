@@ -10,6 +10,15 @@ const authenticatorIndex = state => state.windows.authenticatorIndex;
 const fileSystemObject = state => state.windows.fileSystem;
 const desktopNodeIndex = state => state.windows.desktopNodeIndex;
 
+const userObject = state => state.auth.user;
+
+export const isAnonymousUserSelector = createSelector(
+  [userObject],
+  (userObject) => {
+    return Object.keys(userObject).length === 0 && userObject.constructor === Object;
+  }
+);
+
 export const authenticatorSelector = createSelector(
   [fileSystemObject, authenticatorIndex],
   (fileSystemObject, authenticatorIndex) => {

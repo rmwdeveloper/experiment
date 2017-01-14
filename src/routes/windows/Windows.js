@@ -7,7 +7,7 @@ import shallowCompare from 'react-addons-shallow-compare';
 
 import * as windowsActions from '../../actions/windows';
 import * as authActions from '../../actions/auth';
-import { installedProgramsSelector, userDirectoriesSelector, desktopItemsSelector,
+import { installedProgramsSelector, userDirectoriesSelector, desktopItemsSelector, isAnonymousUserSelector,
   computerSettingsSelector, utilityControlsSelector, authenticatorSelector } from '../../selectors';
 import WindowsDesktop from '../../components/Windows/Desktop';
 import WindowsTaskbar from '../../components/Windows/Taskbar';
@@ -16,6 +16,8 @@ import MobileTaskbar from '../../components/Windows/MobileTaskbar';
 
 @connect(state => ({
   registering: state.auth.registering,
+  user: state.auth.user,
+  isAnonymousUser: isAnonymousUserSelector,
   startMenuOpened: state.windows.startMenuOpened,
   installedPrograms: installedProgramsSelector(state),
   userDirectories: userDirectoriesSelector(state),
@@ -24,6 +26,8 @@ import MobileTaskbar from '../../components/Windows/MobileTaskbar';
   authenticator: authenticatorSelector(state),
   desktopItems: desktopItemsSelector(state),
   fileSystem: state.windows.fileSystem,
+  diskSpace: state.windows.diskSpace,
+  usedSpace: state.windows.usedSpace,
   desktopNodeIndex: state.windows.desktopNodeIndex,
   userIndex: state.windows.userIndex,
   contextMenuX: state.windows.contextMenuX,
@@ -44,6 +48,8 @@ import MobileTaskbar from '../../components/Windows/MobileTaskbar';
 class Windows extends Component { //eslint-disable-line
   static propTypes = {
     registering: PropTypes.bool,
+    user: PropTypes.object,
+    isAnonymousUser: PropTypes.bool,
     toggleRegisterMode: PropTypes.func,
     login: PropTypes.func,
     installedPrograms: PropTypes.array,
@@ -74,6 +80,8 @@ class Windows extends Component { //eslint-disable-line
     toggleWindowMaximize: PropTypes.func,
     toggleWindowMinimize: PropTypes.func,
     fileSystem: PropTypes.object,
+    diskSpace: PropTypes.number,
+    usedSpace: PropTypes.number,
     desktopNodeIndex: PropTypes.number,
     userIndex: PropTypes.number,
     authenticator: PropTypes.object,

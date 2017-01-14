@@ -4,9 +4,12 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 
 
-function DiskManager({}) {
+function DiskManager({diskSpace, usedSpace, user}) {
   return <div className={styles.root}>
-    disk manager
+    {diskSpace} {usedSpace}
+    <div className={styles.spaceAvailable}>
+      <span>Total Space Available: {diskSpace - usedSpace}</span>
+    </div>
   </div>;
 }
 

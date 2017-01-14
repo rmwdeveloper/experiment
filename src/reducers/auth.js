@@ -3,7 +3,8 @@ import {
 } from '../constants';
 
 const initialState = {
-  registering: false
+  registering: false,
+  user: {}
 };
 
 export default function auth(state = initialState, action) {
