@@ -21,7 +21,8 @@ import {
   OPEN_ERROR_WINDOW,
   CLOSE_ERROR_WINDOW,
   MOVE_FILE,
-  MOVE_FILES
+  MOVE_FILES,
+  LOGIN
 } from '../constants';
 
 
@@ -266,6 +267,8 @@ export default function layout(state = initialState, action) {
       });
       newOpenedFiles[openedFileIndex].minimized = !newOpenedFiles[openedFileIndex].minimized;
       return { ...state, openedFiles: newOpenedFiles };
+    case LOGIN:
+      return state;
     default:
       return state;
   }

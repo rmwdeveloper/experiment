@@ -19,7 +19,12 @@
   justify-content: center;
   flex-direction: column;
 }
-
+.controlGroupError, .errorMessage {
+  color: red;
+}
+.errorMessage {
+  font-size: 12px;
+}
 #registerEmail, #registerUsername, #registerPassword, .controlGroup label {
   display: block;
 }

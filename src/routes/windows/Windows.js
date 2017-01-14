@@ -45,6 +45,7 @@ class Windows extends Component { //eslint-disable-line
   static propTypes = {
     registering: PropTypes.bool,
     toggleRegisterMode: PropTypes.func,
+    login: PropTypes.func,
     installedPrograms: PropTypes.array,
     userDirectories: PropTypes.array,
     utilityControls: PropTypes.array,

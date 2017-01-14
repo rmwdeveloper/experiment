@@ -8,7 +8,8 @@ import { database_name_secret,
   aws_secret_key_secret,
   aws_bucket_name_secret,
   aws_region_secret,
-  aws_time_url_secret
+  aws_time_url_secret,
+  session_secret_secret
   } from './secret';
 
 export const database_name = database_name_secret;
@@ -23,6 +24,8 @@ export const aws_secret_key = aws_secret_key_secret;
 export const aws_bucket_name = aws_bucket_name_secret;
 export const aws_region = aws_region_secret;
 export const aws_time_url = aws_time_url_secret;
+
+export const session_secret = session_secret_secret;
 
 export const evap_config = {signerUrl: aws_signer_url, aws_key, bucket: aws_bucket_name, awsSignatureVersion: 2,
   aws_url: `https://s3-${aws_region}.amazonaws.com`, maxConcurrentParts: 10, logging: true,
