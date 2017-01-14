@@ -42,11 +42,10 @@ const initialState = {
     8: { name: 'Programs', children: [9], permissions: ['rwx-'] },
     9: { name: 'Office', children: [5, 6], permissions: ['rwx-'] },
     10: { name: 'Word Processor', permissions: ['rwx-'], extension: 'shct', metadata: { icon: 'wordlogoXSmall.png' } },
-    11: { name: 'Desktop', permissions: ['rwx-'], children: [10, 12, 13, 14, 15, 22, 23, 24, 25, 26, 27, 28] },
+    11: { name: 'Desktop', permissions: ['rwx-'], children: [10, 12, 13, 14, 22, 23, 24, 25, 26, 27, 28] },
     12: { name: 'Spreadsheets', permissions: ['rwx-'], extension: 'shct', metadata: { icon: 'excellogoXSmall.png' } },
     13: { name: 'Webscape', permissions: ['rwx-'], extension: 'shct', metadata: { icon: 'ie7.png' } },
     14: { name: 'My Documents', permissions: ['rwx-'], children: [16], metadata: { icon: 'MyDocumentsXSmall.png' }, registryKey:'Folder' },
-    15: { name: 'My Computer', permissions: ['rwx-'], children: [], metadata: { icon: 'MyComputerXSmall.png' } },
     16: { name: 'My Music', permissions: ['rwx-'], children: [], metadata: { icon: 'MyMusicXSmall.png' } },
     17: { name: 'Control Panel', permissions: ['rwx-'], children: [], metadata: { icon: 'ControlPanelXSmall.png' } },
     18: { name: 'Printer And Faxes', permissions: ['rwx-'], metadata: { icon: 'printerAndFaxesXSmall.png' } },
@@ -79,7 +78,7 @@ const initialState = {
   openedFiles: [], // {entityId, height, width}
   openedFileDimensions: {},
   errorWindows: [],
-  diskSpace: 50, // MB
+  diskSpace: 50000, // MB
 };
 export default function layout(state = initialState, action) {
   const newOpenedFiles = [...state.openedFiles];
