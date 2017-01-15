@@ -74,6 +74,7 @@ class Desktop extends Component {
     };
   }
   componentDidMount() {
+    const { user, isAnonymousUser } = this.props;
     this.icons = document.getElementsByClassName('desktopIcon');
     this.desktop = document.getElementById('desktop');
     this.header = document.getElementById('primaryHeader');
@@ -85,6 +86,7 @@ class Desktop extends Component {
       previewsContainer: null,
     addedfile: file => {
       const { name, size, type } = file;
+      console.log(' dropped in .. desktop');
       // Evaporate.create(evap_config)
       //   .then(
       //     evaporate => {

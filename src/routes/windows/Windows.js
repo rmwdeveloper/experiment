@@ -17,7 +17,7 @@ import MobileTaskbar from '../../components/Windows/MobileTaskbar';
 @connect(state => ({
   registering: state.auth.registering,
   user: state.auth.user,
-  isAnonymousUser: isAnonymousUserSelector,
+  isAnonymousUser: isAnonymousUserSelector(state),
   startMenuOpened: state.windows.startMenuOpened,
   installedPrograms: installedProgramsSelector(state),
   userDirectories: userDirectoriesSelector(state),
