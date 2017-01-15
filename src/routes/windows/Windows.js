@@ -7,6 +7,7 @@ import shallowCompare from 'react-addons-shallow-compare';
 
 import * as windowsActions from '../../actions/windows';
 import * as authActions from '../../actions/auth';
+import * as storageActions from '../../actions/storage';
 import { installedProgramsSelector, userDirectoriesSelector, desktopItemsSelector, isAnonymousUserSelector,
   computerSettingsSelector, utilityControlsSelector, authenticatorSelector } from '../../selectors';
 import WindowsDesktop from '../../components/Windows/Desktop';
@@ -44,7 +45,7 @@ import MobileTaskbar from '../../components/Windows/MobileTaskbar';
   browserHeight: state.windows.browserHeight,
   desktopWidth: state.windows.browserWidth,
   desktopHeight: state.windows.browserHeight
-}), { ...windowsActions, ...authActions })
+}), { ...windowsActions, ...authActions, ...storageActions })
 class Windows extends Component { //eslint-disable-line
   static propTypes = {
     registering: PropTypes.bool,

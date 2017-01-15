@@ -3,6 +3,11 @@ export const SET_RUNTIME_VARIABLE = 'SET_RUNTIME_VARIABLE';
 export const TOGGLE_REGISTER_MODE = 'auth/TOGGLE_REGISTER_MODE';
 export const LOGIN = 'auth/LOGIN';
 
+export const UPLOAD_START = 'storage/UPLOAD_START';
+export const UPLOAD_PROGRESS = 'storage/UPLOAD_PROGRESS';
+export const UPLOAD_COMPLETE = 'storage/UPLOAD_COMPLETE';
+export const UPLOAD_ERROR = 'storage/UPLOAD_ERROR';
+
 
 export const OPEN_START_MENU = 'windows/OPEN_START_MENU';
 export const CLOSE_START_MENU = 'windows/CLOSE_START_MENU';
