@@ -46,7 +46,7 @@ const initialState = {
     12: { name: 'Spreadsheets', permissions: ['rwx-'], extension: 'shct', metadata: { icon: 'excellogoXSmall.png' } },
     13: { name: 'Webscape', permissions: ['rwx-'], extension: 'shct', metadata: { icon: 'ie7.png' } },
     14: { name: 'My Documents', permissions: ['rwx-'], children: [16], metadata: { icon: 'MyDocumentsXSmall.png' }, registryKey:'Folder' },
-    15: { name: 'My Computer', permissions: ['rwx-'], children: [], metadata: { icon: 'MyComputerXSmall.png' } },
+    15: { name: 'Disk Manager', permissions: ['rwx-'],  extension: 'exe', metadata: { sprite: true, icon: 'iconsSprite.gif', backgroundPosition: '125px 100px' } },
     16: { name: 'My Music', permissions: ['rwx-'], children: [], metadata: { icon: 'MyMusicXSmall.png' } },
     17: { name: 'Control Panel', permissions: ['rwx-'], children: [], metadata: { icon: 'ControlPanelXSmall.png' } },
     18: { name: 'Printer And Faxes', permissions: ['rwx-'], metadata: { icon: 'printerAndFaxesXSmall.png' } },
@@ -78,7 +78,9 @@ const initialState = {
   selectedDesktopIcons: [], // Array of entity IDs todo: maybe rename this to selectedIcons if this can be used for both desktop and folder...
   openedFiles: [], // {entityId, height, width}
   openedFileDimensions: {},
-  errorWindows: []
+  errorWindows: [],
+  diskSpace: 50000, // MB
+  usedSpace: 0, // MB
 };
 export default function layout(state = initialState, action) {
   const newOpenedFiles = [...state.openedFiles];

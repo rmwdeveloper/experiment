@@ -1,6 +1,14 @@
 @import '../../variables.css';
 
 .root {
-
+  background-color: #0000AA;
+  color: #FFF;
+  font-family: monospace;
+  height: calc(100% - 27px);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
 }
 

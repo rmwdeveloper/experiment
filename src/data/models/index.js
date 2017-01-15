@@ -2,6 +2,7 @@ import sequelize from '../sequelize';
 import User from './User';
 import UserLogin from './UserLogin';
 import UserProfile from './UserProfile';
+import FileSystem from './FileSystem';
 
 User.hasMany(UserLogin, {
   foreignKey: 'userId',
@@ -17,6 +18,8 @@ User.hasOne(UserProfile, {
   onUpdate: 'cascade',
   onDelete: 'cascade',
 });
+
+User.hasOne(FileSystem);
 
 function sync(...args) {
   return sequelize.sync(...args);

@@ -1,0 +1,6 @@
+{
+  "name": "DiskManager",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./DiskManager.js"
+}
