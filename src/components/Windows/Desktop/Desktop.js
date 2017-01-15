@@ -85,26 +85,26 @@ class Desktop extends Component {
       previewsContainer: null,
     addedfile: file => {
       const { name, size, type } = file;
-      Evaporate.create(evap_config)
-        .then(
-          evaporate => {
-            evaporate.add({
-              name: 'test.png',
-              file,
-              xAmzHeadersAtInitiate : {
-                'x-amz-acl': 'public-read'
-              },
-              // progress: progressVal => {console.log('progress!!', progressVal)},
-              info: info => {console.log('info!!', info)},
-              error: error => {console.log('error!!', error)},
-              warn: warn => {console.log('warn!!', warn)},
-            })
-              .then(
-                awsKey => { },
-                reason => { }
-              ).catch(error=>{console.log(error);})
-          },
-          reason => {});
+      // Evaporate.create(evap_config)
+      //   .then(
+      //     evaporate => {
+      //       evaporate.add({
+      //         name: 'test.png',
+      //         file,
+      //         xAmzHeadersAtInitiate : {
+      //           'x-amz-acl': 'public-read'
+      //         },
+      //         // progress: progressVal => {console.log('progress!!', progressVal)},
+      //         info: info => {console.log('info!!', info)},
+      //         error: error => {console.log('error!!', error)},
+      //         warn: warn => {console.log('warn!!', warn)},
+      //       })
+      //         .then(
+      //           awsKey => { },
+      //           reason => { }
+      //         ).catch(error=>{console.log(error);})
+      //     },
+      //     reason => {});
     }
     });
 

@@ -17,7 +17,9 @@ const Upload = Model.define('Upload', {
   fileSize: {
     type: DataType.BIGINT
   },
-
+  uploadDate: {
+    type: DataType.DATE
+  }
 });
 
 export default Upload;

@@ -3,6 +3,7 @@ import User from './User';
 import UserLogin from './UserLogin';
 import UserProfile from './UserProfile';
 import FileSystem from './FileSystem';
+import Upload from './Upload';
 
 User.hasMany(UserLogin, {
   foreignKey: 'userId',
@@ -12,6 +13,13 @@ User.hasMany(UserLogin, {
 });
 
 
+User.hasMany(UserLogin, {
+  foreignKey: 'userId',
+  as: 'logins',
+  onUpdate: 'cascade',
+  onDelete: 'cascade',
+});
+
 User.hasOne(UserProfile, {
   foreignKey: 'userId',
   as: 'profile',
@@ -19,7 +27,14 @@ User.hasOne(UserProfile, {
   onDelete: 'cascade',
 });
 
-User.hasOne(FileSystem);
+User.hasOne(FileSystem, {
+  onUpdate: 'cascade',
+  onDelete: 'cascade'
+});
+User.hasMany(Upload, {
+  onUpdate: 'cascade',
+  onDelete: 'cascade'
+});
 
 function sync(...args) {
   return sequelize.sync(...args);
