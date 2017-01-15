@@ -4,9 +4,14 @@ import styles from './QuickAccessDirectoryItem.css'; //eslint-disable-line
 import cx from 'classnames';
 
 function QuickAccessDirectoryItem({ data, className }) {
+  const style = {background: `url(${data.metadata.icon})`};
+  if (data.metadata.sprite) {
+    style.backgroundSize = '425px';
+    style.backgroundPosition = data.metadata.backgroundPosition;
+  }
   return (
     <div className={styles.root}>
-      <img className={styles.icon} src={data.metadata.icon} alt={`${data.name} icon`} />
+      <div style={style} data-index={data.index} className={cx(styles.icon)}></div>
       <span className={cx(styles.directoryName, className)}> {data.name}</span>
     </div>
   );
