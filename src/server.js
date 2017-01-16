@@ -87,8 +87,8 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(id, done) {
   User.findById(id)
     .then(user => {
-      const {username, email, emailConfirmed} = user.dataValues;
-      done(null, {username, email, emailConfirmed});
+      const {username, email, emailConfirmed, id} = user.dataValues;
+      done(null, {username, email, emailConfirmed, id});
       return null;
     })
     .catch(err => {

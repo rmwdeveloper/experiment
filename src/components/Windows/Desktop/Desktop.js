@@ -47,6 +47,7 @@ class Desktop extends Component {
     this.stopResizeFileWindow = this.stopResizeFileWindow.bind(this);
     this.fileWindowResizing = this.fileWindowResizing.bind(this);
     this.findAncestorWithClickClass = this.findAncestorWithClickClass.bind(this);
+    this.getUploadId = this.getUploadId.bind(this);
     this.dragbox = null;
     this.draggedItem = null;
     this.resizedItem = null;
@@ -73,8 +74,12 @@ class Desktop extends Component {
       headerHeight: null
     };
   }
-  componentDidMount() {
+  getUploadId() {
     const { user, isAnonymousUser } = this.props;
+    console.log(user, isAnonymousUser);
+    return isAnonymousUser ? 0 : user.id;
+  }
+  componentDidMount() {
     this.icons = document.getElementsByClassName('desktopIcon');
     this.desktop = document.getElementById('desktop');
     this.header = document.getElementById('primaryHeader');
@@ -87,7 +92,7 @@ class Desktop extends Component {
       previewsContainer: null,
     addedfile: file => {
       const { name, size, type } = file;
-      const upload_id = isAnonymousUser ? 0 : user.id;
+      const upload_id = this.getUploadId();
       fetch('/upload_start', {method: 'get', credentials: 'include'})
         .then(response => {
           response.json().then( dateObject => {
@@ -149,19 +154,19 @@ class Desktop extends Component {
       desktopHeight: this.desktop.offsetHeight,
       headerHeight: this.header.offsetHeight});
   }
-  shouldComponentUpdate(nextProps, nextState) {
-    return (this.state.selectedIcons !== nextState.selectedIcons) ||
-      (this.props.registering !== nextProps.registering) ||
-      // (this.props.desktopWidth !== nextProps.desktopWidth) ||
-      // (this.props.desktopHeight !== nextProps.desktopHeight) ||
-      (this.props.selectedDesktopIcons !== nextProps.selectedDesktopIcons) ||
-      (this.props.contextMenuActive !== nextProps.contextMenuActive) ||
-      (this.props.contextMenuX !== nextProps.contextMenuX)||
-      (this.props.openedFiles !== nextProps.openedFiles) ||
-      (this.props.fileSystem !== nextProps.fileSystem) ||
-      (this.props.errorWindows !== nextProps.errorWindows) ||
-      (this.props.contextMenuY !== nextProps.contextMenuY);
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   return (this.state.selectedIcons !== nextState.selectedIcons) ||
+  //     (this.props.registering !== nextProps.registering) ||
+  //     // (this.props.desktopWidth !== nextProps.desktopWidth) ||
+  //     // (this.props.desktopHeight !== nextProps.desktopHeight) ||
+  //     (this.props.selectedDesktopIcons !== nextProps.selectedDesktopIcons) ||
+  //     (this.props.contextMenuActive !== nextProps.contextMenuActive) ||
+  //     (this.props.contextMenuX !== nextProps.contextMenuX)||
+  //     (this.props.openedFiles !== nextProps.openedFiles) ||
+  //     (this.props.fileSystem !== nextProps.fileSystem) ||
+  //     (this.props.errorWindows !== nextProps.errorWindows) ||
+  //     (this.props.contextMenuY !== nextProps.contextMenuY);
+  // }
   diffNodeLists(firstNodeList, secondNodeList) {
     const iconsArray = [].slice.call(firstNodeList);
     const selectedArray = [].slice.call(secondNodeList);
