@@ -109,7 +109,9 @@ class Desktop extends Component {
                       console.log(xhr, awsObjectKey, stats);
                       fetch('/upload_complete', {method: 'post', credentials: 'include'})
                         .then(response => {
-                          console.log('test');
+                          return response.json().then(responseObject => {
+                            console.log(responseObject);
+                          });
                         }).catch(err => {
                           return err;
                       })

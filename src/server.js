@@ -54,7 +54,7 @@ const sessionConfig = {
     db: sequelize
   }),
   resave: false, // we support the touch method so per the express-session docs this should be set to false
-  proxy: true // if you do SSL outside of node.};
+  // proxy: true // if you do SSL outside of node.};
 };
 //
 // Register Node.js middleware
@@ -144,6 +144,13 @@ app.post('/register', (req, res) => {
 app.post('/login',
   passport.authenticate('login', { successRedirect: '/success', failureRedirect: '/failure', session: true })
 );
+app.get('/logout', (req, res) => {
+  req.logout();
+
+  req.session.destroy(function (err) {
+    res.redirect('/'); //Inside a callback… bulletproof!
+  });
+});
 
 //
 // Register API middleware
