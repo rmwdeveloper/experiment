@@ -18,7 +18,12 @@ const Upload = Model.define('Upload', {
     type: DataType.BIGINT
   },
   uploadDate: {
-    type: DataType.DATE
+    type: DataType.DATE,
+    defaultValue: DataType.NOW
+  },
+  uploadComplete: {
+    type: DataType.BOOLEAN,
+    defaultValue: false
   }
 });
 

@@ -140,7 +140,8 @@ app.post('/login',
 // })));
 
 /*
-* Return server time, check if user has enough space for upload. 
+* Return server time, check if user has enough space for upload. If user does have enough space,
+* create an Upload model instance for this particular upload.
 * */
 app.get('/upload_prep', (req, res) => {
   const now = new Date(Date.now());
@@ -153,8 +154,10 @@ app.get('/upload_prep', (req, res) => {
     seconds: now.getSeconds(),
     milliseconds: now.getMilliseconds()
   };
-
   res.send(date);
+});
+app.post('save_upload_data', (req, res) => {
+  res.send('asdf!');
 });
 app.get('/sign_aws', (req, res) => {
   res.send(crypto
