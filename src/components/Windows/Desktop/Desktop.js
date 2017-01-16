@@ -88,7 +88,7 @@ class Desktop extends Component {
     addedfile: file => {
       const { name, size, type } = file;
       const upload_id = isAnonymousUser ? 0 : user.id;
-      fetch('/upload_prep', {method: 'get'})
+      fetch('/upload_start', {method: 'get'})
         .then(response => {
           response.json().then( dateObject => {
             const { year, month, day, hours, minutes, seconds, milliseconds } = dateObject;
@@ -107,6 +107,14 @@ class Desktop extends Component {
                     warn: warn => {},
                     complete: (xhr, awsObjectKey, stats) => {
                       console.log(xhr, awsObjectKey, stats);
+                      fetch('/upload_complete', {method: 'post'})
+                        .then(response => {
+                          response.json().then(responseObject => {
+                            console.log(responseObject);
+                          });
+                        }).catch(err => {
+
+                      })
                     }
                   })
                     .then(

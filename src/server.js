@@ -143,7 +143,7 @@ app.post('/login',
 * Return server time, check if user has enough space for upload. If user does have enough space,
 * create an Upload model instance for this particular upload.
 * */
-app.get('/upload_prep', (req, res) => {
+app.get('/upload_start', (req, res) => {
   const now = new Date(Date.now());
   const date = {
     year: now.getFullYear(),
@@ -156,9 +156,11 @@ app.get('/upload_prep', (req, res) => {
   };
   res.send(date);
 });
-app.post('save_upload_data', (req, res) => {
-  res.send('asdf!');
+
+app.post('/upload_complete', (req, res) => {
+  res.send({});
 });
+
 app.get('/sign_aws', (req, res) => {
   res.send(crypto
     .createHmac('sha1', aws_secret_key)
