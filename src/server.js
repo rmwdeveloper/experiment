@@ -144,6 +144,10 @@ app.post('/register', (req, res) => {
 app.post('/login',
   passport.authenticate('login', { successRedirect: '/success', failureRedirect: '/failure', session: true })
 );
+app.get('/get_user', (req, res) => {
+  const userObject = req.user ? req.user : {};
+  res.send(userObject);
+});
 app.get('/logout', (req, res) => {
   req.logout();
 

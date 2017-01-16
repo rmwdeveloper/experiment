@@ -104,6 +104,9 @@ class Windows extends Component { //eslint-disable-line
   shouldComponentUpdate(nextProps) {
     return shallowCompare(this.props, nextProps);
   }
+  componentWillMount() {
+    this.props.initializeAuth();
+  }
   componentDidMount() {
     this.props.initializeBrowserDimensions(window.innerWidth, window.innerHeight);
   }
