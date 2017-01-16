@@ -10,7 +10,7 @@ const sequelizeConfig = {
     min: 0,
     idle: 10000
   },
-  storage: './portfolio'
+  logging: false
 };
 if (database_dialect === 'sqlite') {
   sequelizeConfig.storage = './portfolio';

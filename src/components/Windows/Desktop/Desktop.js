@@ -81,7 +81,7 @@ class Desktop extends Component {
 
     // START dropzone stuff. todo: abstract this crap away to a HOC
     // todo : dropzone script is in index.jade. Should be packed with webpack
-
+    // todo: convert fetch to isomorphic fetch ?
 
     this.dropzone = new Dropzone('div#desktop', {url: '/upload', autoProcessQueue:false, clickable: false, createImageThumbnails: false,
       previewsContainer: null,
