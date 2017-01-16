@@ -139,7 +139,10 @@ app.post('/login',
 //   pretty: process.env.NODE_ENV !== 'production',
 // })));
 
-app.get('/server_time', (req, res) => {
+/*
+* Return server time, check if user has enough space for upload. 
+* */
+app.get('/upload_prep', (req, res) => {
   const now = new Date(Date.now());
   const date = {
     year: now.getFullYear(),

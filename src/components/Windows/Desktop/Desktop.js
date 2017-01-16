@@ -88,7 +88,7 @@ class Desktop extends Component {
     addedfile: file => {
       const { name, size, type } = file;
       const upload_id = isAnonymousUser ? 0 : user.id;
-      fetch('/server_time', {method: 'get'})
+      fetch('/upload_prep', {method: 'get'})
         .then(response => {
           response.json().then( dateObject => {
             const { year, month, day, hours, minutes, seconds, milliseconds } = dateObject;
@@ -102,9 +102,12 @@ class Desktop extends Component {
                       'x-amz-acl': 'public-read'
                     },
                     // progress: progressVal => {console.log('progress!!', progressVal)},
-                    info: info => {console.log('info!!', info)},
-                    error: error => {console.log('error!!', error)},
-                    warn: warn => {console.log('warn!!', warn)},
+                    info: info => {},
+                    error: error => {},
+                    warn: warn => {},
+                    complete: (xhr, awsObjectKey, stats) => {
+                      console.log(xhr, awsObjectKey, stats);
+                    }
                   })
                     .then(
                       awsKey => { },
