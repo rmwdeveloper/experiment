@@ -81,6 +81,7 @@ app.use(passport.session());
 
 passport.serializeUser(function(user, done) {
   done(null, user.dataValues.id);
+  return null;
 });
 //
 passport.deserializeUser(function(id, done) {
@@ -88,9 +89,11 @@ passport.deserializeUser(function(id, done) {
     .then(user => {
       const {username, email, emailConfirmed} = user.dataValues;
       done(null, {username, email, emailConfirmed});
+      return null;
     })
     .catch(err => {
       done(err, null);
+      return null;
     });
 });
 
@@ -103,13 +106,16 @@ passport.use('login', new LocalStrategy({
     User.findOne({ where: { email: username } })
     .then(user => {
       if (user === null) {
-        return cb(null, false);
+        cb(null, false);
+        return null;
       }
       bcrypt.compare(password, user.password, (err, res) => {
         if (res) {
-          return cb(null, user);
+          cb(null, user);
+          return null;
         }
-        return cb(null, false);
+        cb(null, false);
+        return null;
       });
     });
 }));
@@ -159,7 +165,7 @@ app.post('/login',
 * Return server time, check if user has enough space for upload. If user does have enough space,
 * create an Upload model instance for this particular upload.
 * */
-app.get('/upload_start', async(req, res) => {
+app.get('/upload_start', (req, res) => {
   console.log(req.user);
   // console.log('req user is . . .', req.user);
 
@@ -176,7 +182,7 @@ app.get('/upload_start', async(req, res) => {
   res.send(date);
 });
 
-app.post('/upload_complete', async(req, res) => {
+app.post('/upload_complete', (req, res) => {
   console.log(req.user);
   res.send({});
 });
