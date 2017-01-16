@@ -82,45 +82,44 @@ class Desktop extends Component {
     // START dropzone stuff. todo: abstract this crap away to a HOC
     // todo : dropzone script is in index.jade. Should be packed with webpack
 
-    const getServerTime = new XMLHttpRequest();
-    getServerTime.open('GET', '/server_time', true);
-    getServerTime.timeout = 1000;
-    getServerTime.setRequestHeader("Content-Type", "application/json");
-    getServerTime.onreadystatechange = function(event) {
-      if(event.target.readyState == XMLHttpRequest.DONE) {
-        if (event.target.status === 200) {
-          console.log(JSON.parse(event.target.response));
-        }
-      }
-    };
 
     this.dropzone = new Dropzone('div#desktop', {url: '/upload', autoProcessQueue:false, clickable: false, createImageThumbnails: false,
       previewsContainer: null,
     addedfile: file => {
       const { name, size, type } = file;
-      getServerTime.send();
+      const upload_id = isAnonymousUser ? 0 : user.id;
+      fetch('/server_time', {method: 'get'})
+        .then(response => {
+          response.json().then( dateObject => {
+            const { year, month, day, hours, minutes, seconds, milliseconds } = dateObject;
+            Evaporate.create(evap_config)
+              .then(
+                evaporate => {
+                  evaporate.add({
+                    name: `${upload_id}/${year}/${month}/${day}/${hours}${minutes}${seconds}${milliseconds}/${name}`,
+                    file,
+                    xAmzHeadersAtInitiate : {
+                      'x-amz-acl': 'public-read'
+                    },
+                    // progress: progressVal => {console.log('progress!!', progressVal)},
+                    info: info => {console.log('info!!', info)},
+                    error: error => {console.log('error!!', error)},
+                    warn: warn => {console.log('warn!!', warn)},
+                  })
+                    .then(
+                      awsKey => { },
+                      reason => { }
+                    ).catch(error=>{console.log(error);})
+                },
+                reason => {});
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        });
       
 
-      // Evaporate.create(evap_config)
-      //   .then(
-      //     evaporate => {
-      //       evaporate.add({
-      //         name: 'test.png',
-      //         file,
-      //         xAmzHeadersAtInitiate : {
-      //           'x-amz-acl': 'public-read'
-      //         },
-      //         // progress: progressVal => {console.log('progress!!', progressVal)},
-      //         info: info => {console.log('info!!', info)},
-      //         error: error => {console.log('error!!', error)},
-      //         warn: warn => {console.log('warn!!', warn)},
-      //       })
-      //         .then(
-      //           awsKey => { },
-      //           reason => { }
-      //         ).catch(error=>{console.log(error);})
-      //     },
-      //     reason => {});
+
     }
     });
 
