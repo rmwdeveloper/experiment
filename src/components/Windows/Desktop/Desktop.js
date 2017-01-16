@@ -83,11 +83,15 @@ class Desktop extends Component {
     // todo : dropzone script is in index.jade. Should be packed with webpack
 
     const getServerTime = new XMLHttpRequest();
-    getServerTime.open('GET', '/serverTime', true);
+    getServerTime.open('GET', '/server_time', true);
     getServerTime.timeout = 1000;
     getServerTime.setRequestHeader("Content-Type", "application/json");
     getServerTime.onreadystatechange = function(event) {
-
+      if(event.target.readyState == XMLHttpRequest.DONE) {
+        if (event.target.status === 200) {
+          console.log(JSON.parse(event.target.response));
+        }
+      }
     };
 
     this.dropzone = new Dropzone('div#desktop', {url: '/upload', autoProcessQueue:false, clickable: false, createImageThumbnails: false,

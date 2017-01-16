@@ -140,8 +140,18 @@ app.post('/login',
 // })));
 
 app.get('/server_time', (req, res) => {
-  console.log('in server time');
-  res.send('server time!!');
+  const now = new Date(Date.now());
+  const date = {
+    year: now.getFullYear(),
+    month: now.getMonth() + 1, // getMonth is 0 indexed.
+    day: now.getDate(),
+    hours: now.getHours(),
+    minutes: now.getMinutes(),
+    seconds: now.getSeconds(),
+    milliseconds: now.getMilliseconds()
+  };
+
+  res.send(date);
 });
 app.get('/sign_aws', (req, res) => {
   res.send(crypto
