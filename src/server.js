@@ -7,6 +7,7 @@ import multer from 'multer';
 import crypto from 'crypto';
 import bcrypt from 'bcrypt';
 import cookieParser from 'cookie-parser';
+import cookieSession from 'cookie-session';
 import compression from 'compression';
 import bodyParser from 'body-parser';
 import expressJwt from 'express-jwt';
@@ -15,7 +16,7 @@ import passport from 'passport';
 
 import ReactDOM from 'react-dom/server';
 import models, { User } from './data/models';
-
+import sequelize from './data/sequelize';
 import routes from './routes';
 import { resolve } from 'universal-router';
 import { port, analytics, auth, aws_secret_key, session_secret } from './config';
@@ -26,6 +27,7 @@ import assets from './assets';
 import configureStore from './store/configureStore';
 import { setRuntimeVariable } from './actions/runtime';
 
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
 // todo: Make configuration handle both http (local development) and https (production)
 const app = express();
 const upload = multer();
@@ -46,6 +48,14 @@ global.navigator.userAgent = global.navigator.userAgent || 'all';
 // };
 
 
+const sessionConfig = {
+  secret: 'keyboard cat',
+  store: new SequelizeStore({
+    db: sequelize
+  }),
+  resave: false, // we support the touch method so per the express-session docs this should be set to false
+  proxy: true // if you do SSL outside of node.};
+};
 //
 // Register Node.js middleware
 // -----------------------------------------------------------------------------
@@ -54,7 +64,7 @@ app.use(express.static(path.join(__dirname, 'public', 'windows')));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(session({ cookie: { secure: false },  secret: 'test secret'})); // todo: figure out how the hell cookies work with SSL
+app.use(session(sessionConfig)); // todo: figure out how the hell cookies work with SSL
 app.use(passport.initialize());
 app.use(passport.session());
 // app.use(flash());
@@ -139,11 +149,20 @@ app.post('/login',
 //   pretty: process.env.NODE_ENV !== 'production',
 // })));
 
+// function isLoggedIn(req, res, next) {
+//   if (req.isAuthenticated())
+//     return next();
+//
+//   res.sendStatus(401);
+// }
 /*
 * Return server time, check if user has enough space for upload. If user does have enough space,
 * create an Upload model instance for this particular upload.
 * */
-app.get('/upload_start', (req, res) => {
+app.get('/upload_start', async(req, res) => {
+  console.log(req.user);
+  // console.log('req user is . . .', req.user);
+
   const now = new Date(Date.now());
   const date = {
     year: now.getFullYear(),
@@ -157,11 +176,12 @@ app.get('/upload_start', (req, res) => {
   res.send(date);
 });
 
-app.post('/upload_complete', (req, res) => {
+app.post('/upload_complete', async(req, res) => {
+  console.log(req.user);
   res.send({});
 });
 
-app.get('/sign_aws', (req, res) => {
+app.get('/sign_aws', async(req, res) => {
   res.send(crypto
     .createHmac('sha1', aws_secret_key)
     .update(req.query.to_sign)
@@ -227,9 +247,9 @@ app.get('*', async(req, res, next) => {
 });
 
 // Upload route
-app.post('/upload', (req, res) => {
-  res.send('Got an upload request!');
-});
+// app.post('/upload', (req, res) => {
+//   res.send('Got an upload request!');
+// });
 
 
 
