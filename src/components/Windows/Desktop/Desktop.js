@@ -79,14 +79,24 @@ class Desktop extends Component {
     this.desktop = document.getElementById('desktop');
     this.header = document.getElementById('primaryHeader');
 
-
     // START dropzone stuff. todo: abstract this crap away to a HOC
     // todo : dropzone script is in index.jade. Should be packed with webpack
+
+    const getServerTime = new XMLHttpRequest();
+    getServerTime.open('GET', '/serverTime', true);
+    getServerTime.timeout = 1000;
+    getServerTime.setRequestHeader("Content-Type", "application/json");
+    getServerTime.onreadystatechange = function(event) {
+
+    };
+
     this.dropzone = new Dropzone('div#desktop', {url: '/upload', autoProcessQueue:false, clickable: false, createImageThumbnails: false,
       previewsContainer: null,
     addedfile: file => {
       const { name, size, type } = file;
-      console.log(' dropped in .. desktop');
+      getServerTime.send();
+      
+
       // Evaporate.create(evap_config)
       //   .then(
       //     evaporate => {
