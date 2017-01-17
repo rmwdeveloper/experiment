@@ -243,13 +243,23 @@ export default function layout(state = initialState, action) {
     case LOGIN:
       const newState = {...state};
       newState.fileSystem = action.fileSystem;
-      
-      const test = Object.keys(action.IndexIndicatorGroups).map(index => {
-        const { name, NodeIndices } = action.IndexIndicatorGroups[index];
-
-        return { name, indices: NodeIndices.map(nodeIndex => {return nodeIndex.nodeIndex })};
-      });
-      console.log(test);
+      for (const prop in action.IndexIndicatorGroups) {
+        if (action.IndexIndicatorGroups.hasOwnProperty(prop)) {
+          const { name, NodeIndices } = action.IndexIndicatorGroups[prop];
+          if ( NodeIndices.length === 1) {
+            newState[name] = NodeIndices[0].nodeIndex;
+          } else {
+            newState[name] = NodeIndices.map(nodeIndex => {return nodeIndex.nodeIndex });
+          }
+        }
+      }
+      console.log(newState);
+      // const test = Object.keys(action.IndexIndicatorGroups).map(index => {
+      //   const { name, NodeIndices } = action.IndexIndicatorGroups[index];
+      //
+      //   return { name, indices: NodeIndices.map(nodeIndex => {return nodeIndex.nodeIndex })};
+      // });
+      // console.log(test);
       return { ...state, fileSystem: action.fileSystem, diskSpace: action.diskSpace };
     default:
       return state;
