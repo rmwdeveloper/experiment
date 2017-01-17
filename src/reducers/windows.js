@@ -253,7 +253,6 @@ export default function layout(state = initialState, action) {
           }
         }
       }
-      console.log(newState);
       // const test = Object.keys(action.IndexIndicatorGroups).map(index => {
       //   const { name, NodeIndices } = action.IndexIndicatorGroups[index];
       //
