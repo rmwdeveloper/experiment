@@ -112,6 +112,7 @@ class Windows extends Component { //eslint-disable-line
   }
   render() {
     const { startMenuOpened, toggleStartMenu, installedPrograms, clearActives } = this.props;
+    
     return (<div className={styles.root} onClick={clearActives} >
       <WindowsDesktop {...this.props} />
       {startMenuOpened  && this.props.browserWidth > 767 ? <WindowsStartMenu installedPrograms={installedPrograms} {...this.props} />

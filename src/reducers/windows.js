@@ -1,3 +1,4 @@
+import fileSystem from '../data/fileSystem';
 import {
   OPEN_START_MENU,
   CLEAR_ACTIVES,
@@ -31,7 +32,7 @@ const initialState = {
   browserHeight: 0,
   desktopWidth: 0,
   desktopHeight: 0,
-  fileSystem: {},
+  fileSystem,
   desktopNodeIndex: 11, //indices are in state, and not searchable by name because user can make duplicate names
   userIndex: 4, // Users personal index. Username will be fileSystem[userIndex].name  . Default is "Guest"
   authenticatorIndex: 29,
