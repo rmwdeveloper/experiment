@@ -28,7 +28,7 @@ User.hasOne(UserProfile, {
 });
 
 FileSystem.belongsTo(User);
-FileSystem.hasMany(NodeIndex);
+
 
 
 User.hasMany(Upload, {
