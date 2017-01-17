@@ -1,5 +1,5 @@
 
-export const fileSystem =  { // Indices are always unique and static. A node only ever has one parent.
+module.exports = { // Indices are always unique and static. A node only ever has one parent.
   1: { name: 'root', children: [2, 17, 18], permissions: ['rwxp'] },
   2: { name: 'drive', children: [3, 8], permissions: ['rwxp'] },
   3: { name: 'Users', children: [4], permissions: ['rwxp'] },

@@ -1,3 +1,5 @@
+const fileSystem = require('../fileSystem');
+
 module.exports = [
   {
     "model": "User",
@@ -10,7 +12,7 @@ module.exports = [
   "data": {
   "UserId": 1,
   "diskSpace": 50,
-  "fileSystem": "test"
+  "fileSystem": JSON.stringify(fileSystem)
   }
   }
 ];
