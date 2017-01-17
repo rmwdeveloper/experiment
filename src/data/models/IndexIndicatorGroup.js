@@ -1,7 +1,7 @@
 import DataType from 'sequelize';
 import Model from '../sequelize';
 
-const FileSystem = Model.define('FileSystem', {
+const IndexIndicatorGroup = Model.define('IndexIndicatorGroup', {
   id: {
     type: DataType.INTEGER,
     primaryKey: true,
@@ -9,14 +9,9 @@ const FileSystem = Model.define('FileSystem', {
     allowNull: false,
     validate: {isInt: true, min: 0}
   },
-  fileSystem: {
-    type: DataType.TEXT
-  },
-  diskSpace: {
-    type: DataType.INTEGER,
-    default: 50
+  name: {
+    type: DataType.STRING
   }
-
 });
 
-export default FileSystem;
+export default IndexIndicatorGroup;

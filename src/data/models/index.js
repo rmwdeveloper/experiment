@@ -3,6 +3,8 @@ import User from './User';
 import UserLogin from './UserLogin';
 import UserProfile from './UserProfile';
 import FileSystem from './FileSystem';
+import NodeIndex from './NodeIndex';
+import IndexIndicatorGroup from './IndexIndicatorGroup';
 import Upload from './Upload';
 
 User.hasMany(UserLogin, {
@@ -28,7 +30,8 @@ User.hasOne(UserProfile, {
 });
 
 FileSystem.belongsTo(User);
-
+FileSystem.hasMany(IndexIndicatorGroup);
+IndexIndicatorGroup.hasMany(NodeIndex)
 
 
 User.hasMany(Upload, {
@@ -41,4 +44,4 @@ function sync(...args) {
 }
 
 export default { sync };
-export { User, UserLogin, UserProfile, FileSystem, Upload };
+export { User, UserLogin, UserProfile, FileSystem, Upload, IndexIndicatorGroup, NodeIndex };
