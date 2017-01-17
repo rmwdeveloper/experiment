@@ -22,7 +22,6 @@ export function initializeAuth(){
       method: 'get', credentials: 'include'
     }).then(response => {
       response.json().then(userData => {
-        console.log(userData);
         const { User, UserId, IndexIndicatorGroups, fileSystem, diskSpace } = userData;
         dispatch({type: LOGIN, user: User, UserId, IndexIndicatorGroups, fileSystem: JSON.parse(fileSystem), diskSpace});
       });

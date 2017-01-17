@@ -241,7 +241,13 @@ export default function layout(state = initialState, action) {
       newOpenedFiles[openedFileIndex].minimized = !newOpenedFiles[openedFileIndex].minimized;
       return { ...state, openedFiles: newOpenedFiles };
     case LOGIN:
-      return state;
+      const test = Object.keys(action.IndexIndicatorGroups).map(index => {
+        const { name, NodeIndices } = action.IndexIndicatorGroups[index];
+
+        return { name, indices: NodeIndices.map(nodeIndex => {return nodeIndex.nodeIndex })};
+      });
+      console.log(test);
+      return { ...state, fileSystem: action.fileSystem, diskSpace: action.diskSpace };
     default:
       return state;
   }
