@@ -6,15 +6,16 @@ const User = Model.define('User', {
     type: DataType.INTEGER,
     primaryKey: true,
     autoIncrement: true,
-    validate: {isInt: true, notNull: true, min: 1}
+    allowNull: false,
+    validate: {isInt: true, min: 0}
   },
   username: {
     type: DataType.STRING(30),
     unique: true,
     validate: {
       len: {
-        args: [6, 30],
-        msg: 'Username must be between 6 and 30 characters'
+        args: [5, 30],
+        msg: 'Username must be between 5 and 30 characters'
       },
       is: {
         args: /^[\w.@+-]+$/i,

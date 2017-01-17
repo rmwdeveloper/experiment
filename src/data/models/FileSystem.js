@@ -6,13 +6,12 @@ const FileSystem = Model.define('FileSystem', {
     type: DataType.INTEGER,
     primaryKey: true,
     autoIncrement: true,
-    validate: {isInt: true, notNull: true, min: 1}
+    allowNull: false,
+    validate: {isInt: true, min: 0}
   },
-
   fileSystem: {
     type: DataType.TEXT,
   },
-
   diskSpace: {
     type: DataType.INTEGER,
     default: 50

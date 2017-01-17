@@ -17,7 +17,7 @@ import PrettyError from 'pretty-error';
 import passport from 'passport';
 
 import ReactDOM from 'react-dom/server';
-import models, { User } from './data/models';
+import models, { User, FileSystem } from './data/models';
 import sequelize from './data/sequelize';
 import routes from './routes';
 import { resolve } from 'universal-router';
@@ -300,12 +300,21 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
 // });
 
 /* eslint-disable no-console */
-sequelize_fixtures.loadFile(path.join(__dirname,'..','src' ,'data', 'fixtures', 'initial_data.json'), models).then(function(){
-  models.sync().catch(err => console.error(err.stack)).then(() => {
-    app.listen(port, () => {
+
+models.sync().catch(err => console.error(err.stack)).then(() => {
+  app.listen(port, () => {
+    sequelize_fixtures.loadFile(path.join(__dirname, '..', 'src', 'data', 'fixtures', 'initial_data.json'), {User, FileSystem}).then(function(){
       console.log(`The server is running at http://localhost:${port}/`);
-    });
+    }).catch(err => { console.log(err)});
   });
 });
+
+// sequelize_fixtures.loadFile(path.join(__dirname, '..', 'src', 'data', 'fixtures', 'initial_data.json'), {User, FileSystem}).then(function(){
+//   models.sync().catch(err => console.error(err.stack)).then(() => {
+//     app.listen(port, () => {
+//       console.log(`The server is running at http://localhost:${port}/`);
+//     });
+//   });
+// }).catch(err => {console.log(err)});
 
 /* eslint-enable no-console */

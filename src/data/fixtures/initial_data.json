@@ -2,15 +2,12 @@
   {
     "model": "User",
     "data": {
-      "id": 0,
       "username": "Guest"
     }
   },
   {
     "model": "FileSystem",
     "data": {
-      "id": 0,
-      "owner": 0,
       "diskSpace": 50,
       "fileSystem": "test"
     }

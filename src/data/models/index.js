@@ -28,10 +28,7 @@ User.hasOne(UserProfile, {
 });
 
 FileSystem.belongsTo(User);
-User.hasOne(FileSystem, {
-  onUpdate: 'cascade',
-  onDelete: 'cascade'
-});
+
 
 User.hasMany(Upload, {
   onUpdate: 'cascade',
@@ -43,4 +40,4 @@ function sync(...args) {
 }
 
 export default { sync };
-export { User, UserLogin, UserProfile };
+export { User, UserLogin, UserProfile, FileSystem, Upload };
