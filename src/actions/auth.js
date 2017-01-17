@@ -21,9 +21,10 @@ export function initializeAuth(){
     const response = fetch('/get_user', {
       method: 'get', credentials: 'include'
     }).then(response => {
-      response.json().then(user => {
-        console.log(user);
-        dispatch({type: LOGIN, user});
+      response.json().then(userData => {
+        console.log(userData);
+        const { User, UserId, IndexIndicatorGroups, fileSystem, diskSpace } = userData;
+        dispatch({type: LOGIN, user: User, UserId, IndexIndicatorGroups, fileSystem: JSON.parse(fileSystem), diskSpace});
       });
     });
   };
