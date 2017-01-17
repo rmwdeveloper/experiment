@@ -82,14 +82,15 @@ app.use(passport.session());
 // }));
 
 passport.serializeUser(function(user, done) {
-  done(null, user.dataValues.id);
+  const { id } = user.get({ plain: true });
+  done(null, id);
   return null;
 });
 //
 passport.deserializeUser(function(id, done) {
   User.findById(id)
     .then(user => {
-      const {username, email, emailConfirmed, id} = user.dataValues;
+      const {username, email, emailConfirmed, id} = user.get({plain:true});
       done(null, {username, email, emailConfirmed, id});
       return null;
     })
@@ -147,11 +148,14 @@ app.post('/login',
   passport.authenticate('login', { successRedirect: '/success', failureRedirect: '/failure', session: true })
 );
 app.get('/get_user', (req, res) => {
-  const userObject = req.user ? req.user : {};
-  User.findById(1).then(user=>{}).catch(err=>{console.log(err);});
-  FileSystem.findById(1, { include: [{ all: true, nested: true }]}).then(fileSystem=>{console.log(fileSystem);}).catch(err=>{console.log(err);});
-  // User.findById(1, {attributes:['username']}).then(user=>{console.log(user);}).catch(err=>{console.log(err);});
-  res.send(userObject);
+  const UserId = req.user ? req.user.id : 1; // Either logged in user, or guest ID ( 1 )
+  FileSystem.findOne({where: {UserId}, include: [{ all: true, nested: true }]}).then(fileSystem=>{
+    res.send(fileSystem.get({plain: true}));
+    return null;
+  }).catch(err=>{
+    // todo: put in a logginsg statement
+    return null;
+  });
 });
 app.get('/logout', (req, res) => {
   req.logout();

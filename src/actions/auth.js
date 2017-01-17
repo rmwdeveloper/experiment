@@ -12,7 +12,6 @@ export function toggleRegisterMode() {
 
 export function login(user) {
   return dispatch => {
-    console.log('in login action', user);
     dispatch({ type: LOGIN, user });
   };
 }
@@ -23,6 +22,7 @@ export function initializeAuth(){
       method: 'get', credentials: 'include'
     }).then(response => {
       response.json().then(user => {
+        console.log(user);
         dispatch({type: LOGIN, user});
       });
     });
