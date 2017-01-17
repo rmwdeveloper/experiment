@@ -3,8 +3,6 @@ import User from './User';
 import UserLogin from './UserLogin';
 import UserProfile from './UserProfile';
 import FileSystem from './FileSystem';
-import NodeIndex from './NodeIndex';
-import NodeMetadata from './NodeMetadata';
 import Upload from './Upload';
 
 User.hasMany(UserLogin, {
@@ -31,6 +29,7 @@ User.hasOne(UserProfile, {
 
 FileSystem.belongsTo(User);
 FileSystem.hasMany(NodeIndex);
+
 
 User.hasMany(Upload, {
   onUpdate: 'cascade',
