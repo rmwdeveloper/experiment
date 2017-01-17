@@ -131,7 +131,8 @@ app.post('/register', (req, res) => {
         res.send('Error');
       }
       else if ( hash ) {
-        User.create({username: req.body.username, email:req.body.email,  password: hash})
+        FileSystem.create({user: {username: req.body.username, email:req.body.email, password: hash},
+        include: [User]})
           .then(item => {
             res.status(200);
             res.send('Success');

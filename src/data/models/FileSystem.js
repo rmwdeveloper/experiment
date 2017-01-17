@@ -1,6 +1,8 @@
 import DataType from 'sequelize';
 import Model from '../sequelize';
 import fileSystem from '../fileSystem';
+
+
 const FileSystem = Model.define('FileSystem', {
   id: {
     type: DataType.INTEGER,
@@ -11,11 +13,12 @@ const FileSystem = Model.define('FileSystem', {
   },
   fileSystem: {
     type: DataType.TEXT,
-    default: JSON.stringify(fileSystem)
+    defaultValue: JSON.stringify(fileSystem),
+    allowNull: false
   },
   diskSpace: {
     type: DataType.INTEGER,
-    default: 50
+    defaultValue: 50
   }
 
 });
