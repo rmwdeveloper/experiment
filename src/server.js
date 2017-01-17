@@ -149,7 +149,21 @@ app.post('/login',
 );
 app.get('/get_user', (req, res) => {
   const UserId = req.user ? req.user.id : 1; // Either logged in user, or guest ID ( 1 )
-  FileSystem.findOne({where: {UserId}, include: [{ all: true, nested: true }]}).then(fileSystem=>{
+  FileSystem.findOne({where: {UserId}, include: [
+    {
+    model: User,
+    attributes: ['id', 'username','email','emailConfirmed']
+    },
+    {
+      model: IndexIndicatorGroup,
+      attributes: ['name'],
+      include: [{
+        model: NodeIndex,
+        attributes: ['nodeIndex'],
+      }]
+    },
+  ]})
+    .then(fileSystem=>{
     res.send(fileSystem.get({plain: true}));
     return null;
   }).catch(err=>{
