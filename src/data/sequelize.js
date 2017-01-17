@@ -1,4 +1,5 @@
 import Sequelize from 'sequelize';
+import sequelize_fixtures from 'sequelize-fixtures';
 import { database_name, database_username, database_password,
 database_host, database_dialect} from '../config';
 

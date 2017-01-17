@@ -3,6 +3,8 @@ import path from 'path';
 import express from 'express';
 import session from 'express-session';
 
+import sequelize_fixtures from 'sequelize-fixtures';
+
 import multer from 'multer';
 import crypto from 'crypto';
 import bcrypt from 'bcrypt';
@@ -298,9 +300,12 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
 // });
 
 /* eslint-disable no-console */
-models.sync().catch(err => console.error(err.stack)).then(() => {
-  app.listen(port, () => {
-    console.log(`The server is running at http://localhost:${port}/`);
+sequelize_fixtures.loadFile(path.join(__dirname,'..','src' ,'data', 'fixtures', 'initial_data.json'), models).then(function(){
+  models.sync().catch(err => console.error(err.stack)).then(() => {
+    app.listen(port, () => {
+      console.log(`The server is running at http://localhost:${port}/`);
+    });
   });
 });
+
 /* eslint-enable no-console */

@@ -27,10 +27,12 @@ User.hasOne(UserProfile, {
   onDelete: 'cascade',
 });
 
+FileSystem.belongsTo(User);
 User.hasOne(FileSystem, {
   onUpdate: 'cascade',
   onDelete: 'cascade'
 });
+
 User.hasMany(Upload, {
   onUpdate: 'cascade',
   onDelete: 'cascade'
