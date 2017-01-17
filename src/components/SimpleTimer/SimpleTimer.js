@@ -23,7 +23,6 @@ class SimpleTimer extends Component {
     const today = new Date();
     const hours = today.getHours();
     const minutes = today.getMinutes();
-    console.log(hours, minutes);
     const AMPM = hours >= 12 ? 'PM' : 'AM';
     const formattedMinutes = this.formatMinutes(minutes, 'minutes');
     const formattedHours = this.formatHours(hours, 'hours');
@@ -42,7 +41,7 @@ class SimpleTimer extends Component {
   formatHours(digit) {
     if (digit < 12) {
       digit = `${digit}`;
-    } else if (digit > 12 && interval === 'hours' ) {
+    } else if (digit > 12 ) {
       digit = Math.abs(12 - digit);
     }
     return digit;
