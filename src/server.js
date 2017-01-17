@@ -148,6 +148,9 @@ app.post('/login',
 );
 app.get('/get_user', (req, res) => {
   const userObject = req.user ? req.user : {};
+  User.findById(1).then(user=>{}).catch(err=>{console.log(err);});
+  FileSystem.findById(1, { include: [{ all: true, nested: true }]}).then(fileSystem=>{console.log(fileSystem);}).catch(err=>{console.log(err);});
+  // User.findById(1, {attributes:['username']}).then(user=>{console.log(user);}).catch(err=>{console.log(err);});
   res.send(userObject);
 });
 app.get('/logout', (req, res) => {

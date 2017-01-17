@@ -18,6 +18,7 @@ module.exports = [
   {
     "model": "IndexIndicatorGroup",
     "data": {
+      "FileSystemId": 1,
       "name": "desktopNodeIndex",
       "id": 1
     }
@@ -25,6 +26,7 @@ module.exports = [
   {
     "model": "IndexIndicatorGroup",
     "data": {
+      "FileSystemId": 1,
       "name": "userIndex",
       "id": 2
     }
@@ -32,6 +34,7 @@ module.exports = [
   {
     "model": "IndexIndicatorGroup",
     "data": {
+      "FileSystemId": 1,
       "name": "authenticatorIndex",
       "id": 3
     }
@@ -39,6 +42,7 @@ module.exports = [
   {
     "model": "IndexIndicatorGroup",
     "data": {
+      "FileSystemId": 1,
       "name": "startMenuProgramIndices",
       "id": 4
     }
@@ -46,12 +50,14 @@ module.exports = [
   {
     "model": "IndexIndicatorGroup",
     "data": {
+      "FileSystemId": 1,
       "name": "userDirectoriesIndices",
       "id": 5
     }
   },{
     "model": "IndexIndicatorGroup",
     "data": {
+      "FileSystemId": 1,
       "name": "computerSettingsIndices",
       "id": 6
     }
@@ -59,6 +65,7 @@ module.exports = [
   {
     "model": "IndexIndicatorGroup",
     "data": {
+      "FileSystemId": 1,
       "name": "utilityControlsIndices",
       "id": 7
     }

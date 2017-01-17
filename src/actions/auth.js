@@ -12,6 +12,7 @@ export function toggleRegisterMode() {
 
 export function login(user) {
   return dispatch => {
+    console.log('in login action', user);
     dispatch({ type: LOGIN, user });
   };
 }
