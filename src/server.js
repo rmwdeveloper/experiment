@@ -303,13 +303,13 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
 
 models.sync().catch(err => console.error(err.stack)).then(() => {
   app.listen(port, () => {
-    sequelize_fixtures.loadFile(path.join(__dirname, '..', 'src', 'data', 'fixtures', 'initial_data.json'), {User, FileSystem}).then(function(){
+    sequelize_fixtures.loadFile(path.join(__dirname, '..', 'src', 'data', 'fixtures', 'initial_data.js'), {User, FileSystem}).then(function(){
       console.log(`The server is running at http://localhost:${port}/`);
     }).catch(err => { console.log(err)});
   });
 });
 
-// sequelize_fixtures.loadFile(path.join(__dirname, '..', 'src', 'data', 'fixtures', 'initial_data.json'), {User, FileSystem}).then(function(){
+// sequelize_fixtures.loadFile(path.join(__dirname, '..', 'src', 'data', 'fixtures', 'initial_data.js'), {User, FileSystem}).then(function(){
 //   models.sync().catch(err => console.error(err.stack)).then(() => {
 //     app.listen(port, () => {
 //       console.log(`The server is running at http://localhost:${port}/`);
