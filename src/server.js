@@ -23,6 +23,8 @@ import indexIndicatorGroupsFixture from './data/fixtures/indexIndicatorGroups';
 import nodeIndicesFixture from './data/fixtures/nodeIndices';
 import fileNodesFixture from './data/fixtures/fileNodes';
 import fileNodeMetadataFixture from './data/fixtures/fileNodeMetadata';
+import fileNodeChildrenFixture from './data/fixtures/fileNodeChildren';
+
 import sequelize from './data/sequelize';
 import routes from './routes';
 import { resolve } from 'universal-router';
@@ -127,6 +129,9 @@ passport.use('login', new LocalStrategy({
       });
     });
 }));
+
+
+
 app.post('/register', (req, res) => {
   bcrypt.genSalt(10, (err, salt) => {
     bcrypt.hash(req.body.password, salt, (err, hash) => {
@@ -135,13 +140,14 @@ app.post('/register', (req, res) => {
         res.send('Error');
       }
       else if ( hash ) {
-        const initialIndexIndicatorGroups = indexIndicatorGroupsFixture.map( indexObject => { return indexObject.data; });
-        const fileNodes = fileNodesFixture( fileNode => { return fileNode.data });
-        const fileNodeMetadata = fileNodeMetadataFixture( fileNodeMetadata => { return fileNodeMetadata.data });
-        const nodeIndices = nodeIndicesFixture.map( nodeObject => { return nodeObject.data; });
-
+        const initialIndexIndicatorGroups = indexIndicatorGroupsFixture.map( indexObject => { const {name} = indexObject.data; return { name } });
+        const initialFileNodes = fileNodesFixture.map( fileNode => { const { name, permissions, extension} = fileNode.data; return { name, permissions, extension}; });
+        const initialFileNodeMetadata = fileNodeMetadataFixture.map( fileNodeMetadata => { const { name, value} = fileNodeMetadata.data; return {name, value} });
+        const initialNodeIndices = nodeIndicesFixture.map( nodeObject => { const {nodeIndex} = nodeObject.data; return nodeIndex;});
+        const initialNodeChildrenIndices = fileNodeChildrenFixture.map( childIndex => { const {nodeIndex} = childIndex.data; return nodeIndex;});
+        
         FileSystem.create({diskSpace: 50, User: {username: req.body.username, email:req.body.email, password: hash}},
-          {include: [User]})
+          {include: [User, FileNode, FileNodeMetadata, IndexIndicatorGroup, NodeIndex]})
           .then(item => {
             res.status(200);
             res.send('Success');

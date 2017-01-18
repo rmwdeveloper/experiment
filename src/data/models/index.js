@@ -37,7 +37,7 @@ FileSystem.hasMany(FileNode);
 FileNode.hasMany(NodeIndex, {as: 'children'} );
 FileNode.hasMany(FileNodeMetadata);
 
-IndexIndicatorGroup.hasMany(NodeIndex)
+IndexIndicatorGroup.hasMany(NodeIndex);
 
 
 User.hasMany(Upload, {
