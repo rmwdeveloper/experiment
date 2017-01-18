@@ -131,7 +131,6 @@ passport.use('login', new LocalStrategy({
 }));
 
 
-
 app.post('/register', (req, res) => {
   bcrypt.genSalt(10, (err, salt) => {
     bcrypt.hash(req.body.password, salt, (err, hash) => {
@@ -140,25 +139,41 @@ app.post('/register', (req, res) => {
         res.send('Error');
       }
       else if ( hash ) {
+
         const initialIndexIndicatorGroups = indexIndicatorGroupsFixture.map( indexObject => { const {name} = indexObject.data; return { name } });
         const initialFileNodes = fileNodesFixture.map( fileNode => { const { name, permissions, extension} = fileNode.data; return { name, permissions, extension}; });
         const initialFileNodeMetadata = fileNodeMetadataFixture.map( fileNodeMetadata => { const { name, value} = fileNodeMetadata.data; return {name, value} });
         const initialNodeIndices = nodeIndicesFixture.map( nodeObject => { const {nodeIndex} = nodeObject.data; return nodeIndex;});
         const initialNodeChildrenIndices = fileNodeChildrenFixture.map( childIndex => { const {nodeIndex} = childIndex.data; return nodeIndex;});
-        
-        FileSystem.create({diskSpace: 50, User: {username: req.body.username, email:req.body.email, password: hash}},
-          {include: [User, FileNode, FileNodeMetadata, IndexIndicatorGroup, NodeIndex]})
-          .then(item => {
-            res.status(200);
-            res.send('Success');
-            return null;
-          })
-          .catch(errorObject => {
-            res.status(400);
-            console.log(errorObject);
-            res.send(errorObject.errors);
-            return null;
-          });
+
+        sequelize.transaction( transaction => {
+
+
+        }).then( result => {
+          res.status(200);
+          res.send(result);
+          return null;
+        }).catch(error => {
+          res.status(400);
+          res.send('Error');
+          return null;
+        });
+
+
+        // FileSystem.create({diskSpace: 50,
+        //   User: {username: req.body.username, email:req.body.email, password: hash} },
+        //   {include: [User, FileNode]})
+        //   .then(item => {
+        //     res.status(200);
+        //     res.send('Success');
+        //     return null;
+        //   })
+        //   .catch(errorObject => {
+        //     res.status(400);
+        //     console.log(errorObject);
+        //     res.send(errorObject.errors);
+        //     return null;
+        //   });
       }
     });
   });
