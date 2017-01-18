@@ -18,6 +18,9 @@ import passport from 'passport';
 
 import ReactDOM from 'react-dom/server';
 import models, { User, FileSystem, IndexIndicatorGroup, NodeIndex } from './data/models';
+// todo : better way to import these ?
+import indexIndicatorGroupsFixture from './data/fixtures/indexIndicatorGroups';
+import nodeIndicesFixture from './data/fixtures/nodeIndices';
 import sequelize from './data/sequelize';
 import routes from './routes';
 import { resolve } from 'universal-router';
@@ -122,7 +125,6 @@ passport.use('login', new LocalStrategy({
       });
     });
 }));
-
 app.post('/register', (req, res) => {
   bcrypt.genSalt(10, (err, salt) => {
     bcrypt.hash(req.body.password, salt, (err, hash) => {
@@ -131,6 +133,10 @@ app.post('/register', (req, res) => {
         res.send('Error');
       }
       else if ( hash ) {
+        const initialIndexIndicatorGroups = indexIndicatorGroupsFixture.map( indexObject => { return indexObject.data; });
+        const nodeIndices = nodeIndicesFixture.map( nodeObject => { return nodeObject.data; });
+
+        console.log(initialIndexIndicatorGroups, nodeIndices);
         FileSystem.create({user: {username: req.body.username, email:req.body.email, password: hash},
         include: [User]})
           .then(item => {
