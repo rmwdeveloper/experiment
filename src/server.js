@@ -136,16 +136,18 @@ app.post('/register', (req, res) => {
         const initialIndexIndicatorGroups = indexIndicatorGroupsFixture.map( indexObject => { return indexObject.data; });
         const nodeIndices = nodeIndicesFixture.map( nodeObject => { return nodeObject.data; });
 
-        console.log(initialIndexIndicatorGroups, nodeIndices);
-        FileSystem.create({user: {username: req.body.username, email:req.body.email, password: hash},
-        include: [User]})
+        FileSystem.create({diskSpace: 50, User: {username: req.body.username, email:req.body.email, password: hash}},
+          {include: [User]})
           .then(item => {
             res.status(200);
             res.send('Success');
+            return null;
           })
           .catch(errorObject => {
             res.status(400);
+            console.log(errorObject);
             res.send(errorObject.errors);
+            return null;
           });
       }
     });
