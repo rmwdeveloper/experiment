@@ -17,7 +17,7 @@ import PrettyError from 'pretty-error';
 import passport from 'passport';
 
 import ReactDOM from 'react-dom/server';
-import models, { User, FileSystem, IndexIndicatorGroup, NodeIndex } from './data/models';
+import models, { User, FileSystem, IndexIndicatorGroup, NodeIndex, FileNode, FileNodeMetadata  } from './data/models';
 // todo : better way to import these ?
 import indexIndicatorGroupsFixture from './data/fixtures/indexIndicatorGroups';
 import nodeIndicesFixture from './data/fixtures/nodeIndices';
@@ -334,7 +334,7 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
 models.sync().catch(err => console.error(err.stack)).then(() => {
   app.listen(port, () => {
     sequelize_fixtures.loadFile(path.join(__dirname, '..', 'src', 'data', 'fixtures', 'initial_data.js'), {User,
-      FileSystem, IndexIndicatorGroup, NodeIndex}).then(function(){
+      FileSystem, IndexIndicatorGroup, NodeIndex, FileNode, FileNodeMetadata}).then(function(){
       console.log(`The server is running at http://localhost:${port}/`);
     }).catch(err => { console.log(err)});
   });
