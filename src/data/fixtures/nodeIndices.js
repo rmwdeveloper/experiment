@@ -1,20 +1,21 @@
 const fileSystem = require('../fileSystem');
 
-// const fileNodeChildren = Object.keys(fileSystem).map( key => {
-//   const {name, permissions, extension} = fileSystem[key];
-//   const fixture = {
-//     model: 'NodeIndex',
-//     data: {
-//       name, permissions
-//     }
-//   };
-//   if (extension) {
-//     fixture.data.extension = extension;
-//   }
-//   return fixture;
-// });
+const fixtures = [];
 
-module.exports = [
+for (const index in fileSystem) {
+  if (fileSystem.hasOwnProperty(index)) {
+    const node = fileSystem[index];
+    if (node.hasOwnProperty('children')) {
+      node.children.forEach( child => {
+        fixtures.push({
+          model: "NodeIndex", data: {nodeIndex: child, FileNodeId: index }
+        });
+      });
+    }
+  }
+}
+
+module.exports = fixtures.concat([
   {
     "model": "NodeIndex",
     "data": {
@@ -112,4 +113,4 @@ module.exports = [
       "nodeIndex": 21
     }
   }
-];
+]);
