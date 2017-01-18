@@ -147,13 +147,16 @@ app.post('/register', (req, res) => {
         const initialNodeChildrenIndices = fileNodeChildrenFixture.map( childIndex => { const {nodeIndex} = childIndex.data; return nodeIndex;});
 
         sequelize.transaction( transaction => {
-
+          return FileSystem.create({diskSpace: 50}, {transaction}).then(fileSystem => {
+            console.log('fileSystem', fileSystem.get({plain: true}));
+          })
 
         }).then( result => {
           res.status(200);
           res.send(result);
           return null;
         }).catch(error => {
+          console.log(error);
           res.status(400);
           res.send('Error');
           return null;
