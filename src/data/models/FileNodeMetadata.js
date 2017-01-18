@@ -1,7 +1,7 @@
 import DataType from 'sequelize';
 import Model from '../sequelize';
 
-const FileNode = Model.define('FileNode', {
+const FileNodeMetadata = Model.define('FileNodeMetadata', {
   id: {
     type: DataType.INTEGER,
     primaryKey: true,
@@ -17,4 +17,4 @@ const FileNode = Model.define('FileNode', {
   }
 });
 
-export default FileNode;
+export default FileNodeMetadata;

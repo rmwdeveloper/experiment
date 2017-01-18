@@ -1,3 +1,19 @@
+const fileSystem = require('../fileSystem');
+
+// const fileNodeChildren = Object.keys(fileSystem).map( key => {
+//   const {name, permissions, extension} = fileSystem[key];
+//   const fixture = {
+//     model: 'NodeIndex',
+//     data: {
+//       name, permissions
+//     }
+//   };
+//   if (extension) {
+//     fixture.data.extension = extension;
+//   }
+//   return fixture;
+// });
+
 module.exports = [
   {
     "model": "NodeIndex",
