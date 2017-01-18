@@ -18,9 +18,11 @@ import passport from 'passport';
 
 import ReactDOM from 'react-dom/server';
 import models, { User, FileSystem, IndexIndicatorGroup, NodeIndex, FileNode, FileNodeMetadata  } from './data/models';
-// todo : better way to import these ?
+// todo : better way to import these fixtures?
 import indexIndicatorGroupsFixture from './data/fixtures/indexIndicatorGroups';
 import nodeIndicesFixture from './data/fixtures/nodeIndices';
+import fileNodesFixture from './data/fixtures/fileNodes';
+import fileNodeMetadataFixture from './data/fixtures/fileNodeMetadata';
 import sequelize from './data/sequelize';
 import routes from './routes';
 import { resolve } from 'universal-router';
@@ -134,6 +136,8 @@ app.post('/register', (req, res) => {
       }
       else if ( hash ) {
         const initialIndexIndicatorGroups = indexIndicatorGroupsFixture.map( indexObject => { return indexObject.data; });
+        const fileNodes = fileNodesFixture( fileNode => { return fileNode.data });
+        const fileNodeMetadata = fileNodeMetadataFixture( fileNodeMetadata => { return fileNodeMetadata.data });
         const nodeIndices = nodeIndicesFixture.map( nodeObject => { return nodeObject.data; });
 
         FileSystem.create({diskSpace: 50, User: {username: req.body.username, email:req.body.email, password: hash}},
