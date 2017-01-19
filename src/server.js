@@ -158,7 +158,19 @@ app.post('/register', (req, res) => {
               { const { name, permissions, extension, nodeIndex } = fileNode.data; return { name, nodeIndex, permissions, extension, FileSystemId: id }; });
               return FileNode.bulkCreate(initialFileNodes, {transaction, individualHooks: true}).then(fileNodes => {
                 const fileNodeData = fileNodes.map( node => { return node.get({plain: true})});
+                const promises = [];
 
+                for (let iterator = 0; iterator < initialFileNodeMetadata.length; iterator++) {
+                  const nodeThatHasMetadata = fileNodeData.find(element => {
+                    return initialFileNodeMetadata[iterator].nodeIndex === element.nodeIndex;
+                  });
+                  initialFileNodeMetadata[iterator].FileNodeId = nodeThatHasMetadata.id;
+                  const newPromise = FileNodeMetadata.create(initialFileNodeMetadata[iterator], {transaction});
+                  promises.push(newPromise);
+                }
+
+                // return FileNodeMetadata.bulkCreate(initialFileNodeMetadata, {transaction, individualHooks: true}).then(metadata => {
+                // })
               });
 
               // initialFileNodes.forEach(fileNodeValues => {

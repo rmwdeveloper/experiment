@@ -8,7 +8,8 @@ for (const index in fileSystem) {
       for (const metaDataItem in node.metadata) {
         if (node.metadata.hasOwnProperty(metaDataItem)) {
           fixtures.push(
-            {model: 'FileNodeMetadata', data: {name: metaDataItem, FileNodeId: index,
+            {model: 'FileNodeMetadata', data: {name: metaDataItem,
+              FileNodeId: index,
               nodeIndex: index,
               value: node.metadata[metaDataItem]}}
           )

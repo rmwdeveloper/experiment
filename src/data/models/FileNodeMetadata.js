@@ -18,7 +18,7 @@ const FileNodeMetadata = Model.define('FileNodeMetadata', {
   nodeIndex: {
     type: DataType.INTEGER,
     allowNull: false
-  }
+  },
 });
 
 export default FileNodeMetadata;
