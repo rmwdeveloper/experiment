@@ -141,7 +141,7 @@ app.post('/register', (req, res) => {
       else if ( hash ) {
 
         const initialIndexIndicatorGroups = indexIndicatorGroupsFixture.map( indexObject => { const {name} = indexObject.data; return { name } });
-        const initialFileNodeMetadata = fileNodeMetadataFixture.map( fileNodeMetadata => { const { name, value} = fileNodeMetadata.data; return {name, value} });
+        const initialFileNodeMetadata = fileNodeMetadataFixture.map( fileNodeMetadata => { const { name, value, nodeIndex} = fileNodeMetadata.data; return {name, value, nodeIndex} });
         const initialNodeIndices = nodeIndicesFixture.map( nodeObject => { const {nodeIndex} = nodeObject.data; return nodeIndex;});
         const initialNodeChildrenIndices = fileNodeChildrenFixture.map( childIndex => { const {nodeIndex} = childIndex.data; return nodeIndex;});
 
@@ -158,7 +158,7 @@ app.post('/register', (req, res) => {
               { const { name, permissions, extension, nodeIndex } = fileNode.data; return { name, nodeIndex, permissions, extension, FileSystemId: id }; });
               return FileNode.bulkCreate(initialFileNodes, {transaction, individualHooks: true}).then(fileNodes => {
                 const fileNodeData = fileNodes.map( node => { return node.get({plain: true})});
-                console.log(fileNodeData);
+
               });
 
               // initialFileNodes.forEach(fileNodeValues => {
