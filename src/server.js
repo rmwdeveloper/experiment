@@ -155,7 +155,7 @@ app.post('/register', (req, res) => {
               { const { name, permissions, extension, nodeIndex } = fileNode.data; return { name, nodeIndex, permissions, extension, FileSystemId: id }; });
               return FileNode.bulkCreate(initialFileNodes, {transaction, individualHooks: true}).then(fileNodes => {
                 const fileNodeData = fileNodes.map( node => { return node.get({plain: true})});
-                const initialIndexIndicatorGroups = indexIndicatorGroupsFixture.map( indexObject => { const {name} = indexObject.data; return { name, FileSystemId: id } });
+                const initialIndexIndicatorGroups = indexIndicatorGroupsFixture.map( indexObject => { const {name, nodeIndex } = indexObject.data; return { name, nodeIndex , FileSystemId: id } });
                 const promises = [];
 
                 for (let iterator = 0; iterator < initialNodeChildrenIndices.length; iterator++) {
