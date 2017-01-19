@@ -142,8 +142,8 @@ app.post('/register', (req, res) => {
 
 
         const initialFileNodeMetadata = fileNodeMetadataFixture.map( fileNodeMetadata => { const { name, value, nodeIndex} = fileNodeMetadata.data; return {name, value, nodeIndex} });
-        const initialNodeIndices = nodeIndicesFixture.map( nodeObject => { const {nodeIndex} = nodeObject.data; return nodeIndex;});
-        const initialNodeChildrenIndices = fileNodeChildrenFixture.map( childIndex => { const {nodeIndex} = childIndex.data; return nodeIndex;});
+        const initialNodeIndices = nodeIndicesFixture.map( nodeObject => { const {nodeIndex} = nodeObject.data; return {nodeIndex}; });
+        const initialNodeChildrenIndices = fileNodeChildrenFixture.map( childIndex => { const {nodeIndex} = childIndex.data; return {nodeIndex};});
 
         sequelize.transaction( transaction => { // todo: Jesus, clean this shit up.
 
@@ -157,6 +157,15 @@ app.post('/register', (req, res) => {
                 const fileNodeData = fileNodes.map( node => { return node.get({plain: true})});
                 const initialIndexIndicatorGroups = indexIndicatorGroupsFixture.map( indexObject => { const {name} = indexObject.data; return { name, FileSystemId: id } });
                 const promises = [];
+
+                for (let iterator = 0; iterator < initialNodeChildrenIndices.length; iterator++) {
+                  const nodeHasChildren = fileNodeData.find(element => {
+                    return initialNodeChildrenIndices[iterator].nodeIndex === parseInt(element.nodeIndex, 10);
+                  });
+                  initialNodeChildrenIndices[iterator].FileNodeId = nodeHasChildren.id;
+                  const newPromise = NodeIndex.create(initialNodeChildrenIndices[iterator], {transaction});
+                  promises.push(newPromise);
+                }
 
                 for (let iterator = 0; iterator < initialFileNodeMetadata.length; iterator++) {
                   const nodeThatHasMetadata = fileNodeData.find(element => {
@@ -173,7 +182,10 @@ app.post('/register', (req, res) => {
                 }
 
                 return Promise.all(promises).then( result => {
-                  console.log(result);
+                  const newestData = result.map( dat => {
+                    return dat.get({plain: true})
+                  });
+                  console.log(newestData);
                 })
               });
             })
