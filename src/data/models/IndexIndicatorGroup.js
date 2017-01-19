@@ -11,6 +11,9 @@ const IndexIndicatorGroup = Model.define('IndexIndicatorGroup', {
   },
   name: {
     type: DataType.STRING
+  },
+  nodeIndex: {
+    type: DataType.INTEGER
   }
 });
 

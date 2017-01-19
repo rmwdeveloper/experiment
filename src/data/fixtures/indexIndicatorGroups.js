@@ -3,7 +3,7 @@ module.exports = [{
   "data": {
     "FileSystemId": 1,
     "name": "desktopNodeIndex",
-    "id": 1
+    "nodeIndex": 11
   }
 },
   {
@@ -11,7 +11,7 @@ module.exports = [{
     "data": {
       "FileSystemId": 1,
       "name": "userIndex",
-      "id": 2
+      "nodeIndex": 4
     }
   },
   {
@@ -19,7 +19,7 @@ module.exports = [{
     "data": {
       "FileSystemId": 1,
       "name": "authenticatorIndex",
-      "id": 3
+      "nodeIndex": 29
     }
   },
   {
@@ -27,7 +27,22 @@ module.exports = [{
     "data": {
       "FileSystemId": 1,
       "name": "startMenuProgramIndices",
-      "id": 4
+      "nodeIndex": 5
+    }
+  },
+  {
+    "model": "IndexIndicatorGroup",
+    "data": {
+      "FileSystemId": 1,
+      "name": "startMenuProgramIndices",
+      "nodeIndex": 6
+    }
+  },{
+    "model": "IndexIndicatorGroup",
+    "data": {
+      "FileSystemId": 1,
+      "name": "startMenuProgramIndices",
+      "nodeIndex": 7
     }
   },
   {
@@ -35,14 +50,39 @@ module.exports = [{
     "data": {
       "FileSystemId": 1,
       "name": "userDirectoriesIndices",
-      "id": 5
+      "nodeIndex": 14
     }
-  },{
+  },
+  {
+    "model": "IndexIndicatorGroup",
+    "data": {
+      "FileSystemId": 1,
+      "name": "userDirectoriesIndices",
+      "nodeIndex": 15
+    }
+  },
+  {
+    "model": "IndexIndicatorGroup",
+    "data": {
+      "FileSystemId": 1,
+      "name": "userDirectoriesIndices",
+      "nodeIndex": 16
+    }
+  },
+  {
     "model": "IndexIndicatorGroup",
     "data": {
       "FileSystemId": 1,
       "name": "computerSettingsIndices",
-      "id": 6
+      "nodeIndex": 17
+    }
+  },
+  {
+    "model": "IndexIndicatorGroup",
+    "data": {
+      "FileSystemId": 1,
+      "name": "computerSettingsIndices",
+      "nodeIndex": 18
     }
   },
   {
@@ -50,6 +90,23 @@ module.exports = [{
     "data": {
       "FileSystemId": 1,
       "name": "utilityControlsIndices",
-      "id": 7
+      "nodeIndex": 19
     }
-  }];
+  },
+  {
+    "model": "IndexIndicatorGroup",
+    "data": {
+      "FileSystemId": 1,
+      "name": "utilityControlsIndices",
+      "nodeIndex": 20
+    }
+  },
+  {
+    "model": "IndexIndicatorGroup",
+    "data": {
+      "FileSystemId": 1,
+      "name": "utilityControlsIndices",
+      "nodeIndex": 21
+    }
+  },
+];

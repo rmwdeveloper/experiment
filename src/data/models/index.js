@@ -34,7 +34,6 @@ User.hasOne(UserProfile, {
 FileSystem.belongsTo(User);
 FileSystem.hasMany(IndexIndicatorGroup);
 FileSystem.hasMany(FileNode);
-IndexIndicatorGroup.hasMany(NodeIndex);
 
 FileNode.hasMany(NodeIndex, {as: 'children'} );
 

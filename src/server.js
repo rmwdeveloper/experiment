@@ -176,20 +176,19 @@ app.post('/register', (req, res) => {
                   promises.push(newPromise);
                 }
 
-                for (let iterator = 0; iterator < initialIndexIndicatorGroups.length; iterator++) {
-                  const newPromise = IndexIndicatorGroup.create(initialIndexIndicatorGroups[iterator], {transaction});
-                  promises.push(newPromise);
-                }
-
-                return Promise.all(promises).then( result => {
-                  const newestData = result.map( dat => {
-                    return dat.get({plain: true})
+                return Promise.all(promises).then( () => {
+                  const morePromises = [];
+                  for (let iterator = 0; iterator < initialIndexIndicatorGroups.length; iterator++) {
+                    const newPromise = IndexIndicatorGroup.create(initialIndexIndicatorGroups[iterator], {transaction});
+                    morePromises.push(newPromise);
+                  }
+                  return Promise.all(morePromises).then( result => {
+                    const data = result.map( dataItem => { return dataItem.get({plain: true})});
                   });
-                  console.log(newestData);
-                })
+                });
               });
-            })
-          })
+            });
+          });
         }).then( result => {
           res.status(200);
           res.send(result);
