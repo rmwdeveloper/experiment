@@ -140,7 +140,7 @@ app.post('/register', (req, res) => {
       }
       else if ( hash ) {
 
-        const initialIndexIndicatorGroups = indexIndicatorGroupsFixture.map( indexObject => { const {name} = indexObject.data; return { name } });
+
         const initialFileNodeMetadata = fileNodeMetadataFixture.map( fileNodeMetadata => { const { name, value, nodeIndex} = fileNodeMetadata.data; return {name, value, nodeIndex} });
         const initialNodeIndices = nodeIndicesFixture.map( nodeObject => { const {nodeIndex} = nodeObject.data; return nodeIndex;});
         const initialNodeChildrenIndices = fileNodeChildrenFixture.map( childIndex => { const {nodeIndex} = childIndex.data; return nodeIndex;});
@@ -148,13 +148,14 @@ app.post('/register', (req, res) => {
         sequelize.transaction( transaction => {
 
           return User.create({username: req.body.username, email:req.body.email, password: hash}, {transaction}).then(user => {
-            const { id } = user.get({plain: true});
-            return FileSystem.create({diskSpace: 50, UserId: id}, {transaction}).then(fileSystem => {
+            const userObj = user.get({plain: true});
+            return FileSystem.create({diskSpace: 50, UserId: userObj.id}, {transaction}).then(fileSystem => {
               const { id } = fileSystem.get({plain: true});
               const initialFileNodes = fileNodesFixture.map( fileNode =>
               { const { name, permissions, extension, nodeIndex } = fileNode.data; return { name, nodeIndex, permissions, extension, FileSystemId: id }; });
               return FileNode.bulkCreate(initialFileNodes, {transaction, individualHooks: true}).then(fileNodes => {
                 const fileNodeData = fileNodes.map( node => { return node.get({plain: true})});
+                const initialIndexIndicatorGroups = indexIndicatorGroupsFixture.map( indexObject => { const {name} = indexObject.data; return { name, FileSystemId: id } });
                 const promises = [];
 
                 for (let iterator = 0; iterator < initialFileNodeMetadata.length; iterator++) {
@@ -163,6 +164,11 @@ app.post('/register', (req, res) => {
                   });
                   initialFileNodeMetadata[iterator].FileNodeId = nodeThatHasMetadata.id;
                   const newPromise = FileNodeMetadata.create(initialFileNodeMetadata[iterator], {transaction});
+                  promises.push(newPromise);
+                }
+
+                for (let iterator = 0; iterator < initialIndexIndicatorGroups.length; iterator++) {
+                  const newPromise = IndexIndicatorGroup.create(initialIndexIndicatorGroups[iterator], {transaction});
                   promises.push(newPromise);
                 }
 
