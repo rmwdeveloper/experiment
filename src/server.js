@@ -169,8 +169,7 @@ app.post('/register', (req, res) => {
                   promises.push(newPromise);
                 }
 
-                // return FileNodeMetadata.bulkCreate(initialFileNodeMetadata, {transaction, individualHooks: true}).then(metadata => {
-                // })
+                return Promise.all(promises);
               });
 
               // initialFileNodes.forEach(fileNodeValues => {
