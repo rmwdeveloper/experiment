@@ -147,10 +147,25 @@ app.post('/register', (req, res) => {
         const initialNodeChildrenIndices = fileNodeChildrenFixture.map( childIndex => { const {nodeIndex} = childIndex.data; return nodeIndex;});
 
         sequelize.transaction( transaction => {
-          return FileSystem.create({diskSpace: 50}, {transaction}).then(fileSystem => {
-            console.log('fileSystem', fileSystem.get({plain: true}));
-          })
 
+          // return FileSystem.create({diskSpace: 50}, {transaction}).then(fileSystem => {
+          //   console.log('fileSystem', fileSystem.get({plain: true}));
+          // })
+          return User.create({username: req.body.username, email:req.body.email, password: hash}, {transaction}).then(user => {
+            const { id } = user.get({plain: true});
+            return FileSystem.create({diskSpace: 50, UserId: id}, {transaction}).then(fileSystem => {
+              const { id } = fileSystem.get({plain: true});
+              return FileNode.bulkCreate(initialFileNodes, {transaction});
+              // initialFileNodes.forEach(fileNodeValues => {
+              //   const {name, permissions, extension } = fileNodeValues;
+              //   return FileNode.create({name, permissions, extension});
+              // });
+              // return Promise.all(initialFileNodes).then(fileNodeValues => {
+              //   const {name, permissions, extension } = fileNodeValues;
+              //   return FileNode.create({name, permissions, extension});
+              // })
+            })
+          })
         }).then( result => {
           res.status(200);
           res.send(result);
