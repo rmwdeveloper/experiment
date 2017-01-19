@@ -145,7 +145,7 @@ app.post('/register', (req, res) => {
         const initialNodeIndices = nodeIndicesFixture.map( nodeObject => { const {nodeIndex} = nodeObject.data; return nodeIndex;});
         const initialNodeChildrenIndices = fileNodeChildrenFixture.map( childIndex => { const {nodeIndex} = childIndex.data; return nodeIndex;});
 
-        sequelize.transaction( transaction => {
+        sequelize.transaction( transaction => { // todo: Jesus, clean this shit up.
 
           return User.create({username: req.body.username, email:req.body.email, password: hash}, {transaction}).then(user => {
             const userObj = user.get({plain: true});
@@ -172,7 +172,9 @@ app.post('/register', (req, res) => {
                   promises.push(newPromise);
                 }
 
-                return Promise.all(promises);
+                return Promise.all(promises).then( result => {
+                  console.log(result);
+                })
               });
             })
           })
