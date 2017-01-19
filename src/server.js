@@ -141,7 +141,6 @@ app.post('/register', (req, res) => {
       else if ( hash ) {
 
         const initialIndexIndicatorGroups = indexIndicatorGroupsFixture.map( indexObject => { const {name} = indexObject.data; return { name } });
-        const initialFileNodes = fileNodesFixture.map( fileNode => { const { name, permissions, extension} = fileNode.data; return { name, permissions, extension}; });
         const initialFileNodeMetadata = fileNodeMetadataFixture.map( fileNodeMetadata => { const { name, value} = fileNodeMetadata.data; return {name, value} });
         const initialNodeIndices = nodeIndicesFixture.map( nodeObject => { const {nodeIndex} = nodeObject.data; return nodeIndex;});
         const initialNodeChildrenIndices = fileNodeChildrenFixture.map( childIndex => { const {nodeIndex} = childIndex.data; return nodeIndex;});
@@ -155,6 +154,8 @@ app.post('/register', (req, res) => {
             const { id } = user.get({plain: true});
             return FileSystem.create({diskSpace: 50, UserId: id}, {transaction}).then(fileSystem => {
               const { id } = fileSystem.get({plain: true});
+              const initialFileNodes = fileNodesFixture.map( fileNode =>
+              { const { name, permissions, extension } = fileNode.data; return { name, permissions, extension, FileSystemId: id }; });
               return FileNode.bulkCreate(initialFileNodes, {transaction});
               // initialFileNodes.forEach(fileNodeValues => {
               //   const {name, permissions, extension } = fileNodeValues;
