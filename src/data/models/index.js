@@ -35,7 +35,7 @@ FileSystem.belongsTo(User);
 FileSystem.hasMany(IndexIndicatorGroup);
 FileSystem.hasMany(FileNode);
 
-FileNode.hasMany(NodeIndex, {as: 'children'} );
+// FileNode.hasMany(NodeIndex, {as: 'children'} );
 
 
 FileNode.hasMany(FileNodeMetadata);
@@ -53,5 +53,6 @@ function sync(...args) {
 }
 
 export default { sync };
-export { User, UserLogin, UserProfile, FileSystem, Upload, IndexIndicatorGroup, NodeIndex,
+export { User, UserLogin, UserProfile, FileSystem, Upload, IndexIndicatorGroup,
+        // NodeIndex,
         FileNode, FileNodeMetadata};
