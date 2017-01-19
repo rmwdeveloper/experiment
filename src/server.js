@@ -155,7 +155,7 @@ app.post('/register', (req, res) => {
             return FileSystem.create({diskSpace: 50, UserId: id}, {transaction}).then(fileSystem => {
               const { id } = fileSystem.get({plain: true});
               const initialFileNodes = fileNodesFixture.map( fileNode =>
-              { const { name, permissions, extension } = fileNode.data; return { name, permissions, extension, FileSystemId: id }; });
+              { const { name, permissions, extension, nodeIndex } = fileNode.data; return { name, nodeIndex, permissions, extension, FileSystemId: id }; });
               return FileNode.bulkCreate(initialFileNodes, {transaction, individualHooks: true}).then(fileNodes => {
                 const fileNodeData = fileNodes.map( node => { return node.get({plain: true})});
                 console.log(fileNodeData);

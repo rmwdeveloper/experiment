@@ -5,7 +5,7 @@ module.exports = Object.keys(fileSystem).map( key => {
   const fixture = {
     model: 'FileNode',
     data: {
-      name, permissions, FileSystemId: 1
+      name, permissions, FileSystemId: 1, nodeIndex: key
     }
   };
   if (extension) {
