@@ -147,9 +147,6 @@ app.post('/register', (req, res) => {
 
         sequelize.transaction( transaction => {
 
-          // return FileSystem.create({diskSpace: 50}, {transaction}).then(fileSystem => {
-          //   console.log('fileSystem', fileSystem.get({plain: true}));
-          // })
           return User.create({username: req.body.username, email:req.body.email, password: hash}, {transaction}).then(user => {
             const { id } = user.get({plain: true});
             return FileSystem.create({diskSpace: 50, UserId: id}, {transaction}).then(fileSystem => {
@@ -171,15 +168,6 @@ app.post('/register', (req, res) => {
 
                 return Promise.all(promises);
               });
-
-              // initialFileNodes.forEach(fileNodeValues => {
-              //   const {name, permissions, extension } = fileNodeValues;
-              //   return FileNode.create({name, permissions, extension});
-              // });
-              // return Promise.all(initialFileNodes).then(fileNodeValues => {
-              //   const {name, permissions, extension } = fileNodeValues;
-              //   return FileNode.create({name, permissions, extension});
-              // })
             })
           })
         }).then( result => {
