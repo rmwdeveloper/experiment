@@ -140,6 +140,13 @@ app.post('/register', (req, res) => {
       }
       else if ( hash ) {
 
+        User.create({username: req.body.username, email:req.body.email, password: hash}).then(user => {
+          'use strict';
+
+        }).catch(err => {
+          'use strict';
+          
+        });
         //
         //
         // const initialFileNodeMetadata = fileNodeMetadataFixture.map( fileNodeMetadata => { const { name, value, nodeIndex} = fileNodeMetadata.data; return {name, value, nodeIndex} });

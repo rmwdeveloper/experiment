@@ -7,4 +7,4 @@ const fileNodesFixture = require('./fileNodes');
 const fileNodeMetadataFixture = require('./fileNodeMetadata');
 
 module.exports = [].concat(userFixture, fileSystemFixture, indexIndicatorGroupsFixture,
-            fileNodesFixture, fileNodeMetadataFixture, nodeIndicesFixture, fileNodeChildrenFixture);
+            fileNodesFixture, fileNodeMetadataFixture);

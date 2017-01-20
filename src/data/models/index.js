@@ -5,7 +5,6 @@ import UserProfile from './UserProfile';
 import FileSystem from './FileSystem';
 import FileNode from './FileNode';
 import FileNodeMetadata from './FileNodeMetadata';
-import NodeIndex from './NodeIndex';
 import IndexIndicatorGroup from './IndexIndicatorGroup';
 import Upload from './Upload';
 
@@ -31,15 +30,22 @@ User.hasOne(UserProfile, {
   onDelete: 'cascade',
 });
 
-FileSystem.belongsTo(User);
+User.hasOne(FileSystem);
+
 FileSystem.hasMany(IndexIndicatorGroup);
 FileSystem.hasMany(FileNode);
-
-// FileNode.hasMany(NodeIndex, {as: 'children'} );
-
-
 FileNode.hasMany(FileNodeMetadata);
 
+// todo: Move these hooks somewhere.
+
+
+User.afterCreate( (instance) => {
+  sequelize.transaction( transaction => {
+
+
+  }).then(result => {}).catch(error => {});
+
+});
 
 
 
