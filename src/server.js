@@ -20,14 +20,12 @@ import ReactDOM from 'react-dom/server';
 import models, { User, FileSystem, FileNode, FileNodeMetadata  } from './data/models';
 // todo : better way to import these fixtures?
 
-
-
+import { fileNodesFixture, fileNodesMetadataFixture } from './data/fixtures';
 import sequelize from './data/sequelize';
 import routes from './routes';
 import { resolve } from 'universal-router';
 import { port, analytics, auth, aws_secret_key, session_secret } from './config';
 import { Strategy as LocalStrategy } from 'passport-local';
-
 
 import assets from './assets';
 import configureStore from './store/configureStore';
@@ -127,7 +125,6 @@ passport.use('login', new LocalStrategy({
     });
 }));
 
-
 app.post('/register', (req, res) => {
   bcrypt.genSalt(10, (err, salt) => {
     bcrypt.hash(req.body.password, salt, (err, hash) => {
@@ -135,23 +132,56 @@ app.post('/register', (req, res) => {
         res.status(400);
         res.send('Error');
         return null;
-      }
-      else if ( hash ) {
-        User.create({username: req.body.username, email:req.body.email, password: hash}).then(user => {
+      } else if (hash) {
+        sequelize.transaction(transaction => {
+        
+        }).then(result => {
           res.status(200);
-          res.send('Success');
-          return null;
-
-        }).catch(errorObject => {
-          res.status(400);
-          res.send(errorObject.errors);
-          return null;
+          console.log(result);
         });
-        return null;
       }
     });
   });
 });
+// app.post('/register', (req, res) => {
+//   bcrypt.genSalt(10, (err, salt) => {
+//     bcrypt.hash(req.body.password, salt, (err, hash) => {
+//       if ( err ) {
+//         res.status(400);
+//         res.send('Error');
+//         return null;
+//       }
+//       else if ( hash ) {
+//           sequelize.transaction( transaction => {
+//             return User.create({username: req.body.username, email:req.body.email, password: hash}, {transaction}).then(user => {
+//               const userObj = user.get({plain: true});
+//               return FileSystem.create({diskSpace: 50, UserId: userObj.id}, {transaction}).then(fileSystem => {
+//                 const fileNodes = fileNodesFixture.map( fileNode => { fileNode.FileSystemId = fileSystem.get({plain:true}).id; return fileNode});
+//                 return FileNode.bulkCreate(fileNodes, {transaction, individualHooks: true}).then(fileNodes => {
+//                   const promises = [];
+//                   const fileNodesRows = fileNodes.map( rowData => { return rowData.get({plain: true})});
+//                   for (let iterator = 0; iterator < fileNodesMetadataFixture.length; iterator++) {
+//                     const nodeThatHasMetadata = fileNodesRows.find(element => {
+//                       return fileNodesMetadataFixture[iterator].nodeIndex === element.nodeIndex;
+//                     });
+//                     fileNodesMetadataFixture[iterator].FileNodeId = nodeThatHasMetadata.id;
+//                     const { name, value, FileNodeId } = fileNodesMetadataFixture[iterator];
+//                     const newPromise = FileNodeMetadata.create({ name, value, FileNodeId }, {transaction});
+//                     promises.push(newPromise);
+//                   }
+//                   return Promise.all(promises).then( (results) => {
+//                     return results;
+//                   });
+//                 });
+//             });
+//           });
+//         }).then(result => {
+//             console.log(result);
+//           });
+//       }
+//     });
+//   });
+// });
 app.post('/login',
   passport.authenticate('login', { successRedirect: '/success', failureRedirect: '/failure', session: true })
 );
