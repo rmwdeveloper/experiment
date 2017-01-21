@@ -18,13 +18,13 @@ export function login(user) {
 
 export function initializeAuth(){
   return dispatch => {
-    const response = fetch('/get_user', {
-      method: 'get', credentials: 'include'
-    }).then(response => {
-      response.json().then(userData => {
-        const { User, UserId, IndexIndicatorGroups, fileSystem, diskSpace } = userData;
-        dispatch({type: LOGIN, user: User, UserId, IndexIndicatorGroups, fileSystem: JSON.parse(fileSystem), diskSpace});
-      });
-    });
+    // const response = fetch('/get_user', {
+    //   method: 'get', credentials: 'include'
+    // }).then(response => {
+    //   response.json().then(userData => {
+    //     const { User, UserId, IndexIndicatorGroups, fileSystem, diskSpace } = userData;
+    //     dispatch({type: LOGIN, user: User, UserId, IndexIndicatorGroups, fileSystem: JSON.parse(fileSystem), diskSpace});
+    //   });
+    // });
   };
 }

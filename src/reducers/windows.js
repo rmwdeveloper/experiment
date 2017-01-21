@@ -33,8 +33,8 @@ const initialState = {
   desktopWidth: 0,
   desktopHeight: 0,
   fileSystem,
-  // desktopNodeIndex: 11, //indices are in state, and not searchable by name because user can make duplicate names
-  // userIndex: 4, // Users personal index. Username will be fileSystem[userIndex].name  . Default is "Guest"
+  desktopNodeIndex: 11, //indices are in state, and not searchable by name because user can make duplicate names
+  userIndex: 4, // Users personal index. Username will be fileSystem[userIndex].name  . Default is "Guest"
   authenticatorIndex: 29,
   startMenuProgramsIndices: [5, 6, 7],
   userDirectoriesIndices: [14, 15, 16],

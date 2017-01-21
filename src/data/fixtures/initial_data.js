@@ -1,10 +1,11 @@
 const userFixture = require('./user');
 const fileSystemFixture = require('./fileSystem');
-const indexIndicatorGroupsFixture = require('./indexIndicatorGroups');
-const nodeIndicesFixture = require('./nodeIndices');
-const fileNodeChildrenFixture = require('./fileNodeChildren');
 const fileNodesFixture = require('./fileNodes');
 const fileNodeMetadataFixture = require('./fileNodeMetadata');
 
-module.exports = [].concat(userFixture, fileSystemFixture, indexIndicatorGroupsFixture,
-            fileNodesFixture, fileNodeMetadataFixture);
+const metadata = fileNodeMetadataFixture.map( metadataFixture => { // todo: refactor this mess.
+  const { model,  data: {name, FileNodeId, value}} = metadataFixture;
+  return {model, data: { name, FileNodeId, value}};
+});
+module.exports = [].concat(userFixture, fileSystemFixture,
+            fileNodesFixture, metadata);

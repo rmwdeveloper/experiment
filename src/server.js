@@ -17,13 +17,10 @@ import PrettyError from 'pretty-error';
 import passport from 'passport';
 
 import ReactDOM from 'react-dom/server';
-import models, { User, FileSystem, IndexIndicatorGroup, NodeIndex, FileNode, FileNodeMetadata  } from './data/models';
+import models, { User, FileSystem, FileNode, FileNodeMetadata  } from './data/models';
 // todo : better way to import these fixtures?
-import indexIndicatorGroupsFixture from './data/fixtures/indexIndicatorGroups';
-import nodeIndicesFixture from './data/fixtures/nodeIndices';
-import fileNodesFixture from './data/fixtures/fileNodes';
-import fileNodeMetadataFixture from './data/fixtures/fileNodeMetadata';
-import fileNodeChildrenFixture from './data/fixtures/fileNodeChildren';
+
+
 
 import sequelize from './data/sequelize';
 import routes from './routes';
@@ -137,92 +134,20 @@ app.post('/register', (req, res) => {
       if ( err ) {
         res.status(400);
         res.send('Error');
+        return null;
       }
       else if ( hash ) {
-
         User.create({username: req.body.username, email:req.body.email, password: hash}).then(user => {
-          'use strict';
+          res.status(200);
+          res.send('Success');
+          return null;
 
-        }).catch(err => {
-          'use strict';
-          
+        }).catch(errorObject => {
+          res.status(400);
+          res.send(errorObject.errors);
+          return null;
         });
-        //
-        //
-        // const initialFileNodeMetadata = fileNodeMetadataFixture.map( fileNodeMetadata => { const { name, value, nodeIndex} = fileNodeMetadata.data; return {name, value, nodeIndex} });
-        // const initialNodeIndices = nodeIndicesFixture.map( nodeObject => { const {nodeIndex} = nodeObject.data; return {nodeIndex}; });
-        // const initialNodeChildrenIndices = fileNodeChildrenFixture.map( childIndex => { const {nodeIndex} = childIndex.data; return {nodeIndex};});
-        //
-        // sequelize.transaction( transaction => { // todo: Jesus, clean this shit up.
-        //
-        //   return User.create({username: req.body.username, email:req.body.email, password: hash}, {transaction}).then(user => {
-        //     const userObj = user.get({plain: true});
-        //     return FileSystem.create({diskSpace: 50, UserId: userObj.id}, {transaction}).then(fileSystem => {
-        //       const { id } = fileSystem.get({plain: true});
-        //       const initialFileNodes = fileNodesFixture.map( fileNode =>
-        //       { const { name, permissions, extension, nodeIndex } = fileNode.data; return { name, nodeIndex, permissions, extension, FileSystemId: id }; });
-        //       return FileNode.bulkCreate(initialFileNodes, {transaction, individualHooks: true}).then(fileNodes => {
-        //         const fileNodeData = fileNodes.map( node => { return node.get({plain: true})});
-        //         const initialIndexIndicatorGroups = indexIndicatorGroupsFixture.map( indexObject => { const {name, nodeIndex } = indexObject.data; return { name, nodeIndex , FileSystemId: id } });
-        //         const promises = [];
-        //
-        //         for (let iterator = 0; iterator < initialNodeChildrenIndices.length; iterator++) {
-        //           const nodeHasChildren = fileNodeData.find(element => {
-        //             return initialNodeChildrenIndices[iterator].nodeIndex === parseInt(element.nodeIndex, 10);
-        //           });
-        //           initialNodeChildrenIndices[iterator].FileNodeId = nodeHasChildren.id;
-        //           const newPromise = NodeIndex.create(initialNodeChildrenIndices[iterator], {transaction});
-        //           promises.push(newPromise);
-        //         }
-        //
-        //         for (let iterator = 0; iterator < initialFileNodeMetadata.length; iterator++) {
-        //           const nodeThatHasMetadata = fileNodeData.find(element => {
-        //             return initialFileNodeMetadata[iterator].nodeIndex === element.nodeIndex;
-        //           });
-        //           initialFileNodeMetadata[iterator].FileNodeId = nodeThatHasMetadata.id;
-        //           const newPromise = FileNodeMetadata.create(initialFileNodeMetadata[iterator], {transaction});
-        //           promises.push(newPromise);
-        //         }
-        //
-        //         return Promise.all(promises).then( () => {
-        //           const morePromises = [];
-        //           for (let iterator = 0; iterator < initialIndexIndicatorGroups.length; iterator++) {
-        //             const newPromise = IndexIndicatorGroup.create(initialIndexIndicatorGroups[iterator], {transaction});
-        //             morePromises.push(newPromise);
-        //           }
-        //           return Promise.all(morePromises).then( result => {
-        //             const data = result.map( dataItem => { return dataItem.get({plain: true})});
-        //           });
-        //         });
-        //       });
-        //     });
-        //   });
-        // }).then( result => {
-        //   res.status(200);
-        //   res.send(result);
-        //   return null;
-        // }).catch(error => {
-        //   console.log(error);
-        //   res.status(400);
-        //   res.send('Error');
-        //   return null;
-        // });
-        //
-        //
-        // // FileSystem.create({diskSpace: 50,
-        // //   User: {username: req.body.username, email:req.body.email, password: hash} },
-        // //   {include: [User, FileNode]})
-        // //   .then(item => {
-        // //     res.status(200);
-        // //     res.send('Success');
-        // //     return null;
-        // //   })
-        // //   .catch(errorObject => {
-        // //     res.status(400);
-        // //     console.log(errorObject);
-        // //     res.send(errorObject.errors);
-        // //     return null;
-        // //   });
+        return null;
       }
     });
   });
@@ -231,29 +156,39 @@ app.post('/login',
   passport.authenticate('login', { successRedirect: '/success', failureRedirect: '/failure', session: true })
 );
 app.get('/get_user', (req, res) => {
-  const UserId = req.user ? req.user.id : 1; // Either logged in user, or guest ID ( 1 )
-  FileSystem.findOne({where: {UserId}, include: [
-    {
-    model: User,
-    attributes: ['id', 'username','email','emailConfirmed']
-    },
-    {
-      model: IndexIndicatorGroup,
-      attributes: ['name'],
-      include: [{
-        model: NodeIndex,
-        attributes: ['nodeIndex'],
-      }]
-    },
-  ]})
-    .then(fileSystem=>{
-    res.send(fileSystem.get({plain: true}));
-    return null;
-  }).catch(err=>{
-    // todo: put in a logginsg statement
-    return null;
+  const id = req.user ? req.user.id : 1; // Either logged in user, or guest ID ( 1 )
+  User.findOne({where: {id}}).then(user => {
+    res.status(200);
+    res.send({});
+  }).catch(err => {
+    res.status(403);
+    res.send('Error');
   });
 });
+// app.get('/get_user', (req, res) => {
+//   const UserId = req.user ? req.user.id : 1; // Either logged in user, or guest ID ( 1 )
+//   FileSystem.findOne({where: {UserId}, include: [
+//     {
+//     model: User,
+//     attributes: ['id', 'username','email','emailConfirmed']
+//     },
+//     {
+//       model: IndexIndicatorGroup,
+//       attributes: ['name'],
+//       include: [{
+//         model: NodeIndex,
+//         attributes: ['nodeIndex'],
+//       }]
+//     },
+//   ]})
+//     .then(fileSystem=>{
+//     res.send(fileSystem.get({plain: true}));
+//     return null;
+//   }).catch(err=>{
+//     // todo: put in a logginsg statement
+//     return null;
+//   });
+// });
 app.get('/logout', (req, res) => {
   req.logout();
 
@@ -408,20 +343,10 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
 models.sync().catch(err => console.error(err.stack)).then(() => {
   app.listen(port, () => {
     sequelize_fixtures.loadFile(path.join(__dirname, '..', 'src', 'data', 'fixtures', 'initial_data.js'), {User,
-      FileSystem, IndexIndicatorGroup,
-      // NodeIndex,
-      FileNode, FileNodeMetadata}).then(function(){
+      FileSystem, FileNode, FileNodeMetadata}).then(function(){
       console.log(`The server is running at http://localhost:${port}/`);
     }).catch(err => { console.log(err)});
   });
 });
-
-// sequelize_fixtures.loadFile(path.join(__dirname, '..', 'src', 'data', 'fixtures', 'initial_data.js'), {User, FileSystem}).then(function(){
-//   models.sync().catch(err => console.error(err.stack)).then(() => {
-//     app.listen(port, () => {
-//       console.log(`The server is running at http://localhost:${port}/`);
-//     });
-//   });
-// }).catch(err => {console.log(err)});
 
 /* eslint-enable no-console */
