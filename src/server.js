@@ -133,11 +133,42 @@ app.post('/register', (req, res) => {
         res.send('Error');
         return null;
       } else if (hash) {
-        sequelize.transaction(transaction => {
-        
-        }).then(result => {
-          res.status(200);
-          console.log(result);
+        return sequelize.transaction(transaction => {
+          return User.create({username: req.body.username, email:req.body.email, password: hash}, {transaction}).then(user => {
+            const userObj = user.get({plain: true});
+            return FileSystem.create({diskSpace: 50, UserId: userObj.id}, {transaction}).then(fileSystem => {
+              const fileNodes = fileNodesFixture.map( fileNode => { fileNode.FileSystemId = fileSystem.get({plain:true}).id; return fileNode});
+              return FileNode.bulkCreate(fileNodes, {transaction, individualHooks: true}).then(fileNodes => {
+                const promises = [];
+                const fileNodesRows = fileNodes.map( rowData => { return rowData.get({plain: true})});
+
+                for (let iterator = 0; iterator < fileNodesMetadataFixture.length; iterator++) {
+                  const nodeThatHasMetadata = fileNodesRows.find(element => {
+                    return fileNodesMetadataFixture[iterator].nodeIndex === element.nodeIndex;
+                  });
+                  fileNodesMetadataFixture[iterator].FileNodeId = nodeThatHasMetadata.id;
+                  const { name, value, FileNodeId } = fileNodesMetadataFixture[iterator];
+                  const newPromise = FileNodeMetadata.create({ name, value, FileNodeId }, {transaction});
+                  promises.push(newPromise);
+                }
+                return Promise.all(promises).then( (results) => {
+                  return results;
+                });
+              });
+            });
+          });
+        })
+        .then(() => {
+          User.findOne({ where: {username:req.body.username }, include: [ {model: FileSystem, include: [{model: FileNode, include: [FileNodeMetadata]}]} ]}).then( userObj => {
+            res.status(200);
+            res.send(userObj);
+            return null;
+          });
+          return null;
+        }).catch( errorObj => {
+          res.status(400);
+          res.send(errorObj.errors);
+          return null;
         });
       }
     });
