@@ -242,24 +242,19 @@ export default function layout(state = initialState, action) {
       return { ...state, openedFiles: newOpenedFiles };
     case LOGIN:
       const newState = {...state};
-      newState.fileSystem = action.fileSystem;
-      for (const prop in action.IndexIndicatorGroups) {
-        if (action.IndexIndicatorGroups.hasOwnProperty(prop)) {
-          const { name, NodeIndices } = action.IndexIndicatorGroups[prop];
-          if ( NodeIndices.length === 1) {
-            newState[name] = NodeIndices[0].nodeIndex;
-          } else {
-            newState[name] = NodeIndices.map(nodeIndex => {return nodeIndex.nodeIndex });
-          }
+      newState.fileSystem = {};
+      action.user.FileSystem.FileNodes.forEach(fileNode => {
+        const { nodeIndex, permissions, name, extension, FileNodeMetadata } = fileNode;
+        const metadata = {};
+        if (FileNodeMetadata.length > 0 ) {
+          FileNodeMetadata.forEach(metadataItem => {
+            metadata[metadataItem.name] = metadataItem.value;
+          });
         }
-      }
-      // const test = Object.keys(action.IndexIndicatorGroups).map(index => {
-      //   const { name, NodeIndices } = action.IndexIndicatorGroups[index];
-      //
-      //   return { name, indices: NodeIndices.map(nodeIndex => {return nodeIndex.nodeIndex })};
-      // });
-      // console.log(test);
-      return { ...state, fileSystem: action.fileSystem, diskSpace: action.diskSpace };
+        newState.fileSystem[nodeIndex] = {permissions, name, extension, metadata};
+      });
+
+      return { ...state, fileSystem: newState.fileSystem, diskSpace: action.user.FileSystem.diskSpace };
     default:
       return state;
   }

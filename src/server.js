@@ -159,12 +159,15 @@ app.post('/register', (req, res) => {
           });
         })
         .then(() => {
-          User.findOne({ where: {username:req.body.username }, include: [ {model: FileSystem, include: [{model: FileNode, include: [FileNodeMetadata]}]} ]}).then( userObj => {
+          User.findOne({ where: {username:req.body.username }, attributes: ['username', 'email', 'emailConfirmed'],
+            include: [ {model: FileSystem, attributes: ['diskSpace'],
+            include: [{model: FileNode, attributes: ['name', 'permissions', 'extension','nodeIndex'],
+            include: [{model: FileNodeMetadata, attributes: ['name', 'value']}]
+            }]} ]}).then( userObj => {
             res.status(200);
             res.send(userObj);
             return null;
           });
-          return null;
         }).catch( errorObj => {
           res.status(400);
           res.send(errorObj.errors);
