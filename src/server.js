@@ -314,7 +314,19 @@ app.get('/sign_aws', async(req, res) => {
 // Register server-side rendering middleware
 // -----------------------------------------------------------------------------
 app.get('/success', async(req, res) => {
-  res.status(200).send(req.user);
+  // todo: refactor this copy pasted code
+  User.findOne({ where: {username:req.user.username }, attributes: ['username', 'email', 'emailConfirmed'],
+    include: [ {model: FileSystem, attributes: ['diskSpace'],
+      include: [{model: FileNode, attributes: ['name', 'permissions', 'extension','nodeIndex'],
+        include: [{model: FileNodeMetadata, attributes: ['name', 'value']}]
+      }]} ]}).then( userObj => {
+    res.status(200);
+    res.send(userObj);
+    res.status(200).send(userObj);
+    return null;
+  });
+
+
 });
 
 app.get('/failure', async(req, res) => {
