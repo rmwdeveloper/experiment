@@ -137,7 +137,12 @@ app.post('/register', (req, res) => {
           return User.create({username: req.body.username, email:req.body.email, password: hash}, {transaction}).then(user => {
             const userObj = user.get({plain: true});
             return FileSystem.create({diskSpace: 50, UserId: userObj.id}, {transaction}).then(fileSystem => {
-              const fileNodes = fileNodesFixture.map( fileNode => { fileNode.FileSystemId = fileSystem.get({plain:true}).id; return fileNode});
+              const fileNodes = fileNodesFixture.map( fileNode => {
+                if (fileNode.nodeIndex === 4) {
+                  fileNode.name = req.body.username; //   TODO : refactor
+                }
+                fileNode.FileSystemId = fileSystem.get({plain:true}).id; return fileNode
+              });
               return FileNode.bulkCreate(fileNodes, {transaction, individualHooks: true}).then(fileNodes => {
                 const promises = [];
                 const fileNodesRows = fileNodes.map( rowData => { return rowData.get({plain: true})});
