@@ -149,7 +149,7 @@ app.post('/register', (req, res) => {
 
                 for (let iterator = 0; iterator < fileNodesMetadataFixture.length; iterator++) {
                   const nodeThatHasMetadata = fileNodesRows.find(element => {
-                    return fileNodesMetadataFixture[iterator].nodeIndex === element.nodeIndex;
+                    return parseInt(fileNodesMetadataFixture[iterator].nodeIndex, 10) === parseInt(element.nodeIndex, 10);
                   });
                   if (nodeThatHasMetadata) {
                     fileNodesMetadataFixture[iterator].FileNodeId = nodeThatHasMetadata.id;
