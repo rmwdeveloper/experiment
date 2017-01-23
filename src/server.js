@@ -223,12 +223,13 @@ app.post('/login',
 );
 app.get('/get_user', (req, res) => {
   const id = req.user ? req.user.id : 1; // Either logged in user, or guest ID ( 1 )
-  User.findOne({where: {id}}).then(user => {
-    res.status(200);
-    res.send({});
-  }).catch(err => {
-    res.status(403);
-    res.send('Error');
+  User.findOne({ where: {id}, attributes: ['username', 'email', 'emailConfirmed'],
+    include: [ {model: FileSystem, attributes: ['diskSpace'],
+      include: [{model: FileNode, attributes: ['name', 'permissions', 'extension','nodeIndex', 'FileNodeId'],
+        include: [{model: FileNodeMetadata, attributes: ['name', 'value']}]
+      }]} ]}).then( userObj => {
+    res.status(200).send(userObj);
+    return null;
   });
 });
 // app.get('/get_user', (req, res) => {
@@ -322,8 +323,6 @@ app.get('/success', async(req, res) => {
       include: [{model: FileNode, attributes: ['name', 'permissions', 'extension','nodeIndex', 'FileNodeId'],
         include: [{model: FileNodeMetadata, attributes: ['name', 'value']}]
       }]} ]}).then( userObj => {
-    res.status(200);
-    res.send(userObj);
     res.status(200).send(userObj);
     return null;
   });
