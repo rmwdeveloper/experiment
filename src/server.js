@@ -154,14 +154,14 @@ app.post('/register', (req, res) => {
                 return Promise.all(promises).then( (results) => {
                   return results;
                 });
-              });
-            });
-          });
+              }).catch(err => { console.log(err);});
+            }).catch(err => { console.log(err);});
+          }).catch(err => { console.log(err);});
         })
         .then(() => {
           User.findOne({ where: {username:req.body.username }, attributes: ['username', 'email', 'emailConfirmed'],
             include: [ {model: FileSystem, attributes: ['diskSpace'],
-            include: [{model: FileNode, attributes: ['name', 'permissions', 'extension','nodeIndex'],
+            include: [{model: FileNode, attributes: ['name', 'permissions', 'extension','nodeIndex', 'FileNodeId'],
             include: [{model: FileNodeMetadata, attributes: ['name', 'value']}]
             }]} ]}).then( userObj => {
             res.status(200);
