@@ -27,8 +27,7 @@ class MoveableResizeableWindow extends Component {
         windowStyle = { height: 0, width: 0, left: 0, top: 0 };
       }
       windowStyle.zIndex = 2;
-      return (
-        <div className={styles.root} style={windowStyle}>
+      return (<div className={styles.root}  style={windowStyle}>
           {children}
           <div data-clickClass={windowsClickables.fileResizeHandle} data-topClickable data-index={index} data-side={'top'} className={styles.topResizer}></div>
           <div data-clickClass={windowsClickables.fileResizeHandle} data-topClickable data-index={index} data-side={'right'} className={styles.rightResizer}></div>

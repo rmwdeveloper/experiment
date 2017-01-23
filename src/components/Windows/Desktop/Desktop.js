@@ -132,9 +132,6 @@ class Desktop extends Component {
         .catch(error => {
           console.log(error);
         });
-      
-
-
     }
     });
 
@@ -153,19 +150,17 @@ class Desktop extends Component {
       desktopHeight: this.desktop.offsetHeight,
       headerHeight: this.header.offsetHeight});
   }
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   return (this.state.selectedIcons !== nextState.selectedIcons) ||
-  //     (this.props.registering !== nextProps.registering) ||
-  //     // (this.props.desktopWidth !== nextProps.desktopWidth) ||
-  //     // (this.props.desktopHeight !== nextProps.desktopHeight) ||
-  //     (this.props.selectedDesktopIcons !== nextProps.selectedDesktopIcons) ||
-  //     (this.props.contextMenuActive !== nextProps.contextMenuActive) ||
-  //     (this.props.contextMenuX !== nextProps.contextMenuX)||
-  //     (this.props.openedFiles !== nextProps.openedFiles) ||
-  //     (this.props.fileSystem !== nextProps.fileSystem) ||
-  //     (this.props.errorWindows !== nextProps.errorWindows) ||
-  //     (this.props.contextMenuY !== nextProps.contextMenuY);
-  // }
+  shouldComponentUpdate(nextProps, nextState) {
+    return (this.state.selectedIcons !== nextState.selectedIcons) ||
+      (this.props.registering !== nextProps.registering) ||
+      (this.props.selectedDesktopIcons !== nextProps.selectedDesktopIcons) ||
+      (this.props.contextMenuActive !== nextProps.contextMenuActive) ||
+      (this.props.contextMenuX !== nextProps.contextMenuX)||
+      (this.props.openedFiles !== nextProps.openedFiles) ||
+      (this.props.fileSystem !== nextProps.fileSystem) ||
+      (this.props.errorWindows !== nextProps.errorWindows) ||
+      (this.props.contextMenuY !== nextProps.contextMenuY);
+  }
   diffNodeLists(firstNodeList, secondNodeList) {
     const iconsArray = [].slice.call(firstNodeList);
     const selectedArray = [].slice.call(secondNodeList);
@@ -247,31 +242,9 @@ class Desktop extends Component {
     const deltaY = event.clientY - this.state.resizeStartY;
     this.resizeDeltaX = event.clientX - this.state.resizeStartX;
     this.resizeDeltaY = event.clientY - this.state.resizeStartY;
-    // todo : Move this somewhere else.
-    switch ( resizeSideClicked ) {
-      case 'topLeft':
-        break;
-      case 'top':
-        break;
-      case 'topRight':
-        break;
-      case 'right':
-        break;
-      case 'bottomRight':
-        break;
-      case 'bottom':
-        break;
-      case 'bottomLeft':
-        break;
-      case 'left':
-        break;
-      default:
-        return null;
-    }
-    console.log(this.resizedItem);
 
-    // resizeWindow(this.resizedItem, resizeSideClicked, deltaX, deltaY, resizeStartWidth, resizeStartHeight,
-    //  resizeStartLeft, resizeStartTop);
+    resizeWindow(this.resizedItem, resizeSideClicked, deltaX, deltaY, resizeStartWidth, resizeStartHeight,
+     resizeStartLeft, resizeStartTop);
   }
   stopResizeFileWindow(event) {
     const { itemResized, resizeStartHeight, resizeStartWidth, resizeSideClicked, resizeStartLeft, resizeStartTop } = this.state;

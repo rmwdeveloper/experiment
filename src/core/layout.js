@@ -4,6 +4,7 @@ export function sortLayout(a, b) {
 
 export function resizeWindow(resizeNode, sideClicked, deltaX, deltaY, resizeStartWidth, resizeStartHeight,
   resizeStartLeft, resizeStartTop) {
+  
   if (sideClicked === 'topLeft') {
     if (deltaY < 0) {
       resizeNode.style.height = `${resizeStartHeight + Math.abs(deltaY)}px`;
@@ -28,7 +29,6 @@ export function resizeWindow(resizeNode, sideClicked, deltaX, deltaY, resizeStar
     }
   }
   else if (sideClicked === 'top') {
-    console.log(resizeStartTop, deltaY);
     if (deltaY < 0) {
       resizeNode.style.height = `${resizeStartHeight + Math.abs(deltaY)}px`;
       resizeNode.style.top = `${resizeStartTop - Math.abs(deltaY)}px`;
