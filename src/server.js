@@ -319,7 +319,7 @@ app.get('/success', async(req, res) => {
   // todo: refactor this copy pasted code
   User.findOne({ where: {username:req.user.username }, attributes: ['username', 'email', 'emailConfirmed'],
     include: [ {model: FileSystem, attributes: ['diskSpace'],
-      include: [{model: FileNode, attributes: ['name', 'permissions', 'extension','nodeIndex'],
+      include: [{model: FileNode, attributes: ['name', 'permissions', 'extension','nodeIndex', 'FileNodeId'],
         include: [{model: FileNodeMetadata, attributes: ['name', 'value']}]
       }]} ]}).then( userObj => {
     res.status(200);
