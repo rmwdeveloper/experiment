@@ -146,7 +146,9 @@ app.post('/register', (req, res) => {
                   const nodeThatHasMetadata = fileNodesRows.find(element => {
                     return fileNodesMetadataFixture[iterator].nodeIndex === element.nodeIndex;
                   });
-                  fileNodesMetadataFixture[iterator].FileNodeId = nodeThatHasMetadata.id;
+                  if (nodeThatHasMetadata) {
+                    fileNodesMetadataFixture[iterator].FileNodeId = nodeThatHasMetadata.id;
+                  }
                   const { name, value, FileNodeId } = fileNodesMetadataFixture[iterator];
                   const newPromise = FileNodeMetadata.create({ name, value, FileNodeId }, {transaction});
                   promises.push(newPromise);

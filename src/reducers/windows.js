@@ -243,6 +243,7 @@ export default function layout(state = initialState, action) {
     case LOGIN:
       const newState = {...state};
       newState.fileSystem = {};
+      const nodeIndices = action.user.FileSystem.FileNodes.map(fileNode => { return fileNode.nodeIndex}).sort((a, b) => { return a-b;});
       action.user.FileSystem.FileNodes.forEach(fileNode => {
         const { nodeIndex, permissions, name, extension, FileNodeMetadata } = fileNode;
         const metadata = {};
@@ -252,6 +253,13 @@ export default function layout(state = initialState, action) {
           });
         }
         newState.fileSystem[nodeIndex] = {permissions, name, extension, metadata};
+        if (fileNode.FileNodeId !== undefined ) {
+          if (newState.fileSystem[fileNode.FileNodeId].hasOwnProperty('children')) {
+            newState.fileSystem[fileNode.FileNodeId].children.push(nodeIndex);
+          } else {
+            newState.fileSystem[fileNode.FileNodeId].children = [nodeIndex];
+          }
+        }
       });
 
       return { ...state, fileSystem: newState.fileSystem, diskSpace: action.user.FileSystem.diskSpace };
