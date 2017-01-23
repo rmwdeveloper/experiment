@@ -76,7 +76,6 @@ class Desktop extends Component {
   }
   getUploadId() {
     const { user, isAnonymousUser } = this.props;
-    console.log(user, isAnonymousUser);
     return isAnonymousUser ? 0 : user.id;
   }
   componentDidMount() {
@@ -248,8 +247,31 @@ class Desktop extends Component {
     const deltaY = event.clientY - this.state.resizeStartY;
     this.resizeDeltaX = event.clientX - this.state.resizeStartX;
     this.resizeDeltaY = event.clientY - this.state.resizeStartY;
-    resizeWindow(this.resizedItem, resizeSideClicked, deltaX, deltaY, resizeStartWidth, resizeStartHeight,
-     resizeStartLeft, resizeStartTop);
+    // todo : Move this somewhere else.
+    switch ( resizeSideClicked ) {
+      case 'topLeft':
+        break;
+      case 'top':
+        break;
+      case 'topRight':
+        break;
+      case 'right':
+        break;
+      case 'bottomRight':
+        break;
+      case 'bottom':
+        break;
+      case 'bottomLeft':
+        break;
+      case 'left':
+        break;
+      default:
+        return null;
+    }
+    console.log(this.resizedItem);
+
+    // resizeWindow(this.resizedItem, resizeSideClicked, deltaX, deltaY, resizeStartWidth, resizeStartHeight,
+    //  resizeStartLeft, resizeStartTop);
   }
   stopResizeFileWindow(event) {
     const { itemResized, resizeStartHeight, resizeStartWidth, resizeSideClicked, resizeStartLeft, resizeStartTop } = this.state;
