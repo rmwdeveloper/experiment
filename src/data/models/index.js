@@ -34,6 +34,9 @@ User.hasOne(FileSystem);
 
 
 FileSystem.hasMany(FileNode);
+
+FileNode.hasMany(FileNode);
+
 FileNode.hasMany(FileNodeMetadata);
 
 // todo: Move these hooks somewhere.
