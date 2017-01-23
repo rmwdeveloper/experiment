@@ -36,7 +36,7 @@ const initialState = {
   desktopNodeIndex: 11, //indices are in state, and not searchable by name because user can make duplicate names
   userIndex: 4, // Users personal index. Username will be fileSystem[userIndex].name  . Default is "Guest"
   authenticatorIndex: 29,
-  startMenuProgramsIndices: [5, 6, 7],
+  startMenuProgramsIndices: [7, 8, 9],
   userDirectoriesIndices: [14, 15, 16],
   computerSettingsIndices: [17, 18],
   utilityControlsIndices: [19, 20, 21],
