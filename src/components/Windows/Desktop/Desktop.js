@@ -47,6 +47,7 @@ class Desktop extends Component {
     this.stopResizeFileWindow = this.stopResizeFileWindow.bind(this);
     this.fileWindowResizing = this.fileWindowResizing.bind(this);
     this.findAncestorWithClickClass = this.findAncestorWithClickClass.bind(this);
+    this.getUploadId = this.getUploadId.bind(this);
     this.dragbox = null;
     this.draggedItem = null;
     this.resizedItem = null;
@@ -73,38 +74,68 @@ class Desktop extends Component {
       headerHeight: null
     };
   }
+  getUploadId() {
+    const { user, isAnonymousUser } = this.props;
+    console.log(user, isAnonymousUser);
+    return isAnonymousUser ? 0 : user.id;
+  }
   componentDidMount() {
     this.icons = document.getElementsByClassName('desktopIcon');
     this.desktop = document.getElementById('desktop');
     this.header = document.getElementById('primaryHeader');
 
-
     // START dropzone stuff. todo: abstract this crap away to a HOC
     // todo : dropzone script is in index.jade. Should be packed with webpack
+    // todo: convert fetch to isomorphic fetch ?
+
     this.dropzone = new Dropzone('div#desktop', {url: '/upload', autoProcessQueue:false, clickable: false, createImageThumbnails: false,
       previewsContainer: null,
     addedfile: file => {
       const { name, size, type } = file;
-      Evaporate.create(evap_config)
-        .then(
-          evaporate => {
-            evaporate.add({
-              name: 'test.png',
-              file,
-              xAmzHeadersAtInitiate : {
-                'x-amz-acl': 'public-read'
-              },
-              // progress: progressVal => {console.log('progress!!', progressVal)},
-              info: info => {console.log('info!!', info)},
-              error: error => {console.log('error!!', error)},
-              warn: warn => {console.log('warn!!', warn)},
-            })
+      const upload_id = this.getUploadId();
+      fetch('/upload_start', {method: 'get', credentials: 'include'})
+        .then(response => {
+          response.json().then( dateObject => {
+            const { year, month, day, hours, minutes, seconds, milliseconds } = dateObject;
+            Evaporate.create(evap_config)
               .then(
-                awsKey => { },
-                reason => { }
-              ).catch(error=>{console.log(error);})
-          },
-          reason => {});
+                evaporate => {
+                  evaporate.add({
+                    name: `${upload_id}/${year}/${month}/${day}/${hours}${minutes}${seconds}${milliseconds}/${name}`,
+                    file,
+                    xAmzHeadersAtInitiate : {
+                      'x-amz-acl': 'public-read'
+                    },
+                    // progress: progressVal => {console.log('progress!!', progressVal)},
+                    info: info => {},
+                    error: error => {},
+                    warn: warn => {},
+                    complete: (xhr, awsObjectKey, stats) => {
+                      console.log(xhr, awsObjectKey, stats);
+                      fetch('/upload_complete', {method: 'post', credentials: 'include'})
+                        .then(response => {
+                          return response.json().then(responseObject => {
+                            console.log(responseObject);
+                          });
+                        }).catch(err => {
+                          return err;
+                      })
+                    }
+                  })
+                    .then(
+                      awsKey => { },
+                      reason => { }
+                    ).catch(error=>{console.log(error);})
+                },
+                reason => {});
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      
+
+
     }
     });
 
@@ -123,19 +154,19 @@ class Desktop extends Component {
       desktopHeight: this.desktop.offsetHeight,
       headerHeight: this.header.offsetHeight});
   }
-  shouldComponentUpdate(nextProps, nextState) {
-    return (this.state.selectedIcons !== nextState.selectedIcons) ||
-      (this.props.registering !== nextProps.registering) ||
-      // (this.props.desktopWidth !== nextProps.desktopWidth) ||
-      // (this.props.desktopHeight !== nextProps.desktopHeight) ||
-      (this.props.selectedDesktopIcons !== nextProps.selectedDesktopIcons) ||
-      (this.props.contextMenuActive !== nextProps.contextMenuActive) ||
-      (this.props.contextMenuX !== nextProps.contextMenuX)||
-      (this.props.openedFiles !== nextProps.openedFiles) ||
-      (this.props.fileSystem !== nextProps.fileSystem) ||
-      (this.props.errorWindows !== nextProps.errorWindows) ||
-      (this.props.contextMenuY !== nextProps.contextMenuY);
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   return (this.state.selectedIcons !== nextState.selectedIcons) ||
+  //     (this.props.registering !== nextProps.registering) ||
+  //     // (this.props.desktopWidth !== nextProps.desktopWidth) ||
+  //     // (this.props.desktopHeight !== nextProps.desktopHeight) ||
+  //     (this.props.selectedDesktopIcons !== nextProps.selectedDesktopIcons) ||
+  //     (this.props.contextMenuActive !== nextProps.contextMenuActive) ||
+  //     (this.props.contextMenuX !== nextProps.contextMenuX)||
+  //     (this.props.openedFiles !== nextProps.openedFiles) ||
+  //     (this.props.fileSystem !== nextProps.fileSystem) ||
+  //     (this.props.errorWindows !== nextProps.errorWindows) ||
+  //     (this.props.contextMenuY !== nextProps.contextMenuY);
+  // }
   diffNodeLists(firstNodeList, secondNodeList) {
     const iconsArray = [].slice.call(firstNodeList);
     const selectedArray = [].slice.call(secondNodeList);

@@ -1,9 +1,7 @@
 import DataType from 'sequelize';
 import Model from '../sequelize';
-import fileSystem from '../fileSystem';
 
-
-const FileSystem = Model.define('FileSystem', {
+const FileNode = Model.define('FileNode', {
   id: {
     type: DataType.INTEGER,
     primaryKey: true,
@@ -11,11 +9,19 @@ const FileSystem = Model.define('FileSystem', {
     allowNull: false,
     validate: {isInt: true, min: 0}
   },
-  diskSpace: {
+  name: {
+    type: DataType.STRING
+  },
+  permissions: {
+    type: DataType.STRING(4)
+  },
+  extension: {
+    type: DataType.STRING
+  },
+  nodeIndex: {
     type: DataType.INTEGER,
-    defaultValue: 50
+    allowNull: false
   }
-
 });
 
-export default FileSystem;
+export default FileNode;

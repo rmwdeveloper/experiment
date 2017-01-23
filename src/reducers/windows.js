@@ -1,3 +1,4 @@
+import fileSystem from '../data/fileSystem';
 import {
   OPEN_START_MENU,
   CLEAR_ACTIVES,
@@ -31,41 +32,11 @@ const initialState = {
   browserHeight: 0,
   desktopWidth: 0,
   desktopHeight: 0,
-  fileSystem: { // Indices are always unique and static. A node only ever has one parent.
-    1: { name: 'root', children: [2, 17, 18], permissions: ['rwxp'] },
-    2: { name: 'drive', children: [3, 8], permissions: ['rwxp'] },
-    3: { name: 'Users', children: [4], permissions: ['rwxp'] },
-    4: { name: 'Guest', children: [11, 14, 15], permissions: ['rwxp'] },
-    5: { name: 'Word Processor', permissions: ['rwx-'], extension: 'exe', metadata: { icon: 'wordlogoXSmall.png' } },
-    6: { name: 'Spreadsheets', permissions: ['rwx-'], extension: 'exe', metadata: { icon: 'excellogoXSmall.png' } },
-    7: { name: 'Webscape', permissions: ['rwx-'], extension: 'exe', metadata: { icon: 'ie7.png' } },
-    8: { name: 'Programs', children: [9], permissions: ['rwx-'] },
-    9: { name: 'Office', children: [5, 6], permissions: ['rwx-'] },
-    10: { name: 'Word Processor', permissions: ['rwx-'], extension: 'shct', metadata: { icon: 'wordlogoXSmall.png' } },
-    11: { name: 'Desktop', permissions: ['rwx-'], children: [10, 12, 13, 14, 15, 22, 23, 24, 25, 26, 27, 28] },
-    12: { name: 'Spreadsheets', permissions: ['rwx-'], extension: 'shct', metadata: { icon: 'excellogoXSmall.png' } },
-    13: { name: 'Webscape', permissions: ['rwx-'], extension: 'shct', metadata: { icon: 'ie7.png' } },
-    14: { name: 'My Documents', permissions: ['rwx-'], children: [16], metadata: { icon: 'MyDocumentsXSmall.png' }, registryKey:'Folder' },
-    15: { name: 'Disk Manager', permissions: ['rwx-'],  extension: 'exe', metadata: { sprite: true, icon: 'iconsSprite.gif', backgroundPosition: '125px 100px' } },
-    16: { name: 'My Music', permissions: ['rwx-'], children: [], metadata: { icon: 'MyMusicXSmall.png' } },
-    17: { name: 'Control Panel', permissions: ['rwx-'], children: [], metadata: { icon: 'ControlPanelXSmall.png' } },
-    18: { name: 'Printer And Faxes', permissions: ['rwx-'], metadata: { icon: 'printerAndFaxesXSmall.png' } },
-    19: { name: 'Help And Support', permissions: ['rwxp'], extension: 'exe', metadata: { icon: 'HelpAndSupportXSmall.png' } },
-    20: { name: 'Search', permissions: ['rwxp'], extension: 'exe', metadata: { icon: 'SearchXSmall.png' } },
-    21: { name: 'Run', permissions: ['rwxp'], extension: 'exe', metadata: { icon: 'RunXSmall.png' } },
-    22: { name: 'test', permissions: ['rwx-'], extension: 'txt', metadata: { icon: 'RunXSmall.png' } },
-    23: { name: 'my lil painting', permissions: ['rwx-'], extension: 'jpg', metadata: { sprite: true, icon: 'iconsSprite.gif', backgroundPosition: '53px 42px' } },
-    24: { name: 'Mailr', permissions: ['rwx-'], extension: 'txt', metadata: { sprite: true, icon: 'iconsSprite.gif', backgroundPosition: '200px 210px' } },
-    25: { name: 'some text', permissions: ['rwx-'], extension: 'txt', metadata: { sprite: true, icon: 'iconsSprite.gif', backgroundPosition: '200px 100px' } },
-    26: { name: 'anothjer image', permissions: ['rwx-'], extension: 'jpg', metadata: { sprite: true, icon: 'iconsSprite.gif', backgroundPosition: '53px 42px' } },
-    27: { name: 'printer settings', permissions: ['rwx-'], extension: 'txt', metadata: { sprite: true, icon: 'iconsSprite.gif', backgroundPosition: '200px 50px' } },
-    28: { name: 'some text(2)', permissions: ['rwx-'], extension: 'txt', metadata: { sprite: true, icon: 'iconsSprite.gif', backgroundPosition: '200px 100px' } },
-    29: { name: 'Authenticator', permissions: ['rwxp'], extension: 'exe' },
-  },
+  fileSystem,
   desktopNodeIndex: 11, //indices are in state, and not searchable by name because user can make duplicate names
   userIndex: 4, // Users personal index. Username will be fileSystem[userIndex].name  . Default is "Guest"
   authenticatorIndex: 29,
-  startMenuProgramsIndices: [5, 6, 7],
+  startMenuProgramsIndices: [7, 8, 9],
   userDirectoriesIndices: [14, 15, 16],
   computerSettingsIndices: [17, 18],
   utilityControlsIndices: [19, 20, 21],
@@ -270,7 +241,34 @@ export default function layout(state = initialState, action) {
       newOpenedFiles[openedFileIndex].minimized = !newOpenedFiles[openedFileIndex].minimized;
       return { ...state, openedFiles: newOpenedFiles };
     case LOGIN:
-      return state;
+      const newState = {...state};
+      newState.fileSystem = {};
+      const fileSystemWithNodeIndexedKeys = {};
+      action.user.FileSystem.FileNodes.forEach(nodeObject => {
+        fileSystemWithNodeIndexedKeys[nodeObject.nodeIndex] = nodeObject;
+      });
+      const nodeIndices = action.user.FileSystem.FileNodes.map(fileNode => { return fileNode.nodeIndex}).sort((a, b) => { return a-b;});
+
+      nodeIndices.forEach(nodeIndex => {
+        const fileNode = fileSystemWithNodeIndexedKeys[nodeIndex];
+        const { permissions, name, extension, FileNodeMetadata } = fileNode;
+        const metadata = {};
+        if (FileNodeMetadata.length > 0 ) {
+          FileNodeMetadata.forEach(metadataItem => {
+            metadata[metadataItem.name] = metadataItem.value;
+          });
+        }
+        newState.fileSystem[nodeIndex] = {permissions, name, extension, metadata};
+        if (fileNode.FileNodeId !== undefined && fileNode.FileNodeId !== null ) {
+          if (newState.fileSystem[fileNode.FileNodeId].hasOwnProperty('children')) {
+            newState.fileSystem[fileNode.FileNodeId].children.push(nodeIndex);
+          } else {
+            newState.fileSystem[fileNode.FileNodeId].children = [nodeIndex];
+          }
+        }
+      });
+
+      return { ...state, fileSystem: newState.fileSystem, diskSpace: action.user.FileSystem.diskSpace };
     default:
       return state;
   }

@@ -31,6 +31,7 @@ class Authenticator extends Component {
     if(response.readyState == XMLHttpRequest.DONE) {
       if (response.status === 200) {
         this.setState({registrationErrors: []});
+        this.props.login(JSON.parse(response.response));
       } else {
         const registrationErrors = JSON.parse(response.response);
         this.setState({registrationErrors});

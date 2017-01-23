@@ -1,4 +1,5 @@
 import Sequelize from 'sequelize';
+import sequelize_fixtures from 'sequelize-fixtures';
 import { database_name, database_username, database_password,
 database_host, database_dialect} from '../config';
 
@@ -10,7 +11,7 @@ const sequelizeConfig = {
     min: 0,
     idle: 10000
   },
-  storage: './portfolio'
+  logging: false
 };
 if (database_dialect === 'sqlite') {
   sequelizeConfig.storage = './portfolio';

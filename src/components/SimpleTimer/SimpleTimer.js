@@ -7,7 +7,8 @@ class SimpleTimer extends Component {
 
   constructor() {
     super();
-    this.formatTime = this.formatTime.bind(this);
+    this.formatMinutes = this.formatMinutes.bind(this);
+    this.formatHours = this.formatHours.bind(this);
     this.timer = this.timer.bind(this);
   }
   componentWillMount() {
@@ -23,18 +24,24 @@ class SimpleTimer extends Component {
     const hours = today.getHours();
     const minutes = today.getMinutes();
     const AMPM = hours >= 12 ? 'PM' : 'AM';
-    const formattedMinutes = this.formatTime(minutes, 'minutes');
-    const formattedHours = this.formatTime(hours, 'hours');
+    const formattedMinutes = this.formatMinutes(minutes, 'minutes');
+    const formattedHours = this.formatHours(hours, 'hours');
 
     if (typeof document !== 'undefined') {
       const node = document.getElementById('timer');
       node.innerHTML = `${formattedHours}:${formattedMinutes} ${AMPM}`;
     }
   }
-  formatTime(digit, interval) {
-    if (digit < 12) {
+  formatMinutes(digit) {
+    if (digit < 10) {
       digit = `0${digit}`;
-    } else if (digit > 12 && interval === 'hours' ) {
+    }
+    return digit;
+  }
+  formatHours(digit) {
+    if (digit < 12) {
+      digit = `${digit}`;
+    } else if (digit > 12 ) {
       digit = Math.abs(12 - digit);
     }
     return digit;

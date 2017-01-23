@@ -7,6 +7,7 @@ import shallowCompare from 'react-addons-shallow-compare';
 
 import * as windowsActions from '../../actions/windows';
 import * as authActions from '../../actions/auth';
+import * as storageActions from '../../actions/storage';
 import { installedProgramsSelector, userDirectoriesSelector, desktopItemsSelector, isAnonymousUserSelector,
   computerSettingsSelector, utilityControlsSelector, authenticatorSelector } from '../../selectors';
 import WindowsDesktop from '../../components/Windows/Desktop';
@@ -17,7 +18,7 @@ import MobileTaskbar from '../../components/Windows/MobileTaskbar';
 @connect(state => ({
   registering: state.auth.registering,
   user: state.auth.user,
-  isAnonymousUser: isAnonymousUserSelector,
+  isAnonymousUser: isAnonymousUserSelector(state),
   startMenuOpened: state.windows.startMenuOpened,
   installedPrograms: installedProgramsSelector(state),
   userDirectories: userDirectoriesSelector(state),
@@ -44,7 +45,7 @@ import MobileTaskbar from '../../components/Windows/MobileTaskbar';
   browserHeight: state.windows.browserHeight,
   desktopWidth: state.windows.browserWidth,
   desktopHeight: state.windows.browserHeight
-}), { ...windowsActions, ...authActions })
+}), { ...windowsActions, ...authActions, ...storageActions })
 class Windows extends Component { //eslint-disable-line
   static propTypes = {
     registering: PropTypes.bool,
@@ -103,11 +104,15 @@ class Windows extends Component { //eslint-disable-line
   shouldComponentUpdate(nextProps) {
     return shallowCompare(this.props, nextProps);
   }
+  componentWillMount() {
+    this.props.initializeAuth();
+  }
   componentDidMount() {
     this.props.initializeBrowserDimensions(window.innerWidth, window.innerHeight);
   }
   render() {
     const { startMenuOpened, toggleStartMenu, installedPrograms, clearActives } = this.props;
+    
     return (<div className={styles.root} onClick={clearActives} >
       <WindowsDesktop {...this.props} />
       {startMenuOpened  && this.props.browserWidth > 767 ? <WindowsStartMenu installedPrograms={installedPrograms} {...this.props} />
