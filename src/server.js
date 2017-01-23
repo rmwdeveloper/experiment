@@ -156,9 +156,9 @@ app.post('/register', (req, res) => {
                 return Promise.all(promises).then( (results) => {
                   return results;
                 });
-              }).catch(err => { console.log(err);});
-            }).catch(err => { console.log(err);});
-          }).catch(err => { console.log(err);});
+              });
+            });
+          });
         })
         .then(() => {
           User.findOne({ where: {username:req.body.username }, attributes: ['username', 'email', 'emailConfirmed'],
@@ -168,8 +168,8 @@ app.post('/register', (req, res) => {
             }]} ]}).then( userObj => {
             res.status(200);
             res.send(userObj);
-            return null;
           });
+          return null;
         }).catch( errorObj => {
           res.status(400);
           res.send(errorObj.errors);
