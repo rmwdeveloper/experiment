@@ -96,37 +96,38 @@ class Desktop extends Component {
         .then(response => {
           response.json().then( dateObject => {
             const { year, month, day, hours, minutes, seconds, milliseconds } = dateObject;
-            Evaporate.create(evap_config)
-              .then(
-                evaporate => {
-                  evaporate.add({
-                    name: `${upload_id}/${year}/${month}/${day}/${hours}${minutes}${seconds}${milliseconds}/${name}`,
-                    file,
-                    xAmzHeadersAtInitiate : {
-                      'x-amz-acl': 'public-read'
-                    },
-                    // progress: progressVal => {console.log('progress!!', progressVal)},
-                    info: info => {},
-                    error: error => {},
-                    warn: warn => {},
-                    complete: (xhr, awsObjectKey, stats) => {
-                      console.log(xhr, awsObjectKey, stats);
-                      fetch('/upload_complete', {method: 'post', credentials: 'include'})
-                        .then(response => {
-                          return response.json().then(responseObject => {
-                            console.log(responseObject);
-                          });
-                        }).catch(err => {
-                          return err;
-                      })
-                    }
-                  })
-                    .then(
-                      awsKey => { },
-                      reason => { }
-                    ).catch(error=>{console.log(error);})
-                },
-                reason => {});
+            // Evaporate.create(evap_config)
+            //   .then(
+            //     evaporate => {
+            //       evaporate.add({
+            //         n
+            // ame: `${upload_id}/${year}/${month}/${day}/${hours}${minutes}${seconds}${milliseconds}/${name}`,
+            //         file,
+            //         xAmzHeadersAtInitiate : {
+            //           'x-amz-acl': 'public-read'
+            //         },
+            //         // progress: progressVal => {console.log('progress!!', progressVal)},
+            //         info: info => {},
+            //         error: error => {},
+            //         warn: warn => {},
+            //         complete: (xhr, awsObjectKey, stats) => {
+            //           console.log(xhr, awsObjectKey, stats);
+            //           fetch('/upload_complete', {method: 'post', credentials: 'include'})
+            //             .then(response => {
+            //               return response.json().then(responseObject => {
+            //                 console.log(responseObject);
+            //               });
+            //             }).catch(err => {
+            //               return err;
+            //           })
+            //         }
+            //       })
+            //         .then(
+            //           awsKey => { },
+            //           reason => { }
+            //         ).catch(error=>{console.log(error);})
+            //     },
+            //     reason => {});
           });
         })
         .catch(error => {

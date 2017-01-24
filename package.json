@@ -39,6 +39,7 @@
   },
   "homepage": "https://github.com/rmwdeveloper/experiment#readme",
   "dependencies": {
+    "aws-sdk": "^2.7.27",
     "axios": "^0.13.0",
     "bcrypt": "^0.8.7",
     "bluebird": "^3.4.1",
