@@ -26,6 +26,7 @@ import routes from './routes';
 import { resolve } from 'universal-router';
 import { port, analytics, auth, aws_secret_key, session_secret } from './config';
 
+import { getUser } from './core/auth';
 
 import assets from './assets';
 import configureStore from './store/configureStore';
@@ -126,13 +127,9 @@ app.post('/register', (req, res) => {
           });
         })
         .then(() => {
-          User.findOne({ where: { username: req.body.username }, attributes: ['username', 'email', 'emailConfirmed'],
-            include: [{ model: FileSystem, attributes: ['diskSpace'],
-            include: [{ model: FileNode, attributes: ['name', 'permissions', 'extension', 'nodeIndex', 'FileNodeId'],
-            include: [{ model: FileNodeMetadata, attributes: ['name', 'value'] }]
-            }] }] }).then(userObj => {
-              res.status(200).send(userObj);
-            });
+          getUser(req.body.username).then(userObj => {
+            res.status(200).send(userObj);
+          });
           return null;
         }).catch(errorObj => {
           res.status(400).send(errorObj.errors);
@@ -148,12 +145,8 @@ app.post('/login',
   passport.authenticate('login', { successRedirect: '/success', failureRedirect: '/failure', session: true })
 );
 app.get('/get_user', (req, res) => {
-  const id = req.user ? req.user.id : 1; // Either logged in user, or guest ID ( 1 )
-  User.findOne({ where: {id}, attributes: ['username', 'email', 'emailConfirmed'],
-    include: [ {model: FileSystem, attributes: ['diskSpace'],
-      include: [{model: FileNode, attributes: ['name', 'permissions', 'extension','nodeIndex', 'FileNodeId'],
-        include: [{model: FileNodeMetadata, attributes: ['name', 'value']}]
-      }]} ]}).then( userObj => {
+  const username = req.user ? req.user.username : 'Guest'; // Either logged in user, or guest ID ( 1 )
+  getUser(username).then(userObj => {
     res.status(200).send(userObj);
     return null;
   });
@@ -168,12 +161,7 @@ app.get('/logout', (req, res) => {
 });
 
 app.get('/success', async(req, res) => {
-  // todo: refactor this copy pasted code
-  User.findOne({ where: {username:req.user.username }, attributes: ['username', 'email', 'emailConfirmed'],
-    include: [ {model: FileSystem, attributes: ['diskSpace'],
-      include: [{model: FileNode, attributes: ['name', 'permissions', 'extension','nodeIndex', 'FileNodeId'],
-        include: [{model: FileNodeMetadata, attributes: ['name', 'value']}]
-      }]} ]}).then( userObj => {
+  getUser(req.user.username).then(userObj => {
     res.status(200).send(userObj);
     return null;
   });
