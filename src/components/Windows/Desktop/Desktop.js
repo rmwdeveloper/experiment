@@ -82,7 +82,7 @@ class Desktop extends Component {
     this.icons = document.getElementsByClassName('desktopIcon');
     this.desktop = document.getElementById('desktop');
     this.header = document.getElementById('primaryHeader');
-
+    const { checkAvailableSpace, uploadComplete, uploadStart, uploadProgress, uploadError } = this.props;
     // START dropzone stuff. todo: abstract this crap away to a HOC
     // todo : dropzone script is in index.jade. Should be packed with webpack
     // todo: convert fetch to isomorphic fetch ?
@@ -92,13 +92,14 @@ class Desktop extends Component {
     addedfile: file => {
       const { name, size, type } = file;
       const upload_id = this.getUploadId();
-      // todo: dispatch check upload readiness action
+      checkAvailableSpace();
       fetch('/upload_start', {method: 'get', credentials: 'include'})
         .then(response => {
           response.json().then( responseObject => { // size in bytes
             const { size, date: { year, month, day, hours, minutes, seconds, milliseconds } } = responseObject;
             //todo: upload start action
             //todo: Some sort of auth here, prevent unauth uploads. Dont trust client.
+            uploadStart();
             const mbUsed = (size / 1000).toFixed(2);
             Evaporate.create(evap_config)
               .then(
@@ -110,17 +111,17 @@ class Desktop extends Component {
                       'x-amz-acl': 'public-read'
                     },
                     progress: progressVal => {
-
+                      uploadProgress();
                     },
                     info: info => {},
                     error: error => {},
                     warn: warn => {},
                     complete: (xhr, awsObjectKey, stats) => {
-                      console.log(xhr, awsObjectKey, stats);
                       fetch('/upload_complete', {method: 'post', credentials: 'include'})
                         .then(response => {
                           return response.json().then(responseObject => {
                             console.log(responseObject);
+                            uploadComplete();
                           });
                         }).catch(err => {
                           return err;
