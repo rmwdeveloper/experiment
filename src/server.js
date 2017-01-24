@@ -26,7 +26,7 @@ import routes from './routes';
 import { resolve } from 'universal-router';
 import { port, analytics, auth, aws_secret_key, session_secret } from './config';
 
-import { getDirectorySize } from './core/aws';
+import { getDirectorySize, doesObjectExist } from './core/aws';
 import { getUser } from './core/auth';
 
 import assets from './assets';
@@ -193,20 +193,25 @@ app.get('/failure', async(req, res) => {
 * */
 app.get('/upload_start', (req, res) => {
   // console.log('req user is . . .', req.user);
-  getDirectorySize().then(test => {
-    console.log(test);
-  }).catch(err => { console.log(err);});
-  const now = new Date(Date.now());
-  const date = {
-    year: now.getFullYear(),
-    month: now.getMonth() + 1, // getMonth is 0 indexed.
-    day: now.getDate(),
-    hours: now.getHours(),
-    minutes: now.getMinutes(),
-    seconds: now.getSeconds(),
-    milliseconds: now.getMilliseconds()
-  };
-  res.send(date);
+  doesObjectExist('1/').then(response => {
+    getDirectorySize().then(bucketInformation => {
+      res.send(bucketInformation);
+    });
+  }).catch(error => {
+    //No Object Found!
+  });
+
+  // const now = new Date(Date.now());
+  // const date = {
+  //   year: now.getFullYear(),
+  //   month: now.getMonth() + 1, // getMonth is 0 indexed.
+  //   day: now.getDate(),
+  //   hours: now.getHours(),
+  //   minutes: now.getMinutes(),
+  //   seconds: now.getSeconds(),
+  //   milliseconds: now.getMilliseconds()
+  // };
+  // res.send(date);
 });
 
 app.post('/upload_complete', (req, res) => {
