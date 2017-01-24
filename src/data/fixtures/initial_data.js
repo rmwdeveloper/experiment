@@ -7,5 +7,6 @@ const metadata = fileNodeMetadataFixture.map( metadataFixture => { // todo: refa
   const { model,  data: {name, FileNodeId, value}} = metadataFixture;
   return {model, data: { name, FileNodeId, value}};
 });
+
 module.exports = [].concat(userFixture, fileSystemFixture,
             fileNodesFixture, metadata);

@@ -184,45 +184,7 @@ app.post('/register', (req, res) => {
     });
   });
 });
-// app.post('/register', (req, res) => {
-//   bcrypt.genSalt(10, (err, salt) => {
-//     bcrypt.hash(req.body.password, salt, (err, hash) => {
-//       if ( err ) {
-//         res.status(400);
-//         res.send('Error');
-//         return null;
-//       }
-//       else if ( hash ) {
-//           sequelize.transaction( transaction => {
-//             return User.create({username: req.body.username, email:req.body.email, password: hash}, {transaction}).then(user => {
-//               const userObj = user.get({plain: true});
-//               return FileSystem.create({diskSpace: 50, UserId: userObj.id}, {transaction}).then(fileSystem => {
-//                 const fileNodes = fileNodesFixture.map( fileNode => { fileNode.FileSystemId = fileSystem.get({plain:true}).id; return fileNode});
-//                 return FileNode.bulkCreate(fileNodes, {transaction, individualHooks: true}).then(fileNodes => {
-//                   const promises = [];
-//                   const fileNodesRows = fileNodes.map( rowData => { return rowData.get({plain: true})});
-//                   for (let iterator = 0; iterator < fileNodesMetadataFixture.length; iterator++) {
-//                     const nodeThatHasMetadata = fileNodesRows.find(element => {
-//                       return fileNodesMetadataFixture[iterator].nodeIndex === element.nodeIndex;
-//                     });
-//                     fileNodesMetadataFixture[iterator].FileNodeId = nodeThatHasMetadata.id;
-//                     const { name, value, FileNodeId } = fileNodesMetadataFixture[iterator];
-//                     const newPromise = FileNodeMetadata.create({ name, value, FileNodeId }, {transaction});
-//                     promises.push(newPromise);
-//                   }
-//                   return Promise.all(promises).then( (results) => {
-//                     return results;
-//                   });
-//                 });
-//             });
-//           });
-//         }).then(result => {
-//             console.log(result);
-//           });
-//       }
-//     });
-//   });
-// });
+
 app.post('/login',
   passport.authenticate('login', { successRedirect: '/success', failureRedirect: '/failure', session: true })
 );
@@ -237,30 +199,7 @@ app.get('/get_user', (req, res) => {
     return null;
   });
 });
-// app.get('/get_user', (req, res) => {
-//   const UserId = req.user ? req.user.id : 1; // Either logged in user, or guest ID ( 1 )
-//   FileSystem.findOne({where: {UserId}, include: [
-//     {
-//     model: User,
-//     attributes: ['id', 'username','email','emailConfirmed']
-//     },
-//     {
-//       model: IndexIndicatorGroup,
-//       attributes: ['name'],
-//       include: [{
-//         model: NodeIndex,
-//         attributes: ['nodeIndex'],
-//       }]
-//     },
-//   ]})
-//     .then(fileSystem=>{
-//     res.send(fileSystem.get({plain: true}));
-//     return null;
-//   }).catch(err=>{
-//     // todo: put in a logginsg statement
-//     return null;
-//   });
-// });
+
 app.get('/logout', (req, res) => {
   req.logout();
 
@@ -385,12 +324,6 @@ app.get('*', async(req, res, next) => {
     next(err);
   }
 });
-
-// Upload route
-// app.post('/upload', (req, res) => {
-//   res.send('Got an upload request!');
-// });
-
 
 
 //

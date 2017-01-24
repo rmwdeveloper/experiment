@@ -39,8 +39,6 @@ FileNode.hasMany(FileNode);
 
 FileNode.hasMany(FileNodeMetadata);
 
-// todo: Move these hooks somewhere.
-
 
 User.hasMany(Upload, {
   onUpdate: 'cascade',
