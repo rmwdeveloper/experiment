@@ -17,7 +17,7 @@ export function getDirectorySize(Prefix) {
   return new Promise((resolve, reject) => {
     let size = 0;
     s3.listObjectsV2({Bucket: aws_bucket_name, Prefix}, (err, data) => {
-      data.Contents.forEach((item) => {
+      data.Contents.forEach((item) =>{
         size += item.Size;
       });
       err ? reject(err) : resolve(size);

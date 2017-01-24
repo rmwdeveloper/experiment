@@ -95,9 +95,10 @@ class Desktop extends Component {
       // todo: dispatch check upload readiness action
       fetch('/upload_start', {method: 'get', credentials: 'include'})
         .then(response => {
-          response.json().then( responseObject => {
+          response.json().then( responseObject => { // size in bytes
             const { size, date: { year, month, day, hours, minutes, seconds, milliseconds } } = responseObject;
             //todo: upload start action
+            const mbUsed = (size / 1000).toFixed(2);
             Evaporate.create(evap_config)
               .then(
                 evaporate => {

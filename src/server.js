@@ -205,8 +205,8 @@ app.get('/upload_start', (req, res) => {
   };
 
   doesObjectExist(`${id}/`).then(response => {
-    getDirectorySize(`${id}/`).then(bucketInformation => {
-      res.status(200).send({ size: 0, date });
+    getDirectorySize(`${id}/`).then(size => {
+      res.status(200).send({ size, date });
     });
   }).catch(error => {
     //No Object Found!
