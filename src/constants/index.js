@@ -3,6 +3,8 @@ export const SET_RUNTIME_VARIABLE = 'SET_RUNTIME_VARIABLE';
 export const TOGGLE_REGISTER_MODE = 'auth/TOGGLE_REGISTER_MODE';
 export const LOGIN = 'auth/LOGIN';
 
+
+export const CHECK_AVAILABLE_SPACE = 'storage/CHECK_AVAILABLE_SPACE';
 export const UPLOAD_START = 'storage/UPLOAD_START';
 export const UPLOAD_PROGRESS = 'storage/UPLOAD_PROGRESS';
 export const UPLOAD_COMPLETE = 'storage/UPLOAD_COMPLETE';

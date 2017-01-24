@@ -98,6 +98,7 @@ class Desktop extends Component {
           response.json().then( responseObject => { // size in bytes
             const { size, date: { year, month, day, hours, minutes, seconds, milliseconds } } = responseObject;
             //todo: upload start action
+            //todo: Some sort of auth here, prevent unauth uploads. Dont trust client.
             const mbUsed = (size / 1000).toFixed(2);
             Evaporate.create(evap_config)
               .then(
@@ -108,7 +109,9 @@ class Desktop extends Component {
                     xAmzHeadersAtInitiate : {
                       'x-amz-acl': 'public-read'
                     },
-                    // progress: progressVal => {console.log('progress!!', progressVal)},
+                    progress: progressVal => {
+
+                    },
                     info: info => {},
                     error: error => {},
                     warn: warn => {},
