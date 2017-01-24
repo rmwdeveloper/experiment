@@ -25,7 +25,7 @@ import sequelize from './data/sequelize';
 import routes from './routes';
 import { resolve } from 'universal-router';
 import { port, analytics, auth, aws_secret_key, session_secret } from './config';
-import { Strategy as LocalStrategy } from 'passport-local';
+
 
 import assets from './assets';
 import configureStore from './store/configureStore';
@@ -83,47 +83,7 @@ app.use(passport.session());
 //   /* jscs:enable requireCamelCaseOrUpperCaseIdentifiers */
 // }));
 
-passport.serializeUser(function(user, done) {
-  const { id } = user.get({ plain: true });
-  done(null, id);
-  return null;
-});
-//
-passport.deserializeUser(function(id, done) {
-  User.findById(id)
-    .then(user => {
-      const {username, email, emailConfirmed, id} = user.get({plain:true});
-      done(null, {username, email, emailConfirmed, id});
-      return null;
-    })
-    .catch(err => {
-      done(err, null);
-      return null;
-    });
-});
 
-
-passport.use('login', new LocalStrategy({
-  usernameField: 'email',
-  passwordField: 'password'
-},
-  (username, password, cb) => {
-    User.findOne({ where: { email: username } })
-    .then(user => {
-      if (user === null) {
-        cb(null, false);
-        return null;
-      }
-      bcrypt.compare(password, user.password, (err, res) => {
-        if (res) {
-          cb(null, user);
-          return null;
-        }
-        cb(null, false);
-        return null;
-      });
-    });
-}));
 
 app.post('/register', (req, res) => {
   bcrypt.genSalt(10, (err, salt) => {
@@ -208,6 +168,21 @@ app.get('/logout', (req, res) => {
   });
 });
 
+app.get('/success', async(req, res) => {
+  // todo: refactor this copy pasted code
+  User.findOne({ where: {username:req.user.username }, attributes: ['username', 'email', 'emailConfirmed'],
+    include: [ {model: FileSystem, attributes: ['diskSpace'],
+      include: [{model: FileNode, attributes: ['name', 'permissions', 'extension','nodeIndex', 'FileNodeId'],
+        include: [{model: FileNodeMetadata, attributes: ['name', 'value']}]
+      }]} ]}).then( userObj => {
+    res.status(200).send(userObj);
+    return null;
+  });
+});
+
+app.get('/failure', async(req, res) => {
+  res.status(403).send('failure');
+});
 //
 // Register API middleware
 // -----------------------------------------------------------------------------
@@ -257,27 +232,11 @@ app.get('/sign_aws', async(req, res) => {
     .digest('base64')
   );
 });
+
 //
 // Register server-side rendering middleware
 // -----------------------------------------------------------------------------
-app.get('/success', async(req, res) => {
-  // todo: refactor this copy pasted code
-  User.findOne({ where: {username:req.user.username }, attributes: ['username', 'email', 'emailConfirmed'],
-    include: [ {model: FileSystem, attributes: ['diskSpace'],
-      include: [{model: FileNode, attributes: ['name', 'permissions', 'extension','nodeIndex', 'FileNodeId'],
-        include: [{model: FileNodeMetadata, attributes: ['name', 'value']}]
-      }]} ]}).then( userObj => {
-    res.status(200).send(userObj);
-    return null;
-  });
 
-
-});
-
-app.get('/failure', async(req, res) => {
-
-  res.status(403).send('failure');
-});
 app.get('*', async(req, res, next) => {
   try {
     let css = [];
