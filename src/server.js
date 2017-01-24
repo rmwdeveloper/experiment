@@ -195,7 +195,7 @@ app.get('/upload_start', (req, res) => {
   // console.log('req user is . . .', req.user);
   getDirectorySize().then(test => {
     console.log(test);
-  });
+  }).catch(err => { console.log(err);});
   const now = new Date(Date.now());
   const date = {
     year: now.getFullYear(),
