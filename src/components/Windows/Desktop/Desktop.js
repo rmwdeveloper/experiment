@@ -92,44 +92,43 @@ class Desktop extends Component {
     addedfile: file => {
       const { name, size, type } = file;
       const upload_id = this.getUploadId();
+      // todo: dispatch check upload readiness action
       fetch('/upload_start', {method: 'get', credentials: 'include'})
         .then(response => {
           response.json().then( responseObject => {
-            console.log(responseObject);
-
-            // const { year, month, day, hours, minutes, seconds, milliseconds } = dateObject;
-            // Evaporate.create(evap_config)
-            //   .then(
-            //     evaporate => {
-            //       evaporate.add({
-            //         n
-            // ame: `${upload_id}/${year}/${month}/${day}/${hours}${minutes}${seconds}${milliseconds}/${name}`,
-            //         file,
-            //         xAmzHeadersAtInitiate : {
-            //           'x-amz-acl': 'public-read'
-            //         },
-            //         // progress: progressVal => {console.log('progress!!', progressVal)},
-            //         info: info => {},
-            //         error: error => {},
-            //         warn: warn => {},
-            //         complete: (xhr, awsObjectKey, stats) => {
-            //           console.log(xhr, awsObjectKey, stats);
-            //           fetch('/upload_complete', {method: 'post', credentials: 'include'})
-            //             .then(response => {
-            //               return response.json().then(responseObject => {
-            //                 console.log(responseObject);
-            //               });
-            //             }).catch(err => {
-            //               return err;
-            //           })
-            //         }
-            //       })
-            //         .then(
-            //           awsKey => { },
-            //           reason => { }
-            //         ).catch(error=>{console.log(error);})
-            //     },
-            //     reason => {});
+            const { size, date: { year, month, day, hours, minutes, seconds, milliseconds } } = responseObject;
+            //todo: upload start action
+            Evaporate.create(evap_config)
+              .then(
+                evaporate => {
+                  evaporate.add({
+                    name: `${upload_id}/${year}/${month}/${day}/${hours}${minutes}${seconds}${milliseconds}/${name}`,
+                    file,
+                    xAmzHeadersAtInitiate : {
+                      'x-amz-acl': 'public-read'
+                    },
+                    // progress: progressVal => {console.log('progress!!', progressVal)},
+                    info: info => {},
+                    error: error => {},
+                    warn: warn => {},
+                    complete: (xhr, awsObjectKey, stats) => {
+                      console.log(xhr, awsObjectKey, stats);
+                      fetch('/upload_complete', {method: 'post', credentials: 'include'})
+                        .then(response => {
+                          return response.json().then(responseObject => {
+                            console.log(responseObject);
+                          });
+                        }).catch(err => {
+                          return err;
+                      })
+                    }
+                  })
+                    .then(
+                      awsKey => { },
+                      reason => { }
+                    ).catch(error=>{console.log(error);})
+                },
+                reason => {});
           });
         })
         .catch(error => {

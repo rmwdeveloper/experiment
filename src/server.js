@@ -193,25 +193,24 @@ app.get('/failure', async(req, res) => {
 * */
 app.get('/upload_start', (req, res) => {
   const id = req.user ? req.user.id : 1;
+  const now = new Date(Date.now());
+  const date = {
+    year: now.getFullYear(),
+    month: now.getMonth() + 1, // getMonth is 0 indexed.
+    day: now.getDate(),
+    hours: now.getHours(),
+    minutes: now.getMinutes(),
+    seconds: now.getSeconds(),
+    milliseconds: now.getMilliseconds()
+  };
+
   doesObjectExist(`${id}/`).then(response => {
     getDirectorySize(`${id}/`).then(bucketInformation => {
-      res.status(200).send({ size: 0 });
+      res.status(200).send({ size: 0, date });
     });
   }).catch(error => {
     //No Object Found!
   });
-
-  // const now = new Date(Date.now());
-  // const date = {
-  //   year: now.getFullYear(),
-  //   month: now.getMonth() + 1, // getMonth is 0 indexed.
-  //   day: now.getDate(),
-  //   hours: now.getHours(),
-  //   minutes: now.getMinutes(),
-  //   seconds: now.getSeconds(),
-  //   milliseconds: now.getMilliseconds()
-  // };
-  // res.send(date);
 });
 
 app.post('/upload_complete', (req, res) => {
