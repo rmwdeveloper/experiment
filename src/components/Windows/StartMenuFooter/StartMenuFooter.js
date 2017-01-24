@@ -13,6 +13,8 @@ class StartMenuFooter extends Component {
   async logout() {
     const response = await fetch('/logout', {
       method: 'get', credentials: 'include'
+    }).then(() => {
+      this.props.initializeAuth(); // "Login" as AnonymousUser(Guest) after logout
     });
     // if (response.status !== 200) throw new Error(response.statusText);
     // const data = await response.json();

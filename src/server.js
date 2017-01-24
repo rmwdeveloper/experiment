@@ -14,7 +14,7 @@ import compression from 'compression';
 import bodyParser from 'body-parser';
 import expressJwt from 'express-jwt';
 import PrettyError from 'pretty-error';
-import passport from 'passport';
+import passport from './core/passport';
 
 import ReactDOM from 'react-dom/server';
 import models, { User, FileSystem, FileNode, FileNodeMetadata  } from './data/models';
@@ -84,25 +84,6 @@ app.use(passport.session());
 //   /* jscs:enable requireCamelCaseOrUpperCaseIdentifiers */
 // }));
 
-passport.serializeUser(function(user, done) {
-  const { id } = user.get({ plain: true });
-  console.log(id);
-  done(null, id);
-  return null;
-});
-
-passport.deserializeUser( (id, done) => {
-  User.findById(id)
-    .then(user => {
-      const {username, email, emailConfirmed, id} = user.get({plain:true});
-      done(null, {username, email, emailConfirmed, id});
-      return null;
-    })
-    .catch(err => {
-      done(err, null);
-      return null;
-    });
-});
 
 app.post('/register', (req, res) => {
   bcrypt.genSalt(10, (err, salt) => {
