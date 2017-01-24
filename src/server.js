@@ -194,7 +194,7 @@ app.get('/failure', async(req, res) => {
 app.get('/upload_start', (req, res) => {
   // console.log('req user is . . .', req.user);
   doesObjectExist('1/').then(response => {
-    getDirectorySize().then(bucketInformation => {
+    getDirectorySize('1/').then(bucketInformation => {
       res.send(bucketInformation);
     });
   }).catch(error => {

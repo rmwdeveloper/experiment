@@ -13,13 +13,15 @@ export function doesObjectExist(keyName) {
     });
   });
 }
-export function getDirectorySize() {
+export function getDirectorySize(Prefix) {
   return new Promise((resolve, reject) => {
-    exec(baseCommand, (err, stdout, stderr) => {
-      const testVal = JSON.parse(stdout);
-      console.log(typeof(testVal));
-      console.log(testVal);
-      err ? reject({err, stderr, stdout}) : resolve(JSON.stringify(stdout));
+    let size = 0;
+    s3.listObjectsV2({Bucket: aws_bucket_name, Prefix}, (err, data) => {
+      data.Contents.forEach((item) => {
+        size += item.Size;
+      });
+      console.log(size);
+      err ? reject(err) : resolve(data);
     });
   });
 }
