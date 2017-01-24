@@ -6,7 +6,6 @@ import { User } from '../data/models';
 
 passport.serializeUser(function(user, done) {
   const { id } = user.get({ plain: true });
-  console.log(id);
   done(null, id);
   return null;
 });
@@ -31,13 +30,11 @@ passport.use('login', new LocalStrategy({
   (username, password, cb) => {
     User.findOne({ where: { email: username } })
       .then(user => {
-        console.log('user?');
         if (user === null) {
           cb(null, false);
           return null;
         }
         bcrypt.compare(password, user.password, (err, res) => {
-          console.log('trying to compare .. . ');
           if (res) {
             cb(null, user);
             return null;
