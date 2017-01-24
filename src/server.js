@@ -26,6 +26,7 @@ import routes from './routes';
 import { resolve } from 'universal-router';
 import { port, analytics, auth, aws_secret_key, session_secret } from './config';
 
+import { getDirectorySize } from './core/aws';
 import { getUser } from './core/auth';
 
 import assets from './assets';
@@ -191,9 +192,10 @@ app.get('/failure', async(req, res) => {
 * create an Upload model instance for this particular upload.
 * */
 app.get('/upload_start', (req, res) => {
-  console.log(req.user);
   // console.log('req user is . . .', req.user);
-
+  getDirectorySize().then(test => {
+    console.log(test);
+  });
   const now = new Date(Date.now());
   const date = {
     year: now.getFullYear(),

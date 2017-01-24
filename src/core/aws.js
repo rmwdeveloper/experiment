@@ -1,7 +1,15 @@
 import AWS from 'aws-sdk';
-import { aws_bucket_name } from '../config';
+import { aws_bucket_name, aws_key, aws_region, aws_secret_key } from '../config';
 const s3 = new AWS.S3();
 
-export function getBucketSize() {
-  return s3.getObject()
+const exec = require('child_process').exec;
+
+const baseCommand = `aws s3 ls --summarize --human-readable --recursive s3://${aws_bucket_name}/`;
+
+export function getDirectorySize() {
+  return new Promise((resolve, reject) => {
+    exec(baseCommand, (err, stdout, stderr) => {
+      err ? reject(err) : resolve({stdout, stderr});
+    });
+  });
 }
