@@ -88,24 +88,24 @@ app.use(passport.session());
 app.post('/register', (req, res) => {
   bcrypt.genSalt(10, (err, salt) => {
     bcrypt.hash(req.body.password, salt, (err, hash) => {
-      if ( err ) {
+      if (err) {
         res.status(400);
         res.send('Error');
         return null;
       } else if (hash) {
         return sequelize.transaction(transaction => {
-          return User.create({username: req.body.username, email:req.body.email, password: hash}, {transaction}).then(user => {
-            const userObj = user.get({plain: true});
-            return FileSystem.create({diskSpace: 50, UserId: userObj.id}, {transaction}).then(fileSystem => {
-              const fileNodes = fileNodesFixture.map( fileNode => {
+          return User.create({ username: req.body.username, email: req.body.email, password: hash }, { transaction }).then(user => {
+            const userObj = user.get({ plain: true });
+            return FileSystem.create({ diskSpace: 50, UserId: userObj.id }, { transaction }).then(fileSystem => {
+              const fileNodes = fileNodesFixture.map(fileNode => {
                 if (fileNode.nodeIndex === 4) {
                   fileNode.name = req.body.username; //   TODO : refactor
                 }
-                fileNode.FileSystemId = fileSystem.get({plain:true}).id; return fileNode
+                fileNode.FileSystemId = fileSystem.get({ plain: true }).id; return fileNode;
               });
-              return FileNode.bulkCreate(fileNodes, {transaction, individualHooks: true}).then(fileNodes => {
+              return FileNode.bulkCreate(fileNodes, { transaction, individualHooks: true }).then(fileNodeRows => {
                 const promises = [];
-                const fileNodesRows = fileNodes.map( rowData => { return rowData.get({plain: true})});
+                const fileNodesRows = fileNodeRows.map( rowData => { return rowData.get({ plain: true }); });
 
                 for (let iterator = 0; iterator < fileNodesMetadataFixture.length; iterator++) {
                   const nodeThatHasMetadata = fileNodesRows.find(element => {
@@ -115,7 +115,7 @@ app.post('/register', (req, res) => {
                     fileNodesMetadataFixture[iterator].FileNodeId = nodeThatHasMetadata.id;
                   }
                   const { name, value, FileNodeId } = fileNodesMetadataFixture[iterator];
-                  const newPromise = FileNodeMetadata.create({ name, value, FileNodeId }, {transaction});
+                  const newPromise = FileNodeMetadata.create({ name, value, FileNodeId }, { transaction });
                   promises.push(newPromise);
                 }
                 return Promise.all(promises).then( (results) => {
@@ -126,17 +126,16 @@ app.post('/register', (req, res) => {
           });
         })
         .then(() => {
-          User.findOne({ where: {username:req.body.username }, attributes: ['username', 'email', 'emailConfirmed'],
-            include: [ {model: FileSystem, attributes: ['diskSpace'],
-            include: [{model: FileNode, attributes: ['name', 'permissions', 'extension','nodeIndex', 'FileNodeId'],
-            include: [{model: FileNodeMetadata, attributes: ['name', 'value']}]
-            }]} ]}).then( userObj => {
-            res.status(200);
-            res.send(userObj);
-          });
+          User.findOne({ where: { username: req.body.username }, attributes: ['username', 'email', 'emailConfirmed'],
+            include: [{ model: FileSystem, attributes: ['diskSpace'],
+            include: [{ model: FileNode, attributes: ['name', 'permissions', 'extension', 'nodeIndex', 'FileNodeId'],
+            include: [{ model: FileNodeMetadata, attributes: ['name', 'value'] }]
+            }] }] }).then(userObj => {
+              res.status(200).send(userObj);
+            });
           return null;
-        }).catch( errorObj => {
-          res.status(400);
+        }).catch(errorObj => {
+          res.status(400).send(errorObj.errors);
           res.send(errorObj.errors);
           return null;
         });
