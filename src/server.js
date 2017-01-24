@@ -84,7 +84,25 @@ app.use(passport.session());
 //   /* jscs:enable requireCamelCaseOrUpperCaseIdentifiers */
 // }));
 
+passport.serializeUser(function(user, done) {
+  const { id } = user.get({ plain: true });
+  console.log(id);
+  done(null, id);
+  return null;
+});
 
+passport.deserializeUser( (id, done) => {
+  User.findById(id)
+    .then(user => {
+      const {username, email, emailConfirmed, id} = user.get({plain:true});
+      done(null, {username, email, emailConfirmed, id});
+      return null;
+    })
+    .catch(err => {
+      done(err, null);
+      return null;
+    });
+});
 
 app.post('/register', (req, res) => {
   bcrypt.genSalt(10, (err, salt) => {
@@ -128,11 +146,17 @@ app.post('/register', (req, res) => {
         })
         .then(() => {
           getUser(req.body.username).then(userObj => {
-            res.status(200).send(userObj);
+            req.logIn(userObj, error => {
+              if (error) {
+                return null;
+              }
+              res.status(200).send(userObj);
+              return null;
+            });
           });
           return null;
         }).catch(errorObj => {
-          res.status(400).send(errorObj.errors);
+          res.status(403).send(errorObj.errors);
           res.send(errorObj.errors);
           return null;
         });
@@ -236,7 +260,8 @@ app.get('*', async(req, res, next) => {
       name: 'initialNow',
       value: Date.now(),
     }));
-    
+
+
     await resolve(routes, {
       path: req.url,
       query: req.query,
