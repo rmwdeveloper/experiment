@@ -1,7 +1,8 @@
 import fetch from '../core/fetch';
 import {
   TOGGLE_REGISTER_MODE,
-  LOGIN
+  LOGIN,
+  CLOSE_FILE_WINDOW
 } from '../constants';
 
 export function toggleRegisterMode() {
@@ -11,8 +12,10 @@ export function toggleRegisterMode() {
 }
 
 export function login(user) {
-  return dispatch => {
+  return (dispatch, getState) => {
+    const { windows: { authenticatorIndex, openedFiles } } = getState();
     dispatch({ type: LOGIN, user });
+    dispatch({ type: CLOSE_FILE_WINDOW, openedFileIndex: openedFiles.indexOf(authenticatorIndex) });
   };
 }
 
