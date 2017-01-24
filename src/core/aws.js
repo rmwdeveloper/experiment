@@ -20,8 +20,7 @@ export function getDirectorySize(Prefix) {
       data.Contents.forEach((item) => {
         size += item.Size;
       });
-      console.log(size);
-      err ? reject(err) : resolve(data);
+      err ? reject(err) : resolve(size);
     });
   });
 }

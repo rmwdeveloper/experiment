@@ -192,10 +192,10 @@ app.get('/failure', async(req, res) => {
 * create an Upload model instance for this particular upload.
 * */
 app.get('/upload_start', (req, res) => {
-  // console.log('req user is . . .', req.user);
-  doesObjectExist('1/').then(response => {
-    getDirectorySize('1/').then(bucketInformation => {
-      res.send(bucketInformation);
+  const id = req.user ? req.user.id : 1;
+  doesObjectExist(`${id}/`).then(response => {
+    getDirectorySize(`${id}/`).then(bucketInformation => {
+      res.status(200).send({ size: 0 });
     });
   }).catch(error => {
     //No Object Found!

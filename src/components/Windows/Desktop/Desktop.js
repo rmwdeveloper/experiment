@@ -96,7 +96,7 @@ class Desktop extends Component {
         .then(response => {
           response.json().then( responseObject => {
             console.log(responseObject);
-            console.log(JSON.parse(responseObject));
+
             // const { year, month, day, hours, minutes, seconds, milliseconds } = dateObject;
             // Evaporate.create(evap_config)
             //   .then(
