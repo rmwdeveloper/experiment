@@ -180,12 +180,7 @@ app.get('/failure', async(req, res) => {
 //   pretty: process.env.NODE_ENV !== 'production',
 // })));
 
-// function isLoggedIn(req, res, next) {
-//   if (req.isAuthenticated())
-//     return next();
-//
-//   res.sendStatus(401);
-// }
+
 /*
 * Return server time, check if user has enough space for upload. If user does have enough space,
 * create an Upload model instance for this particular upload.
@@ -241,10 +236,7 @@ app.get('*', async(req, res, next) => {
       name: 'initialNow',
       value: Date.now(),
     }));
-
-    /*
-     *
-     */
+    
     await resolve(routes, {
       path: req.url,
       query: req.query,
