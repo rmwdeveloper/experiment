@@ -8,6 +8,7 @@ function DiskManager({diskSpace, usedSpace, user}) {
   return <div className={styles.root}>
     {diskSpace} {usedSpace}
     <div className={styles.spaceAvailable}>
+      <span> {diskSpace} {usedSpace}</span>
       <span>Total Space Available: {diskSpace - usedSpace}</span>
     </div>
   </div>;

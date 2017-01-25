@@ -17,7 +17,7 @@ export default function windowsRegistry(fileType, openedFileNode) {
         case 'Word Processor':
           return FileWindow(Word);
         case 'Disk Manager':
-          return FileWindow(DiskManager)
+          return FileWindow(DiskManager);
         default:
           return FileWindow(EmptyProgram);
       }

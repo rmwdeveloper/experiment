@@ -11,7 +11,7 @@ module.exports = { // Indices are always unique and static. A node only ever has
   9: { name: 'Webscape', permissions: 'rwx-', extension: 'exe', metadata: { icon: 'ie7.png' } },
   10: { name: 'Word Processor', permissions: 'rwx-', extension: 'shct', metadata: { icon: 'wordlogoXSmall.png' } },
   11: { name: 'Desktop', permissions: 'rwx-', children: [12, 13, 14, 15, 22, 23, 24, 25, 26, 27, 28], metadata: { isDesktop: true } },
-  12: { name: 'Spreadsheets', permissions: 'rwx-', extension: 'shct', metadata: { icon: 'excellogoXSmall.png' } },
+  12: { name: 'Disk Manager', permissions: 'rwx-', extension: 'exe', metadata: { sprite: true, icon: 'iconsSprite.gif', backgroundPosition: '130px 100px'} },
   13: { name: 'Webscape', permissions: 'rwx-', extension: 'shct', metadata: { icon: 'ie7.png' } },
   14: { name: 'My Documents', permissions: 'rwx-', children: [16], metadata: { icon: 'MyDocumentsXSmall.png' }, registryKey:'Folder' },
   15: { name: 'My Computer', permissions: 'rwx-', children: [], metadata: { icon: 'MyComputerXSmall.png' } },
