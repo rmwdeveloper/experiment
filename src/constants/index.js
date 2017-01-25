@@ -5,6 +5,7 @@ export const LOGIN = 'auth/LOGIN';
 
 
 export const CHECK_AVAILABLE_SPACE = 'storage/CHECK_AVAILABLE_SPACE';
+export const DISK_FULL = 'storage/DISK_FULL';
 export const UPLOAD_START = 'storage/UPLOAD_START';
 export const UPLOAD_PROGRESS = 'storage/UPLOAD_PROGRESS';
 export const UPLOAD_COMPLETE = 'storage/UPLOAD_COMPLETE';

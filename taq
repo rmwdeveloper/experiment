@@ -1,0 +1,112 @@
+[1mdiff --git a/src/actions/storage.js b/src/actions/storage.js[m
+[1mindex 1a8d265..efb9bd8 100644[m
+[1m--- a/src/actions/storage.js[m
+[1m+++ b/src/actions/storage.js[m
+[36m@@ -6,26 +6,39 @@[m [mimport {[m
+   UPLOAD_ERROR[m
+ } from '../constants';[m
+ [m
+[32m+[m[32m/*[m
+[32m+[m[32m* Toolbar.. pop up disk space indicator and play animation.[m
+[32m+[m[32m* Add icon to desktop (or folder) with low opacity.[m
+[32m+[m[32m */[m
+ export function checkAvailableSpace() {[m
+   return dispatch => {[m
+     dispatch({ type: CHECK_AVAILABLE_SPACE });[m
+   };[m
+ }[m
+ [m
+[31m-export function uploadComplete() {[m
+[32m+[m[32m/*[m
+[32m+[m[32m * Continue animation, indicating that disk is full. Trigger popup asking user to buy more space.[m
+[32m+[m[32m * Remove Icon from desktop.[m
+[32m+[m[32m */[m
+[32m+[m[32mexport function uploadError() {[m
+   return dispatch => {[m
+[31m-    dispatch({ type: UPLOAD_COMPLETE });[m
+[32m+[m[32m    dispatch({ type: UPLOAD_ERROR });[m
+   };[m
+ }[m
+ [m
+[31m-[m
+[32m+[m[32m/*[m
+[32m+[m[32m * Hide the disk space indicator.[m
+[32m+[m[32m */[m
+ export function uploadStart() {[m
+   return dispatch => {[m
+     dispatch({ type: UPLOAD_START });[m
+   };[m
+ }[m
+ [m
+[31m-[m
+[32m+[m[32m/*[m
+[32m+[m[32m * Progressively increase the opacity of the new upload icon.[m
+[32m+[m[32m * Also have an upload progress bar.[m
+[32m+[m[32m */[m
+ export function uploadProgress() {[m
+   return dispatch => {[m
+     dispatch({ type: UPLOAD_PROGRESS });[m
+[36m@@ -33,9 +46,11 @@[m [mexport function uploadProgress() {[m
+ }[m
+ [m
+ [m
+[31m-export function uploadError() {[m
+[32m+[m[32mexport function uploadComplete() {[m
+   return dispatch => {[m
+[31m-    dispatch({ type: UPLOAD_ERROR });[m
+[32m+[m[32m    dispatch({ type: UPLOAD_COMPLETE });[m
+   };[m
+ }[m
+ [m
+[41m+[m
+[41m+[m
+[1mdiff --git a/src/components/Windows/Desktop/Desktop.js b/src/components/Windows/Desktop/Desktop.js[m
+[1mindex b183b19..fc2aa34 100644[m
+[1m--- a/src/components/Windows/Desktop/Desktop.js[m
+[1m+++ b/src/components/Windows/Desktop/Desktop.js[m
+[36m@@ -79,6 +79,7 @@[m [mclass Desktop extends Component {[m
+     return isAnonymousUser ? 0 : user.id;[m
+   }[m
+   componentDidMount() {[m
+[32m+[m[32m    const { diskSpace } = this.props;[m
+     this.icons = document.getElementsByClassName('desktopIcon');[m
+     this.desktop = document.getElementById('desktop');[m
+     this.header = document.getElementById('primaryHeader');[m
+[36m@@ -92,18 +93,22 @@[m [mclass Desktop extends Component {[m
+     addedfile: file => {[m
+       const { name, size, type } = file;[m
+       const fileSizeMb = (size / 1000 / 1000).toFixed(2);[m
+[31m-      console.log('size', fileSizeMb);[m
+       const upload_id = this.getUploadId();[m
+       checkAvailableSpace();[m
+       fetch('/upload_start', {method: 'get', credentials: 'include'})[m
+         .then(response => {[m
+           response.json().then( responseObject => { // size in bytes[m
+             const { usedSpace, date: { year, month, day, hours, minutes, seconds, milliseconds } } = responseObject;[m
+[32m+[m[32m            const mbUsed = (usedSpace / 1000 / 1000).toFixed(2);[m
+[32m+[m
+[32m+[m[32m            if ( diskSpace - mbUsed - fileSizeMb < 0) {[m
+[32m+[m[32m              uploadError();[m
+[32m+[m[32m              return null;[m
+[32m+[m[32m            }[m
+             //todo: upload start action[m
+             //todo: Some sort of auth here, prevent unauth uploads. Dont trust client.[m
+             uploadStart();[m
+[31m-            const mbUsed = (usedSpace / 1000).toFixed(2);[m
+[31m-            console.log('mbUsed', mbUsed);[m
+[32m+[m
+             Evaporate.create(evap_config)[m
+               .then([m
+                 evaporate => {[m
+[1mdiff --git a/src/constants/index.js b/src/constants/index.js[m
+[1mindex 133a866..02bba9a 100644[m
+[1m--- a/src/constants/index.js[m
+[1m+++ b/src/constants/index.js[m
+[36m@@ -5,6 +5,7 @@[m [mexport const LOGIN = 'auth/LOGIN';[m
+ [m
+ [m
+ export const CHECK_AVAILABLE_SPACE = 'storage/CHECK_AVAILABLE_SPACE';[m
+[32m+[m[32mexport const DISK_FULL = 'storage/DISK_FULL';[m
+ export const UPLOAD_START = 'storage/UPLOAD_START';[m
+ export const UPLOAD_PROGRESS = 'storage/UPLOAD_PROGRESS';[m
+ export const UPLOAD_COMPLETE = 'storage/UPLOAD_COMPLETE';[m
