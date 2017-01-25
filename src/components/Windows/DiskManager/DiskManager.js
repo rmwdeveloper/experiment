@@ -11,6 +11,10 @@ class DiskManager extends Component {
   constructor() {
     super();
     this.drawChart = this.drawChart.bind(this);
+    this.startResize = this.startResize.bind(this);
+  }
+  startResize() {
+    console.log('resizing');
   }
   drawChart() {
     // Create the data table.
@@ -36,10 +40,20 @@ class DiskManager extends Component {
   }
   componentDidMount() {
     const { index } = this.props;
-    const fileWindow = document.getElementById(`diskManager${index}`).parentNode;
-    console.log(fileWindow);
+    this.rootElement = document.getElementById(`diskManager${index}`);
+    this.fileNodes = [].slice.call(this.rootElement.parentNode.childNodes).filter(nodeElement => {
+      return nodeElement.classList.contains('resizerHandle');
+    });
+    this.fileNodes.forEach(domElement => {
+      domElement.addEventListener('mousedown', this.startResize);
+    });
     google.charts.load('current', {'packages':['corechart']});
     google.charts.setOnLoadCallback(this.drawChart);
+  }
+  componentWillUnmount() {
+    this.fileNodes.forEach(domElement => {
+      domElement.removeEventListener('mousedown', this.startResize);
+    });
   }
   render() {
     const { index } = this.props;
