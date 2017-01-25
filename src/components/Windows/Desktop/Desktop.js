@@ -91,16 +91,19 @@ class Desktop extends Component {
       previewsContainer: null,
     addedfile: file => {
       const { name, size, type } = file;
+      const fileSizeMb = (size / 1000 / 1000).toFixed(2);
+      console.log('size', fileSizeMb);
       const upload_id = this.getUploadId();
       checkAvailableSpace();
       fetch('/upload_start', {method: 'get', credentials: 'include'})
         .then(response => {
           response.json().then( responseObject => { // size in bytes
-            const { size, date: { year, month, day, hours, minutes, seconds, milliseconds } } = responseObject;
+            const { usedSpace, date: { year, month, day, hours, minutes, seconds, milliseconds } } = responseObject;
             //todo: upload start action
             //todo: Some sort of auth here, prevent unauth uploads. Dont trust client.
             uploadStart();
-            const mbUsed = (size / 1000).toFixed(2);
+            const mbUsed = (usedSpace / 1000).toFixed(2);
+            console.log('mbUsed', mbUsed);
             Evaporate.create(evap_config)
               .then(
                 evaporate => {

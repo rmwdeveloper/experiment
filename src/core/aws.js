@@ -24,3 +24,11 @@ export function getDirectorySize(Prefix) {
     });
   });
 }
+
+export function createDirectory(Key) {
+  return new Promise((resolve, reject) => {
+    s3.putObject({Bucket: aws_bucket_name, Key}, (err, data) => {
+      err ? reject(err) : resolve(data);
+    });
+  });
+}

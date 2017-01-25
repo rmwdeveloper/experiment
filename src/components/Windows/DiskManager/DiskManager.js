@@ -62,9 +62,8 @@ class DiskManager extends Component {
   render() {
     const { index } = this.props;
     return (<div id={`diskManager${index}`} className={styles.root}>
-      <div id="chart_div" className={styles.charts}>
-
-      </div>
+      
+      <div id="chart_div" className={styles.charts}></div>
     </div>);
   }
 }

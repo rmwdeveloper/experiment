@@ -26,7 +26,7 @@ import routes from './routes';
 import { resolve } from 'universal-router';
 import { port, analytics, auth, aws_secret_key, session_secret } from './config';
 
-import { getDirectorySize, doesObjectExist } from './core/aws';
+import { getDirectorySize, doesObjectExist, createDirectory } from './core/aws';
 import { getUser } from './core/auth';
 
 import assets from './assets';
@@ -206,10 +206,12 @@ app.get('/upload_start', (req, res) => {
 
   doesObjectExist(`${id}/`).then(response => {
     getDirectorySize(`${id}/`).then(size => {
-      res.status(200).send({ size, date });
+      res.status(200).send({ usedSpace: size, date });
     });
-  }).catch(error => {
-    //No Object Found!
+  }).catch(error => { //User ID doesnt exist, this is the user's first upload.
+    createDirectory(`${id}/`).then(() => {
+      res.status(200).send({ usedSpace: 0, date });
+    });
   });
 });
 
