@@ -51,7 +51,7 @@ const initialState = {
   openedFileDimensions: {},
   errorWindows: [],
   diskSpace: 50000, // MB
-  usedSpace: 0, // MB
+  usedSpace: 400, // MB
 };
 export default function layout(state = initialState, action) {
   const newOpenedFiles = [...state.openedFiles];

@@ -12,37 +12,31 @@ class DiskManager extends Component {
     super();
     this.drawChart = this.drawChart.bind(this);
     this.startResize = this.startResize.bind(this);
-    this.resizing = this.resizing.bind(this);
     this.stopResizing = this.stopResizing.bind(this);
   }
   startResize() {
-    window.addEventListener('mousemove', this.resizing);
+    window.addEventListener('mousemove', this.drawChart);
     window.addEventListener('mouseup', this.stopResizing);
   }
-  resizing() {
-    this.drawChart();
-  }
   stopResizing() {
-    window.removeEventListener('mousemove', this.resizing);
+    window.removeEventListener('mousemove', this.drawChart);
     window.removeEventListener('mouseup', this.stopResizing);
   }
   drawChart() {
-    // Create the data table.
+    const { diskSpace, usedSpace } = this.props;
     const data = new google.visualization.DataTable();
-    data.addColumn('string', 'Topping');
-    data.addColumn('number', 'Slices');
+    data.addColumn('string', 'DiskSpace');
+    data.addColumn('number', 'Megabytes');
     data.addRows([
-      ['Mushrooms', 3],
-      ['Onions', 1],
-      ['Olives', 1],
-      ['Zucchini', 1],
-      ['Pepperoni', 2]
+      ['Used', usedSpace],
+      ['Available', diskSpace - usedSpace],
     ]);
 
     // Set chart options
-    const options = {'title':'How Much Pizza I Ate Last Night',
-      'width':'100%',
-      'height':300};
+    const options = {'title':'Disk Space (MB)',
+      pieSliceText: 'value',
+      'width': this.rootElement.offsetWidth,
+      'height':this.rootElement.offsetHeight};
 
     // Instantiate and draw our chart, passing in some options.
     const chart = new google.visualization.PieChart(document.getElementById('chart_div'));
