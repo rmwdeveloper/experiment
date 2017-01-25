@@ -12,9 +12,19 @@ class DiskManager extends Component {
     super();
     this.drawChart = this.drawChart.bind(this);
     this.startResize = this.startResize.bind(this);
+    this.resizing = this.resizing.bind(this);
+    this.stopResizing = this.stopResizing.bind(this);
   }
   startResize() {
-    console.log('resizing');
+    window.addEventListener('mousemove', this.resizing);
+    window.addEventListener('mouseup', this.stopResizing);
+  }
+  resizing() {
+    this.drawChart();
+  }
+  stopResizing() {
+    window.removeEventListener('mousemove', this.resizing);
+    window.removeEventListener('mouseup', this.stopResizing);
   }
   drawChart() {
     // Create the data table.
