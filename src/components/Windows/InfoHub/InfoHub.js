@@ -9,6 +9,7 @@ function InfoHub({ className }) {
   return (
     <div className={styles.root}>
       <img className={styles.infoImage} src={computerIcon} width="30" height="29" alt="My Computer Icon for taskbar" />
+      <img className={styles.infoImage} src={computerIcon} width="30" height="29" alt="My Computer Icon for taskbar" />
       <SimpleTimer />
     </div>
   );
