@@ -14,22 +14,24 @@
 }
 
 .infoImage {
-  margin: 0 7px;
+  width: 30px;
+  color: #FFF;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
+.infoImage:hover {
+  background-color: rgba(255, 255, 255, .25);
+}
 @media (--phoneRetina) {
   .root {
     min-width: 125px;
   }
-  .infoImage {
-    margin: 0 7px;
-  }
+
 }
 @media(--desktop) {
   .root {
     min-width: 145px;
-  }
-  .infoImage {
-    margin: 0 15px;
   }
 }
