@@ -23,7 +23,9 @@ import {
   CLOSE_ERROR_WINDOW,
   MOVE_FILE,
   MOVE_FILES,
-  LOGIN
+  LOGIN,
+  UPLOAD_START,
+  CHECK_AVAILABLE_SPACE
 } from '../constants';
 
 
@@ -51,20 +53,27 @@ const initialState = {
   openedFileDimensions: {},
   errorWindows: [],
   diskSpace: 50000, // MB
-  usedSpace: 400, // MB
+  usedSpace: 0, // MB
 };
 export default function layout(state = initialState, action) {
+  const nextNodeIndex = Object.keys(state.fileSystem).length + 1;
   const newOpenedFiles = [...state.openedFiles];
   const newOpenedFileDimensions = {...state.openedFileDimensions};
   const newErrorWindows = [...state.errorWindows];
   const newFileSystem = { ...state.fileSystem };
   switch (action.type) {
+    case UPLOAD_START:
+      return {...state, usedSpace: action.newSpaceUsed};
     case OPEN_START_MENU:
       return { ...state, startMenuOpened: true };
     case CLOSE_START_MENU:
       return { ...state, startMenuOpened: false };
+    case CHECK_AVAILABLE_SPACE: // create new file based on the newly uploaded file. todo: make this work for desktop, or for a folder.
+      newFileSystem[nextNodeIndex] = { name: action.newFileName, extension: action.newFileExtension,
+        metadata: { icon: 'placeholder.png' } };
+      newFileSystem[state.desktopNodeIndex].children.push(nextNodeIndex);
+      return { ...state, fileSystem: newFileSystem};
     case CREATE_FOLDER:
-      const nextNodeIndex = Object.keys(state.fileSystem).length + 1;
       newFileSystem[nextNodeIndex] = { children: [], name: 'New Folder', type: 'Folder', metadata: { icon: 'emptyFolderXSmall.png' } };
       if (action.location === 'desktop') {
         newFileSystem[action.desktopNodeIndex].children.push(nextNodeIndex);

@@ -93,14 +93,15 @@ class Desktop extends Component {
       previewsContainer: null,
     addedfile: file => {
       const { name, size, type } = file;
+      const [fileName, extension] = name.split('.');
       const fileSizeMb = (size / 1000 / 1000).toFixed(2);
       const upload_id = this.getUploadId();
-      checkAvailableSpace();
+      checkAvailableSpace(fileName, extension);
       fetch('/upload_start', {method: 'get', credentials: 'include'})
         .then(response => {
           response.json().then( responseObject => { // size in bytes
             const { usedSpace, date: { year, month, day, hours, minutes, seconds, milliseconds } } = responseObject;
-            const mbUsed = (usedSpace / 1000 / 1000).toFixed(2);
+            const mbUsed = (usedSpace / 1000 / 1000).toFixed(2); // usedSpace from server, not state.
 
             if ( diskSpace - mbUsed - fileSizeMb < 0) {
               uploadError();
@@ -108,7 +109,7 @@ class Desktop extends Component {
             }
             //todo: upload start action
             //todo: Some sort of auth here, prevent unauth uploads. Dont trust client.
-            uploadStart();
+            uploadStart(parseFloat(fileSizeMb, 10) + parseFloat(mbUsed, 10));
 
             Evaporate.create(evap_config)
               .then(
@@ -170,6 +171,7 @@ class Desktop extends Component {
     return (this.state.selectedIcons !== nextState.selectedIcons) ||
       (this.props.registering !== nextProps.registering) ||
       (this.props.showSpaceIndicator !== nextProps.showSpaceIndicator) ||
+      (this.props.usedSpace !== nextProps.usedSpace) ||
       (this.props.selectedDesktopIcons !== nextProps.selectedDesktopIcons) ||
       (this.props.contextMenuActive !== nextProps.contextMenuActive) ||
       (this.props.contextMenuX !== nextProps.contextMenuX)||
