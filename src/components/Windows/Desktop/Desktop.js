@@ -169,6 +169,7 @@ class Desktop extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     return (this.state.selectedIcons !== nextState.selectedIcons) ||
       (this.props.registering !== nextProps.registering) ||
+      (this.props.showSpaceIndicator !== nextProps.showSpaceIndicator) ||
       (this.props.selectedDesktopIcons !== nextProps.selectedDesktopIcons) ||
       (this.props.contextMenuActive !== nextProps.contextMenuActive) ||
       (this.props.contextMenuX !== nextProps.contextMenuX)||
@@ -386,6 +387,7 @@ class Desktop extends Component {
   render() {
     const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, contextMenuClickClass, contextMenuIndexClicked,
       errorWindows, closeErrorWindow, connectDropTarget, moveFile, moveFiles, desktopNodeIndex, usedSpace, diskSpace,
+      showSpaceIndicator,
       selectedDesktopIcons, createFolder, openErrorWindow, openFile, openedFiles, fileSystem } = this.props;
     const selectedIds = selectedDesktopIcons.map(id => {return parseInt(id, 10)});
     return (connectDropTarget(
@@ -427,7 +429,9 @@ class Desktop extends Component {
                 contextMenuY={contextMenuY}
                 contextMenuX={contextMenuX}/> : null
         }
-        <SpaceAvailabilityIndicator usedSpace={usedSpace} diskSpace={diskSpace} />
+        {
+          showSpaceIndicator ?  <SpaceAvailabilityIndicator usedSpace={usedSpace} diskSpace={diskSpace} /> : null
+        }
       </div>
     ));
   }
