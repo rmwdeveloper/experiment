@@ -385,7 +385,7 @@ class Desktop extends Component {
   }
   render() {
     const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, contextMenuClickClass, contextMenuIndexClicked,
-      errorWindows, closeErrorWindow, connectDropTarget, moveFile, moveFiles, desktopNodeIndex,
+      errorWindows, closeErrorWindow, connectDropTarget, moveFile, moveFiles, desktopNodeIndex, usedSpace, diskSpace,
       selectedDesktopIcons, createFolder, openErrorWindow, openFile, openedFiles, fileSystem } = this.props;
     const selectedIds = selectedDesktopIcons.map(id => {return parseInt(id, 10)});
     return (connectDropTarget(
@@ -427,7 +427,7 @@ class Desktop extends Component {
                 contextMenuY={contextMenuY}
                 contextMenuX={contextMenuX}/> : null
         }
-        <SpaceAvailabilityIndicator />
+        <SpaceAvailabilityIndicator usedSpace={usedSpace} diskSpace={diskSpace} />
       </div>
     ));
   }
