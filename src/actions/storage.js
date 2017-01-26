@@ -29,9 +29,9 @@ export function uploadError() {
 /*
  * Update the space indicator gauge to reflect new space used.
  */
-export function uploadStart(newSpaceUsed) {
+export function uploadStart(newSpaceUsed, temporaryUploadId) {
   return dispatch => {
-    dispatch({ type: UPLOAD_START, newSpaceUsed });
+    dispatch({ type: UPLOAD_START, newSpaceUsed, temporaryUploadId });
   };
 }
 
@@ -39,9 +39,9 @@ export function uploadStart(newSpaceUsed) {
  * Progressively increase the opacity of the new upload icon.
  * Also have an upload progress bar.
  */
-export function uploadProgress() {
-  return dispatch => {
-    dispatch({ type: UPLOAD_PROGRESS });
+export function uploadProgress(progress, temporaryUploadId) {
+  return (dispatch, getState) => {
+    dispatch({ type: UPLOAD_PROGRESS, progress, temporaryUploadId });
   };
 }
 

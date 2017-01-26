@@ -12,6 +12,9 @@ function FileIcon({ item, openFile, connectDragSource, connectDropTarget, classN
     style.backgroundSize = '425px';
     style.backgroundPosition = item.metadata.backgroundPosition;
   }
+  if (item.metadata.iconOpacity) {
+    style.opacity = item.metadata.iconOpacity;
+  }
   return connectDragSource(connectDropTarget(
     <div data-clickClass={windowsClickables.desktopItem} data-topClickable data-index={item.index} onDoubleClick={() => { openFile(item.index); }}
          className={cx(className, styles.root)}>

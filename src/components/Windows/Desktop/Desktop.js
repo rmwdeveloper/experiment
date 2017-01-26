@@ -109,7 +109,8 @@ class Desktop extends Component {
             }
             //todo: upload start action
             //todo: Some sort of auth here, prevent unauth uploads. Dont trust client.
-            uploadStart(parseFloat(fileSizeMb, 10) + parseFloat(mbUsed, 10));
+            const temporaryUploadId = `${upload_id}${year}${month}${day}${hours}${minutes}${seconds}${milliseconds}`;
+            uploadStart(parseFloat(fileSizeMb, 10) + parseFloat(mbUsed, 10), temporaryUploadId);
 
             Evaporate.create(evap_config)
               .then(
@@ -121,7 +122,7 @@ class Desktop extends Component {
                       'x-amz-acl': 'public-read'
                     },
                     progress: progressVal => {
-                      uploadProgress();
+                      uploadProgress(progressVal, temporaryUploadId);
                     },
                     info: info => {},
                     error: error => {},
@@ -172,9 +173,10 @@ class Desktop extends Component {
       (this.props.registering !== nextProps.registering) ||
       (this.props.showSpaceIndicator !== nextProps.showSpaceIndicator) ||
       (this.props.usedSpace !== nextProps.usedSpace) ||
+      (this.props.uploads !== nextProps.uploads) ||
       (this.props.selectedDesktopIcons !== nextProps.selectedDesktopIcons) ||
       (this.props.contextMenuActive !== nextProps.contextMenuActive) ||
-      (this.props.contextMenuX !== nextProps.contextMenuX)||
+      (this.props.contextMenuX !== nextProps.contextMenuX) ||
       (this.props.openedFiles !== nextProps.openedFiles) ||
       (this.props.fileSystem !== nextProps.fileSystem) ||
       (this.props.errorWindows !== nextProps.errorWindows) ||
