@@ -1,6 +1,6 @@
 {
-  "name": "FileIcon",
+  "name": "SpaceAvailabilityIndicator",
   "version": "0.0.0",
   "private": true,
-  "main": "./FileIcon.js"
+  "main": "./SpaceAvailabilityIndicator.js"
 }

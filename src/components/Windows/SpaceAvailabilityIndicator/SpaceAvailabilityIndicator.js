@@ -3,7 +3,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './SpaceAvailabilityIndicator.css'; //eslint-disable-line
 
 
-function SpaceAvailabilityIndicator({ item, openFile, connectDragSource, connectDropTarget, className }) {
+function SpaceAvailabilityIndicator({ }) {
   return <div>Space Availability Indicator</div>
 }
 

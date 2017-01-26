@@ -10,6 +10,7 @@ import { windowsClickables } from '../../../constants/windows';
 import DesktopItem from '../FileIcon';
 import ContextMenu from '../ContextMenu';
 import ErrorWindow from '../ErrorWindow';
+import SpaceAvailabilityIndicator from '../SpaceAvailabilityIndicator';
 import Evaporate from 'evaporate';
 import { resizeWindow } from '../../../core/layout'
 
@@ -426,6 +427,7 @@ class Desktop extends Component {
                 contextMenuY={contextMenuY}
                 contextMenuX={contextMenuX}/> : null
         }
+        <SpaceAvailabilityIndicator />
       </div>
     ));
   }
