@@ -430,7 +430,7 @@ class Desktop extends Component {
                 contextMenuX={contextMenuX}/> : null
         }
         {
-          showSpaceIndicator ?  <SpaceAvailabilityIndicator usedSpace={usedSpace} diskSpace={diskSpace} /> : null
+            showSpaceIndicator ?  <SpaceAvailabilityIndicator className={styles.showIndicator} usedSpace={usedSpace} diskSpace={diskSpace} /> : null
         }
       </div>
     ));
