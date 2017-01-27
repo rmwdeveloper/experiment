@@ -27,6 +27,6 @@ module.exports = { // Indices are always unique and static. A node only ever has
   25: { name: 'some text', permissions: 'rwx-', extension: 'txt', metadata: { sprite: true, icon: 'iconsSprite.gif', backgroundPosition: '200px 100px' } },
   26: { name: 'anothjer image', permissions: 'rwx-', extension: 'jpg', metadata: { sprite: true, icon: 'iconsSprite.gif', backgroundPosition: '53px 42px' } },
   27: { name: 'printer settings', permissions: 'rwx-', extension: 'txt', metadata: { sprite: true, icon: 'iconsSprite.gif', backgroundPosition: '200px 50px' } },
-  28: { name: 'some text(2)', permissions: 'rwx-', extension: 'txt', metadata: { sprite: true, icon: 'iconsSprite.gif', backgroundPosition: '200px 100px' } },
+  28: { name: 'A really really really really really long filename', permissions: 'rwx-', extension: 'txt', metadata: { sprite: true, icon: 'iconsSprite.gif', backgroundPosition: '200px 100px' } },
   29: { name: 'Authenticator', permissions: 'rwxp', extension: 'exe' },
 };
