@@ -17,6 +17,15 @@
   height: 60px;
   width: 60px;
 }
+
+.iconSVG{
+  position: absolute;
+}
+
+.iconSVG path {
+  stroke-dasharray: 400;
+
+}
 .directoryName {
   display:inline-block;
   text-align: center;

@@ -18,8 +18,13 @@ function FileIcon({ item, openFile, connectDragSource, connectDropTarget, classN
   return connectDragSource(connectDropTarget(
     <div data-clickClass={windowsClickables.desktopItem} data-topClickable data-index={item.index} onDoubleClick={() => { openFile(item.index); }}
          className={cx(className, styles.root)}>
+      <svg className={styles.iconSVG} width="100%" height="100%">]
+        <rect width="100%" height="100%" fill="transparent"
+              stroke="#BBB"/>
+        <path style={{strokeDashoffset: 400 * (1 - 0.5) }} d="M0 0 H 100 V 100 H 100 0 V 100 0" stroke="red" stroke-width="3" fill="transparent" />
+      </svg>
       <div style={style} data-clickClass={windowsClickables.desktopItemIcon} data-index={item.index} className={cx(styles.icon)}></div>
-      {/*<img data-index={item.index} className={styles.icon} src={item.metadata.icon} alt={`${item.name} icon`} />*/}
+
       <span data-clickClass={windowsClickables.desktopItemName} data-index={item.index} className={styles.directoryName}> {item.name}</span>
     </div>
   ));
