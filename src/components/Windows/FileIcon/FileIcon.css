@@ -1,8 +1,8 @@
 @import '../../variables.css';
 
 .root {
-  width: 95px;
-  height: 95px;
+  width: 100px;
+  height: 100px;
   /*overflow: hidden;*/
   margin: 10px;
   display: flex;
