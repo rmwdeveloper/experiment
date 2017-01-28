@@ -136,7 +136,7 @@ class Desktop extends Component {
                         .then(response => {
                           return response.json().then(responseObject => {
                             console.log(responseObject);
-                            uploadComplete();
+                            uploadComplete(temporaryUploadId);
                           });
                         }).catch(err => {
                           return err;

@@ -26,7 +26,8 @@ import {
   LOGIN,
   UPLOAD_START,
   CHECK_AVAILABLE_SPACE,
-  UPLOAD_PROGRESS
+  UPLOAD_PROGRESS,
+  UPLOAD_COMPLETE
 } from '../constants';
 
 
@@ -79,6 +80,10 @@ export default function layout(state = initialState, action) {
       return { ...state, fileSystem: newFileSystem, uploads: newUploads };
     case UPLOAD_PROGRESS:
       newFileSystem[state.uploads[action.temporaryUploadId]].metadata.progress = action.progress;
+      return { ...state, fileSystem: newFileSystem};
+    case UPLOAD_COMPLETE:
+      delete newFileSystem[state.uploads[action.temporaryUploadId]].metadata.progress;
+      delete newFileSystem[state.uploads[action.temporaryUploadId]].metadata.loading;
       return { ...state, fileSystem: newFileSystem};
     case CREATE_FOLDER:
       newFileSystem[nextNodeIndex] = { children: [], name: 'New Folder', type: 'Folder', metadata: { icon: 'emptyFolderXSmall.png' } };

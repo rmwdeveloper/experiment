@@ -46,9 +46,9 @@ export function uploadProgress(progress, temporaryUploadId) {
 }
 
 
-export function uploadComplete() {
+export function uploadComplete(temporaryUploadId) {
   return dispatch => {
-    dispatch({ type: UPLOAD_COMPLETE });
+    dispatch({ type: UPLOAD_COMPLETE, temporaryUploadId });
   };
 }
 
