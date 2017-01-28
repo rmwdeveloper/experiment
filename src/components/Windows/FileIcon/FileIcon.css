@@ -20,18 +20,19 @@
 
 .iconSVG{
   position: absolute;
+  top: -5px;
+  left: -5px;
 }
 
-.iconSVG path {
-  stroke-dasharray: 400;
 
-}
 .directoryName {
   display:inline-block;
   text-align: center;
   height: 50%;
   width: 100%;
   white-space: pre-line;
+  word-wrap: break-word;
+  overflow: hidden;
 }
 
 @media (--tablet) {

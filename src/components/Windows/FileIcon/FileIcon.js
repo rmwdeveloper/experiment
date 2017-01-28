@@ -8,10 +8,10 @@ import flow from 'lodash.flow';
 
 function FileIcon({ item, openFile, connectDragSource, connectDropTarget, className, uploads }) {
   const style = {background: `url(${item.metadata.icon})`};
-  const loadingBorder = (<svg className={styles.iconSVG} width="100%" height="100%">]
+  const loadingBorder = (<svg className={styles.iconSVG} width="110" height="110">]
     <rect width="100%" height="100%" fill="transparent"
-          stroke="#BBB"/>
-    <path style={{strokeDashoffset: 400 * (1 - item.metadata.progress) }} d="M0 0 H 100 V 100 H 100 0 V 100 0" stroke="red" strokeWidth="3" fill="transparent" />
+          stroke="black"/>
+    <path style={{strokeDasharray: 440, strokeDashoffset: 440 * (1 - item.metadata.progress) }} d="M0 0 H 110 V 110 H 110 0 V 110 0" stroke="green" strokeWidth="5" fill="transparent" />
   </svg>);
   if (item.metadata.sprite) {
     style.backgroundSize = '425px';
@@ -23,7 +23,7 @@ function FileIcon({ item, openFile, connectDragSource, connectDropTarget, classN
   return connectDragSource(connectDropTarget(
     <div data-clickClass={windowsClickables.desktopItem} data-topClickable data-index={item.index} onDoubleClick={() => { openFile(item.index); }}
          className={cx(className, styles.root)}>
-      { item.metadata.isLoading ? loadingBorder : null}
+      { item.metadata.loading ? loadingBorder : null}
       <div style={style} data-clickClass={windowsClickables.desktopItemIcon} data-index={item.index} className={cx(styles.icon)}></div>
 
       <span data-clickClass={windowsClickables.desktopItemName} data-index={item.index} className={styles.directoryName}> {item.name}</span>
