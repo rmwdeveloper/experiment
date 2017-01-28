@@ -63,6 +63,7 @@ export default function layout(state = initialState, action) {
   const newOpenedFileDimensions = {...state.openedFileDimensions};
   const newErrorWindows = [...state.errorWindows];
   const newFileSystem = { ...state.fileSystem };
+  const newUploads = { ...state.uploads };
   switch (action.type) {
     case UPLOAD_START:
       return {...state, usedSpace: action.newSpaceUsed};
@@ -74,6 +75,10 @@ export default function layout(state = initialState, action) {
       newFileSystem[nextNodeIndex] = { name: action.newFileName, extension: action.newFileExtension,
         metadata: { icon: 'placeholder.png', iconOpacity: 0.25, isLoading: true, progress: 0, temporaryUploadId: action.temporaryUploadId } };
       newFileSystem[state.desktopNodeIndex].children.push(nextNodeIndex);
+      newUploads[action.temporaryUploadId] = nextNodeIndex;
+      return { ...state, fileSystem: newFileSystem, uploads: newUploads };
+    case UPLOAD_PROGRESS:
+      newFileSystem[state.uploads[action.temporaryUploadId]].metadata.progress = action.progress;
       return { ...state, fileSystem: newFileSystem};
     case CREATE_FOLDER:
       newFileSystem[nextNodeIndex] = { children: [], name: 'New Folder', type: 'Folder', metadata: { icon: 'emptyFolderXSmall.png' } };

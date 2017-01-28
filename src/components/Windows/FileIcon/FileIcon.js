@@ -11,9 +11,8 @@ function FileIcon({ item, openFile, connectDragSource, connectDropTarget, classN
   const loadingBorder = (<svg className={styles.iconSVG} width="100%" height="100%">]
     <rect width="100%" height="100%" fill="transparent"
           stroke="#BBB"/>
-    <path style={{strokeDashoffset: 400 * (1 - 0.5) }} d="M0 0 H 100 V 100 H 100 0 V 100 0" stroke="red" stroke-width="3" fill="transparent" />
+    <path style={{strokeDashoffset: 400 * (1 - item.metadata.progress) }} d="M0 0 H 100 V 100 H 100 0 V 100 0" stroke="red" strokeWidth="3" fill="transparent" />
   </svg>);
-  console.log(uploads);
   if (item.metadata.sprite) {
     style.backgroundSize = '425px';
     style.backgroundPosition = item.metadata.backgroundPosition;
