@@ -8,7 +8,7 @@ import {
 
 const initialState = {
   showSpaceIndicator: false,
-  uploads: {}
+  // uploads: {}
 };
 
 export default function storage(state = initialState, action) {
@@ -19,9 +19,9 @@ export default function storage(state = initialState, action) {
     case UPLOAD_START:
       newUploads[action.temporaryUploadId] = {progress: 0};
       return {...state, uploads: newUploads };
-    case UPLOAD_PROGRESS:
-      newUploads[action.temporaryUploadId].progress = action.progress;
-      return {...state, uploads: newUploads };
+    // case UPLOAD_PROGRESS:
+    //   newUploads[action.temporaryUploadId].progress = action.progress;
+    //   return {...state, uploads: newUploads };
     case UPLOAD_COMPLETE:
       return { ...state, showSpaceIndicator: false };
     default:

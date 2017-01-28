@@ -25,7 +25,8 @@ import {
   MOVE_FILES,
   LOGIN,
   UPLOAD_START,
-  CHECK_AVAILABLE_SPACE
+  CHECK_AVAILABLE_SPACE,
+  UPLOAD_PROGRESS
 } from '../constants';
 
 
@@ -54,6 +55,7 @@ const initialState = {
   errorWindows: [],
   diskSpace: 50000, // MB
   usedSpace: 0, // MB
+  uploads: {} // uploads[<temporary upload id> = nodeIndex
 };
 export default function layout(state = initialState, action) {
   const nextNodeIndex = Object.keys(state.fileSystem).length + 1;
@@ -70,7 +72,7 @@ export default function layout(state = initialState, action) {
       return { ...state, startMenuOpened: false };
     case CHECK_AVAILABLE_SPACE: // create new file based on the newly uploaded file. todo: make this work for desktop, or for a folder.
       newFileSystem[nextNodeIndex] = { name: action.newFileName, extension: action.newFileExtension,
-        metadata: { icon: 'placeholder.png', iconOpacity: 0.25 } };
+        metadata: { icon: 'placeholder.png', iconOpacity: 0.25, isLoading: true, progress: 0, temporaryUploadId: action.temporaryUploadId } };
       newFileSystem[state.desktopNodeIndex].children.push(nextNodeIndex);
       return { ...state, fileSystem: newFileSystem};
     case CREATE_FOLDER:
@@ -79,6 +81,7 @@ export default function layout(state = initialState, action) {
         newFileSystem[action.desktopNodeIndex].children.push(nextNodeIndex);
       }
       return { ...state, fileSystem: newFileSystem, contextMenuActive: false };
+    
     case OPEN_CONTEXT_MENU:
       return { ...state, contextMenuX: action.mouseX, contextMenuY: action.mouseY, contextMenuActive: true,
         contextMenuClickClass: action.clickclass, contextMenuIndexClicked: action.index };

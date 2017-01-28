@@ -10,9 +10,9 @@ import {
 * Toolbar.. pop up disk space indicator and play animation.
 * Add icon to desktop (or folder) with low opacity.
  */
-export function checkAvailableSpace(newFileName, newFileExtension) {
+export function checkAvailableSpace(newFileName, newFileExtension, temporaryUploadId) {
   return dispatch => {
-    dispatch({ type: CHECK_AVAILABLE_SPACE, newFileName, newFileExtension });
+    dispatch({ type: CHECK_AVAILABLE_SPACE, newFileName, newFileExtension, temporaryUploadId });
   };
 }
 
@@ -40,7 +40,7 @@ export function uploadStart(newSpaceUsed, temporaryUploadId) {
  * Also have an upload progress bar.
  */
 export function uploadProgress(progress, temporaryUploadId) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({ type: UPLOAD_PROGRESS, progress, temporaryUploadId });
   };
 }

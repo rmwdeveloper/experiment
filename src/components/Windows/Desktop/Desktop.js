@@ -3,6 +3,7 @@ import { DropTarget as dropTarget, DragDropContext as dragDropContext, DragSourc
 import HTML5Backend from 'react-dnd-html5-backend';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Desktop.css'; //eslint-disable-line
+import uuidV4 from 'uuid/v4';
 
 import { evap_config } from '../../../config';
 import windowsFileRegistry from '../windowsFileRegistry';
@@ -92,11 +93,15 @@ class Desktop extends Component {
     this.dropzone = new Dropzone('div#desktop', {url: '/upload', autoProcessQueue:false, clickable: false, createImageThumbnails: false,
       previewsContainer: null,
     addedfile: file => {
+
       const { name, size, type } = file;
       const [fileName, extension] = name.split('.');
       const fileSizeMb = (size / 1000 / 1000).toFixed(2);
-      const upload_id = this.getUploadId();
-      checkAvailableSpace(fileName, extension);
+      const userId = this.getUploadId(); // todo : chagne this to getUserId
+      const temporaryUploadId = uuidV4();
+
+      checkAvailableSpace(fileName, extension, temporaryUploadId);
+
       fetch('/upload_start', {method: 'get', credentials: 'include'})
         .then(response => {
           response.json().then( responseObject => { // size in bytes
@@ -109,14 +114,13 @@ class Desktop extends Component {
             }
             //todo: upload start action
             //todo: Some sort of auth here, prevent unauth uploads. Dont trust client.
-            const temporaryUploadId = `${upload_id}${year}${month}${day}${hours}${minutes}${seconds}${milliseconds}`;
             uploadStart(parseFloat(fileSizeMb, 10) + parseFloat(mbUsed, 10), temporaryUploadId);
 
             Evaporate.create(evap_config)
               .then(
                 evaporate => {
                   evaporate.add({
-                    name: `${upload_id}/${year}/${month}/${day}/${hours}${minutes}${seconds}${milliseconds}/${name}`,
+                    name: `${userId}/${year}/${month}/${day}/${hours}${minutes}${seconds}${milliseconds}/${name}`,
                     file,
                     xAmzHeadersAtInitiate : {
                       'x-amz-acl': 'public-read'
@@ -391,7 +395,7 @@ class Desktop extends Component {
   render() {
     const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, contextMenuClickClass, contextMenuIndexClicked,
       errorWindows, closeErrorWindow, connectDropTarget, moveFile, moveFiles, desktopNodeIndex, usedSpace, diskSpace,
-      showSpaceIndicator,
+      showSpaceIndicator, uploads,
       selectedDesktopIcons, createFolder, openErrorWindow, openFile, openedFiles, fileSystem } = this.props;
     const selectedIds = selectedDesktopIcons.map(id => {return parseInt(id, 10)});
     return (connectDropTarget(
@@ -405,7 +409,7 @@ class Desktop extends Component {
         {
           desktopItems.map((desktopitem) => {
             return <DesktopItem selected={selectedIds.includes(desktopitem.index)} className='desktopIcon'
-                                key={desktopitem.index}
+                                key={desktopitem.index} uploads={uploads}
                                 index={desktopitem.index} moveFiles={moveFiles} parentIndex={desktopNodeIndex}
                                 moveFile={moveFile}  openFile={openFile} item={desktopitem} />
           })

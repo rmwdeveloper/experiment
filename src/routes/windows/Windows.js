@@ -30,7 +30,7 @@ import MobileTaskbar from '../../components/Windows/MobileTaskbar';
   diskSpace: state.windows.diskSpace,
   usedSpace: state.windows.usedSpace,
   showSpaceIndicator: state.storage.showSpaceIndicator,
-  uploads: state.storage.uploads,
+  uploads: state.windows.uploads,
   desktopNodeIndex: state.windows.desktopNodeIndex,
   userIndex: state.windows.userIndex,
   contextMenuX: state.windows.contextMenuX,
