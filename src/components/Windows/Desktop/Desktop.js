@@ -50,6 +50,7 @@ class Desktop extends Component {
     this.fileWindowResizing = this.fileWindowResizing.bind(this);
     this.findAncestorWithClickClass = this.findAncestorWithClickClass.bind(this);
     this.getUploadId = this.getUploadId.bind(this);
+    this.uploadComplete = this.uploadComplete.bind(this);
     this.dragbox = null;
     this.draggedItem = null;
     this.resizedItem = null;
@@ -80,12 +81,35 @@ class Desktop extends Component {
     const { user, isAnonymousUser } = this.props;
     return isAnonymousUser ? 0 : user.id;
   }
+  uploadComplete(awsKey, temporaryUploadId) {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    const { fileSystem, uploads, uploadComplete, desktopNodeIndex } = this.props;
+    const newNode = fileSystem[uploads[temporaryUploadId]];
+    delete newNode.metadata.temporaryUploadId; //todo: refactor.
+    delete newNode.metadata.loading;
+    delete newNode.metadata.iconOpacity;
+    delete newNode.metadata.progress;
+
+    fetch('/upload_complete', {method: 'post', headers,
+      body: JSON.stringify({newNode, awsKey, parentIndex: desktopNodeIndex }),
+      credentials: 'include'})
+      .then(response => {
+        return response.json().then(responseObject => {
+          uploadComplete(temporaryUploadId);
+          // todo: persist in uploads and filesystem.
+
+        });
+      }).catch(err => {
+      return err;
+    })
+  }
   componentDidMount() {
     const { diskSpace } = this.props;
     this.icons = document.getElementsByClassName('desktopIcon');
     this.desktop = document.getElementById('desktop');
     this.header = document.getElementById('primaryHeader');
-    const { checkAvailableSpace, uploadComplete, uploadStart, uploadProgress, uploadError } = this.props;
+    const { checkAvailableSpace, uploadComplete, uploadStart, uploadProgress, uploadError, fileSystem, uploads } = this.props;
     // START dropzone stuff. todo: abstract this crap away to a HOC
     // todo : dropzone script is in index.jade. Should be packed with webpack
     // todo: convert fetch to isomorphic fetch ?
@@ -132,15 +156,7 @@ class Desktop extends Component {
                     error: error => {},
                     warn: warn => {},
                     complete: (xhr, awsObjectKey, stats) => {
-                      fetch('/upload_complete', {method: 'post', credentials: 'include'})
-                        .then(response => {
-                          return response.json().then(responseObject => {
-                            console.log(responseObject);
-                            uploadComplete(temporaryUploadId);
-                          });
-                        }).catch(err => {
-                          return err;
-                      })
+                      this.uploadComplete(awsObjectKey, temporaryUploadId);
                     }
                   })
                     .then(

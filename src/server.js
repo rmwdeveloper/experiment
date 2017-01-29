@@ -17,7 +17,7 @@ import PrettyError from 'pretty-error';
 import passport from './core/passport';
 
 import ReactDOM from 'react-dom/server';
-import models, { User, FileSystem, FileNode, FileNodeMetadata  } from './data/models';
+import models, { User, FileSystem, FileNode, FileNodeMetadata, Upload } from './data/models';
 // todo : better way to import these fixtures?
 
 import { fileNodesFixture, fileNodesMetadataFixture } from './data/fixtures';
@@ -216,8 +216,33 @@ app.get('/upload_start', (req, res) => {
 });
 
 app.post('/upload_complete', (req, res) => {
-  console.log(req.user);
-  res.send({});
+  // console.log(req.body.newNode);
+  // console.log(req.body.awsKey);
+  const username = req.user ? req.user.username : 'Guest'; // Either logged in user, or guest ID ( 1 )
+  getUser(username).then(userObj => {
+    const FileSystemId = userObj.get({plain: true}).FileSystem.id; //todo: Abract away into filenode create helper.
+    const { name, permissions, extension, nodeIndex, metadata } = req.body.newNode;
+
+    return sequelize.transaction( transaction => {
+      return FileNode.create({name, permissions, extension, nodeIndex, FileSystemId, FileNodeId: req.body.parentIndex}, {transaction}).then(fileNode => {
+        const { id } = fileNode.get({plain: true});
+        const promises = [];
+        Object.keys(metadata).forEach(key => { promises.push(FileNodeMetadata.create({name: key, value: metadata[key], FileNodeId: id }, {transaction})); });
+        return Promise.all(promises).then( (results) => {
+          return results;
+        });
+      });
+
+    }).then(result => {
+      // console.log(result);
+
+    }).catch(error => {
+      console.log(error);
+
+    });
+    res.status(200).send('Ok!');
+  });
+  return null;
 });
 
 app.get('/sign_aws', async(req, res) => {

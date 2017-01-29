@@ -74,7 +74,9 @@ export default function layout(state = initialState, action) {
       return { ...state, startMenuOpened: false };
     case CHECK_AVAILABLE_SPACE: // create new file based on the newly uploaded file. todo: make this work for desktop, or for a folder.
       newFileSystem[nextNodeIndex] = { name: action.newFileName, extension: action.newFileExtension,
-        metadata: { icon: 'placeholder.png', iconOpacity: 0.25, loading: true, progress: 0, temporaryUploadId: action.temporaryUploadId } };
+        nodeIndex: nextNodeIndex,  permissions: 'rwxp',
+        metadata: { icon: 'placeholder.png',
+          iconOpacity: 0.25, loading: true, progress: 0, temporaryUploadId: action.temporaryUploadId } };
       newFileSystem[state.desktopNodeIndex].children.push(nextNodeIndex);
       newUploads[action.temporaryUploadId] = nextNodeIndex;
       return { ...state, fileSystem: newFileSystem, uploads: newUploads };
