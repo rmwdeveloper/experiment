@@ -4,6 +4,7 @@ import Word from '../Word/Word/Word';
 import EmptyProgram from './EmptyProgram/EmptyProgram';
 import Authenticator from './Authenticator/Authenticator';
 import DiskManager from './DiskManager/DiskManager';
+import ErrorWindow from './ErrorWindow/ErrorWindow';
 
 export default function windowsRegistry(fileType, openedFileNode) {
   switch (fileType) {
@@ -18,6 +19,8 @@ export default function windowsRegistry(fileType, openedFileNode) {
           return FileWindow(Word);
         case 'Disk Manager':
           return FileWindow(DiskManager);
+        case 'Error Displayer':
+          return FileWindow(ErrorWindow)
         default:
           return FileWindow(EmptyProgram);
       }

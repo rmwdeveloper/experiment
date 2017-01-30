@@ -69,9 +69,9 @@ export function openFile(nodeIndex) {
   };
 }
 
-export function closeFile(openedFileIndex) {
+export function closeFile(nodeIndex, uniqueId) {
   return dispatch => {
-    dispatch({ type: CLOSE_FILE_WINDOW, openedFileIndex });
+    dispatch({ type: CLOSE_FILE_WINDOW, nodeIndex, uniqueId });
   };
 }
 export function closeErrorWindow(errorIndex) {

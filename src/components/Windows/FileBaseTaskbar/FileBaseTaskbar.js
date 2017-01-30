@@ -4,21 +4,21 @@ import styles from './FileBaseTaskbar.css'; //eslint-disable-line
 import cx from 'classnames';
 import { windowsClickables } from '../../../constants/windows';
 
-function FileBaseTaskbar({filename,
+function FileBaseTaskbar({filename, nodeIndex,
   toggleWindowMinimize, toggleWindowMaximize,
-  index, closeFile, maximized}) {
+  uniqueId, closeFile, maximized}) {
   return (
-    <div data-clickclass={windowsClickables.fileTaskbar} data-topClickable data-index={index} className={styles.root}>
+    <div data-clickclass={windowsClickables.fileTaskbar} data-topClickable data-uniqueId={uniqueId} className={styles.root}>
       <span className={styles.fileName}>{filename}</span>
       <div className={styles.fileControls}>
-        <i onClick={() => { toggleWindowMinimize(index); }} className={cx(styles.minimizeWindowIcon, 'fa fa-minus')} />
-        <div onClick={() => { toggleWindowMaximize(index); }} className={styles.resizeWindowIcon}>
+        <i onClick={() => { toggleWindowMinimize(uniqueId); }} className={cx(styles.minimizeWindowIcon, 'fa fa-minus')} />
+        <div onClick={() => { toggleWindowMaximize(uniqueId); }} className={styles.resizeWindowIcon}>
           <i className="fa fa-square-o" />
           {
             maximized ? <i className="fa fa-square-o" /> : null
           }
         </div>
-        <i onClick={() => { closeFile(index); }} className={cx(styles.closeWindowIcon, 'fa fa-remove')} />
+        <i onClick={() => { closeFile(nodeIndex, uniqueId); }} className={cx(styles.closeWindowIcon, 'fa fa-remove')} />
       </div>
     </div>);
 }

@@ -431,12 +431,11 @@ class Desktop extends Component {
           })
         }
         {
-          openedFiles.map((openedFile, index) => {
-            const openedFileNode = fileSystem[openedFile];
+          openedFiles.map((openedFile) => {
+            const openedFileNode = fileSystem[openedFile.nodeIndex];
             const fileType = openedFileNode.hasOwnProperty('children') ? 'Folder' : openedFileNode.extension;
-            return React.createElement(windowsFileRegistry(fileType, openedFileNode), { key: index, openedFile,
-              filename: fileSystem[openedFile].name,
-              index, ...this.props});
+            return React.createElement(windowsFileRegistry(fileType, openedFileNode), { key: openedFile.uniqueId, openedFile,
+              filename: openedFileNode.name, ...this.props});
           })
         }
         {

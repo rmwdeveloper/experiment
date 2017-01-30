@@ -8,20 +8,8 @@ import ErrorWindowTaskbar from '../ErrorWindowTaskbar';
 
 
 function ErrorWindow({errorObject, index, closeErrorWindow}) {
-  const { errorMessage, xPosition, yPosition, width, height } = errorObject;
-  return (
-    <MoveableResizeableWindow
-      height={height}
-      width={width} xPosition={xPosition} yPosition={yPosition} index={index}
-    >
-      <ErrorWindowTaskbar
-        index={index}
-        closeFile={closeErrorWindow}
-      />
-      <div className={styles.root}>
-        {errorMessage}
-      </div>
-    </MoveableResizeableWindow>);
+  // const { errorMessage, xPosition, yPosition, width, height } = errorObject;
+  return (<div>Hello World</div>);
 }
 
 ErrorWindow.propTypes = {

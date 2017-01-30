@@ -38,6 +38,7 @@ const initialState = {
   desktopWidth: 0,
   desktopHeight: 0,
   fileSystem,
+  errorDisplayerIndex: 23,
   desktopNodeIndex: 11, //indices are in state, and not searchable by name because user can make duplicate names
   userIndex: 4, // Users personal index. Username will be fileSystem[userIndex].name  . Default is "Guest"
   authenticatorIndex: 29,
@@ -52,7 +53,7 @@ const initialState = {
   contextMenuIndexClicked: 0,
   contextMenuActive: false,
   selectedDesktopIcons: [], // Array of entity IDs todo: maybe rename this to selectedIcons if this can be used for both desktop and folder...
-  openedFiles: [], // {entityId, height, width}
+  openedFiles: [],
   openedFileDimensions: {},
   errorWindows: [],
   diskSpace: 50000, // MB
@@ -102,15 +103,22 @@ export default function layout(state = initialState, action) {
       return { ...state, selectedDesktopIcons: action.icons };
     case CLEAR_ACTIVES:
       return { ...state, contextMenuActive: false};
-    case OPEN_FILE_WINDOW:
-      newOpenedFileDimensions[action.nodeIndex] = { height: 300, width: 300,
-        xPosition: ((action.desktopWidth / 2.4) + state.openedFiles.length * 5)
-        ,yPosition: ((action.desktopHeight / 4) + state.openedFiles.length * 5), maximized: false, minimized: false };
-      return { ...state, openedFiles: [...state.openedFiles, action.nodeIndex], openedFileDimensions: newOpenedFileDimensions };
+    case OPEN_FILE_WINDOW: // todo: consolidate with below statement (OPEN_ERROR_WINDOW)
+      const uniqueId = uuid.v4(); // todo: a better way to do this?
+      newOpenedFiles.push({nodeIndex: action.nodeIndex, uniqueId});
+      if (!newOpenedFileDimensions[action.nodeIndex]) {
+        newOpenedFileDimensions[action.nodeIndex] = {};
+      }
+      newOpenedFileDimensions[action.nodeIndex][uniqueId] = { height: 300, width: 300,
+        xPosition: ((action.desktopWidth / 2.4) + state.openedFiles.length * 5), index: uniqueId,
+        yPosition: ((action.desktopHeight / 4) + state.openedFiles.length * 5), maximized: false, minimized: false };
+      return { ...state, openedFiles: newOpenedFiles, openedFileDimensions: newOpenedFileDimensions };
 
     case OPEN_ERROR_WINDOW:
-      return { ...state, errorWindows: [...state.errorWindows, { errorMessage: action.errorMessage, height: 150, width: 400,
-        xPosition: (action.desktopWidth / 2.4), yPosition: (action.desktopHeight / 4) }] };
+      newOpenedFileDimensions[state.errorDisplayerIndex] = { height: 300, width: 300,
+        xPosition: ((action.desktopWidth / 2.4) + state.openedFiles.length * 5)
+        ,yPosition: ((action.desktopHeight / 4) + state.openedFiles.length * 5), maximized: false, minimized: false };
+      return { ...state, openedFiles: [...state.openedFiles, state.errorDisplayerIndex], openedFileDimensions: newOpenedFileDimensions };
     case MOVE_FILE:
       // todo : move this util function (getParent) to a helpers file
       const originsParentIndex = Object.keys(state.fileSystem).find(key=> {
@@ -133,8 +141,12 @@ export default function layout(state = initialState, action) {
       newFileSystem[action.toNodeIndex].children = [...newFileSystem[action.toNodeIndex].children, ...selectedIds];
       return {...state, fileSystem: newFileSystem};
     case CLOSE_FILE_WINDOW:
-      return { ...state, openedFiles: [...state.openedFiles.slice(0, action.openedFileIndex),
-            ...state.openedFiles.slice(action.openedFileIndex + 1)] };
+      const elementIndex = state.openedFiles.findIndex(element => {
+        return element.uniqueId === action.uniqueId;
+      });
+      delete newOpenedFileDimensions[action.nodeIndex][action.uniqueId];
+      return { ...state, openedFileDimensions: newOpenedFileDimensions, openedFiles: [...state.openedFiles.slice(0, elementIndex),
+            ...state.openedFiles.slice(elementIndex + 1)] };
     case CLOSE_ERROR_WINDOW:
       return { ...state, errorWindows: [...state.errorWindows.slice(0, action.errorIndex),
         ...state.errorWindows.slice(action.errorIndex + 1)] };
@@ -152,8 +164,8 @@ export default function layout(state = initialState, action) {
       return { ...state, openedFiles: newOpenedFiles };
     case DRAG_FILE_WINDOW:
       if (action.index) { // todo : after close index is undefined: fix this bug.
-          newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].xPosition = action.deltaX;
-          newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].yPosition = action.deltaY;
+          newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]][parseInt(action.index, 10)].xPosition = action.deltaX;
+          newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]][parseInt(action.index, 10)].yPosition = action.deltaY;
         return { ...state, openedFileDimensions: newOpenedFileDimensions };
       }
       return state;
