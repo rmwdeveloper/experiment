@@ -234,13 +234,12 @@ app.post('/upload_complete', (req, res) => {
       });
 
     }).then(result => {
-      // console.log(result);
+      res.status(200).send('Ok!');
 
     }).catch(error => {
       console.log(error);
-
     });
-    res.status(200).send('Ok!');
+
   });
   return null;
 });
