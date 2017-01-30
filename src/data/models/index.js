@@ -39,6 +39,7 @@ FileNode.hasMany(FileNode);
 
 FileNode.hasMany(FileNodeMetadata);
 
+FileNode.hasOne(Upload);
 
 User.hasMany(Upload, {
   onUpdate: 'cascade',
