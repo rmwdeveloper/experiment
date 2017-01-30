@@ -1,4 +1,5 @@
 import fileSystem from '../data/fileSystem';
+import uuid from 'node-uuid';
 import {
   OPEN_START_MENU,
   CLEAR_ACTIVES,
@@ -59,7 +60,7 @@ const initialState = {
   uploads: {} // uploads[<temporary upload id> = nodeIndex
 };
 export default function layout(state = initialState, action) {
-  const nextNodeIndex = Object.keys(state.fileSystem).length + 1;
+  const nextNodeIndex = uuid.v4();
   const newOpenedFiles = [...state.openedFiles];
   const newOpenedFileDimensions = {...state.openedFileDimensions};
   const newErrorWindows = [...state.errorWindows];
