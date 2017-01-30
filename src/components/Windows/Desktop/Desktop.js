@@ -199,7 +199,7 @@ class Desktop extends Component {
       (this.props.contextMenuX !== nextProps.contextMenuX) ||
       (this.props.openedFiles !== nextProps.openedFiles) ||
       (this.props.fileSystem !== nextProps.fileSystem) ||
-      (this.props.errorWindows !== nextProps.errorWindows) ||
+      (this.props.errorMessages !== nextProps.errorMessages) ||
       (this.props.contextMenuY !== nextProps.contextMenuY);
   }
   diffNodeLists(firstNodeList, secondNodeList) {
@@ -410,7 +410,7 @@ class Desktop extends Component {
   }
   render() {
     const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, contextMenuClickClass, contextMenuIndexClicked,
-      errorWindows, closeErrorWindow, connectDropTarget, moveFile, moveFiles, desktopNodeIndex, usedSpace, diskSpace,
+      connectDropTarget, moveFile, moveFiles, desktopNodeIndex, usedSpace, diskSpace,
       showSpaceIndicator, uploads,
       selectedDesktopIcons, createFolder, openErrorWindow, openFile, openedFiles, fileSystem } = this.props;
     const selectedIds = selectedDesktopIcons.map(id => {return parseInt(id, 10)});
@@ -433,14 +433,10 @@ class Desktop extends Component {
         {
           openedFiles.map((openedFile) => {
             const openedFileNode = fileSystem[openedFile.nodeIndex];
+
             const fileType = openedFileNode.hasOwnProperty('children') ? 'Folder' : openedFileNode.extension;
             return React.createElement(windowsFileRegistry(fileType, openedFileNode), { key: openedFile.uniqueId, openedFile,
               filename: openedFileNode.name, ...this.props});
-          })
-        }
-        {
-          errorWindows.map((errorObject, index) => {
-            return <ErrorWindow errorObject={errorObject} index={index} closeErrorWindow={closeErrorWindow} key={index} />;
           })
         }
         {

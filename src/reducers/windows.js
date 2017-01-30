@@ -55,7 +55,7 @@ const initialState = {
   selectedDesktopIcons: [], // Array of entity IDs todo: maybe rename this to selectedIcons if this can be used for both desktop and folder...
   openedFiles: [],
   openedFileDimensions: {},
-  errorWindows: [],
+  errorMessages: {},
   diskSpace: 50000, // MB
   usedSpace: 0, // MB
   uploads: {} // uploads[<temporary upload id> = nodeIndex
@@ -64,12 +64,13 @@ export default function layout(state = initialState, action) {
   const nextNodeIndex = uuid.v4();
   const newOpenedFiles = [...state.openedFiles];
   const newOpenedFileDimensions = {...state.openedFileDimensions};
-  const newErrorWindows = [...state.errorWindows];
+  const newErrorMessages = [...state.errorMessages];
   const newFileSystem = { ...state.fileSystem };
   const newUploads = { ...state.uploads };
 
   let element = null;
   let elementIndex = null;
+  const uniqueId = uuid.v4();
   switch (action.type) {
     case UPLOAD_START:
       return {...state, usedSpace: action.newSpaceUsed};
@@ -107,21 +108,27 @@ export default function layout(state = initialState, action) {
     case CLEAR_ACTIVES:
       return { ...state, contextMenuActive: false};
     case OPEN_FILE_WINDOW: // todo: consolidate with below statement (OPEN_ERROR_WINDOW)
-      const uniqueId = uuid.v4(); // todo: a better way to do this?
+      // todo: a better way to do this?
       newOpenedFiles.push({nodeIndex: action.nodeIndex, uniqueId});
       if (!newOpenedFileDimensions[action.nodeIndex]) {
         newOpenedFileDimensions[action.nodeIndex] = {};
       }
-      newOpenedFileDimensions[action.nodeIndex][uniqueId] = { height: 300, width: 600,
+      newOpenedFileDimensions[action.nodeIndex][uniqueId] = { height: 300, width: 400,
         xPosition: ((action.desktopWidth / 2.4) + state.openedFiles.length * 5), index: uniqueId,
         yPosition: ((action.desktopHeight / 4) + state.openedFiles.length * 5), maximized: false, minimized: false };
       return { ...state, openedFiles: newOpenedFiles, openedFileDimensions: newOpenedFileDimensions };
 
     case OPEN_ERROR_WINDOW:
-      newOpenedFileDimensions[state.errorDisplayerIndex] = { height: 300, width: 300,
-        xPosition: ((action.desktopWidth / 2.4) + state.openedFiles.length * 5)
-        ,yPosition: ((action.desktopHeight / 4) + state.openedFiles.length * 5), maximized: false, minimized: false };
-      return { ...state, openedFiles: [...state.openedFiles, state.errorDisplayerIndex], openedFileDimensions: newOpenedFileDimensions };
+      newOpenedFiles.push({nodeIndex: state.errorDisplayerIndex, uniqueId});
+      if (!newOpenedFileDimensions[state.errorDisplayerIndex]) {
+        newOpenedFileDimensions[state.errorDisplayerIndex] = {};
+      }
+      newErrorMessages[uniqueId] = action.errorMessage;
+      newOpenedFileDimensions[state.errorDisplayerIndex][uniqueId] = { height: 150, width: 300,
+        xPosition: ((action.desktopWidth / 2.4) + state.openedFiles.length * 5), index: uniqueId,
+        yPosition: ((action.desktopHeight / 4) + state.openedFiles.length * 5), maximized: false, minimized: false };
+      return { ...state, openedFiles: newOpenedFiles, openedFileDimensions: newOpenedFileDimensions, errorMessages: newErrorMessages };
+
     case MOVE_FILE:
       // todo : move this util function (getParent) to a helpers file
       const originsParentIndex = Object.keys(state.fileSystem).find(key=> {

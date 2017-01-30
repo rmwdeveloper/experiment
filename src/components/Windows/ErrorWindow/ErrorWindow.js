@@ -7,9 +7,9 @@ import ErrorWindowTaskbar from '../ErrorWindowTaskbar';
 // import { windowsClickables } from '../../../constants/windows';
 
 
-function ErrorWindow({errorObject, index, closeErrorWindow}) {
-  // const { errorMessage, xPosition, yPosition, width, height } = errorObject;
-  return (<div>Hello World</div>);
+function ErrorWindow({errorObject, index, openedFile, closeErrorWindow, errorMessages}) {
+
+  return (<div className={styles.root}>{errorMessages[openedFile.uniqueId]}</div>);
 }
 
 ErrorWindow.propTypes = {
