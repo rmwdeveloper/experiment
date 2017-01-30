@@ -81,7 +81,7 @@ class Desktop extends Component {
     const { user, isAnonymousUser } = this.props;
     return isAnonymousUser ? 0 : user.id;
   }
-  uploadComplete(awsKey, temporaryUploadId) {
+  uploadComplete(awsKey, temporaryUploadId, extension, size) {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     const { fileSystem, uploads, uploadComplete, desktopNodeIndex } = this.props;
@@ -92,7 +92,7 @@ class Desktop extends Component {
     delete newNode.metadata.progress;
 
     fetch('/upload_complete', {method: 'post', headers,
-      body: JSON.stringify({newNode, awsKey, parentIndex: desktopNodeIndex }),
+      body: JSON.stringify({newNode, awsKey, parentIndex: desktopNodeIndex, extension, size }),
       credentials: 'include'})
       .then(response => {
         return response.json().then(responseObject => {
@@ -156,7 +156,7 @@ class Desktop extends Component {
                     error: error => {},
                     warn: warn => {},
                     complete: (xhr, awsObjectKey, stats) => {
-                      this.uploadComplete(awsObjectKey, temporaryUploadId);
+                      this.uploadComplete(awsObjectKey, temporaryUploadId, extension, size);
                     }
                   })
                     .then(

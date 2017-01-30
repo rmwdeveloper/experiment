@@ -228,6 +228,8 @@ app.post('/upload_complete', (req, res) => {
         const { id } = fileNode.get({plain: true});
         const promises = [];
         Object.keys(metadata).forEach(key => { promises.push(FileNodeMetadata.create({name: key, value: metadata[key], FileNodeId: id }, {transaction})); });
+        promises.push(Upload.create({location: req.body.awsKey,extension: req.body.extension, UserId: userObj.get({plain: true}).id,
+          FileNodeId: id, fileSize: req.body.size, uploadComplete: true}, {transaction}));
         return Promise.all(promises).then( (results) => {
           return results;
         });
