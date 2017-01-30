@@ -6,7 +6,6 @@ import cx from 'classnames';
 
 class MoveableResizeableWindow extends Component {
     static propTypes = {
-      index: PropTypes.string,
       minimized: PropTypes.bool,
       maximized: PropTypes.bool,
       height: PropTypes.number,
@@ -16,7 +15,7 @@ class MoveableResizeableWindow extends Component {
       children: PropTypes.array
     };
     render() {
-      const { index, children, dimensions } = this.props;
+      const { nodeIndex, uniqueId, children, dimensions } = this.props;
       // TODO : perfect resize action. Make it smoother.
       const {maximized, minimized, height, width, xPosition, yPosition } = dimensions;
       let windowStyle = { height, width, left: xPosition, top: yPosition };
@@ -30,15 +29,14 @@ class MoveableResizeableWindow extends Component {
       windowStyle.zIndex = 2;
       return (<div className={styles.root}  style={windowStyle}>
           {children}
-          <div data-clickClass={windowsClickables.fileResizeHandle} data-topClickable data-index={index} data-side={'top'} className={cx(styles.topResizer, 'resizerHandle')}></div>
-          <div data-clickClass={windowsClickables.fileResizeHandle} data-topClickable data-index={index} data-side={'right'} className={cx(styles.rightResizer, 'resizerHandle')}></div>
-          <div data-clickClass={windowsClickables.fileResizeHandle} data-topClickable data-index={index} data-side={'bottom'} className={cx(styles.bottomResizer, 'resizerHandle')}></div>
-          <div data-clickClass={windowsClickables.fileResizeHandle} data-topClickable data-index={index} data-side={'left'} className={cx(styles.leftResizer, 'resizerHandle')}></div>
-
-          <div data-clickClass={windowsClickables.fileResizeHandle} data-topClickable data-index={index} data-side={'bottomRight'} className={cx(styles.bottomRightResizer, 'resizerHandle')}></div>
-          <div data-clickClass={windowsClickables.fileResizeHandle} data-topClickable data-index={index} data-side={'bottomLeft'} className={cx(styles.bottomLeftResizer, 'resizerHandle')}></div>
-          <div data-clickClass={windowsClickables.fileResizeHandle} data-topClickable data-index={index} data-side={'topRight'} className={cx(styles.topRightResizer, 'resizerHandle')}></div>
-          <div data-clickClass={windowsClickables.fileResizeHandle} data-topClickable data-index={index} data-side={'topLeft'} className={cx(styles.topLeftResizer, 'resizerHandle')}></div>
+          <div data-clickClass={windowsClickables.fileResizeHandle} data-topClickable data-uniqueId={uniqueId} data-nodeIndex={nodeIndex} data-side={'top'} className={cx(styles.topResizer, 'resizerHandle')}></div>
+          <div data-clickClass={windowsClickables.fileResizeHandle} data-topClickable data-uniqueId={uniqueId} data-nodeIndex={nodeIndex} data-side={'right'} className={cx(styles.rightResizer, 'resizerHandle')}></div>
+          <div data-clickClass={windowsClickables.fileResizeHandle} data-topClickable data-uniqueId={uniqueId} data-nodeIndex={nodeIndex} data-side={'bottom'} className={cx(styles.bottomResizer, 'resizerHandle')}></div>
+          <div data-clickClass={windowsClickables.fileResizeHandle} data-topClickable data-uniqueId={uniqueId} data-nodeIndex={nodeIndex} data-side={'left'} className={cx(styles.leftResizer, 'resizerHandle')}></div>
+          <div data-clickClass={windowsClickables.fileResizeHandle} data-topClickable data-uniqueId={uniqueId} data-nodeIndex={nodeIndex} data-side={'bottomRight'} className={cx(styles.bottomRightResizer, 'resizerHandle')}></div>
+          <div data-clickClass={windowsClickables.fileResizeHandle} data-topClickable data-uniqueId={uniqueId} data-nodeIndex={nodeIndex} data-side={'bottomLeft'} className={cx(styles.bottomLeftResizer, 'resizerHandle')}></div>
+          <div data-clickClass={windowsClickables.fileResizeHandle} data-topClickable data-uniqueId={uniqueId} data-nodeIndex={nodeIndex} data-side={'topRight'} className={cx(styles.topRightResizer, 'resizerHandle')}></div>
+          <div data-clickClass={windowsClickables.fileResizeHandle} data-topClickable data-uniqueId={uniqueId} data-nodeIndex={nodeIndex} data-side={'topLeft'} className={cx(styles.topLeftResizer, 'resizerHandle')}></div>
         </div>);
     }
   }
