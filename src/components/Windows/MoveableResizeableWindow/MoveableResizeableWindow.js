@@ -6,7 +6,7 @@ import cx from 'classnames';
 
 class MoveableResizeableWindow extends Component {
     static propTypes = {
-      index: PropTypes.number,
+      index: PropTypes.string,
       minimized: PropTypes.bool,
       maximized: PropTypes.bool,
       height: PropTypes.number,

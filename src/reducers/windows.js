@@ -67,6 +67,8 @@ export default function layout(state = initialState, action) {
   const newErrorWindows = [...state.errorWindows];
   const newFileSystem = { ...state.fileSystem };
   const newUploads = { ...state.uploads };
+
+  let elementIndex = null;
   switch (action.type) {
     case UPLOAD_START:
       return {...state, usedSpace: action.newSpaceUsed};
@@ -109,7 +111,7 @@ export default function layout(state = initialState, action) {
       if (!newOpenedFileDimensions[action.nodeIndex]) {
         newOpenedFileDimensions[action.nodeIndex] = {};
       }
-      newOpenedFileDimensions[action.nodeIndex][uniqueId] = { height: 300, width: 300,
+      newOpenedFileDimensions[action.nodeIndex][uniqueId] = { height: 300, width: 600,
         xPosition: ((action.desktopWidth / 2.4) + state.openedFiles.length * 5), index: uniqueId,
         yPosition: ((action.desktopHeight / 4) + state.openedFiles.length * 5), maximized: false, minimized: false };
       return { ...state, openedFiles: newOpenedFiles, openedFileDimensions: newOpenedFileDimensions };
@@ -141,7 +143,7 @@ export default function layout(state = initialState, action) {
       newFileSystem[action.toNodeIndex].children = [...newFileSystem[action.toNodeIndex].children, ...selectedIds];
       return {...state, fileSystem: newFileSystem};
     case CLOSE_FILE_WINDOW:
-      const elementIndex = state.openedFiles.findIndex(element => {
+      elementIndex = state.openedFiles.findIndex(element => {
         return element.uniqueId === action.uniqueId;
       });
       delete newOpenedFileDimensions[action.nodeIndex][action.uniqueId];
@@ -164,8 +166,11 @@ export default function layout(state = initialState, action) {
       return { ...state, openedFiles: newOpenedFiles };
     case DRAG_FILE_WINDOW:
       if (action.index) { // todo : after close index is undefined: fix this bug.
-          newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]][parseInt(action.index, 10)].xPosition = action.deltaX;
-          newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]][parseInt(action.index, 10)].yPosition = action.deltaY;
+        const element = state.openedFiles.find(element => {
+          return element.uniqueId === action.index;
+        });
+          newOpenedFileDimensions[element.nodeIndex][element.uniqueId].xPosition = action.deltaX;
+          newOpenedFileDimensions[element.nodeIndex][element.uniqueId].yPosition = action.deltaY;
         return { ...state, openedFileDimensions: newOpenedFileDimensions };
       }
       return state;
