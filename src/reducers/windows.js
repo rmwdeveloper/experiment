@@ -64,7 +64,7 @@ export default function layout(state = initialState, action) {
   const nextNodeIndex = uuid.v4();
   const newOpenedFiles = {...state.openedFiles};
   const newOpenedFileDimensions = {...state.openedFileDimensions};
-  const newErrorMessages = [...state.errorMessages];
+  const newErrorMessages = {...state.errorMessages};
   const newFileSystem = { ...state.fileSystem };
   const newUploads = { ...state.uploads };
 
@@ -120,8 +120,8 @@ export default function layout(state = initialState, action) {
       newOpenedFiles[uniqueId] = state.errorDisplayerIndex;
       newErrorMessages[uniqueId] = action.errorMessage;
       newOpenedFileDimensions[uniqueId] = { height: 150, width: 300,
-        xPosition: ((action.desktopWidth / 2.4) + state.openedFiles.length * 5), index: uniqueId,
-        yPosition: ((action.desktopHeight / 4) + state.openedFiles.length * 5), maximized: false, minimized: false };
+        xPosition: ((action.desktopWidth / 2.4) + Object.keys(state.openedFiles).length * 5), index: uniqueId,
+        yPosition: ((action.desktopHeight / 4) + Object.keys(state.openedFiles).length * 5), maximized: false, minimized: false };
       return { ...state, openedFiles: newOpenedFiles, openedFileDimensions: newOpenedFileDimensions, errorMessages: newErrorMessages };
 
     case MOVE_FILE:
