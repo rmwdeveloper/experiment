@@ -30,14 +30,14 @@ User.hasOne(UserProfile, {
   onDelete: 'cascade',
 });
 
-User.hasOne(FileSystem);
+User.hasOne(FileSystem, { onUpdate: 'cascade', onDelete: 'cascade' });
 
 
-FileSystem.hasMany(FileNode);
+FileSystem.hasMany(FileNode, { onUpdate: 'cascade', onDelete: 'cascade' });
 
-FileNode.hasMany(FileNode);
+FileNode.hasMany(FileNode, { onUpdate: 'cascade', onDelete: 'cascade' });
 
-FileNode.hasMany(FileNodeMetadata);
+FileNode.hasMany(FileNodeMetadata, { onUpdate: 'cascade', onDelete: 'cascade' });
 
 FileNode.hasOne(Upload, {onDelete: 'cascade'});
 
