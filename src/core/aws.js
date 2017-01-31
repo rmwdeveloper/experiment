@@ -33,6 +33,8 @@ export function createDirectory(Key) {
   });
 }
 
-export function deleteFiles(t0) {
-  console.log(t0);
+export function deleteFiles(instance, options, cb) {
+  console.log(instance.get({plain: true}));
+
+  return cb();
 }

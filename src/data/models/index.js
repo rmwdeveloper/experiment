@@ -51,18 +51,7 @@ User.hasMany(Upload, {
 });
 
 
-// FileNode.hook('afterBulkDestroy', (options, fn) => {
-//   console.log( 'afterBulkDestroy');
-//   return fn();
-// });
-// FileNode.hook('afterDestroy', (instance, options, fn) => {
-//   console.log('afterDestroy');
-//   return fn();
-// });
-
-Upload.hook('destroy', (instance, options) => {console.log( 'upload destroy')});
-Upload.hook('afterBulkDestroy', (instance, options) => {console.log( 'upload afterbulkdestory')});
-Upload.hook('afterDestroy', (instance, options) => {console.log( 'upload afterDestroy')});
+Upload.hook('afterDestroy', deleteFiles);
 
 function sync(...args) {
   return sequelize.sync(...args);
