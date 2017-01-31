@@ -4,7 +4,7 @@ import styles from './FileBaseTaskbar.css'; //eslint-disable-line
 import cx from 'classnames';
 import { windowsClickables } from '../../../constants/windows';
 
-function FileBaseTaskbar({filename, nodeIndex,
+function FileBaseTaskbar({filename,
   toggleWindowMinimize, toggleWindowMaximize,
   uniqueId, closeFile, maximized}) {
   return (
@@ -18,7 +18,7 @@ function FileBaseTaskbar({filename, nodeIndex,
             maximized ? <i className="fa fa-square-o" /> : null
           }
         </div>
-        <i onClick={() => { closeFile(nodeIndex, uniqueId); }} className={cx(styles.closeWindowIcon, 'fa fa-remove')} />
+        <i onClick={() => { closeFile(uniqueId); }} className={cx(styles.closeWindowIcon, 'fa fa-remove')} />
       </div>
     </div>);
 }
