@@ -50,7 +50,7 @@ const initialState = {
   contextMenuX: 0,
   contextMenuY: 0,
   contextMenuClickClass: '',
-  contextMenuIndexClicked: 0,
+  contextMenuIndexClicked: '',
   contextMenuActive: false,
   selectedDesktopIcons: [], // Array of entity IDs todo: maybe rename this to selectedIcons if this can be used for both desktop and folder...
   openedFiles: [],

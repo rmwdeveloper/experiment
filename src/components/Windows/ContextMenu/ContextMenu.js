@@ -9,7 +9,7 @@ class ContextMenu extends Component {
     contextMenuX: PropTypes.number,
     contextMenuY: PropTypes.number,
     contextMenuClickClass: PropTypes.string,
-    contextMenuIndex: PropTypes.number,
+    contextMenuIndex: PropTypes.string,
     openErrorWindow: PropTypes.func
   };
   constructor() {
@@ -47,7 +47,7 @@ class ContextMenu extends Component {
         { contextMenuClickClass === 'desktopItem' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Download Contents</span></li> : null}
         { contextMenuClickClass === 'desktopItem' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Copy</span></li> : null}
         { contextMenuClickClass === 'desktopItem' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Cut</span></li> : null}
-        { contextMenuClickClass === 'desktopItem' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Delete</span></li> : null}
+        { contextMenuClickClass === 'desktopItem' ? <li onClick={this.delete}><span className={styles.menuItem}>Delete</span></li> : null}
         { contextMenuClickClass === 'desktopItem' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Rename</span></li> : null}
         { contextMenuClickClass === 'desktop' || contextMenuClickClass === 'desktopItemIcon' || contextMenuClickClass === 'desktopItemName' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Properties...</span></li> : null}
       </ul>
