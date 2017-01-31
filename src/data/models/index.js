@@ -1,4 +1,6 @@
 import sequelize from '../sequelize';
+import { deleteFiles } from '../../core/aws';
+
 import User from './User';
 import UserLogin from './UserLogin';
 import UserProfile from './UserProfile';
@@ -39,12 +41,28 @@ FileNode.hasMany(FileNode, { onUpdate: 'cascade', onDelete: 'cascade' });
 
 FileNode.hasMany(FileNodeMetadata, { onUpdate: 'cascade', onDelete: 'cascade' });
 
-FileNode.hasOne(Upload, {onDelete: 'cascade'});
+FileNode.hasOne(Upload, {onDelete: 'cascade', hooks: true});
+Upload.belongsTo(FileNode, { hooks: true });
 
 User.hasMany(Upload, {
   onUpdate: 'cascade',
-  onDelete: 'cascade'
+  onDelete: 'cascade',
+  hooks: true
 });
+
+
+// FileNode.hook('afterBulkDestroy', (options, fn) => {
+//   console.log( 'afterBulkDestroy');
+//   return fn();
+// });
+// FileNode.hook('afterDestroy', (instance, options, fn) => {
+//   console.log('afterDestroy');
+//   return fn();
+// });
+
+Upload.hook('destroy', (instance, options) => {console.log( 'upload destroy')});
+Upload.hook('afterBulkDestroy', (instance, options) => {console.log( 'upload afterbulkdestory')});
+Upload.hook('afterDestroy', (instance, options) => {console.log( 'upload afterDestroy')});
 
 function sync(...args) {
   return sequelize.sync(...args);

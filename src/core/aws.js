@@ -32,3 +32,7 @@ export function createDirectory(Key) {
     });
   });
 }
+
+export function deleteFiles(t0) {
+  console.log(t0);
+}

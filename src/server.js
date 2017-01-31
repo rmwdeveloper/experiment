@@ -161,12 +161,40 @@ app.get('/get_user', (req, res) => {
 app.post('/delete_files', (req, res) => {
   const username = req.user ? req.user.username : 'Guest'; // Either logged in user, or guest ID ( 1 )
   const { toDelete } = req.body;
-
   getUser(username).then(userObj => {
     const { FileSystem: {id} } = userObj.get({plain: true});
-    FileNode.destroy({ where: {FileSystemId: id, nodeIndex: { $in: toDelete }}});
+
+    // FileNode.destroy({ individualHooks: true,
+    //   hooks: true,
+    //   where: {FileSystemId: id, nodeIndex: { $in: toDelete }}});
+
+    toDelete.forEach( nodeToDelete => { // todo: convert to sequelize transaction.
+
+      FileNode.findOne({ where: {FileSystemId: id, nodeIndex: nodeToDelete }}).then( node => {
+        node.destroy();
+      });
+    });
+    // FileNode.findAll({where: {FileSystemId: id, nodeIndex: { $in: toDelete }}}).then(nodes => {
+    //   console.log(nodes);
+    //   // nodes.destroy({ individualHooks: true, hooks: true });
+    // }).catch( error => {
+    //   console.log(error);
+    // });
+    // FileNode.destroy({ individualHooks: true,
+    //   hooks: true,
+    //   where: {FileSystemId: id, nodeIndex: { $in: toDelete }}});
     return null;
   });
+  
+  // getUser(username).then(userObj => {
+  //   const { FileSystem: {id} } = userObj.get({plain: true});
+  //   return sequelize.transaction(transaction => {
+  //     return FileNode.destroy({ individualHooks: true, hooks: true, where: {FileSystemId: id, nodeIndex: { $in: toDelete }}}, {transaction});
+  //   })
+  //     .then(result => {console.log(result);})
+  //     .catch(err => { console.log(err);});
+  // });
+
 });
 app.get('/logout', (req, res) => {
   req.logout();
@@ -345,11 +373,17 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
 
 models.sync().catch(err => console.error(err.stack)).then(() => {
   app.listen(port, () => {
-    sequelize_fixtures.loadFile(path.join(__dirname, '..', 'src', 'data', 'fixtures', 'initial_data.js'), {User,
-      FileSystem, FileNode, FileNodeMetadata}).then(function(){
-      console.log(`The server is running at http://localhost:${port}/`);
-    }).catch(err => { console.log(err)});
+    console.log(`The server is running at http://localhost:${port}/`);
   });
 });
+
+// models.sync().catch(err => console.error(err.stack)).then(() => {
+//   app.listen(port, () => {
+//     sequelize_fixtures.loadFile(path.join(__dirname, '..', 'src', 'data', 'fixtures', 'initial_data.js'), {User,
+//       FileSystem, FileNode, FileNodeMetadata}).then(function(){
+//       console.log(`The server is running at http://localhost:${port}/`);
+//     }).catch(err => { console.log(err)});
+//   });
+// });
 
 /* eslint-enable no-console */
