@@ -34,7 +34,11 @@ export function createDirectory(Key) {
 }
 
 export function deleteFiles(instance, options, cb) {
-  console.log(instance.get({plain: true}));
-
-  return cb();
+  const { location } = instance.get({plain: true});
+  return new Promise((resolve, reject) => {
+    let size = 0;
+    s3.deleteObject({Bucket: aws_bucket_name, Key: location}, (err, data) => {
+      err ? reject(err) : resolve(data);
+    });
+  });
 }
