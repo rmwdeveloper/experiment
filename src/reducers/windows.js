@@ -53,7 +53,7 @@ const initialState = {
   contextMenuIndexClicked: '',
   contextMenuActive: false,
   selectedDesktopIcons: [], // Array of entity IDs todo: maybe rename this to selectedIcons if this can be used for both desktop and folder...
-  openedFiles: [],
+  openedFiles: {}, // { uuidv4: nodeIndex}
   openedFileDimensions: {},
   errorMessages: {},
   diskSpace: 50000, // MB
@@ -62,7 +62,7 @@ const initialState = {
 };
 export default function layout(state = initialState, action) {
   const nextNodeIndex = uuid.v4();
-  const newOpenedFiles = [...state.openedFiles];
+  const newOpenedFiles = {...state.openedFiles};
   const newOpenedFileDimensions = {...state.openedFileDimensions};
   const newErrorMessages = [...state.errorMessages];
   const newFileSystem = { ...state.fileSystem };
@@ -109,22 +109,17 @@ export default function layout(state = initialState, action) {
       return { ...state, contextMenuActive: false};
     case OPEN_FILE_WINDOW: // todo: consolidate with below statement (OPEN_ERROR_WINDOW)
       // todo: a better way to do this?
-      newOpenedFiles.push({nodeIndex: action.nodeIndex, uniqueId});
-      if (!newOpenedFileDimensions[action.nodeIndex]) {
-        newOpenedFileDimensions[action.nodeIndex] = {};
-      }
-      newOpenedFileDimensions[action.nodeIndex][uniqueId] = { height: 300, width: 400,
-        xPosition: ((action.desktopWidth / 2.4) + state.openedFiles.length * 5), index: uniqueId,
-        yPosition: ((action.desktopHeight / 4) + state.openedFiles.length * 5), maximized: false, minimized: false };
+      newOpenedFiles[uniqueId] = action.nodeIndex;
+      newOpenedFileDimensions[uniqueId] = { height: 300, width: 400,
+        xPosition: ((action.desktopWidth / 2.4) + Object.keys(state.openedFiles).length * 5), index: uniqueId,
+        yPosition: ((action.desktopHeight / 4) + Object.keys(state.openedFiles).length * 5), maximized: false, minimized: false };
+
       return { ...state, openedFiles: newOpenedFiles, openedFileDimensions: newOpenedFileDimensions };
 
     case OPEN_ERROR_WINDOW:
-      newOpenedFiles.push({nodeIndex: state.errorDisplayerIndex, uniqueId});
-      if (!newOpenedFileDimensions[state.errorDisplayerIndex]) {
-        newOpenedFileDimensions[state.errorDisplayerIndex] = {};
-      }
+      newOpenedFiles[uniqueId] = state.errorDisplayerIndex;
       newErrorMessages[uniqueId] = action.errorMessage;
-      newOpenedFileDimensions[state.errorDisplayerIndex][uniqueId] = { height: 150, width: 300,
+      newOpenedFileDimensions[uniqueId] = { height: 150, width: 300,
         xPosition: ((action.desktopWidth / 2.4) + state.openedFiles.length * 5), index: uniqueId,
         yPosition: ((action.desktopHeight / 4) + state.openedFiles.length * 5), maximized: false, minimized: false };
       return { ...state, openedFiles: newOpenedFiles, openedFileDimensions: newOpenedFileDimensions, errorMessages: newErrorMessages };
@@ -151,12 +146,9 @@ export default function layout(state = initialState, action) {
       newFileSystem[action.toNodeIndex].children = [...newFileSystem[action.toNodeIndex].children, ...selectedIds];
       return {...state, fileSystem: newFileSystem};
     case CLOSE_FILE_WINDOW:
-      elementIndex = state.openedFiles.findIndex(element => {
-        return element.uniqueId === action.uniqueId;
-      });
-      delete newOpenedFileDimensions[action.nodeIndex][action.uniqueId];
-      return { ...state, openedFileDimensions: newOpenedFileDimensions, openedFiles: [...state.openedFiles.slice(0, elementIndex),
-            ...state.openedFiles.slice(elementIndex + 1)] };
+      delete newOpenedFiles[action.uniqueId];
+      delete newOpenedFileDimensions[action.uniqueId];
+      return { ...state, openedFileDimensions: newOpenedFileDimensions, openedFiles: newOpenedFiles };
     case CLOSE_ERROR_WINDOW:
       return { ...state, errorWindows: [...state.errorWindows.slice(0, action.errorIndex),
         ...state.errorWindows.slice(action.errorIndex + 1)] };
@@ -174,11 +166,8 @@ export default function layout(state = initialState, action) {
       return { ...state, openedFiles: newOpenedFiles };
     case DRAG_FILE_WINDOW:
       if (action.index) { // todo : after close index is undefined: fix this bug.
-        element = state.openedFiles.find(element => { // todo: Remove need for this element retrieval.
-          return element.uniqueId === action.index;
-        });
-          newOpenedFileDimensions[element.nodeIndex][element.uniqueId].xPosition = action.deltaX;
-          newOpenedFileDimensions[element.nodeIndex][element.uniqueId].yPosition = action.deltaY;
+        newOpenedFileDimensions[action.index].xPosition = action.deltaX;
+        newOpenedFileDimensions[action.index].yPosition = action.deltaY;
         return { ...state, openedFileDimensions: newOpenedFileDimensions };
       }
       return state;
@@ -194,95 +183,92 @@ export default function layout(state = initialState, action) {
     case INITIALIZE_DESKTOP_DIMENSIONS:
       return { ...state, desktopWidth: action.desktopWidth, desktopHeight: action.desktopHeight };
     case RESIZE_FILE_WINDOW: // todo: Needs refactor. Bulky and repetitive switch case.
-      element = state.openedFiles.find(element => { // todo: Remove need for this element retrieval.
-        return element.uniqueId === action.index;
-      });
       if (action.resizeSideClicked === 'topLeft') {
         if (action.deltaY < 0) {
-          newOpenedFileDimensions[element.nodeIndex][element.uniqueId].height = action.resizeStartHeight + Math.abs(action.deltaY);
-          newOpenedFileDimensions[element.nodeIndex][element.uniqueId].yPosition = action.resizeStartTop - Math.abs(action.deltaY);
+          newOpenedFileDimensions[action.index].height = action.resizeStartHeight + Math.abs(action.deltaY);
+          newOpenedFileDimensions[action.index].yPosition = action.resizeStartTop - Math.abs(action.deltaY);
         }
         if (action.deltaY > 0 ) {
           if (!((action.resizeStartHeight - action.deltaY) < 200)) {
-            newOpenedFileDimensions[element.nodeIndex][element.uniqueId].height = action.resizeStartHeight - Math.abs(action.deltaY);
-            newOpenedFileDimensions[element.nodeIndex][element.uniqueId].yPosition = action.resizeStartTop + Math.abs(action.deltaY);
+            newOpenedFileDimensions[action.index].height = action.resizeStartHeight - Math.abs(action.deltaY);
+            newOpenedFileDimensions[action.index].yPosition = action.resizeStartTop + Math.abs(action.deltaY);
           }
         }
         if (action.deltaX < 0) {
-          newOpenedFileDimensions[element.nodeIndex][element.uniqueId].width = action.resizeStartWidth + Math.abs(action.deltaX);
-          newOpenedFileDimensions[element.nodeIndex][element.uniqueId].xPosition = action.resizeStartLeft - Math.abs(action.deltaX);
+          newOpenedFileDimensions[action.index].width = action.resizeStartWidth + Math.abs(action.deltaX);
+          newOpenedFileDimensions[action.index].xPosition = action.resizeStartLeft - Math.abs(action.deltaX);
 
         }
         if (action.deltaX > 0 ) {
           if (!((action.resizeStartWidth - action.deltaX) < 200)) {
-            newOpenedFileDimensions[element.nodeIndex][element.uniqueId].width = action.resizeStartWidth - Math.abs(action.deltaX);
-            newOpenedFileDimensions[element.nodeIndex][element.uniqueId].xPosition = action.resizeStartLeft + Math.abs(action.deltaX);
+            newOpenedFileDimensions[action.index].width = action.resizeStartWidth - Math.abs(action.deltaX);
+            newOpenedFileDimensions[action.index].xPosition = action.resizeStartLeft + Math.abs(action.deltaX);
           }
         }
       }
       else if (action.resizeSideClicked === 'top') {
         if (action.deltaY < 0) {
-          newOpenedFileDimensions[element.nodeIndex][element.uniqueId].height = action.resizeStartHeight + Math.abs(action.deltaY);
-          newOpenedFileDimensions[element.nodeIndex][element.uniqueId].yPosition = action.resizeStartTop - Math.abs(action.deltaY);
+          newOpenedFileDimensions[action.index].height = action.resizeStartHeight + Math.abs(action.deltaY);
+          newOpenedFileDimensions[action.index].yPosition = action.resizeStartTop - Math.abs(action.deltaY);
         }
         if (action.deltaY > 0 ) {
           if (!((action.resizeStartHeight - action.deltaY) < 200)) {
-            newOpenedFileDimensions[element.nodeIndex][element.uniqueId].height = action.resizeStartHeight - Math.abs(action.deltaY);
-            newOpenedFileDimensions[element.nodeIndex][element.uniqueId].yPosition = action.resizeStartTop + Math.abs(action.deltaY);
+            newOpenedFileDimensions[action.index].height = action.resizeStartHeight - Math.abs(action.deltaY);
+            newOpenedFileDimensions[action.index].yPosition = action.resizeStartTop + Math.abs(action.deltaY);
           }
         }
       }
       else if (action.resizeSideClicked === 'right') {
-        newOpenedFileDimensions[element.nodeIndex][element.uniqueId].width = action.resizeStartWidth + action.deltaX;
+        newOpenedFileDimensions[action.index].width = action.resizeStartWidth + action.deltaX;
       }
       else if (action.resizeSideClicked === 'bottom') {
-        newOpenedFileDimensions[element.nodeIndex][element.uniqueId].height = action.resizeStartHeight + action.deltaY;
+        newOpenedFileDimensions[action.index].height = action.resizeStartHeight + action.deltaY;
       }
       else if (action.resizeSideClicked === 'left') {
         if (action.deltaX < 0) {
-          newOpenedFileDimensions[element.nodeIndex][element.uniqueId].width = action.resizeStartWidth + Math.abs(action.deltaX);
-          newOpenedFileDimensions[element.nodeIndex][element.uniqueId].xPosition = action.resizeStartLeft - Math.abs(action.deltaX);
+          newOpenedFileDimensions[action.index].width = action.resizeStartWidth + Math.abs(action.deltaX);
+          newOpenedFileDimensions[action.index].xPosition = action.resizeStartLeft - Math.abs(action.deltaX);
         }
         if (action.deltaX > 0 ) {
           if (!((action.resizeStartHeight - action.deltaX) < 200)) {
-            newOpenedFileDimensions[element.nodeIndex][element.uniqueId].width = action.resizeStartWidth - Math.abs(action.deltaX);
-            newOpenedFileDimensions[element.nodeIndex][element.uniqueId].xPosition = action.resizeStartLeft + Math.abs(action.deltaX);
+            newOpenedFileDimensions[action.index].width = action.resizeStartWidth - Math.abs(action.deltaX);
+            newOpenedFileDimensions[action.index].xPosition = action.resizeStartLeft + Math.abs(action.deltaX);
           }
         }
       }
 
       else if (action.resizeSideClicked === 'topRight') {
-        newOpenedFileDimensions[element.nodeIndex][element.uniqueId].width = action.resizeStartWidth + action.deltaX;
+        newOpenedFileDimensions[action.index].width = action.resizeStartWidth + action.deltaX;
         if (action.deltaY < 0) {
-          newOpenedFileDimensions[element.nodeIndex][element.uniqueId].height = action.resizeStartHeight + Math.abs(action.deltaY);
-          newOpenedFileDimensions[element.nodeIndex][element.uniqueId].yPosition = action.resizeStartTop - Math.abs(action.deltaX);
+          newOpenedFileDimensions[action.index].height = action.resizeStartHeight + Math.abs(action.deltaY);
+          newOpenedFileDimensions[action.index].yPosition = action.resizeStartTop - Math.abs(action.deltaX);
         }
         if (action.deltaY > 0 ) {
           if (!((action.resizeStartHeight - action.deltaY) < 200)) {
-            newOpenedFileDimensions[element.nodeIndex][element.uniqueId].height = action.resizeStartHeight - Math.abs(action.deltaY);
-            newOpenedFileDimensions[element.nodeIndex][element.uniqueId].yPosition = action.resizeStartTop + Math.abs(action.deltaY);
+            newOpenedFileDimensions[action.index].height = action.resizeStartHeight - Math.abs(action.deltaY);
+            newOpenedFileDimensions[action.index].yPosition = action.resizeStartTop + Math.abs(action.deltaY);
           }
         }
       }
 
       else if (action.resizeSideClicked === 'bottomRight') {
-        newOpenedFileDimensions[element.nodeIndex][element.uniqueId].width = action.resizeStartWidth + action.deltaX;
-        newOpenedFileDimensions[element.nodeIndex][element.uniqueId].height = action.resizeStartHeight + action.deltaY;
+        newOpenedFileDimensions[action.index].width = action.resizeStartWidth + action.deltaX;
+        newOpenedFileDimensions[action.index].height = action.resizeStartHeight + action.deltaY;
       }
 
       else if (action.resizeSideClicked === 'bottomLeft') {
 
-        newOpenedFileDimensions[element.nodeIndex][element.uniqueId].height = action.resizeStartHeight + action.deltaY;
+        newOpenedFileDimensions[action.index].height = action.resizeStartHeight + action.deltaY;
 
         if (action.deltaX < 0) {
-          newOpenedFileDimensions[element.nodeIndex][element.uniqueId].width = action.resizeStartWidth + Math.abs(action.deltaX);
-          newOpenedFileDimensions[element.nodeIndex][element.uniqueId].xPosition = action.resizeStartLeft - Math.abs(action.deltaX);
+          newOpenedFileDimensions[action.index].width = action.resizeStartWidth + Math.abs(action.deltaX);
+          newOpenedFileDimensions[action.index].xPosition = action.resizeStartLeft - Math.abs(action.deltaX);
 
         }
         if (action.deltaX > 0 ) {
           if (!((action.resizeStartWidth - action.deltaX) < 200)) {
-            newOpenedFileDimensions[element.nodeIndex][element.uniqueId].width = action.resizeStartWidth - Math.abs(action.deltaX);
-            newOpenedFileDimensions[element.nodeIndex][element.uniqueId].xPosition = action.resizeStartLeft + Math.abs(action.deltaX);
+            newOpenedFileDimensions[action.index].width = action.resizeStartWidth - Math.abs(action.deltaX);
+            newOpenedFileDimensions[action.index].xPosition = action.resizeStartLeft + Math.abs(action.deltaX);
           }
         }
       }

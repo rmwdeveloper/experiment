@@ -7,14 +7,14 @@ import FolderNavigation from '../FolderNavigation';
 import FolderContents from '../FolderContents';
 
 
-function Folder({openedFile, index,  openedFileDimensions, selectedDesktopIcons, clearActives, fileSystem, selectIcons, openFile, moveFile, moveFiles}) {
+function Folder({openedFile, index, uniqueId, openedFileDimensions, selectedDesktopIcons, clearActives, fileSystem, selectIcons, openFile, moveFile, moveFiles}) {
   const selectedIds = selectedDesktopIcons.map(id => {return parseInt(id, 10)});
-  const folderContents = fileSystem[openedFile.nodeIndex].children ? fileSystem[openedFile.nodeIndex].children.map((nodeIndex, index) => {
+  const folderContents = fileSystem[openedFile.index].children ? fileSystem[openedFile.index].children.map((nodeIndex, index) => {
     fileSystem[nodeIndex].index = nodeIndex;
-    return <FolderItem moveFile={moveFile} moveFiles={moveFiles} className="folderIcon" parentIndex={openedFile.nodeIndex} selected={selectedIds.includes(nodeIndex)}
+    return <FolderItem moveFile={moveFile} moveFiles={moveFiles} className="folderIcon" parentIndex={openedFile.index} selected={selectedIds.includes(nodeIndex)}
                        key={index} index={index} openFile={openFile} item={fileSystem[nodeIndex]} />;
   }) : null;
-  const windowHeight = openedFileDimensions[openedFile.nodeIndex][openedFile.uniqueId].height - 30;
+  const windowHeight = openedFileDimensions[uniqueId].height - 30;
 
   return (
     <div style={{minHeight: windowHeight}} className={styles.root}>

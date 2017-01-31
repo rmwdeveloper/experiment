@@ -80,7 +80,7 @@ class Windows extends Component { //eslint-disable-line
     closeErrorWindow: PropTypes.func,
     clearActives: PropTypes.func,
     createFolder: PropTypes.func,
-    openedFiles: PropTypes.array,
+    openedFiles: PropTypes.object,
     openedFileDimensions: PropTypes.object,
     errorMessages: PropTypes.object,
     openFile: PropTypes.func,

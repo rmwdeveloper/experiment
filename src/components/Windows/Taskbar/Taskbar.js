@@ -7,7 +7,7 @@ import InfoHub from '../InfoHub';
 class Taskbar extends Component {
   static propTypes = {
     toggleStartMenu: PropTypes.func,
-    openedFiles: PropTypes.array,
+    openedFiles: PropTypes.object,
     entities: PropTypes.object
   };
 

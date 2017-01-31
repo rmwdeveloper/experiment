@@ -22,7 +22,7 @@ class Desktop extends Component {
     contextMenuX: PropTypes.number,
     contextMenuY: PropTypes.number,
     openContextMenu: PropTypes.func,
-    openedFiles: PropTypes.array,
+    openedFiles: PropTypes.object,
     selectIcons: PropTypes.func,
     desktopItems: PropTypes.array,
     createFolder: PropTypes.func,
@@ -268,7 +268,7 @@ class Desktop extends Component {
   }
   startResizeFileWindow(event) {
     const { openedFiles, openedFileDimensions } = this.props;
-    const windowBeingResized = openedFileDimensions[event.target.dataset.nodeindex][event.target.dataset.uniqueid];
+    const windowBeingResized = openedFileDimensions[event.target.dataset.uniqueid];
     this.resizedItem = event.target.parentNode; // todo: Change how parent node is retrieved.
 
     this.setState({ resizingFileWindowInProgress: true, resizeStartX: event.clientX, resizeStartY: event.clientY,
@@ -431,12 +431,11 @@ class Desktop extends Component {
           })
         }
         {
-          openedFiles.map((openedFile) => {
-            const openedFileNode = fileSystem[openedFile.nodeIndex];
-
+          Object.keys(openedFiles).map((uniqueId) => {
+            const openedFileNode = fileSystem[openedFiles[uniqueId]];
             const fileType = openedFileNode.hasOwnProperty('children') ? 'Folder' : openedFileNode.extension;
-            return React.createElement(windowsFileRegistry(fileType, openedFileNode), { key: openedFile.uniqueId, openedFile,
-              filename: openedFileNode.name, ...this.props});
+            return React.createElement(windowsFileRegistry(fileType, openedFileNode), { key: uniqueId, openedFile: openedFileNode,
+              uniqueId, filename: openedFileNode.name, ...this.props});
           })
         }
         {
