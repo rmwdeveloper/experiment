@@ -161,13 +161,10 @@ app.get('/get_user', (req, res) => {
 app.post('/delete_files', (req, res) => {
   const username = req.user ? req.user.username : 'Guest'; // Either logged in user, or guest ID ( 1 )
   const { toDelete } = req.body;
-  console.log( toDelete );
+
   getUser(username).then(userObj => {
     const { FileSystem: {id} } = userObj.get({plain: true});
-
-    FileNode.destroy({ where: {FileSystemId: id, nodeIndex: { $in: toDelete }}}).then(results => {
-      console.log(results);
-    });
+    FileNode.destroy({ where: {FileSystemId: id, nodeIndex: { $in: toDelete }}});
     return null;
   });
 });

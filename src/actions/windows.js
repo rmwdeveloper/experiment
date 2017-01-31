@@ -173,17 +173,16 @@ export function moveFiles(fromParentIndex, toNodeIndex) {
   }
 }
 
-
+//todo: put in <ACTION>, <ACTION_COMPLETE>, <ACTION_ERROR> for all persistent operations.
 export function deleteFiles() {
   return (dispatch, getState) => {
     const { windows: { selectedDesktopIcons } } = getState();
     const headers = new Headers(); // todo: abstract headers away
     headers.append('Content-Type', 'application/json');
+    dispatch({ type: DELETE_FILES, toDelete: selectedDesktopIcons  });
     fetch('/delete_files', {
       method: 'post', credentials: 'include', headers,
       body: JSON.stringify({toDelete: selectedDesktopIcons })
-    }).then( () => {
-      dispatch({ type: DELETE_FILES, toDelete: selectedDesktopIcons  });
-    });
+    })
   };
 }
