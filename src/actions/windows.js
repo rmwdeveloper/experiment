@@ -16,7 +16,8 @@ import {
   OPEN_ERROR_WINDOW,
   CLOSE_ERROR_WINDOW,
   MOVE_FILE,
-  MOVE_FILES
+  MOVE_FILES,
+  DELETE_FILES
 } from '../constants';
 
 // todo rmw: Remove parameters in actions that can be gotten in state. e.g., openFile desktopWidth
@@ -169,5 +170,12 @@ export function moveFiles(fromParentIndex, toNodeIndex) {
       return null;
     }
     dispatch({ type: MOVE_FILES, fromIndices: selectedDesktopIcons, fromParentIndex, toNodeIndex});
+  }
+}
+
+export function deleteFiles() {
+  return (dispatch, getState) => {
+    const { windows: { selectedDesktopIcons } } = getState();
+    dispatch({ type: DELETE_FILES, toDelete: selectedDesktopIcons  });
   }
 }

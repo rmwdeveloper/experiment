@@ -85,6 +85,7 @@ class Windows extends Component { //eslint-disable-line
     errorMessages: PropTypes.object,
     openFile: PropTypes.func,
     closeFile: PropTypes.func,
+    deleteFiles: PropTypes.func,
     toggleWindowMaximize: PropTypes.func,
     toggleWindowMinimize: PropTypes.func,
     fileSystem: PropTypes.object,

@@ -25,7 +25,7 @@ class ContextMenu extends Component {
     this.props.openErrorWindow("This isn't implemented yet. Sorry!");
   }
   render() {
-    const { contextMenuX, contextMenuY, contextMenuClickClass, contextMenuIndexClicked } = this.props;
+    const { contextMenuX, contextMenuY, contextMenuClickClass, contextMenuIndexClicked, deleteFiles } = this.props;
     // todo: refactor render
     return (
       <ul style={{top: `${contextMenuY}px`, left: `${contextMenuX}px`}} className={cx(styles.root, styles.contextMenu)}
@@ -47,7 +47,7 @@ class ContextMenu extends Component {
         { contextMenuClickClass === 'desktopItem' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Download Contents</span></li> : null}
         { contextMenuClickClass === 'desktopItem' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Copy</span></li> : null}
         { contextMenuClickClass === 'desktopItem' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Cut</span></li> : null}
-        { contextMenuClickClass === 'desktopItem' ? <li onClick={this.delete}><span className={styles.menuItem}>Delete</span></li> : null}
+        { contextMenuClickClass === 'desktopItem' ? <li onClick={deleteFiles}><span className={styles.menuItem}>Delete</span></li> : null}
         { contextMenuClickClass === 'desktopItem' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Rename</span></li> : null}
         { contextMenuClickClass === 'desktop' || contextMenuClickClass === 'desktopItemIcon' || contextMenuClickClass === 'desktopItemName' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Properties...</span></li> : null}
       </ul>

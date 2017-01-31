@@ -35,6 +35,7 @@ export const OPEN_ERROR_WINDOW = 'windows/OPEN_ERROR_WINDOW';
 export const CLOSE_ERROR_WINDOW = 'windows/CLOSE_ERROR_WINDOW';
 export const MOVE_FILE = 'windows/MOVE_FILE';
 export const MOVE_FILES = 'windows/MOVE_FILES';
+export const DELETE_FILES = 'windows/DELETE_FILES';
 
 export const LOAD_STOCKS = 'stock/LOAD_STOCKS';
 export const SEARCH_STOCKS = 'stock/SEARCH_STOCKS';

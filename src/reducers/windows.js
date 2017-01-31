@@ -28,7 +28,8 @@ import {
   UPLOAD_START,
   CHECK_AVAILABLE_SPACE,
   UPLOAD_PROGRESS,
-  UPLOAD_COMPLETE
+  UPLOAD_COMPLETE,
+  DELETE_FILES
 } from '../constants';
 
 
@@ -99,7 +100,8 @@ export default function layout(state = initialState, action) {
         newFileSystem[action.desktopNodeIndex].children.push(nextNodeIndex);
       }
       return { ...state, fileSystem: newFileSystem, contextMenuActive: false };
-    
+    case DELETE_FILES:
+      return state;
     case OPEN_CONTEXT_MENU:
       return { ...state, contextMenuX: action.mouseX, contextMenuY: action.mouseY, contextMenuActive: true,
         contextMenuClickClass: action.clickclass, contextMenuIndexClicked: action.index };
