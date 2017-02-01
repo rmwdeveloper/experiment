@@ -192,6 +192,17 @@ app.post('/create_folder', (req, res) => {
   });
 });
 
+app.post('/move_folder', (req, res) => {
+  const username = req.user ? req.user.username : 'Guest';
+  // const { newNodeIndex, newNode, location } = req.body;
+  getUser(username).then(userObj => {
+    const { FileSystem: {id} } = userObj.get({ plain: true });
+    // return sequelize.transaction( transaction => {
+    //
+    // });
+  });
+});
+
 app.get('/logout', (req, res) => {
   req.logout();
 
