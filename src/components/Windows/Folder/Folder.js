@@ -22,7 +22,7 @@ function Folder({openedFile, index, uniqueId, openedFileDimensions, selectedDesk
       <FolderNavigation />
       <div className={styles.sidebarAndFolderContents}>
         <FolderSidebar />
-        <FolderContents clearActives={clearActives} selectIcons={selectIcons}
+        <FolderContents clearActives={clearActives} selectIcons={selectIcons} children={fileSystem[openedFile.index].children}
           moveFile={moveFile} moveFile={moveFiles} folderContents={folderContents} index={openedFile.index} />
       </div>
     </div>

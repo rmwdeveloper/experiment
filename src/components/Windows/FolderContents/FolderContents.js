@@ -35,21 +35,21 @@ class FolderContents extends Component {
     this.folderContents = document.getElementById(`folderContents${this.props.index}`);
     this.header = document.getElementById('primaryHeader');
     
-    // START dropzone stuff. todo: abstract this crap away to a HOC
-    // todo : dropzone script is in index.jade. Should be packed with webpack
-    this.dropzone = new Dropzone(`#folderContents${index}`, {url: '/upload', autoProcessQueue:false, clickable: false, createImageThumbnails: false,
-      previewsContainer: null,
-      // drop: event => {
-      //   console.log('drop event folder contents');
-      // },
-      addedfile: file => {
-        const { name, size, type } = file;
-        console.log('dropped in folder');
-      }
-    });
-
-
-    // END DROPZONE STUFF
+    // // START dropzone stuff. todo: abstract this crap away to a HOC
+    // // todo : dropzone script is in index.jade. Should be packed with webpack
+    // this.dropzone = new Dropzone(`#folderContents${index}`, {url: '/upload', autoProcessQueue:false, clickable: false, createImageThumbnails: false,
+    //   previewsContainer: null,
+    //   // drop: event => {
+    //   //   console.log('drop event folder contents');
+    //   // },
+    //   addedfile: file => {
+    //     const { name, size, type } = file;
+    //     console.log('dropped in folder');
+    //   }
+    // });
+    //
+    //
+    // // END DROPZONE STUFF
 
 
     this.folderContents.onmousedown = this.folderContentsMouseDown;
@@ -169,9 +169,9 @@ class FolderContents extends Component {
 const folderTarget = {
   drop(props, monitor) {
     if (monitor.didDrop()) {
-      return;
+      return null;
     }
-    return { index: props.index, canDrop: true };
+    return { index: props.index, canDrop: props.hasOwnProperty('children') };
   }
 };
 
