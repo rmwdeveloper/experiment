@@ -287,9 +287,10 @@ export default function layout(state = initialState, action) {
       action.user.FileSystem.FileNodes.forEach(nodeObject => {
         fileSystemWithNodeIndexedKeys[nodeObject.nodeIndex] = nodeObject;
       });
-      const nodeIndices = action.user.FileSystem.FileNodes.map(fileNode => { return fileNode.nodeIndex}).sort((a, b) => { return a-b;});
+      const nodeIndices = action.user.FileSystem.FileNodes.map(fileNode => { return fileNode.nodeIndex}).sort((a, b) => { return a-b;}); // todo: Need an order attribute. KEys arent ordered anymore
+                                                                                                                                        // with UUID keys.
 
-      nodeIndices.forEach(nodeIndex => {
+      nodeIndices.forEach(nodeIndex => { // todo: refactor this. fileSystem[fileNode] must exist before children can be appended. Error otherwise.
         const fileNode = fileSystemWithNodeIndexedKeys[nodeIndex];
         const { permissions, name, extension, FileNodeMetadata } = fileNode;
         const metadata = {};
@@ -298,7 +299,11 @@ export default function layout(state = initialState, action) {
             metadata[metadataItem.name] = metadataItem.value;
           });
         }
+
         newState.fileSystem[nodeIndex] = {permissions, name, extension, metadata};
+      });
+      nodeIndices.forEach(nodeIndex => {
+        const fileNode = fileSystemWithNodeIndexedKeys[nodeIndex];
         if (fileNode.FileNodeId !== undefined && fileNode.FileNodeId !== null ) {
           if (newState.fileSystem[fileNode.FileNodeId].hasOwnProperty('children')) {
             newState.fileSystem[fileNode.FileNodeId].children.push(nodeIndex);

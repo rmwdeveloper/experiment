@@ -197,10 +197,7 @@ app.post('/move_folder', (req, res) => {
   const { fromNodeIndex, toNodeIndex, originsParentIndex, parentalIndex } = req.body;
   getUser(username).then(userObj => {
     const { FileSystem: {id} } = userObj.get({ plain: true });
-    console.log(fromNodeIndex, toNodeIndex, originsParentIndex, parentalIndex);
-    // return sequelize.transaction( transaction => {
-    //
-    // });
+    FileNode.update({ FileNodeId: toNodeIndex}, { where: { FileSystemId: id, id: fromNodeIndex }});
   });
 });
 
