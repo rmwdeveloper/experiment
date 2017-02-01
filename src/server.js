@@ -197,7 +197,10 @@ app.post('/move_file', (req, res) => {
   const { fromNodeIndex, toNodeIndex, originsParentIndex, parentalIndex } = req.body;
   getUser(username).then(userObj => {
     const { FileSystem: {id} } = userObj.get({ plain: true });
-    FileNode.update({ FileNodeId: toNodeIndex}, { where: { FileSystemId: id, id: fromNodeIndex }});
+    FileNode.findOne({ where: { nodeIndex: toNodeIndex, FileSystemId: id } }).then(toNode => {
+      FileNode.update({ FileNodeId: toNode.get({plain: true}).id }, { where: { FileSystemId: id, nodeIndex: fromNodeIndex } });
+    });
+
   });
 });
 
@@ -207,7 +210,9 @@ app.post('/move_files', (req, res) => {
 
   getUser(username).then(userObj => {
     const { FileSystem: {id} } = userObj.get({ plain: true });
-    FileNode.update({ FileNodeId: toNodeIndex}, { where: { FileSystemId: id, nodeIndex: { $in: fromIndices} }});
+    FileNode.findOne({ where: { nodeIndex: toNodeIndex, FileSystemId: id } }).then(toNode => {
+      FileNode.update({ FileNodeId: toNode.get({plain: true}).id}, { where: { FileSystemId: id, nodeIndex: { $in: fromIndices} }});
+    });
   });
 });
 

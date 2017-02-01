@@ -306,14 +306,18 @@ export default function layout(state = initialState, action) {
         }
 
       });
+       // todo: refactor. Confusing mixture between database ids and nodeindices.
       nodeIndices.forEach(nodeIndex => {
         const fileNode = fileSystemWithNodeIndexedKeys[nodeIndex];
-        if (fileNode.FileNodeId !== undefined && fileNode.FileNodeId !== null ) {
-          if (newState.fileSystem[fileNode.FileNodeId].hasOwnProperty('children')) {
-            newState.fileSystem[fileNode.FileNodeId].children.push(nodeIndex);
-          } else {
-            newState.fileSystem[fileNode.FileNodeId].children = [nodeIndex];
+
+        if (fileNode.FileNodeId !== undefined && fileNode.FileNodeId !== null ) { // node has Children.
+          for (let key in newState.fileSystem) { // TODO: TERRIBLE. REFACTOR URGENT.
+            if(fileSystemWithNodeIndexedKeys[key].id === fileNode.FileNodeId) {
+              newState.fileSystem[key].children.push(nodeIndex);
+              break;
+            }
           }
+
         }
       });
 

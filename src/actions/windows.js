@@ -47,7 +47,7 @@ export function createFolder(location) {
   return (dispatch, getState) => {
     const { windows: { desktopNodeIndex } } = getState();
     const newNodeIndex = uuid.v4(); // todo: Move this somewhere else?
-    const newNode = { children: [], name: 'New Folder', type: 'Folder', metadata: { icon: 'emptyFolderXSmall.png' } };
+    const newNode = { children: [], name: 'New Folder', type: 'Folder', permissions: 'rwxp', metadata: { icon: 'emptyFolderXSmall.png' } };
     const headers = new Headers(); // todo: abstract headers away
     headers.append('Content-Type', 'application/json');
     dispatch({ type: CREATE_FOLDER, location, desktopNodeIndex, newNodeIndex, newNode });
