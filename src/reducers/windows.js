@@ -142,7 +142,7 @@ export default function layout(state = initialState, action) {
           }
         }
       });
-      const parentalIndex = newFileSystem[originsParentIndex].children.indexOf(parseInt(action.fromNodeIndex, 10));
+      const parentalIndex = newFileSystem[originsParentIndex].children.indexOf(action.fromNodeIndex);
       newFileSystem[originsParentIndex].children = [...newFileSystem[originsParentIndex].children.slice(0, parentalIndex),
         ...newFileSystem[originsParentIndex].children.slice(parentalIndex + 1)];
       newFileSystem[action.toNodeIndex].children.push(action.fromNodeIndex);

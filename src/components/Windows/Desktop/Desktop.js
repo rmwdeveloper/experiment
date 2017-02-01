@@ -423,9 +423,9 @@ class Desktop extends Component {
       >
         {/*<Dropzone className={styles.dropzone} disableClick onDrop={()=>{console.log('dropzone onDrop method');}} ref="dropzone" accept="*" /> */}
         {
-          desktopItems.map((desktopitem) => {
+          desktopItems.map((desktopitem, index) => {
             return <DesktopItem selected={selectedIds.includes(desktopitem.index)} className='desktopIcon'
-                                key={desktopitem.index} uploads={uploads}
+                                key={index} uploads={uploads}
                                 index={desktopitem.index} moveFiles={moveFiles} parentIndex={desktopNodeIndex}
                                 moveFile={moveFile}  openFile={openFile} item={desktopitem} />
           })
