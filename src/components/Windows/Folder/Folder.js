@@ -16,13 +16,14 @@ function Folder({openedFile, index, uniqueId, openedFileDimensions, selectedDesk
   }) : null;
   const windowHeight = openedFileDimensions[uniqueId].height - 30;
 
+
   return (
     <div style={{minHeight: windowHeight}} className={styles.root}>
       <FolderNavigation />
       <div className={styles.sidebarAndFolderContents}>
         <FolderSidebar />
         <FolderContents clearActives={clearActives} selectIcons={selectIcons}
-          moveFile={moveFile} moveFile={moveFiles} folderContents={folderContents} index={openedFile.uniqueId} />
+          moveFile={moveFile} moveFile={moveFiles} folderContents={folderContents} index={openedFile.index} />
       </div>
     </div>
   );
