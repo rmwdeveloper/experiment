@@ -6,7 +6,7 @@ import cx from 'classnames';
 import { windowsClickables } from '../../../constants/windows';
 import flow from 'lodash.flow';
 
-function FileIcon({ item, openFile, connectDragSource, connectDropTarget, className, uploads }) {
+function FileIcon({ item, openFile, connectDragSource, connectDropTarget, className, uploads, selected }) {
   const style = {background: `url(${item.metadata.icon})`};
   const loadingBorder = (<svg className={styles.iconSVG} width="110" height="110">]
     <rect width="100%" height="100%" fill="transparent"
@@ -20,8 +20,13 @@ function FileIcon({ item, openFile, connectDragSource, connectDropTarget, classN
   if (item.metadata.iconOpacity) {
     style.opacity = item.metadata.iconOpacity;
   }
+  const selectedStyle = {};
+  if (selected) {
+    selectedStyle.backgroundColor = 'rgba(66,85,101,0.25)';
+    selectedStyle.outline = '2px solid rgb(115, 128, 140)';
+  }
   return connectDragSource(connectDropTarget(
-    <div data-clickClass={windowsClickables.desktopItem} data-topClickable data-index={item.index} onDoubleClick={() => { openFile(item.index); }}
+    <div style={selectedStyle} data-clickClass={windowsClickables.desktopItem} data-topClickable data-index={item.index} onDoubleClick={() => { openFile(item.index); }}
          className={cx(className, styles.root)}>
       { item.metadata.loading ? loadingBorder : null}
       <div style={style} data-clickClass={windowsClickables.desktopItemIcon} data-index={item.index} className={cx(styles.icon)}></div>
