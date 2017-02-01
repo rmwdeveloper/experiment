@@ -1,3 +1,5 @@
+import uuid from 'node-uuid';
+
 import {
   OPEN_START_MENU, CLOSE_START_MENU, CREATE_FOLDER,
   OPEN_CONTEXT_MENU, SELECT_ICONS, CLEAR_ACTIVES, OPEN_FILE_WINDOW,
@@ -44,11 +46,14 @@ export function closeStartMenu() {
 export function createFolder(location) {
   return (dispatch, getState) => {
     const { windows: { desktopNodeIndex } } = getState();
+    const newNodeIndex = uuid.v4(); // todo: Move this somewhere else?
+    const newNode = { children: [], name: 'New Folder', type: 'Folder', metadata: { icon: 'emptyFolderXSmall.png' } };
     const headers = new Headers(); // todo: abstract headers away
     headers.append('Content-Type', 'application/json');
-    dispatch({ type: CREATE_FOLDER, location, desktopNodeIndex });
+    dispatch({ type: CREATE_FOLDER, location, desktopNodeIndex, newNodeIndex, newNode });
     fetch('/create_folder', {
-      method: 'post', credentials: 'include', headers
+      method: 'post', credentials: 'include', headers,
+      body: JSON.stringify({ newNodeIndex, newNode, location: desktopNodeIndex })
     });
   };
 }

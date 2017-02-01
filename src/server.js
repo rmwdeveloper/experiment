@@ -157,6 +157,7 @@ app.get('/get_user', (req, res) => {
     return null;
   });
 });
+//todo : Add a get user middleware so not doing this for every single view.
 
 app.post('/delete_files', (req, res) => {
   const username = req.user ? req.user.username : 'Guest'; // Either logged in user, or guest ID ( 1 )
@@ -164,38 +165,33 @@ app.post('/delete_files', (req, res) => {
   getUser(username).then(userObj => {
     const { FileSystem: {id} } = userObj.get({plain: true});
 
-    // FileNode.destroy({ individualHooks: true,
-    //   hooks: true,
-    //   where: {FileSystemId: id, nodeIndex: { $in: toDelete }}});
-
+    // todo: Batch delete possible? For some reason association hook not being called
+    // todo: when doing bulk destroy.
     toDelete.forEach( nodeToDelete => { // todo: convert to sequelize transaction.
-
       FileNode.findOne({ where: {FileSystemId: id, nodeIndex: nodeToDelete }}).then( node => {
         node.destroy();
       });
     });
-    // FileNode.findAll({where: {FileSystemId: id, nodeIndex: { $in: toDelete }}}).then(nodes => {
-    //   console.log(nodes);
-    //   // nodes.destroy({ individualHooks: true, hooks: true });
-    // }).catch( error => {
-    //   console.log(error);
-    // });
-    // FileNode.destroy({ individualHooks: true,
-    //   hooks: true,
-    //   where: {FileSystemId: id, nodeIndex: { $in: toDelete }}});
     return null;
   });
-  
-  // getUser(username).then(userObj => {
-  //   const { FileSystem: {id} } = userObj.get({plain: true});
-  //   return sequelize.transaction(transaction => {
-  //     return FileNode.destroy({ individualHooks: true, hooks: true, where: {FileSystemId: id, nodeIndex: { $in: toDelete }}}, {transaction});
-  //   })
-  //     .then(result => {console.log(result);})
-  //     .catch(err => { console.log(err);});
-  // });
-
 });
+
+app.post('/create_folder', (req, res) => {
+  const username = req.user ? req.user.username : 'Guest';
+  const { newNodeIndex, newNode, location } = req.body;
+  getUser(username).then(userObj => {
+    const { FileSystem: {id} } = userObj.get({ plain: true });
+    return sequelize.transaction( transaction => {
+      return FileNode.create({ ...newNode, FileNodeId: location, nodeIndex: newNodeIndex, FileSystemId: id }, {transaction}).then( fileNode => {
+        const metadataRows = Object.keys(newNode.metadata).map(name => {
+          return { name, value: newNode.metadata[name], FileNodeId: fileNode.get({ plain: true }).id };
+        });
+        return FileNodeMetadata.bulkCreate(metadataRows, { transaction });
+      });
+    });
+  });
+});
+
 app.get('/logout', (req, res) => {
   req.logout();
 
