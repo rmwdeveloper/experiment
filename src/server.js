@@ -203,10 +203,11 @@ app.post('/move_file', (req, res) => {
 
 app.post('/move_files', (req, res) => {
   const username = req.user ? req.user.username : 'Guest';
-  const { fromNodeIndex, toNodeIndex, originsParentIndex, parentalIndex } = req.body;
+  const { fromIndices, fromParentIndex, toNodeIndex } = req.body;
+
   getUser(username).then(userObj => {
     const { FileSystem: {id} } = userObj.get({ plain: true });
-    FileNode.update({ FileNodeId: toNodeIndex}, { where: { FileSystemId: id, id: fromNodeIndex }});
+    FileNode.update({ FileNodeId: toNodeIndex}, { where: { FileSystemId: id, nodeIndex: { $in: fromIndices} }});
   });
 });
 
