@@ -413,7 +413,7 @@ class Desktop extends Component {
       connectDropTarget, moveFile, moveFiles, desktopNodeIndex, usedSpace, diskSpace, deleteFiles,
       showSpaceIndicator, uploads,
       selectedDesktopIcons, createFolder, openErrorWindow, openFile, openedFiles, fileSystem } = this.props;
-    const selectedIds = selectedDesktopIcons.map(id => {return parseInt(id, 10)});
+
     return (connectDropTarget(
       <div id="desktop"
            data-clickClass={windowsClickables.desktop}
@@ -421,10 +421,9 @@ class Desktop extends Component {
            className={styles.root}
            onContextMenu={this.desktopContextMenu}
       >
-        {/*<Dropzone className={styles.dropzone} disableClick onDrop={()=>{console.log('dropzone onDrop method');}} ref="dropzone" accept="*" /> */}
         {
           desktopItems.map((desktopitem, index) => {
-            return <DesktopItem selected={selectedIds.includes(desktopitem.index)} className='desktopIcon'
+            return <DesktopItem selected={selectedDesktopIcons.includes(desktopitem.index)} className='desktopIcon'
                                 key={index} uploads={uploads}
                                 index={desktopitem.index} moveFiles={moveFiles} parentIndex={desktopNodeIndex}
                                 moveFile={moveFile}  openFile={openFile} item={desktopitem} />
