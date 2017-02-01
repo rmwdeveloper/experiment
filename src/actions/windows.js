@@ -163,16 +163,49 @@ export function openErrorWindow(errorMessage) {
   }
 }
 
+
+// // todo : move this util function (getParent) to a helpers file
+// const originsParentIndex = Object.keys(state.fileSystem).find(key=> {
+//   if (state.fileSystem.hasOwnProperty(key)) {
+//     if (state.fileSystem[key].hasOwnProperty('children')) {
+//       return state.fileSystem[key].children.includes(action.fromNodeIndex);
+//     }
+//   }
+// });
+// const parentalIndex = newFileSystem[originsParentIndex].children.indexOf(action.fromNodeIndex);
+// newFileSystem[originsParentIndex].children = [...newFileSystem[originsParentIndex].children.slice(0, parentalIndex),
+//   ...newFileSystem[originsParentIndex].children.slice(parentalIndex + 1)];
+// newFileSystem[action.toNodeIndex].children.push(action.fromNodeIndex);
+// return {...state, fileSystem: newFileSystem};
+
+//todo: put in <ACTION>, <ACTION_COMPLETE>, <ACTION_ERROR> for all persistent operations.
 export function moveFile(fromNodeIndex, toNodeIndex) {
   return (dispatch, getState) => {
-    const { windows: { selectedDesktopIcons, desktopWidth, desktopHeight } } = getState();
+    const { windows: { selectedDesktopIcons, desktopWidth, desktopHeight, fileSystem } } = getState();
     if (fromNodeIndex === toNodeIndex) {
       dispatch({ type: OPEN_ERROR_WINDOW, errorMessage: "Cant move a folder inside itself.", desktopWidth, desktopHeight});
       return null;
     }
-    dispatch({ type: MOVE_FILE, fromNodeIndex, toNodeIndex});
-  }
+
+    const originsParentIndex = Object.keys(state.fileSystem).find(key=> {
+      if (fileSystem.hasOwnProperty(key)) {
+        if (fileSystem[key].hasOwnProperty('children')) {
+          return fileSystem[key].children.includes(action.fromNodeIndex);
+        }
+      }
+    });
+    const parentalIndex = newFileSystem[originsParentIndex].children.indexOf(action.fromNodeIndex);
+    const headers = new Headers(); // todo: abstract headers away
+    headers.append('Content-Type', 'application/json');
+    dispatch({ type: MOVE_FILE, fromNodeIndex, toNodeIndex, originsParentIndex, parentalIndex});
+    fetch('/move_folder', {
+      method: 'post', credentials: 'include', headers,
+      body: JSON.stringify({ fromNodeIndex, toNodeIndex })
+    });
+  };
 }
+
+
 
 export function moveFiles(fromParentIndex, toNodeIndex) {
   return (dispatch, getState) => {
