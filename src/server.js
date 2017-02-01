@@ -194,9 +194,10 @@ app.post('/create_folder', (req, res) => {
 
 app.post('/move_folder', (req, res) => {
   const username = req.user ? req.user.username : 'Guest';
-  // const { newNodeIndex, newNode, location } = req.body;
+  const { fromNodeIndex, toNodeIndex, originsParentIndex, parentalIndex } = req.body;
   getUser(username).then(userObj => {
     const { FileSystem: {id} } = userObj.get({ plain: true });
+    console.log(fromNodeIndex, toNodeIndex, originsParentIndex, parentalIndex);
     // return sequelize.transaction( transaction => {
     //
     // });

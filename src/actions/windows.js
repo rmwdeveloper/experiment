@@ -181,26 +181,27 @@ export function openErrorWindow(errorMessage) {
 //todo: put in <ACTION>, <ACTION_COMPLETE>, <ACTION_ERROR> for all persistent operations.
 export function moveFile(fromNodeIndex, toNodeIndex) {
   return (dispatch, getState) => {
-    const { windows: { selectedDesktopIcons, desktopWidth, desktopHeight, fileSystem } } = getState();
+    const { windows: { desktopWidth, desktopHeight, fileSystem } } = getState();
     if (fromNodeIndex === toNodeIndex) {
       dispatch({ type: OPEN_ERROR_WINDOW, errorMessage: "Cant move a folder inside itself.", desktopWidth, desktopHeight});
       return null;
     }
 
-    const originsParentIndex = Object.keys(state.fileSystem).find(key=> {
+    const originsParentIndex = Object.keys(fileSystem).find(key=> {
       if (fileSystem.hasOwnProperty(key)) {
         if (fileSystem[key].hasOwnProperty('children')) {
-          return fileSystem[key].children.includes(action.fromNodeIndex);
+          return fileSystem[key].children.includes(fromNodeIndex);
         }
       }
     });
-    const parentalIndex = newFileSystem[originsParentIndex].children.indexOf(action.fromNodeIndex);
+
+    const parentalIndex = fileSystem[originsParentIndex].children.indexOf(fromNodeIndex);
     const headers = new Headers(); // todo: abstract headers away
     headers.append('Content-Type', 'application/json');
     dispatch({ type: MOVE_FILE, fromNodeIndex, toNodeIndex, originsParentIndex, parentalIndex});
     fetch('/move_folder', {
       method: 'post', credentials: 'include', headers,
-      body: JSON.stringify({ fromNodeIndex, toNodeIndex })
+      body: JSON.stringify({ fromNodeIndex, toNodeIndex, originsParentIndex, parentalIndex })
     });
   };
 }

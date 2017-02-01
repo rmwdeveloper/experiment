@@ -136,7 +136,7 @@ export default function layout(state = initialState, action) {
     case MOVE_FILE:
       // todo : move this util function (getParent) to a helpers file
       newFileSystem[action.originsParentIndex].children = [...newFileSystem[action.originsParentIndex].children.slice(0, action.parentalIndex),
-        ...newFileSystem[action.originsParentIndex].children.slice(parentalIndex + 1)];
+        ...newFileSystem[action.originsParentIndex].children.slice(action.parentalIndex + 1)];
       newFileSystem[action.toNodeIndex].children.push(action.fromNodeIndex);
       return {...state, fileSystem: newFileSystem};
     case MOVE_FILES:
