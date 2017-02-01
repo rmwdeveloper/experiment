@@ -192,7 +192,7 @@ app.post('/create_folder', (req, res) => {
   });
 });
 
-app.post('/move_folder', (req, res) => {
+app.post('/move_file', (req, res) => {
   const username = req.user ? req.user.username : 'Guest';
   const { fromNodeIndex, toNodeIndex, originsParentIndex, parentalIndex } = req.body;
   getUser(username).then(userObj => {
@@ -200,6 +200,16 @@ app.post('/move_folder', (req, res) => {
     FileNode.update({ FileNodeId: toNodeIndex}, { where: { FileSystemId: id, id: fromNodeIndex }});
   });
 });
+
+app.post('/move_files', (req, res) => {
+  const username = req.user ? req.user.username : 'Guest';
+  const { fromNodeIndex, toNodeIndex, originsParentIndex, parentalIndex } = req.body;
+  getUser(username).then(userObj => {
+    const { FileSystem: {id} } = userObj.get({ plain: true });
+    FileNode.update({ FileNodeId: toNodeIndex}, { where: { FileSystemId: id, id: fromNodeIndex }});
+  });
+});
+
 
 app.get('/logout', (req, res) => {
   req.logout();

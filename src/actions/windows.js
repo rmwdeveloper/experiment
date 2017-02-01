@@ -199,7 +199,7 @@ export function moveFile(fromNodeIndex, toNodeIndex) {
     const headers = new Headers(); // todo: abstract headers away
     headers.append('Content-Type', 'application/json');
     dispatch({ type: MOVE_FILE, fromNodeIndex, toNodeIndex, originsParentIndex, parentalIndex});
-    fetch('/move_folder', {
+    fetch('/move_file', {
       method: 'post', credentials: 'include', headers,
       body: JSON.stringify({ fromNodeIndex, toNodeIndex, originsParentIndex, parentalIndex })
     });
@@ -216,7 +216,14 @@ export function moveFiles(fromParentIndex, toNodeIndex) {
       dispatch({ type: OPEN_ERROR_WINDOW, errorMessage: "Cant move a folder inside itself.", desktopWidth, desktopHeight});
       return null;
     }
+
+    const headers = new Headers(); // todo: abstract headers away
+    headers.append('Content-Type', 'application/json');
     dispatch({ type: MOVE_FILES, fromIndices: selectedDesktopIcons, fromParentIndex, toNodeIndex});
+    fetch('/move_files', {
+      method: 'post', credentials: 'include', headers,
+      body: JSON.stringify({ fromIndices: selectedDesktopIcons, fromParentIndex, toNodeIndex })
+    });
   }
 }
 

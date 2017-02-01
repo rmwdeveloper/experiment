@@ -140,11 +140,10 @@ export default function layout(state = initialState, action) {
       newFileSystem[action.toNodeIndex].children.push(action.fromNodeIndex);
       return {...state, fileSystem: newFileSystem};
     case MOVE_FILES:
-      const selectedIds = action.fromIndices.map(id => {return parseInt(id, 10)});
       newFileSystem[action.fromParentIndex].children = newFileSystem[action.fromParentIndex].children.filter(value=>{
-        return !selectedIds.includes(value);
+        return !action.fromIndices.includes(value);
       });
-      newFileSystem[action.toNodeIndex].children = [...newFileSystem[action.toNodeIndex].children, ...selectedIds];
+      newFileSystem[action.toNodeIndex].children = [...newFileSystem[action.toNodeIndex].children, ...action.fromIndices];
       return {...state, fileSystem: newFileSystem};
     case CLOSE_FILE_WINDOW:
       delete newOpenedFiles[action.uniqueId];
