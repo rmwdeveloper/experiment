@@ -424,7 +424,7 @@ class Desktop extends Component {
         {
           desktopItems.map((desktopitem, index) => {
             return <DesktopItem selected={selectedDesktopIcons.includes(desktopitem.index)} className='desktopIcon'
-                                key={index} uploads={uploads}
+                                key={desktopitem.index} uploads={uploads}
                                 index={desktopitem.index} moveFiles={moveFiles} parentIndex={desktopNodeIndex}
                                 moveFile={moveFile}  openFile={openFile} item={desktopitem} />
           })
