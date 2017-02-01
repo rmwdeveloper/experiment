@@ -298,8 +298,13 @@ export default function layout(state = initialState, action) {
             metadata[metadataItem.name] = metadataItem.value;
           });
         }
+        newState.fileSystem[nodeIndex] = {permissions, name, metadata};
+        if (extension == null) {
+          newState.fileSystem[nodeIndex].children = [];
+        } else {
+          newState.fileSystem[nodeIndex].extension = extension;
+        }
 
-        newState.fileSystem[nodeIndex] = {permissions, name, extension, metadata};
       });
       nodeIndices.forEach(nodeIndex => {
         const fileNode = fileSystemWithNodeIndexedKeys[nodeIndex];
