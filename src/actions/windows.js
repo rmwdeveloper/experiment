@@ -38,10 +38,18 @@ export function closeStartMenu() {
       dispatch({ type: CLOSE_START_MENU });
   };
 }
+
+
+//todo: put in <ACTION>, <ACTION_COMPLETE>, <ACTION_ERROR> for all persistent operations.
 export function createFolder(location) {
   return (dispatch, getState) => {
     const { windows: { desktopNodeIndex } } = getState();
+    const headers = new Headers(); // todo: abstract headers away
+    headers.append('Content-Type', 'application/json');
     dispatch({ type: CREATE_FOLDER, location, desktopNodeIndex });
+    fetch('/create_folder', {
+      method: 'post', credentials: 'include', headers
+    });
   };
 }
 
