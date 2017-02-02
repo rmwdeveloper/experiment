@@ -43,11 +43,15 @@ FileIcon.propTypes = {
 
 const fileIconSource = {
   beginDrag(props) {
-    Dropzone.instances[0].disable();
+    Dropzone.instances.forEach(instance => {
+      instance.disable();
+    });
     return {index: props.item.index, selected: props.selected, parentIndex: props.parentIndex};
   },
   endDrag(props, monitor, component) {
-    Dropzone.instances[0].enable();
+    Dropzone.instances.forEach(instance => {
+      instance.enable();
+    });
     if (!monitor.didDrop()) {
       return;
     }
