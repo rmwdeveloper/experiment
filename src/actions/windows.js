@@ -7,13 +7,21 @@ import {
   MINIMIZE_FILE_WINDOW,
   UNMINIMIZE_FILE_WINDOW,
   DRAG_FILE_WINDOW,
+  DRAG_ERROR_WINDOW,
   CLICK_TASKBAR_ITEM,
   RESIZE_FILE_WINDOW,
   RESIZE_BROWSER_WINDOW,
-  INITIALIZE_BROWSER_DIMENSIONS
+  INITIALIZE_BROWSER_DIMENSIONS,
+  INITIALIZE_DESKTOP_DIMENSIONS,
+  OPEN_ERROR_WINDOW,
+  CLOSE_ERROR_WINDOW,
+  MOVE_FILE,
+  MOVE_FILES
 } from '../constants';
 
-
+// todo rmw: Remove parameters in actions that can be gotten in state. e.g., openFile desktopWidth
+//  and desktop height can be gotten from getState, doesnt need to be required as a function parameter in the
+// component that uses it.
 export function toggleStartMenu() {
   return (dispatch, getState) => {
     const { windows: { startMenuOpened } } = getState();
@@ -24,10 +32,15 @@ export function toggleStartMenu() {
     }
   };
 }
-
-export function createFolder(location) {
+export function closeStartMenu() {
   return dispatch => {
-    dispatch({ type: CREATE_FOLDER, location });
+      dispatch({ type: CLOSE_START_MENU });
+  };
+}
+export function createFolder(location) {
+  return (dispatch, getState) => {
+    const { windows: { desktopNodeIndex } } = getState();
+    dispatch({ type: CREATE_FOLDER, location, desktopNodeIndex });
   };
 }
 
@@ -49,8 +62,9 @@ export function clearActives() {
   };
 }
 
-export function openFile(nodeIndex, desktopWidth, desktopHeight) {
-  return dispatch => {
+export function openFile(nodeIndex) {
+  return (dispatch, getState) => {
+    const { windows: {desktopWidth, desktopHeight} } = getState();
     dispatch({ type: OPEN_FILE_WINDOW, nodeIndex, desktopWidth, desktopHeight });
   };
 }
@@ -60,7 +74,11 @@ export function closeFile(openedFileIndex) {
     dispatch({ type: CLOSE_FILE_WINDOW, openedFileIndex });
   };
 }
-
+export function closeErrorWindow(errorIndex) {
+  return dispatch => {
+    dispatch({ type: CLOSE_ERROR_WINDOW, errorIndex });
+  };
+}
 export function toggleWindowMaximize(openedFileIndex) {
   return (dispatch, getState) => {
     const { windows: { openedFiles } } = getState();
@@ -85,9 +103,14 @@ export function toggleWindowMinimize(openedFileIndex) {
   };
 }
 
-export function dragFileWindow(index, deltaX, deltaY) { // todo change this name? Same as method in windows/Desktop
+export function dragWindow(index, dragType, deltaX, deltaY) { // todo change this name? Same as method in windows/Desktop. (Change to dragWindow)
   return dispatch => {
-    dispatch({ type: DRAG_FILE_WINDOW, index, deltaX, deltaY });
+    if (dragType === 'file') {
+      dispatch({ type: DRAG_FILE_WINDOW, dragType, index, deltaX, deltaY });
+    }
+    if (dragType === 'error') {
+      dispatch({ type: DRAG_ERROR_WINDOW, dragType, index, deltaX, deltaY });
+    }
   };
 }
 
@@ -112,5 +135,39 @@ export function resizeBrowserWindow(browserWidth, browserHeight, desktopWidth, d
 export function initializeBrowserDimensions(browserWidth, browserHeight) {
   return dispatch => {
     dispatch({ type: INITIALIZE_BROWSER_DIMENSIONS, browserWidth, browserHeight});
+  }
+}
+export function initializeDesktopDimensions(desktopWidth, desktopHeight) {
+  return dispatch => {
+    dispatch({ type: INITIALIZE_DESKTOP_DIMENSIONS, desktopWidth, desktopHeight});
+  }
+}
+export function openErrorWindow(errorMessage) {
+  return (dispatch, getState) => {
+    const { windows: {desktopWidth, desktopHeight} } = getState();
+    dispatch({ type: OPEN_ERROR_WINDOW, errorMessage, desktopWidth, desktopHeight});
+  }
+}
+
+export function moveFile(fromNodeIndex, toNodeIndex) {
+  return (dispatch, getState) => {
+    const { windows: { selectedDesktopIcons, desktopWidth, desktopHeight } } = getState();
+    if (fromNodeIndex === toNodeIndex) {
+      dispatch({ type: OPEN_ERROR_WINDOW, errorMessage: "Cant move a folder inside itself.", desktopWidth, desktopHeight});
+      return null;
+    }
+    dispatch({ type: MOVE_FILE, fromNodeIndex, toNodeIndex});
+  }
+}
+
+export function moveFiles(fromParentIndex, toNodeIndex) {
+  return (dispatch, getState) => {
+    const { windows: { selectedDesktopIcons, desktopWidth, desktopHeight } } = getState();
+    const selectedIds = selectedDesktopIcons.map(id => {return parseInt(id, 10)});
+    if (selectedIds.includes(toNodeIndex)) {
+      dispatch({ type: OPEN_ERROR_WINDOW, errorMessage: "Cant move a folder inside itself.", desktopWidth, desktopHeight});
+      return null;
+    }
+    dispatch({ type: MOVE_FILES, fromIndices: selectedDesktopIcons, fromParentIndex, toNodeIndex});
   }
 }

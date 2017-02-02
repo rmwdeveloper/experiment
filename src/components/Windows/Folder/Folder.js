@@ -1,25 +1,28 @@
 import React, { PropTypes } from 'react';
 import styles from './Folder.css'; //eslint-disable-line
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import FolderItem from '../FolderItem';
+import FolderItem from '../FileIcon';
 import FolderSidebar from '../FolderSidebar';
 import FolderNavigation from '../FolderNavigation';
+import FolderContents from '../FolderContents';
 
-function Folder({openedFile, fileSystem, desktopWidth, desktopHeight, openFile}) {
-  const folderContents = fileSystem[openedFile.nodeIndex].children ? fileSystem[openedFile.nodeIndex].children.map((nodeIndex, index) => {
+
+function Folder({openedFile, openedFileDimensions, selectedDesktopIcons, clearActives, fileSystem, selectIcons, openFile, moveFile, moveFiles}) {
+  const selectedIds = selectedDesktopIcons.map(id => {return parseInt(id, 10)});
+  const folderContents = fileSystem[openedFile].children ? fileSystem[openedFile].children.map((nodeIndex, index) => {
     fileSystem[nodeIndex].index = nodeIndex;
-    return <FolderItem key={index} desktopWidth={desktopWidth} desktopHeight={desktopHeight} index={index} openFile={openFile} item={fileSystem[nodeIndex]} />;
+    return <FolderItem moveFile={moveFile} moveFiles={moveFiles} className="folderIcon" parentIndex={openedFile} selected={selectedIds.includes(nodeIndex)}
+                       key={index} index={index} openFile={openFile} item={fileSystem[nodeIndex]} />;
   }) : null;
-  const windowHeight = openedFile.height - 30;
+  const windowHeight = openedFileDimensions[openedFile].height - 30;
 
   return (
     <div style={{minHeight: windowHeight}} className={styles.root}>
       <FolderNavigation />
       <div className={styles.sidebarAndFolderContents}>
         <FolderSidebar />
-        <div className={styles.folderContents}>
-          {folderContents}
-        </div>
+        <FolderContents clearActives={clearActives} selectIcons={selectIcons}
+          moveFile={moveFile} moveFile={moveFiles} folderContents={folderContents} index={openedFile} />
       </div>
     </div>
   );

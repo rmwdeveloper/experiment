@@ -1,8 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import styles from './FileWindow.css'; //eslint-disable-line
 import FileBaseTaskbar from '../FileBaseTaskbar';
-import { windowsClickables } from '../../../constants/windows';
+import MoveableResizeableWindow from '../MoveableResizeableWindow';
 
 export default function FileWindow(ComposedComponent) {
   class FileWindow extends Component {
@@ -12,25 +10,15 @@ export default function FileWindow(ComposedComponent) {
       toggleWindowMaximize: PropTypes.func,
       toggleWindowMinimize: PropTypes.func,
       filename: PropTypes.string,
-      openedFile: PropTypes.object
+      openedFile: PropTypes.number
     };
     render() {
-      const { closeFile, index, filename, toggleWindowMaximize, toggleWindowMinimize,
-        openedFile: { maximized, minimized, height, width, xPosition, yPosition } } = this.props;
-
-      let windowStyle = {height, width, left: xPosition, top: yPosition};
-
-      if (maximized) {
-        windowStyle = {height: '100%', width: '100%', left: 0, top: 0};
-      }
-      if (minimized) {
-        windowStyle = {height: 0, width: 0, left: 0, top: 0};
-      }
+      const { index, filename, closeFile, toggleWindowMaximize, toggleWindowMinimize,
+        openedFile, openedFileDimensions } = this.props;
+      // todo: make sure FileBaseTaskbar min/max button reflects minimization maximization state
       return (
-        <div className={styles.root} style={windowStyle}>
+        <MoveableResizeableWindow index={index} dimensions={openedFileDimensions[openedFile]} >
           <FileBaseTaskbar
-            maximized={maximized}
-            minimized={minimized}
             toggleWindowMaximize={toggleWindowMaximize}
             toggleWindowMinimize={toggleWindowMinimize}
             index={index}
@@ -38,18 +26,9 @@ export default function FileWindow(ComposedComponent) {
             closeFile={closeFile}
           />
           <ComposedComponent {...this.state} {...this.props} />
-          <div data-clickClass={windowsClickables.fileResizeHandle} data-topClickable data-index={index} data-side={'top'} className={styles.topResizer}></div>
-          <div data-clickClass={windowsClickables.fileResizeHandle} data-topClickable data-index={index} data-side={'right'} className={styles.rightResizer}></div>
-          <div data-clickClass={windowsClickables.fileResizeHandle} data-topClickable data-index={index} data-side={'bottom'} className={styles.bottomResizer}></div>
-          <div data-clickClass={windowsClickables.fileResizeHandle} data-topClickable data-index={index} data-side={'left'} className={styles.leftResizer}></div>
-
-          <div data-clickClass={windowsClickables.fileResizeHandle} data-topClickable data-index={index} data-side={'bottomRight'} className={styles.bottomRightResizer}></div>
-          <div data-clickClass={windowsClickables.fileResizeHandle} data-topClickable data-index={index} data-side={'bottomLeft'} className={styles.bottomLeftResizer}></div>
-          <div data-clickClass={windowsClickables.fileResizeHandle} data-topClickable data-index={index} data-side={'topRight'} className={styles.topRightResizer}></div>
-          <div data-clickClass={windowsClickables.fileResizeHandle} data-topClickable data-index={index} data-side={'topLeft'} className={styles.topLeftResizer}></div>
-        </div>);
+        </MoveableResizeableWindow>);
     }
   }
-  return withStyles(styles)(FileWindow);
+  return FileWindow
 }
 

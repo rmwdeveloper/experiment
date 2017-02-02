@@ -10,6 +10,7 @@ class ContextMenu extends Component {
     contextMenuY: PropTypes.number,
     contextMenuClickClass: PropTypes.string,
     contextMenuIndex: PropTypes.number,
+    openErrorWindow: PropTypes.func
   };
   constructor() {
     super();
@@ -18,14 +19,14 @@ class ContextMenu extends Component {
   }
   createFolder(event) {
     event.stopPropagation();
-    this.props.createFolder('desktopItems');
+    this.props.createFolder(this.props.contextMenuClickClass, this.props.contextMenuIndexClicked);
   }
   notImplemented() {
-    console.log('open not implemented Error Window');
+    this.props.openErrorWindow("This isn't implemented yet. Sorry!");
   }
   render() {
     const { contextMenuX, contextMenuY, contextMenuClickClass, contextMenuIndexClicked } = this.props;
-    console.log(contextMenuClickClass, contextMenuIndexClicked); // todo: refactor render
+    // todo: refactor render
     return (
       <ul style={{top: `${contextMenuY}px`, left: `${contextMenuX}px`}} className={cx(styles.root, styles.contextMenu)}
           type="context" id="mymenu">

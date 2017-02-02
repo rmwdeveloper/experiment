@@ -1,3 +1,4 @@
+import fileSystem from '../data/fileSystem';
 import {
   OPEN_START_MENU,
   CLEAR_ACTIVES,
@@ -12,41 +13,30 @@ import {
   MINIMIZE_FILE_WINDOW,
   UNMINIMIZE_FILE_WINDOW,
   DRAG_FILE_WINDOW,
+  DRAG_ERROR_WINDOW,
   CLICK_TASKBAR_ITEM,
   RESIZE_FILE_WINDOW,
   RESIZE_BROWSER_WINDOW,
-  INITIALIZE_BROWSER_DIMENSIONS
+  INITIALIZE_BROWSER_DIMENSIONS,
+  INITIALIZE_DESKTOP_DIMENSIONS,
+  OPEN_ERROR_WINDOW,
+  CLOSE_ERROR_WINDOW,
+  MOVE_FILE,
+  MOVE_FILES,
+  LOGIN
 } from '../constants';
 
 
 const initialState = {
   browserWidth: 0,
   browserHeight: 0,
-  fileSystem: { // Indices are always unique and static.
-    1: { name: 'root', children: [2, 17, 18], permissions: ['rwxp'] },
-    2: { name: 'drive', children: [3, 8], permissions: ['rwxp'] },
-    3: { name: 'Users', children: [4], permissions: ['rwxp'] },
-    4: { name: 'Guest', children: [11, 14, 15], permissions: ['rwxp'] },
-    5: { name: 'Word Processor', permissions: ['rwx-'], extension: 'exe', metadata: { icon: 'wordlogoXSmall.png' } },
-    6: { name: 'Spreadsheets', permissions: ['rwx-'], extension: 'exe', metadata: { icon: 'excellogoXSmall.png' } },
-    7: { name: 'Webscape', permissions: ['rwx-'], extension: 'exe', metadata: { icon: 'ie7.png' } },
-    8: { name: 'Programs', children: [9], permissions: ['rwx-'] },
-    9: { name: 'Office', children: [5, 6], permissions: ['rwx-'] },
-    10: { name: 'Word Processor', permissions: ['rwx-'], extension: 'shct', metadata: { icon: 'wordlogoXSmall.png' } },
-    11: { name: 'Desktop', permissions: ['rwx-'], children: [10, 12, 13, 14, 15] },
-    12: { name: 'Spreadsheets', permissions: ['rwx-'], extension: 'shct', metadata: { icon: 'excellogoXSmall.png' } },
-    13: { name: 'Webscape', permissions: ['rwx-'], extension: 'shct', metadata: { icon: 'ie7.png' } },
-    14: { name: 'My Documents', permissions: ['rwx-'], children: [16], metadata: { icon: 'MyDocumentsXSmall.png' }, registryKey:'Folder' },
-    15: { name: 'My Computer', permissions: ['rwx-'], children: [], metadata: { icon: 'MyComputerXSmall.png' } },
-    16: { name: 'My Music', permissions: ['rwx-'], children: [], metadata: { icon: 'MyMusicXSmall.png' } },
-    17: { name: 'Control Panel', permissions: ['rwx-'], children: [], metadata: { icon: 'ControlPanelXSmall.png' } },
-    18: { name: 'Printer And Faxes', permissions: ['rwx-'], metadata: { icon: 'printerAndFaxesXSmall.png' } },
-    19: { name: 'Help And Support', permissions: ['rwxp'], extension: 'exe', metadata: { icon: 'HelpAndSupportXSmall.png' } },
-    20: { name: 'Search', permissions: ['rwxp'], extension: 'exe', metadata: { icon: 'SearchXSmall.png' } },
-    21: { name: 'Run', permissions: ['rwxp'], extension: 'exe', metadata: { icon: 'RunXSmall.png' } },
-  },
-  desktopNodeIndex: 11,
-  startMenuProgramsIndices: [5, 6, 7],
+  desktopWidth: 0,
+  desktopHeight: 0,
+  fileSystem,
+  desktopNodeIndex: 11, //indices are in state, and not searchable by name because user can make duplicate names
+  userIndex: 4, // Users personal index. Username will be fileSystem[userIndex].name  . Default is "Guest"
+  authenticatorIndex: 29,
+  startMenuProgramsIndices: [7, 8, 9],
   userDirectoriesIndices: [14, 15, 16],
   computerSettingsIndices: [17, 18],
   utilityControlsIndices: [19, 20, 21],
@@ -56,35 +46,73 @@ const initialState = {
   contextMenuClickClass: '',
   contextMenuIndexClicked: 0,
   contextMenuActive: false,
-  selectedDesktopIcons: [], // Array of entity IDs
+  selectedDesktopIcons: [], // Array of entity IDs todo: maybe rename this to selectedIcons if this can be used for both desktop and folder...
   openedFiles: [], // {entityId, height, width}
+  openedFileDimensions: {},
+  errorWindows: [],
+  diskSpace: 50000, // MB
+  usedSpace: 0, // MB
 };
 export default function layout(state = initialState, action) {
   const newOpenedFiles = [...state.openedFiles];
+  const newOpenedFileDimensions = {...state.openedFileDimensions};
+  const newErrorWindows = [...state.errorWindows];
+  const newFileSystem = { ...state.fileSystem };
   switch (action.type) {
     case OPEN_START_MENU:
       return { ...state, startMenuOpened: true };
     case CLOSE_START_MENU:
       return { ...state, startMenuOpened: false };
     case CREATE_FOLDER:
-      const nextEntityId = Object.keys(state.entities).length + 1;
-      const newEntities = { ...state.entities };
-      newEntities[nextEntityId] = { name: 'New Folder', type: 'Folder', icon: 'emptyFolderXSmall.png' };
-      return { ...state, entities: newEntities, desktopItems: [...state.desktopItems, nextEntityId], contextMenuActive: false };
+      const nextNodeIndex = Object.keys(state.fileSystem).length + 1;
+      newFileSystem[nextNodeIndex] = { children: [], name: 'New Folder', type: 'Folder', metadata: { icon: 'emptyFolderXSmall.png' } };
+      if (action.location === 'desktop') {
+        newFileSystem[action.desktopNodeIndex].children.push(nextNodeIndex);
+      }
+      return { ...state, fileSystem: newFileSystem, contextMenuActive: false };
     case OPEN_CONTEXT_MENU:
       return { ...state, contextMenuX: action.mouseX, contextMenuY: action.mouseY, contextMenuActive: true,
         contextMenuClickClass: action.clickclass, contextMenuIndexClicked: action.index };
     case SELECT_ICONS:
       return { ...state, selectedDesktopIcons: action.icons };
     case CLEAR_ACTIVES:
-      return { ...state, selectedDesktopIcons: [], contextMenuActive: false };
+      return { ...state, contextMenuActive: false};
     case OPEN_FILE_WINDOW:
-      return { ...state, openedFiles: [...state.openedFiles,
-        { nodeIndex: action.nodeIndex, height: 300, width: 300, xPosition: ((action.desktopWidth / 2.4) + state.openedFiles.length * 5)
-      , yPosition: ((action.desktopHeight / 4) + state.openedFiles.length * 5), maximized: false, minimized: false }] };
+      newOpenedFileDimensions[action.nodeIndex] = { height: 300, width: 300,
+        xPosition: ((action.desktopWidth / 2.4) + state.openedFiles.length * 5)
+        ,yPosition: ((action.desktopHeight / 4) + state.openedFiles.length * 5), maximized: false, minimized: false };
+      return { ...state, openedFiles: [...state.openedFiles, action.nodeIndex], openedFileDimensions: newOpenedFileDimensions };
+
+    case OPEN_ERROR_WINDOW:
+      return { ...state, errorWindows: [...state.errorWindows, { errorMessage: action.errorMessage, height: 150, width: 400,
+        xPosition: (action.desktopWidth / 2.4), yPosition: (action.desktopHeight / 4) }] };
+    case MOVE_FILE:
+      // todo : move this util function (getParent) to a helpers file
+      const originsParentIndex = Object.keys(state.fileSystem).find(key=> {
+        if (state.fileSystem.hasOwnProperty(key)) {
+          if (state.fileSystem[key].hasOwnProperty('children')) {
+            return state.fileSystem[key].children.includes(action.fromNodeIndex);
+          }
+        }
+      });
+      const parentalIndex = newFileSystem[originsParentIndex].children.indexOf(parseInt(action.fromNodeIndex, 10));
+      newFileSystem[originsParentIndex].children = [...newFileSystem[originsParentIndex].children.slice(0, parentalIndex),
+        ...newFileSystem[originsParentIndex].children.slice(parentalIndex + 1)];
+      newFileSystem[action.toNodeIndex].children.push(action.fromNodeIndex);
+      return {...state, fileSystem: newFileSystem};
+    case MOVE_FILES:
+      const selectedIds = action.fromIndices.map(id => {return parseInt(id, 10)});
+      newFileSystem[action.fromParentIndex].children = newFileSystem[action.fromParentIndex].children.filter(value=>{
+        return !selectedIds.includes(value);
+      });
+      newFileSystem[action.toNodeIndex].children = [...newFileSystem[action.toNodeIndex].children, ...selectedIds];
+      return {...state, fileSystem: newFileSystem};
     case CLOSE_FILE_WINDOW:
       return { ...state, openedFiles: [...state.openedFiles.slice(0, action.openedFileIndex),
             ...state.openedFiles.slice(action.openedFileIndex + 1)] };
+    case CLOSE_ERROR_WINDOW:
+      return { ...state, errorWindows: [...state.errorWindows.slice(0, action.errorIndex),
+        ...state.errorWindows.slice(action.errorIndex + 1)] };
     case MAXIMIZE_FILE_WINDOW:
       newOpenedFiles[action.openedFileIndex].maximized = true;
       return { ...state, openedFiles: newOpenedFiles };
@@ -98,112 +126,149 @@ export default function layout(state = initialState, action) {
       newOpenedFiles[action.openedFileIndex].minimized = false;
       return { ...state, openedFiles: newOpenedFiles };
     case DRAG_FILE_WINDOW:
-      newOpenedFiles[parseInt(action.index, 10)].xPosition = action.deltaX;
-      newOpenedFiles[parseInt(action.index, 10)].yPosition = action.deltaY;
-      return { ...state, openedFiles: newOpenedFiles };
+      if (action.index) { // todo : after close index is undefined: fix this bug.
+          newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].xPosition = action.deltaX;
+          newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].yPosition = action.deltaY;
+        return { ...state, openedFileDimensions: newOpenedFileDimensions };
+      }
+      return state;
+    case DRAG_ERROR_WINDOW:
+      newErrorWindows[parseInt(action.index, 10)].xPosition = action.deltaX;
+      newErrorWindows[parseInt(action.index, 10)].yPosition = action.deltaY;
+      return { ...state, errorWindows: newErrorWindows };
     case RESIZE_BROWSER_WINDOW:
       return { ...state, browserWidth: action.browserWidth, browserHeight: action.browserHeight,
         desktopWidth: action.desktopWidth, desktopHeight: action.desktopHeight };
     case INITIALIZE_BROWSER_DIMENSIONS:
       return { ...state, browserWidth: action.browserWidth, browserHeight: action.browserHeight };
+    case INITIALIZE_DESKTOP_DIMENSIONS:
+      return { ...state, desktopWidth: action.desktopWidth, desktopHeight: action.desktopHeight };
     case RESIZE_FILE_WINDOW: // todo: Needs refactor. Bulky and repetitive switch case.
-
       if (action.resizeSideClicked === 'topLeft') {
         if (action.deltaY < 0) {
-          newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + Math.abs(action.deltaY);
-          newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop - Math.abs(action.deltaY);
+          newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].height = action.resizeStartHeight + Math.abs(action.deltaY);
+          newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].yPosition = action.resizeStartTop - Math.abs(action.deltaY);
         }
         if (action.deltaY > 0 ) {
-          if (!((action.resizeStartHeight - action.deltaY) < 250)) {
-            newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight - Math.abs(action.deltaY);
-            newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop + Math.abs(action.deltaY);
+          if (!((action.resizeStartHeight - action.deltaY) < 200)) {
+            newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].height = action.resizeStartHeight - Math.abs(action.deltaY);
+            newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].yPosition = action.resizeStartTop + Math.abs(action.deltaY);
           }
         }
         if (action.deltaX < 0) {
-          newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + Math.abs(action.deltaX);
-          newOpenedFiles[parseInt(action.index, 10)].xPosition = action.resizeStartLeft - Math.abs(action.deltaX);
+          newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].width = action.resizeStartWidth + Math.abs(action.deltaX);
+          newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].xPosition = action.resizeStartLeft - Math.abs(action.deltaX);
 
         }
         if (action.deltaX > 0 ) {
-          if (!((action.resizeStartWidth - action.deltaX) < 250)) {
-            newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth - Math.abs(action.deltaX);
-            newOpenedFiles[parseInt(action.index, 10)].xPosition = action.resizeStartLeft + Math.abs(action.deltaX);
+          if (!((action.resizeStartWidth - action.deltaX) < 200)) {
+            newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].width = action.resizeStartWidth - Math.abs(action.deltaX);
+            newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].xPosition = action.resizeStartLeft + Math.abs(action.deltaX);
           }
         }
       }
       else if (action.resizeSideClicked === 'top') {
         if (action.deltaY < 0) {
-          newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + Math.abs(action.deltaY);
-          newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop - Math.abs(action.deltaY);
+          newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].height = action.resizeStartHeight + Math.abs(action.deltaY);
+          newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].yPosition = action.resizeStartTop - Math.abs(action.deltaY);
         }
         if (action.deltaY > 0 ) {
-          if (!((action.resizeStartHeight - action.deltaY) < 250)) {
-            newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight - Math.abs(action.deltaY);
-            newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop + Math.abs(action.deltaY);
+          if (!((action.resizeStartHeight - action.deltaY) < 200)) {
+            newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].height = action.resizeStartHeight - Math.abs(action.deltaY);
+            newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].yPosition = action.resizeStartTop + Math.abs(action.deltaY);
           }
         }
       }
       else if (action.resizeSideClicked === 'right') {
-        newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + action.deltaX;
+        newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].width = action.resizeStartWidth + action.deltaX;
       }
       else if (action.resizeSideClicked === 'bottom') {
-        newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + action.deltaY;
+        newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].height = action.resizeStartHeight + action.deltaY;
       }
       else if (action.resizeSideClicked === 'left') {
         if (action.deltaX < 0) {
-          newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + Math.abs(action.deltaX);
-          newOpenedFiles[parseInt(action.index, 10)].xPosition = action.resizeStartLeft - Math.abs(action.deltaX);
+          newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].width = action.resizeStartWidth + Math.abs(action.deltaX);
+          newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].xPosition = action.resizeStartLeft - Math.abs(action.deltaX);
         }
         if (action.deltaX > 0 ) {
-          if (!((action.resizeStartHeight - action.deltaX) < 250)) {
-            newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth - Math.abs(action.deltaX);
-            newOpenedFiles[parseInt(action.index, 10)].xPosition = action.resizeStartLeft + Math.abs(action.deltaX);
+          if (!((action.resizeStartHeight - action.deltaX) < 200)) {
+            newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].width = action.resizeStartWidth - Math.abs(action.deltaX);
+            newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].xPosition = action.resizeStartLeft + Math.abs(action.deltaX);
           }
         }
       }
 
       else if (action.resizeSideClicked === 'topRight') {
-        newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + action.deltaX;
+        newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].width = action.resizeStartWidth + action.deltaX;
         if (action.deltaY < 0) {
-          newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + Math.abs(action.deltaY);
-          newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop - Math.abs(action.deltaY);
+          newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].height = action.resizeStartHeight + Math.abs(action.deltaY);
+          newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].yPosition = action.resizeStartTop - Math.abs(action.deltaX);
         }
         if (action.deltaY > 0 ) {
-          if (!((action.resizeStartHeight - action.deltaY) < 250)) {
-            newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight - Math.abs(action.deltaY);
-            newOpenedFiles[parseInt(action.index, 10)].yPosition = action.resizeStartTop + Math.abs(action.deltaY);
+          if (!((action.resizeStartHeight - action.deltaY) < 200)) {
+            newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].height = action.resizeStartHeight - Math.abs(action.deltaY);
+            newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].yPosition = action.resizeStartTop + Math.abs(action.deltaY);
           }
         }
       }
 
       else if (action.resizeSideClicked === 'bottomRight') {
-        newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + action.deltaX;
-        newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + action.deltaY;
+        newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].width = action.resizeStartWidth + action.deltaX;
+        newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].height = action.resizeStartHeight + action.deltaY;
       }
 
       else if (action.resizeSideClicked === 'bottomLeft') {
 
-        newOpenedFiles[parseInt(action.index, 10)].height = action.resizeStartHeight + action.deltaY;
+        newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].height = action.resizeStartHeight + action.deltaY;
 
         if (action.deltaX < 0) {
-          newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth + Math.abs(action.deltaX);
-          newOpenedFiles[parseInt(action.index, 10)].xPosition = action.resizeStartLeft - Math.abs(action.deltaX);
+          newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].width = action.resizeStartWidth + Math.abs(action.deltaX);
+          newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].xPosition = action.resizeStartLeft - Math.abs(action.deltaX);
 
         }
         if (action.deltaX > 0 ) {
-          if (!((action.resizeStartWidth - action.deltaX) < 250)) {
-            newOpenedFiles[parseInt(action.index, 10)].width = action.resizeStartWidth - Math.abs(action.deltaX);
-            newOpenedFiles[parseInt(action.index, 10)].xPosition = action.resizeStartLeft + Math.abs(action.deltaX);
+          if (!((action.resizeStartWidth - action.deltaX) < 200)) {
+            newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].width = action.resizeStartWidth - Math.abs(action.deltaX);
+            newOpenedFileDimensions[state.openedFiles[parseInt(action.index, 10)]].xPosition = action.resizeStartLeft + Math.abs(action.deltaX);
           }
         }
       }
-      return { ...state, openedFiles: newOpenedFiles };
+      return { ...state, openedFileDimensions: newOpenedFileDimensions };
     case CLICK_TASKBAR_ITEM:
       const openedFileIndex = state.openedFiles.findIndex( element => {
         return element.entityId === action.index;
       });
       newOpenedFiles[openedFileIndex].minimized = !newOpenedFiles[openedFileIndex].minimized;
       return { ...state, openedFiles: newOpenedFiles };
+    case LOGIN:
+      const newState = {...state};
+      newState.fileSystem = {};
+      const fileSystemWithNodeIndexedKeys = {};
+      action.user.FileSystem.FileNodes.forEach(nodeObject => {
+        fileSystemWithNodeIndexedKeys[nodeObject.nodeIndex] = nodeObject;
+      });
+      const nodeIndices = action.user.FileSystem.FileNodes.map(fileNode => { return fileNode.nodeIndex}).sort((a, b) => { return a-b;});
+
+      nodeIndices.forEach(nodeIndex => {
+        const fileNode = fileSystemWithNodeIndexedKeys[nodeIndex];
+        const { permissions, name, extension, FileNodeMetadata } = fileNode;
+        const metadata = {};
+        if (FileNodeMetadata.length > 0 ) {
+          FileNodeMetadata.forEach(metadataItem => {
+            metadata[metadataItem.name] = metadataItem.value;
+          });
+        }
+        newState.fileSystem[nodeIndex] = {permissions, name, extension, metadata};
+        if (fileNode.FileNodeId !== undefined && fileNode.FileNodeId !== null ) {
+          if (newState.fileSystem[fileNode.FileNodeId].hasOwnProperty('children')) {
+            newState.fileSystem[fileNode.FileNodeId].children.push(nodeIndex);
+          } else {
+            newState.fileSystem[fileNode.FileNodeId].children = [nodeIndex];
+          }
+        }
+      });
+
+      return { ...state, fileSystem: newState.fileSystem, diskSpace: action.user.FileSystem.diskSpace };
     default:
       return state;
   }

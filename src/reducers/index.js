@@ -5,6 +5,7 @@ import auth from './auth';
 import layout from './layout';
 import modal from './modal';
 import windows from './windows';
+import storage from './storage';
 
 export default combineReducers({
   runtime,
@@ -12,5 +13,6 @@ export default combineReducers({
   auth,
   layout,
   modal,
-  windows
+  windows,
+  storage
 });

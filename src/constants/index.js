@@ -1,5 +1,14 @@
 export const SET_RUNTIME_VARIABLE = 'SET_RUNTIME_VARIABLE';
 
+export const TOGGLE_REGISTER_MODE = 'auth/TOGGLE_REGISTER_MODE';
+export const LOGIN = 'auth/LOGIN';
+
+export const UPLOAD_START = 'storage/UPLOAD_START';
+export const UPLOAD_PROGRESS = 'storage/UPLOAD_PROGRESS';
+export const UPLOAD_COMPLETE = 'storage/UPLOAD_COMPLETE';
+export const UPLOAD_ERROR = 'storage/UPLOAD_ERROR';
+
+
 export const OPEN_START_MENU = 'windows/OPEN_START_MENU';
 export const CLOSE_START_MENU = 'windows/CLOSE_START_MENU';
 export const CREATE_FOLDER = 'windows/CREATE_FOLDER';
@@ -13,10 +22,16 @@ export const UNMAXIMIZE_FILE_WINDOW = 'windows/UNMAXIMIZE_FILE_WINDOW';
 export const MINIMIZE_FILE_WINDOW = 'windows/MINIMIZE_FILE_WINDOW';
 export const UNMINIMIZE_FILE_WINDOW = 'windows/UNMINIMIZE_FILE_WINDOW';
 export const DRAG_FILE_WINDOW = 'windows/DRAG_FILE_WINDOW';
+export const DRAG_ERROR_WINDOW = 'windows/DRAG_ERROR_WINDOW';
 export const RESIZE_FILE_WINDOW = 'windows/RESIZE_FILE_WINDOW';
 export const CLICK_TASKBAR_ITEM = 'windows/CLICK_TASKBAR_ITEM';
 export const RESIZE_BROWSER_WINDOW = 'windows/RESIZE_BROWSER_WINDOW';
 export const INITIALIZE_BROWSER_DIMENSIONS = 'windows/INITIALIZE_BROWSER_DIMENSIONS';
+export const INITIALIZE_DESKTOP_DIMENSIONS = 'windows/INITIALIZE_DESKTOP_DIMENSIONS';
+export const OPEN_ERROR_WINDOW = 'windows/OPEN_ERROR_WINDOW';
+export const CLOSE_ERROR_WINDOW = 'windows/CLOSE_ERROR_WINDOW';
+export const MOVE_FILE = 'windows/MOVE_FILE';
+export const MOVE_FILES = 'windows/MOVE_FILES';
 
 export const LOAD_STOCKS = 'stock/LOAD_STOCKS';
 export const SEARCH_STOCKS = 'stock/SEARCH_STOCKS';

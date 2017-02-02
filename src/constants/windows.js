@@ -9,5 +9,7 @@ export const windowsClickables = {
   desktopItemName: 'desktopItemName',
   fileTaskbar: 'fileTaskbar',
   taskbarFileItem: 'taskbarFileItem',
-  fileResizeHandle: 'fileResizeHandle'
+  fileResizeHandle: 'fileResizeHandle',
+  errorTaskbar: 'errorTaskbar',
+  folderContents: 'folderContents'
 };

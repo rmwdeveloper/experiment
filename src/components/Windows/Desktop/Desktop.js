@@ -1,13 +1,19 @@
 import React, { PropTypes, Component } from 'react';
+import { DropTarget as dropTarget, DragDropContext as dragDropContext, DragSource as dragSource  } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Desktop.css'; //eslint-disable-line
 
+import { evap_config } from '../../../config';
 import windowsFileRegistry from '../windowsFileRegistry';
 import { windowsClickables } from '../../../constants/windows';
-import DesktopItem from '../DesktopItem';
+import DesktopItem from '../FileIcon';
 import ContextMenu from '../ContextMenu';
+import ErrorWindow from '../ErrorWindow';
+import Evaporate from 'evaporate';
+import { resizeWindow } from '../../../core/layout'
 
-
+// todo: desktopwidth / desktopheight still neceessary?
 class Desktop extends Component {
   static propTypes = {
     contextMenuActive: PropTypes.bool,
@@ -27,11 +33,11 @@ class Desktop extends Component {
   };
   constructor() {
     super();
-    this.startDragSelect = this.startDragSelect.bind(this);
+    this.startDragSelect = this.startDragSelect.bind(this); // todo: dragSelect. refactor this with the method found in FolderContents.
     this.stopDragSelect = this.stopDragSelect.bind(this);
-    this.startDragFileWindow = this.startDragFileWindow.bind(this);
-    this.dragFileWindow = this.dragFileWindow.bind(this);
-    this.stopDragFileWindow = this.stopDragFileWindow.bind(this);
+    this.startDragWindow = this.startDragWindow.bind(this);
+    this.dragWindow = this.dragWindow.bind(this);
+    this.stopDragWindow = this.stopDragWindow.bind(this);
     this.dragSelecting = this.dragSelecting.bind(this);
     this.checkForOverlap = this.checkForOverlap.bind(this);
     this.desktopContextMenu = this.desktopContextMenu.bind(this);
@@ -41,13 +47,16 @@ class Desktop extends Component {
     this.stopResizeFileWindow = this.stopResizeFileWindow.bind(this);
     this.fileWindowResizing = this.fileWindowResizing.bind(this);
     this.findAncestorWithClickClass = this.findAncestorWithClickClass.bind(this);
+    this.getUploadId = this.getUploadId.bind(this);
     this.dragbox = null;
+    this.draggedItem = null;
+    this.resizedItem = null;
     this.icons = [];
     this.selectedIcons = [];
     this.diffNodeLists = this.diffNodeLists.bind(this);
     this.state = {
       dragSelecting: false,
-      draggingFileWindow: false,
+      draggingWindow: false,
       resizingFileWindowInProgress: false,
       resizeStartX: null,
       resizeStartY: null,
@@ -65,28 +74,99 @@ class Desktop extends Component {
       headerHeight: null
     };
   }
+  getUploadId() {
+    const { user, isAnonymousUser } = this.props;
+    console.log(user, isAnonymousUser);
+    return isAnonymousUser ? 0 : user.id;
+  }
   componentDidMount() {
     this.icons = document.getElementsByClassName('desktopIcon');
     this.desktop = document.getElementById('desktop');
     this.header = document.getElementById('primaryHeader');
+
+    // START dropzone stuff. todo: abstract this crap away to a HOC
+    // todo : dropzone script is in index.jade. Should be packed with webpack
+    // todo: convert fetch to isomorphic fetch ?
+
+    this.dropzone = new Dropzone('div#desktop', {url: '/upload', autoProcessQueue:false, clickable: false, createImageThumbnails: false,
+      previewsContainer: null,
+    addedfile: file => {
+      const { name, size, type } = file;
+      const upload_id = this.getUploadId();
+      fetch('/upload_start', {method: 'get', credentials: 'include'})
+        .then(response => {
+          response.json().then( dateObject => {
+            const { year, month, day, hours, minutes, seconds, milliseconds } = dateObject;
+            Evaporate.create(evap_config)
+              .then(
+                evaporate => {
+                  evaporate.add({
+                    name: `${upload_id}/${year}/${month}/${day}/${hours}${minutes}${seconds}${milliseconds}/${name}`,
+                    file,
+                    xAmzHeadersAtInitiate : {
+                      'x-amz-acl': 'public-read'
+                    },
+                    // progress: progressVal => {console.log('progress!!', progressVal)},
+                    info: info => {},
+                    error: error => {},
+                    warn: warn => {},
+                    complete: (xhr, awsObjectKey, stats) => {
+                      console.log(xhr, awsObjectKey, stats);
+                      fetch('/upload_complete', {method: 'post', credentials: 'include'})
+                        .then(response => {
+                          return response.json().then(responseObject => {
+                            console.log(responseObject);
+                          });
+                        }).catch(err => {
+                          return err;
+                      })
+                    }
+                  })
+                    .then(
+                      awsKey => { },
+                      reason => { }
+                    ).catch(error=>{console.log(error);})
+                },
+                reason => {});
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      
+
+
+    }
+    });
+
+
+    // END DROPZONE STUFF
     this.desktop.onmousedown = this.desktopMouseDown;
     this.desktop.onmouseup = this.desktopMouseUp;
 
+
+    // todo rmw: desktopWidth and Height is both in the redux store and in component State. Should have it it only 1.
+    this.props.initializeDesktopDimensions(this.desktop.offsetWidth, this.desktop.offsetHeight);
     window.addEventListener('resize', this.desktopResize.bind(this));
 
-    this.setState({desktopWidth: this.desktop.offsetWidth,
+
+    this.setState({desktopWidth: this.desktop.offsetWidth, // todo have a workaround for this
       desktopHeight: this.desktop.offsetHeight,
       headerHeight: this.header.offsetHeight});
   }
-  shouldComponentUpdate(nextProps, nextState) {
-    return (this.state.selectedIcons !== nextState.selectedIcons) ||
-      this.props.desktopWidth !== nextProps.desktopWidth ||
-      this.props.desktopHeight !== nextProps.desktopHeight ||
-      (this.props.contextMenuActive !== nextProps.contextMenuActive) ||
-      (this.props.contextMenuX !== nextProps.contextMenuX)||
-      (this.props.openedFiles !== nextProps.openedFiles) ||
-      (this.props.contextMenuY !== nextProps.contextMenuY);
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   return (this.state.selectedIcons !== nextState.selectedIcons) ||
+  //     (this.props.registering !== nextProps.registering) ||
+  //     // (this.props.desktopWidth !== nextProps.desktopWidth) ||
+  //     // (this.props.desktopHeight !== nextProps.desktopHeight) ||
+  //     (this.props.selectedDesktopIcons !== nextProps.selectedDesktopIcons) ||
+  //     (this.props.contextMenuActive !== nextProps.contextMenuActive) ||
+  //     (this.props.contextMenuX !== nextProps.contextMenuX)||
+  //     (this.props.openedFiles !== nextProps.openedFiles) ||
+  //     (this.props.fileSystem !== nextProps.fileSystem) ||
+  //     (this.props.errorWindows !== nextProps.errorWindows) ||
+  //     (this.props.contextMenuY !== nextProps.contextMenuY);
+  // }
   diffNodeLists(firstNodeList, secondNodeList) {
     const iconsArray = [].slice.call(firstNodeList);
     const selectedArray = [].slice.call(secondNodeList);
@@ -106,7 +186,7 @@ class Desktop extends Component {
     return node;
   }
   desktopMouseDown(event) {
-    const { clickclass } = event.target.dataset;
+    const {clickclass} = event.target.dataset;
     if (event.button === 2) { // Right mouse button clicked
       return null;
     }
@@ -118,7 +198,10 @@ class Desktop extends Component {
         this.startDragSelect(event);
         break;
       case windowsClickables.fileTaskbar:
-        this.startDragFileWindow(event);
+        this.startDragWindow(event, 'file');
+        break;
+      case windowsClickables.errorTaskbar:
+        this.startDragWindow(event, 'error');
         break;
       case windowsClickables.desktopItem:
         break;
@@ -126,16 +209,16 @@ class Desktop extends Component {
         break;
 
       default:
-
+        return null;
     }
   }
   desktopMouseUp(event) {
     const { clickclass } = event.target.dataset;
-    const { dragSelecting, draggingFileWindow, resizingFileWindowInProgress} = this.state;
+    const { dragSelecting, draggingWindow, resizingFileWindowInProgress} = this.state;
     if (dragSelecting) {
       this.stopDragSelect(event);
-    } else if (draggingFileWindow) {
-     this.stopDragFileWindow(event);
+    } else if (draggingWindow) {
+     this.stopDragWindow(event);
     } else if (resizingFileWindowInProgress) {
       this.stopResizeFileWindow(event);
     }
@@ -149,7 +232,10 @@ class Desktop extends Component {
     }
   }
   startResizeFileWindow(event) {
-    const windowBeingResized = this.props.openedFiles[parseInt(event.target.dataset.index, 10)];
+    const { openedFiles, openedFileDimensions } = this.props;
+    const windowBeingResized = openedFileDimensions[openedFiles[parseInt(event.target.dataset.index, 10)]];
+    this.resizedItem = event.target.parentNode; // todo: Change how parent node is retrieved.
+
     this.setState({ resizingFileWindowInProgress: true, resizeStartX: event.clientX, resizeStartY: event.clientY,
     itemResized: event.target.dataset.index, resizeStartHeight: event.target.parentNode.clientHeight,
       resizeSideClicked: event.target.dataset.side, resizeStartLeft: windowBeingResized.xPosition,
@@ -160,10 +246,15 @@ class Desktop extends Component {
     const { itemResized, resizeStartHeight, resizeStartWidth, resizeSideClicked, resizeStartLeft, resizeStartTop } = this.state;
     const deltaX = event.clientX - this.state.resizeStartX;
     const deltaY = event.clientY - this.state.resizeStartY;
-    this.props.resizeFileWindow(itemResized, resizeSideClicked, deltaX, deltaY, resizeStartWidth, resizeStartHeight,
-      resizeStartLeft, resizeStartTop);
+    this.resizeDeltaX = event.clientX - this.state.resizeStartX;
+    this.resizeDeltaY = event.clientY - this.state.resizeStartY;
+    resizeWindow(this.resizedItem, resizeSideClicked, deltaX, deltaY, resizeStartWidth, resizeStartHeight,
+     resizeStartLeft, resizeStartTop);
   }
-  stopResizeFileWindow() {
+  stopResizeFileWindow(event) {
+    const { itemResized, resizeStartHeight, resizeStartWidth, resizeSideClicked, resizeStartLeft, resizeStartTop } = this.state;
+    this.props.resizeFileWindow(itemResized, resizeSideClicked, this.resizeDeltaX, this.resizeDeltaY, resizeStartWidth, resizeStartHeight,
+      resizeStartLeft, resizeStartTop);
     this.desktop.removeEventListener('mousemove', this.fileWindowResizing);
     this.setState({ resizingFileWindowInProgress: false, resizeStartX: null, resizeStartY: null, itemResized: null,
     resizeStartHeight: null, resizeStartWidth: null, resizeSideClicked: null, resizeStartTop: null, resizeStartLeft: null});
@@ -171,13 +262,15 @@ class Desktop extends Component {
   startDragSelect(event) {
     const { headerHeight } = this.state;
     this.props.clearActives();
+    this.props.closeStartMenu();
     this.dragbox = document.getElementById('dragbox');
     if (!this.dragbox) {
       this.dragbox = document.createElement('div');
       this.dragbox.setAttribute('id', 'dragbox');
       this.desktop.appendChild(this.dragbox);
-      this.dragbox.style.border = '1px dashed black';
       this.dragbox.style.position = 'absolute';
+      this.dragbox.style.zIndex = 1;
+      this.dragbox.style.backgroundColor = 'rgba(35, 90, 216, .25)';
     }
 
 
@@ -230,7 +323,7 @@ class Desktop extends Component {
       if ( overlapping ) {
         this.icons[i].style.backgroundColor = 'rgba(66,85,101,0.25)';
         this.icons[i].style.outline = '2px solid rgb(115, 128, 140)';
-        this.selectedIcons.push(this.icons[i]);
+        this.selectedIcons.push(this.icons[i].dataset['index']);
       }
     }
   }
@@ -260,55 +353,92 @@ class Desktop extends Component {
     this.dragbox.style.height = `${Math.abs(deltaY)}px`;
     this.checkForOverlap();
   }
-  startDragFileWindow(event) {
-    this.desktop.addEventListener('mousemove', this.dragFileWindow);
+  startDragWindow(event, type) {
+    this.desktop.dragType = type;
+    this.desktop.addEventListener('mousemove', this.dragWindow);
     this.clickedLocationX = event.offsetX;
     this.clickedLocationY = event.offsetY;
-    this.setState({draggingFileWindow: true, itemDragged: event.target.dataset.index });
+    this.draggedItem = event.target.parentNode;
+    this.setState({draggingWindow: true, itemDragged: event.target.dataset.index });
   }
-  dragFileWindow(event) {
+  dragWindow(event) {
     const { itemDragged, headerHeight } = this.state;
-    this.props.dragFileWindow(itemDragged, event.clientX - this.clickedLocationX, event.clientY - headerHeight - this.clickedLocationY);
+    this.draggedItem.style.left = `${event.clientX - this.clickedLocationX}px`;
+    this.draggedItem.style.top = `${event.clientY - this.clickedLocationY - headerHeight}px`;
   }
-  stopDragFileWindow() {
-    this.desktop.removeEventListener('mousemove', this.dragFileWindow);
-    this.setState({draggingFileWindow: false});
+  stopDragWindow() {
+    const { itemDragged, headerHeight } = this.state;
+    this.desktop.removeEventListener('mousemove', this.dragWindow);
+    this.props.dragWindow(itemDragged, this.desktop.dragType, event.clientX - this.clickedLocationX, event.clientY - headerHeight - this.clickedLocationY);
+    this.setState({draggingWindow: false});
   }
   render() {
     const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, contextMenuClickClass, contextMenuIndexClicked,
-      selectedDesktopIcons, createFolder, openFile, openedFiles, fileSystem, desktopWidth, desktopHeight } = this.props;
-    let unselectedIcons = desktopItems;
-    if (this.icons.length > 0 && selectedDesktopIcons.length > 0) {
-      unselectedIcons = this.diffNodeLists(this.icons, selectedDesktopIcons);
-    }
-    return (
+      errorWindows, closeErrorWindow, connectDropTarget, moveFile, moveFiles, desktopNodeIndex,
+      selectedDesktopIcons, createFolder, openErrorWindow, openFile, openedFiles, fileSystem } = this.props;
+    const selectedIds = selectedDesktopIcons.map(id => {return parseInt(id, 10)});
+    return (connectDropTarget(
       <div id="desktop"
            data-clickClass={windowsClickables.desktop}
            data-topClickable
            className={styles.root}
            onContextMenu={this.desktopContextMenu}
       >
+        {/*<Dropzone className={styles.dropzone} disableClick onDrop={()=>{console.log('dropzone onDrop method');}} ref="dropzone" accept="*" /> */}
         {
-          desktopItems.map((desktopitem, index) => {
-            return <DesktopItem key={index} desktopWidth={desktopWidth} desktopHeight={desktopHeight} index={index} openFile={openFile} item={desktopitem} />;
+          desktopItems.map((desktopitem) => {
+            return <DesktopItem selected={selectedIds.includes(desktopitem.index)} className='desktopIcon'
+                                key={desktopitem.index}
+                                index={desktopitem.index} moveFiles={moveFiles} parentIndex={desktopNodeIndex}
+                                moveFile={moveFile}  openFile={openFile} item={desktopitem} />
           })
         }
         {
           openedFiles.map((openedFile, index) => {
-            const openedFileNode = fileSystem[openedFile.nodeIndex];
+            const openedFileNode = fileSystem[openedFile];
             const fileType = openedFileNode.hasOwnProperty('children') ? 'Folder' : openedFileNode.extension;
-            return React.createElement(windowsFileRegistry[fileType], { key: index, openedFile,
-              filename: fileSystem[openedFile.nodeIndex].name, desktopWidth, desktopHeight,
+            return React.createElement(windowsFileRegistry(fileType, openedFileNode), { key: index, openedFile,
+              filename: fileSystem[openedFile].name,
               index, ...this.props});
           })
         }
         {
-          contextMenuActive ? <ContextMenu contextMenuClickClass={contextMenuClickClass} contextMenuIndexClicked={contextMenuIndexClicked}
-                               createFolder={createFolder} contextMenuY={contextMenuY} contextMenuX={contextMenuX}/> : null
+          errorWindows.map((errorObject, index) => {
+            return <ErrorWindow errorObject={errorObject} index={index} closeErrorWindow={closeErrorWindow} key={index} />;
+          })
+        }
+        {
+          contextMenuActive ? <ContextMenu
+                openErrorWindow={openErrorWindow}
+                contextMenuClickClass={contextMenuClickClass}
+                contextMenuIndexClicked={contextMenuIndexClicked}
+                createFolder={createFolder}
+                contextMenuY={contextMenuY}
+                contextMenuX={contextMenuX}/> : null
         }
       </div>
-    );
+    ));
   }
 }
 
-export default withStyles(styles)(Desktop);
+
+const desktopTarget = {
+  drop(props, monitor) {
+    if (monitor.didDrop()) {
+      return;
+    }
+    return { index: props.desktopNodeIndex, canDrop: true };
+
+  }
+
+};
+
+function collectTarget(connect, monitor) {
+  return {
+    connectDropTarget: connect.dropTarget(),
+    isOver: monitor.isOver()
+  };
+}
+
+export default withStyles(styles)(dragDropContext(HTML5Backend)(dropTarget(['fileIcon', 'fileIconGroup'], desktopTarget, collectTarget)(Desktop)));
+

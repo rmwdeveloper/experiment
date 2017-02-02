@@ -4,13 +4,9 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 35px);
   background-color: #fff;
   min-height: 200px;
-}
-
-.folderContents {
-  overflow-y: auto;
 }
 
 .sidebarAndFolderContents {

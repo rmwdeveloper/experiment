@@ -1,0 +1,7 @@
+@import '../../variables.css';
+
+.root {
+  overflow-y: auto;
+  width: calc(100% - 90px);
+  position: relative;
+}
