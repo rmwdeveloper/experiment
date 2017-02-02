@@ -227,15 +227,31 @@ export function moveFiles(fromParentIndex, toNodeIndex) {
 }
 
 //todo: put in <ACTION>, <ACTION_COMPLETE>, <ACTION_ERROR> for all persistent operations.
-export function deleteFiles() {
+export function deleteFiles(indexClicked, clickClass) {
   return (dispatch, getState) => {
-    const { windows: { selectedDesktopIcons } } = getState();
+    const { windows: { selectedDesktopIcons, desktopNodeIndex, fileSystem } } = getState();
+    let toDelete = selectedDesktopIcons;
+    let parentIndex = desktopNodeIndex;
+    if ( selectedDesktopIcons.length === 0 ) { // deleting single item
+      toDelete = [indexClicked];
+    }
+    if (clickClass === 'folderItem') { // todo: refactor.
+      for (let key in fileSystem) {
+        if (fileSystem[key].hasOwnProperty('children')) {
+          if (fileSystem[key].children.includes(indexClicked)) {
+            parentIndex = key;
+            break;
+          }
+        }
+      }
+    }
     const headers = new Headers(); // todo: abstract headers away
     headers.append('Content-Type', 'application/json');
-    dispatch({ type: DELETE_FILES, toDelete: selectedDesktopIcons  });
+    dispatch({ type: DELETE_FILES, toDelete, parentIndex });
     fetch('/delete_files', {
       method: 'post', credentials: 'include', headers,
-      body: JSON.stringify({toDelete: selectedDesktopIcons })
-    })
+      body: JSON.stringify({ toDelete })
+    });
+
   };
 }

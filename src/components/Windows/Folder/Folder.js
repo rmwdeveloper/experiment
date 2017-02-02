@@ -13,7 +13,7 @@ function Folder({openedFile, user, checkAvailableSpace, uploadStart, uploadProgr
   openFile, moveFile, moveFiles}) {
   const folderContents = fileSystem[openedFile.index].children ? fileSystem[openedFile.index].children.map((nodeIndex, index) => {
     fileSystem[nodeIndex].index = nodeIndex;
-    return <FolderItem moveFile={moveFile} moveFiles={moveFiles} className="folderIcon" parentIndex={openedFile.index} selected={selectedDesktopIcons.includes(nodeIndex)}
+    return <FolderItem moveFile={moveFile} clickClass='folderItem' moveFiles={moveFiles} className="folderIcon" parentIndex={openedFile.index} selected={selectedDesktopIcons.includes(nodeIndex)}
                        key={nodeIndex} index={index} openFile={openFile} item={fileSystem[nodeIndex]} />;
   }) : null;
   const windowHeight = openedFileDimensions[uniqueId].height - 30;

@@ -21,6 +21,7 @@ class ContextMenu extends Component {
     event.stopPropagation();
     this.props.createFolder(this.props.contextMenuClickClass, this.props.contextMenuIndexClicked);
   }
+
   notImplemented() {
     this.props.openErrorWindow("This isn't implemented yet. Sorry!");
   }
@@ -42,13 +43,13 @@ class ContextMenu extends Component {
               </ul>
             </li> : null
         }
-        { contextMenuClickClass === 'desktopItem' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Open</span></li> : null}
-        { contextMenuClickClass === 'desktopItem' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Pin To Quick Access</span></li> : null}
-        { contextMenuClickClass === 'desktopItem' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Download Contents</span></li> : null}
-        { contextMenuClickClass === 'desktopItem' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Copy</span></li> : null}
-        { contextMenuClickClass === 'desktopItem' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Cut</span></li> : null}
-        { contextMenuClickClass === 'desktopItem' ? <li onClick={deleteFiles}><span className={styles.menuItem}>Delete</span></li> : null}
-        { contextMenuClickClass === 'desktopItem' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Rename</span></li> : null}
+        { contextMenuClickClass === 'desktopItem' || 'folderItem' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Open</span></li> : null}
+        { contextMenuClickClass === 'desktopItem' || 'folderItem' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Pin To Quick Access</span></li> : null}
+        { contextMenuClickClass === 'desktopItem' || 'folderItem' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Download Contents</span></li> : null}
+        { contextMenuClickClass === 'desktopItem' || 'folderItem' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Copy</span></li> : null}
+        { contextMenuClickClass === 'desktopItem' || 'folderItem' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Cut</span></li> : null}
+        { contextMenuClickClass === 'desktopItem' || 'folderItem' ? <li onClick={() => { deleteFiles(contextMenuIndexClicked, contextMenuClickClass); }}><span className={styles.menuItem}>Delete</span></li> : null}
+        { contextMenuClickClass === 'desktopItem' || 'folderItem' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Rename</span></li> : null}
         { contextMenuClickClass === 'desktop' || contextMenuClickClass === 'desktopItemIcon' || contextMenuClickClass === 'desktopItemName' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Properties...</span></li> : null}
       </ul>
     );

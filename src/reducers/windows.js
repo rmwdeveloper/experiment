@@ -101,8 +101,7 @@ export default function layout(state = initialState, action) {
       }
       return { ...state, fileSystem: newFileSystem, contextMenuActive: false };
     case DELETE_FILES: // todo: edit thjis to allow deletion from folders.
-      // const nodeIndicesToDelete = action.toDelete.map( nodeIndex => { return parseInt(nodeIndex, 10)});
-      newFileSystem[state.desktopNodeIndex].children = newFileSystem[state.desktopNodeIndex].children.filter( element => {
+      newFileSystem[action.parentIndex].children = newFileSystem[action.parentIndex].children.filter( element => {
         return !action.toDelete.includes(element);
       });
       action.toDelete.forEach( nodeIndex => {
