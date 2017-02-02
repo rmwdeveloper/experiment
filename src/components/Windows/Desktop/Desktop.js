@@ -367,7 +367,7 @@ class Desktop extends Component {
 
 const desktopTarget = {
   drop(props, monitor) {
-    if (monitor.didDrop()) {
+    if (monitor.didDrop()) { // dropped on child. 
       return;
     }
     return { index: props.desktopNodeIndex, canDrop: true };

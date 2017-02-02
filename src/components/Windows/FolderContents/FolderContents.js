@@ -154,11 +154,10 @@ class FolderContents extends Component {
 
 const folderTarget = {
   drop(props, monitor) {
-    if (monitor.didDrop()) {
-      console.log(props);
-      return null;
+    if ( !monitor.didDrop()) {
+      return { index: props.index, canDrop: props.hasOwnProperty('children') };
     }
-    return { index: props.index, canDrop: props.hasOwnProperty('children') };
+
   }
 };
 

@@ -95,9 +95,9 @@ export default function layout(state = initialState, action) {
       delete newFileSystem[state.uploads[action.temporaryUploadId]].metadata.loading;
       return { ...state, fileSystem: newFileSystem};
     case CREATE_FOLDER:
-      newFileSystem[nextNodeIndex] = { children: [], name: 'New Folder', type: 'Folder', metadata: { icon: 'emptyFolderXSmall.png' } };
+      newFileSystem[action.newNodeIndex] = { children: [], name: 'New Folder', type: 'Folder', metadata: { icon: 'emptyFolderXSmall.png' } };
       if (action.location === 'desktop') {
-        newFileSystem[action.desktopNodeIndex].children.push(nextNodeIndex);
+        newFileSystem[action.desktopNodeIndex].children.push(action.newNodeIndex);
       }
       return { ...state, fileSystem: newFileSystem, contextMenuActive: false };
     case DELETE_FILES: // todo: edit thjis to allow deletion from folders.

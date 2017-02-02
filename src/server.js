@@ -195,10 +195,17 @@ app.post('/create_folder', (req, res) => {
 app.post('/move_file', (req, res) => {
   const username = req.user ? req.user.username : 'Guest';
   const { fromNodeIndex, toNodeIndex, originsParentIndex, parentalIndex } = req.body;
+  console.log(fromNodeIndex, toNodeIndex, originsParentIndex, parentalIndex);
   getUser(username).then(userObj => {
     const { FileSystem: {id} } = userObj.get({ plain: true });
     FileNode.findOne({ where: { nodeIndex: toNodeIndex, FileSystemId: id } }).then(toNode => {
-      FileNode.update({ FileNodeId: toNode.get({plain: true}).id }, { where: { FileSystemId: id, nodeIndex: fromNodeIndex } });
+      // console.log(toNode.get({plain: true}));
+      FileNode.update({ FileNodeId: toNode.get({plain: true}).id }, { where: { FileSystemId: id, nodeIndex: fromNodeIndex } }).then( result => {
+        'use strict';
+
+      }).catch(err => {
+        console.log(err);
+      })
     });
 
   });
@@ -398,6 +405,7 @@ models.sync().catch(err => console.error(err.stack)).then(() => {
   });
 });
 
+
 // models.sync().catch(err => console.error(err.stack)).then(() => {
 //   app.listen(port, () => {
 //     sequelize_fixtures.loadFile(path.join(__dirname, '..', 'src', 'data', 'fixtures', 'initial_data.js'), {User,
@@ -406,5 +414,4 @@ models.sync().catch(err => console.error(err.stack)).then(() => {
 //     }).catch(err => { console.log(err)});
 //   });
 // });
-
 /* eslint-enable no-console */

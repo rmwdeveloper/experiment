@@ -80,10 +80,24 @@ function collectSource(connect, monitor) {
 }
 
 const fileIconTarget = {
-  drop(props) {
-    return { index: props.index, canDrop: props.item.hasOwnProperty('children') };
+  drop(props, monitor) {
+    if ( monitor.didDrop() ) {
+      return null;
+    }
+
+    return { index: props.item.index, canDrop: props.item.hasOwnProperty('children') };
   }
 };
+
+// const fileIconTarget = {
+//   drop(props, monitor) {
+//     if ( monitor.didDrop() ) {
+//       return null;
+//     }
+//
+//     return { index: props.index, canDrop: props.item.hasOwnProperty('children') };
+//   }
+// };
 
 function collectTarget(connect, monitor) {
   return {
