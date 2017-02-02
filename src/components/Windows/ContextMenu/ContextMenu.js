@@ -9,7 +9,7 @@ class ContextMenu extends Component {
     contextMenuX: PropTypes.number,
     contextMenuY: PropTypes.number,
     contextMenuClickClass: PropTypes.string,
-    contextMenuIndex: PropTypes.number,
+    contextMenuIndex: PropTypes.string,
     openErrorWindow: PropTypes.func
   };
   constructor() {
@@ -21,11 +21,12 @@ class ContextMenu extends Component {
     event.stopPropagation();
     this.props.createFolder(this.props.contextMenuClickClass, this.props.contextMenuIndexClicked);
   }
+
   notImplemented() {
     this.props.openErrorWindow("This isn't implemented yet. Sorry!");
   }
   render() {
-    const { contextMenuX, contextMenuY, contextMenuClickClass, contextMenuIndexClicked } = this.props;
+    const { contextMenuX, contextMenuY, contextMenuClickClass, contextMenuIndexClicked, deleteFiles } = this.props;
     // todo: refactor render
     return (
       <ul style={{top: `${contextMenuY}px`, left: `${contextMenuX}px`}} className={cx(styles.root, styles.contextMenu)}
@@ -37,19 +38,15 @@ class ContextMenu extends Component {
               <span className={styles.menuItem}>New <i className="fa fa-caret-right"/></span>
               <ul className={styles.nestedMenu}>
                 <li onClick={this.createFolder}><span className={styles.menuItem}>Folder</span></li>
-                <li><span className={styles.menuItem}>Text Document</span></li>
-                <li><span className={styles.menuItem}>Spreadsheet</span></li>
+                <li onClick={this.notImplemented}><span className={styles.menuItem}>Text Document</span></li>
+                <li onClick={this.notImplemented}><span className={styles.menuItem}>Spreadsheet</span></li>
               </ul>
             </li> : null
         }
-        { contextMenuClickClass === 'desktopItem' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Open</span></li> : null}
-        { contextMenuClickClass === 'desktopItem' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Pin To Quick Access</span></li> : null}
-        { contextMenuClickClass === 'desktopItem' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Download Contents</span></li> : null}
-        { contextMenuClickClass === 'desktopItem' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Copy</span></li> : null}
-        { contextMenuClickClass === 'desktopItem' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Cut</span></li> : null}
-        { contextMenuClickClass === 'desktopItem' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Delete</span></li> : null}
-        { contextMenuClickClass === 'desktopItem' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Rename</span></li> : null}
-        { contextMenuClickClass === 'desktop' || contextMenuClickClass === 'desktopItemIcon' || contextMenuClickClass === 'desktopItemName' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Properties...</span></li> : null}
+        { contextMenuClickClass === 'desktopItem' || 'folderItem' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Open</span></li> : null}
+        { contextMenuClickClass === 'desktopItem' || 'folderItem' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Download Contents</span></li> : null}
+        { contextMenuClickClass === 'desktopItem' || 'folderItem' ? <li onClick={() => { deleteFiles(contextMenuIndexClicked, contextMenuClickClass); }}><span className={styles.menuItem}>Delete</span></li> : null}
+        { contextMenuClickClass === 'desktopItem' || 'folderItem' ? <li onClick={this.notImplemented}><span className={styles.menuItem}>Rename</span></li> : null}
       </ul>
     );
   }

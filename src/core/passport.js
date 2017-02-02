@@ -1,23 +1,48 @@
 import passport from 'passport';
-import { Strategy as localStrategy } from 'passport-local';
-import { User, UserLogin, UserClaim, UserProfile } from '../data/models';
-import { auth as config } from '../config';
 import bcrypt from 'bcrypt';
+import { Strategy as LocalStrategy } from 'passport-local';
+import { User } from '../data/models';
 
-passport.use(new localStrategy(
-  (username, password, cb) => {
-    User.findOne({ where: { username } }).then(user => {
-      if (user === null) {
-        return cb(null, false);
-      }
-      bcrypt.compare(password, user.password, function (err, res) {
-        if (res) {
-          return cb(null, user);
-        } else if (err) {
-          return cb(null, false);
-        }
-      });
+
+passport.serializeUser(function(user, done) {
+  const { id } = user.get({ plain: true });
+  done(null, id);
+  return null;
+});
+
+passport.deserializeUser( (id, done) => {
+  User.findById(id)
+    .then(user => {
+      const {username, email, emailConfirmed, id} = user.get({plain:true});
+      done(null, {username, email, emailConfirmed, id});
+      return null;
+    })
+    .catch(err => {
+      done(err, null);
+      return null;
     });
+});
+
+passport.use('login', new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'password'
+  },
+  (username, password, cb) => {
+    User.findOne({ where: { email: username } })
+      .then(user => {
+        if (user === null) {
+          cb(null, false);
+          return null;
+        }
+        bcrypt.compare(password, user.password, (err, res) => {
+          if (res) {
+            cb(null, user);
+            return null;
+          }
+          cb(null, false);
+          return null;
+        });
+      }).catch(err => { console.log(err);});
   }));
 
 export default passport;

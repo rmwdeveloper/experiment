@@ -1,4 +1,6 @@
 import sequelize from '../sequelize';
+import { deleteFiles } from '../../core/aws';
+
 import User from './User';
 import UserLogin from './UserLogin';
 import UserProfile from './UserProfile';
@@ -30,22 +32,26 @@ User.hasOne(UserProfile, {
   onDelete: 'cascade',
 });
 
-User.hasOne(FileSystem);
+User.hasOne(FileSystem, { onUpdate: 'cascade', onDelete: 'cascade' });
 
 
-FileSystem.hasMany(FileNode);
+FileSystem.hasMany(FileNode, { onUpdate: 'cascade', onDelete: 'cascade' });
 
-FileNode.hasMany(FileNode);
+FileNode.hasMany(FileNode, { onUpdate: 'cascade', onDelete: 'cascade' });
 
-FileNode.hasMany(FileNodeMetadata);
+FileNode.hasMany(FileNodeMetadata, { onUpdate: 'cascade', onDelete: 'cascade' });
 
-// todo: Move these hooks somewhere.
-
+FileNode.hasOne(Upload, {onDelete: 'cascade', hooks: true});
+Upload.belongsTo(FileNode, { hooks: true });
 
 User.hasMany(Upload, {
   onUpdate: 'cascade',
-  onDelete: 'cascade'
+  onDelete: 'cascade',
+  hooks: true
 });
+
+
+Upload.hook('afterDestroy', deleteFiles);
 
 function sync(...args) {
   return sequelize.sync(...args);

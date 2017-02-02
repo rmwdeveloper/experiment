@@ -3,6 +3,7 @@ import { DropTarget as dropTarget } from 'react-dnd';
 import styles from './FolderContents.css'; //eslint-disable-line
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { windowsClickables } from '../../../constants/windows';
+import DropzoneAWSEvaporate from '../DropzoneAWSEvaporate';
 
 class FolderContents extends Component {
   static propTypes = {
@@ -29,28 +30,15 @@ class FolderContents extends Component {
       headerHeight: null
     };
   }
+  shouldComponentUpdate() {
+    return true;
+  }
   componentDidMount() {
     const { index } = this.props;
     this.icons = document.getElementsByClassName('folderIcon');
     this.folderContents = document.getElementById(`folderContents${this.props.index}`);
     this.header = document.getElementById('primaryHeader');
     
-    // START dropzone stuff. todo: abstract this crap away to a HOC
-    // todo : dropzone script is in index.jade. Should be packed with webpack
-    this.dropzone = new Dropzone(`#folderContents${index}`, {url: '/upload', autoProcessQueue:false, clickable: false, createImageThumbnails: false,
-      previewsContainer: null,
-      // drop: event => {
-      //   console.log('drop event folder contents');
-      // },
-      addedfile: file => {
-        const { name, size, type } = file;
-        console.log('dropped in folder');
-      }
-    });
-
-
-    // END DROPZONE STUFF
-
 
     this.folderContents.onmousedown = this.folderContentsMouseDown;
     this.folderContents.onmouseup = this.folderContentsMouseUp;
@@ -131,13 +119,11 @@ class FolderContents extends Component {
       dragboxRect.left > icon.right ||
       dragboxRect.bottom < icon.top ||
       dragboxRect.top > icon.bottom);
-
       if ( overlapping ) {
         this.icons[i].style.backgroundColor = 'rgba(66,85,101,0.25)';
         this.icons[i].style.outline = '2px solid rgb(115, 128, 140)';
-        // console.log(this.icons[i]);
         this.selectedIcons.push(this.icons[i].dataset['index']);
-      }
+      } 
     }
   }
   folderContentsMouseUp(event) {
@@ -157,7 +143,7 @@ class FolderContents extends Component {
     }
   }
   render(){
-    const { folderContents, connectDropTarget, index } = this.props;
+    const { folderContents, connectDropTarget, index, uploads } = this.props;
     return connectDropTarget(
       <div id={`folderContents${index}`} data-clickClass={windowsClickables.folderContents} data-topClickable data-index={index} className={styles.root}>
         {folderContents}
@@ -168,10 +154,10 @@ class FolderContents extends Component {
 
 const folderTarget = {
   drop(props, monitor) {
-    if (monitor.didDrop()) {
-      return;
+    if ( !monitor.didDrop()) {
+      return { index: props.index, canDrop: props.hasOwnProperty('children') };
     }
-    return { index: props.index, canDrop: true };
+
   }
 };
 
@@ -182,4 +168,4 @@ function collectTarget(connect, monitor) {
   };
 }
 
-export default withStyles(styles)(dropTarget(['fileIcon', 'desktopItemGroup'], folderTarget, collectTarget)(FolderContents));
+export default withStyles(styles)(dropTarget(['fileIcon', 'fileIconGroup'], folderTarget, collectTarget)(DropzoneAWSEvaporate(FolderContents)));

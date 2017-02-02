@@ -19,7 +19,7 @@ const FileNode = Model.define('FileNode', {
     type: DataType.STRING
   },
   nodeIndex: {
-    type: DataType.INTEGER,
+    type: DataType.STRING,
     allowNull: false
   }
 });

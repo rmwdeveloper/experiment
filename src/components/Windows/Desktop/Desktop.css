@@ -17,11 +17,25 @@
   position: absolute;
 }
 
+.showIndicator{
+  animation: show 2s ease 1;
+}
+
 @media (--tablet) {
   .root {
     /*width: 150px;*/
   }
   .startText {
     display: block;
+  }
+}
+
+@keyframes show {
+  from {
+    transform: translateY(50px);
+  }
+
+  to {
+    transform: translateY(0px);
   }
 }

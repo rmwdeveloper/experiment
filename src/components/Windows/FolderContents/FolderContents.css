@@ -4,4 +4,9 @@
   overflow-y: auto;
   width: calc(100% - 90px);
   position: relative;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  display: flex;
 }

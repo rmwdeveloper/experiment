@@ -1,3 +1,5 @@
+import uuid from 'node-uuid';
+
 import {
   OPEN_START_MENU, CLOSE_START_MENU, CREATE_FOLDER,
   OPEN_CONTEXT_MENU, SELECT_ICONS, CLEAR_ACTIVES, OPEN_FILE_WINDOW,
@@ -16,7 +18,8 @@ import {
   OPEN_ERROR_WINDOW,
   CLOSE_ERROR_WINDOW,
   MOVE_FILE,
-  MOVE_FILES
+  MOVE_FILES,
+  DELETE_FILES
 } from '../constants';
 
 // todo rmw: Remove parameters in actions that can be gotten in state. e.g., openFile desktopWidth
@@ -37,10 +40,21 @@ export function closeStartMenu() {
       dispatch({ type: CLOSE_START_MENU });
   };
 }
+
+
+//todo: put in <ACTION>, <ACTION_COMPLETE>, <ACTION_ERROR> for all persistent operations.
 export function createFolder(location) {
   return (dispatch, getState) => {
     const { windows: { desktopNodeIndex } } = getState();
-    dispatch({ type: CREATE_FOLDER, location, desktopNodeIndex });
+    const newNodeIndex = uuid.v4(); // todo: Move this somewhere else?
+    const newNode = { children: [], name: 'New Folder', type: 'Folder', permissions: 'rwxp', metadata: { icon: 'emptyFolderXSmall.png' } };
+    const headers = new Headers(); // todo: abstract headers away
+    headers.append('Content-Type', 'application/json');
+    dispatch({ type: CREATE_FOLDER, location, desktopNodeIndex, newNodeIndex, newNode });
+    fetch('/create_folder', {
+      method: 'post', credentials: 'include', headers,
+      body: JSON.stringify({ newNodeIndex, newNode, location: desktopNodeIndex })
+    });
   };
 }
 
@@ -69,9 +83,9 @@ export function openFile(nodeIndex) {
   };
 }
 
-export function closeFile(openedFileIndex) {
+export function closeFile(uniqueId) {
   return dispatch => {
-    dispatch({ type: CLOSE_FILE_WINDOW, openedFileIndex });
+    dispatch({ type: CLOSE_FILE_WINDOW, uniqueId });
   };
 }
 export function closeErrorWindow(errorIndex) {
@@ -149,25 +163,95 @@ export function openErrorWindow(errorMessage) {
   }
 }
 
+
+// // todo : move this util function (getParent) to a helpers file
+// const originsParentIndex = Object.keys(state.fileSystem).find(key=> {
+//   if (state.fileSystem.hasOwnProperty(key)) {
+//     if (state.fileSystem[key].hasOwnProperty('children')) {
+//       return state.fileSystem[key].children.includes(action.fromNodeIndex);
+//     }
+//   }
+// });
+// const parentalIndex = newFileSystem[originsParentIndex].children.indexOf(action.fromNodeIndex);
+// newFileSystem[originsParentIndex].children = [...newFileSystem[originsParentIndex].children.slice(0, parentalIndex),
+//   ...newFileSystem[originsParentIndex].children.slice(parentalIndex + 1)];
+// newFileSystem[action.toNodeIndex].children.push(action.fromNodeIndex);
+// return {...state, fileSystem: newFileSystem};
+
+//todo: put in <ACTION>, <ACTION_COMPLETE>, <ACTION_ERROR> for all persistent operations.
 export function moveFile(fromNodeIndex, toNodeIndex) {
   return (dispatch, getState) => {
-    const { windows: { selectedDesktopIcons, desktopWidth, desktopHeight } } = getState();
+    const { windows: { desktopWidth, desktopHeight, fileSystem } } = getState();
     if (fromNodeIndex === toNodeIndex) {
       dispatch({ type: OPEN_ERROR_WINDOW, errorMessage: "Cant move a folder inside itself.", desktopWidth, desktopHeight});
       return null;
     }
-    dispatch({ type: MOVE_FILE, fromNodeIndex, toNodeIndex});
-  }
+
+    const originsParentIndex = Object.keys(fileSystem).find(key=> {
+      if (fileSystem.hasOwnProperty(key)) {
+        if (fileSystem[key].hasOwnProperty('children')) {
+          return fileSystem[key].children.includes(fromNodeIndex);
+        }
+      }
+    });
+
+    const parentalIndex = fileSystem[originsParentIndex].children.indexOf(fromNodeIndex);
+    const headers = new Headers(); // todo: abstract headers away
+    headers.append('Content-Type', 'application/json');
+    dispatch({ type: MOVE_FILE, fromNodeIndex, toNodeIndex, originsParentIndex, parentalIndex});
+    fetch('/move_file', {
+      method: 'post', credentials: 'include', headers,
+      body: JSON.stringify({ fromNodeIndex, toNodeIndex, originsParentIndex, parentalIndex })
+    });
+  };
 }
+
+
 
 export function moveFiles(fromParentIndex, toNodeIndex) {
   return (dispatch, getState) => {
     const { windows: { selectedDesktopIcons, desktopWidth, desktopHeight } } = getState();
-    const selectedIds = selectedDesktopIcons.map(id => {return parseInt(id, 10)});
-    if (selectedIds.includes(toNodeIndex)) {
+    if (selectedDesktopIcons.includes(toNodeIndex)) {
       dispatch({ type: OPEN_ERROR_WINDOW, errorMessage: "Cant move a folder inside itself.", desktopWidth, desktopHeight});
       return null;
     }
+
+    const headers = new Headers(); // todo: abstract headers away
+    headers.append('Content-Type', 'application/json');
     dispatch({ type: MOVE_FILES, fromIndices: selectedDesktopIcons, fromParentIndex, toNodeIndex});
+    fetch('/move_files', {
+      method: 'post', credentials: 'include', headers,
+      body: JSON.stringify({ fromIndices: selectedDesktopIcons, fromParentIndex, toNodeIndex })
+    });
   }
+}
+
+//todo: put in <ACTION>, <ACTION_COMPLETE>, <ACTION_ERROR> for all persistent operations.
+export function deleteFiles(indexClicked, clickClass) {
+  return (dispatch, getState) => {
+    const { windows: { selectedDesktopIcons, desktopNodeIndex, fileSystem } } = getState();
+    let toDelete = selectedDesktopIcons;
+    let parentIndex = desktopNodeIndex;
+    if ( selectedDesktopIcons.length === 0 ) { // deleting single item
+      toDelete = [indexClicked];
+    }
+    if (clickClass === 'folderItem') { // todo: refactor.
+      for (let key in fileSystem) {
+        if (fileSystem[key].hasOwnProperty('children')) {
+          if (fileSystem[key].children.includes(indexClicked)) {
+            parentIndex = key;
+            break;
+          }
+        }
+      }
+    }
+    const headers = new Headers(); // todo: abstract headers away
+    headers.append('Content-Type', 'application/json');
+    dispatch({ type: DELETE_FILES, toDelete, parentIndex });
+    fetch('/delete_files', {
+      method: 'post', credentials: 'include', headers,
+      body: JSON.stringify({ toDelete })
+    });
+
+  };
 }

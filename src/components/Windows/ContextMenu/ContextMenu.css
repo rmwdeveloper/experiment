@@ -3,6 +3,7 @@
 .root {
   position: absolute;
   box-shadow: 2px 2px 20px #000000;
+  z-index: 100;
 }
 .root li {
   cursor: pointer;

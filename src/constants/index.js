@@ -3,6 +3,9 @@ export const SET_RUNTIME_VARIABLE = 'SET_RUNTIME_VARIABLE';
 export const TOGGLE_REGISTER_MODE = 'auth/TOGGLE_REGISTER_MODE';
 export const LOGIN = 'auth/LOGIN';
 
+
+export const CHECK_AVAILABLE_SPACE = 'storage/CHECK_AVAILABLE_SPACE';
+export const DISK_FULL = 'storage/DISK_FULL';
 export const UPLOAD_START = 'storage/UPLOAD_START';
 export const UPLOAD_PROGRESS = 'storage/UPLOAD_PROGRESS';
 export const UPLOAD_COMPLETE = 'storage/UPLOAD_COMPLETE';
@@ -15,8 +18,8 @@ export const CREATE_FOLDER = 'windows/CREATE_FOLDER';
 export const SELECT_ICONS = 'windows/SELECT_ICONS';
 export const OPEN_CONTEXT_MENU = 'windows/OPEN_CONTEXT_MENU';
 export const CLEAR_ACTIVES = 'windows/CLEAR_ACTIVES';
-export const OPEN_FILE_WINDOW = 'windows/OPEN_FILE';
-export const CLOSE_FILE_WINDOW = 'windows/CLOSE_FILE';
+export const OPEN_FILE_WINDOW = 'windows/OPEN_FILE_WINDOW';
+export const CLOSE_FILE_WINDOW = 'windows/CLOSE_FILE_WINDOW';
 export const MAXIMIZE_FILE_WINDOW = 'windows/MAXIMIZE_FILE_WINDOW';
 export const UNMAXIMIZE_FILE_WINDOW = 'windows/UNMAXIMIZE_FILE_WINDOW';
 export const MINIMIZE_FILE_WINDOW = 'windows/MINIMIZE_FILE_WINDOW';
@@ -32,6 +35,7 @@ export const OPEN_ERROR_WINDOW = 'windows/OPEN_ERROR_WINDOW';
 export const CLOSE_ERROR_WINDOW = 'windows/CLOSE_ERROR_WINDOW';
 export const MOVE_FILE = 'windows/MOVE_FILE';
 export const MOVE_FILES = 'windows/MOVE_FILES';
+export const DELETE_FILES = 'windows/DELETE_FILES';
 
 export const LOAD_STOCKS = 'stock/LOAD_STOCKS';
 export const SEARCH_STOCKS = 'stock/SEARCH_STOCKS';

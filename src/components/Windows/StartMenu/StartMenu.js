@@ -14,12 +14,12 @@ class StartMenu extends Component {
   }
 
   render() {
-    const { installedPrograms, fileSystem, userIndex, openFile, authenticator, closeStartMenu } = this.props;
+    const { installedPrograms, fileSystem, userIndex, openFile, authenticator, closeStartMenu, initializeAuth } = this.props;
     return (
       <div className={styles.root}>
         <StartMenuHeader fileSystem={fileSystem} userIndex={userIndex} />
         <StartMenuBody installedPrograms={installedPrograms} {...this.props} />
-        <StartMenuFooter openFile={openFile} authenticator={authenticator} closeStartMenu={closeStartMenu} />
+        <StartMenuFooter openFile={openFile} initializeAuth={initializeAuth} authenticator={authenticator} closeStartMenu={closeStartMenu} />
       </div>
     );
   }

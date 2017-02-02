@@ -4,14 +4,18 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Desktop.css'; //eslint-disable-line
 
-import { evap_config } from '../../../config';
+
+
 import windowsFileRegistry from '../windowsFileRegistry';
 import { windowsClickables } from '../../../constants/windows';
+import DropzoneAWSEvaporate from '../DropzoneAWSEvaporate';
 import DesktopItem from '../FileIcon';
 import ContextMenu from '../ContextMenu';
-import ErrorWindow from '../ErrorWindow';
-import Evaporate from 'evaporate';
-import { resizeWindow } from '../../../core/layout'
+
+import SpaceAvailabilityIndicator from '../SpaceAvailabilityIndicator';
+
+import { resizeWindow } from '../../../core/layout';
+
 
 // todo: desktopwidth / desktopheight still neceessary?
 class Desktop extends Component {
@@ -20,7 +24,7 @@ class Desktop extends Component {
     contextMenuX: PropTypes.number,
     contextMenuY: PropTypes.number,
     openContextMenu: PropTypes.func,
-    openedFiles: PropTypes.array,
+    openedFiles: PropTypes.object,
     selectIcons: PropTypes.func,
     desktopItems: PropTypes.array,
     createFolder: PropTypes.func,
@@ -47,7 +51,7 @@ class Desktop extends Component {
     this.stopResizeFileWindow = this.stopResizeFileWindow.bind(this);
     this.fileWindowResizing = this.fileWindowResizing.bind(this);
     this.findAncestorWithClickClass = this.findAncestorWithClickClass.bind(this);
-    this.getUploadId = this.getUploadId.bind(this);
+    
     this.dragbox = null;
     this.draggedItem = null;
     this.resizedItem = null;
@@ -74,73 +78,12 @@ class Desktop extends Component {
       headerHeight: null
     };
   }
-  getUploadId() {
-    const { user, isAnonymousUser } = this.props;
-    console.log(user, isAnonymousUser);
-    return isAnonymousUser ? 0 : user.id;
-  }
+  
   componentDidMount() {
     this.icons = document.getElementsByClassName('desktopIcon');
     this.desktop = document.getElementById('desktop');
     this.header = document.getElementById('primaryHeader');
-
-    // START dropzone stuff. todo: abstract this crap away to a HOC
-    // todo : dropzone script is in index.jade. Should be packed with webpack
-    // todo: convert fetch to isomorphic fetch ?
-
-    this.dropzone = new Dropzone('div#desktop', {url: '/upload', autoProcessQueue:false, clickable: false, createImageThumbnails: false,
-      previewsContainer: null,
-    addedfile: file => {
-      const { name, size, type } = file;
-      const upload_id = this.getUploadId();
-      fetch('/upload_start', {method: 'get', credentials: 'include'})
-        .then(response => {
-          response.json().then( dateObject => {
-            const { year, month, day, hours, minutes, seconds, milliseconds } = dateObject;
-            Evaporate.create(evap_config)
-              .then(
-                evaporate => {
-                  evaporate.add({
-                    name: `${upload_id}/${year}/${month}/${day}/${hours}${minutes}${seconds}${milliseconds}/${name}`,
-                    file,
-                    xAmzHeadersAtInitiate : {
-                      'x-amz-acl': 'public-read'
-                    },
-                    // progress: progressVal => {console.log('progress!!', progressVal)},
-                    info: info => {},
-                    error: error => {},
-                    warn: warn => {},
-                    complete: (xhr, awsObjectKey, stats) => {
-                      console.log(xhr, awsObjectKey, stats);
-                      fetch('/upload_complete', {method: 'post', credentials: 'include'})
-                        .then(response => {
-                          return response.json().then(responseObject => {
-                            console.log(responseObject);
-                          });
-                        }).catch(err => {
-                          return err;
-                      })
-                    }
-                  })
-                    .then(
-                      awsKey => { },
-                      reason => { }
-                    ).catch(error=>{console.log(error);})
-                },
-                reason => {});
-          });
-        })
-        .catch(error => {
-          console.log(error);
-        });
-      
-
-
-    }
-    });
-
-
-    // END DROPZONE STUFF
+    
     this.desktop.onmousedown = this.desktopMouseDown;
     this.desktop.onmouseup = this.desktopMouseUp;
 
@@ -154,19 +97,20 @@ class Desktop extends Component {
       desktopHeight: this.desktop.offsetHeight,
       headerHeight: this.header.offsetHeight});
   }
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   return (this.state.selectedIcons !== nextState.selectedIcons) ||
-  //     (this.props.registering !== nextProps.registering) ||
-  //     // (this.props.desktopWidth !== nextProps.desktopWidth) ||
-  //     // (this.props.desktopHeight !== nextProps.desktopHeight) ||
-  //     (this.props.selectedDesktopIcons !== nextProps.selectedDesktopIcons) ||
-  //     (this.props.contextMenuActive !== nextProps.contextMenuActive) ||
-  //     (this.props.contextMenuX !== nextProps.contextMenuX)||
-  //     (this.props.openedFiles !== nextProps.openedFiles) ||
-  //     (this.props.fileSystem !== nextProps.fileSystem) ||
-  //     (this.props.errorWindows !== nextProps.errorWindows) ||
-  //     (this.props.contextMenuY !== nextProps.contextMenuY);
-  // }
+  shouldComponentUpdate(nextProps, nextState) {
+    return (this.state.selectedIcons !== nextState.selectedIcons) ||
+      (this.props.registering !== nextProps.registering) ||
+      (this.props.showSpaceIndicator !== nextProps.showSpaceIndicator) ||
+      (this.props.usedSpace !== nextProps.usedSpace) ||
+      (this.props.uploads !== nextProps.uploads) ||
+      (this.props.selectedDesktopIcons !== nextProps.selectedDesktopIcons) ||
+      (this.props.contextMenuActive !== nextProps.contextMenuActive) ||
+      (this.props.contextMenuX !== nextProps.contextMenuX) ||
+      (this.props.openedFiles !== nextProps.openedFiles) ||
+      (this.props.fileSystem !== nextProps.fileSystem) ||
+      (this.props.errorMessages !== nextProps.errorMessages) ||
+      (this.props.contextMenuY !== nextProps.contextMenuY);
+  }
   diffNodeLists(firstNodeList, secondNodeList) {
     const iconsArray = [].slice.call(firstNodeList);
     const selectedArray = [].slice.call(secondNodeList);
@@ -233,11 +177,11 @@ class Desktop extends Component {
   }
   startResizeFileWindow(event) {
     const { openedFiles, openedFileDimensions } = this.props;
-    const windowBeingResized = openedFileDimensions[openedFiles[parseInt(event.target.dataset.index, 10)]];
+    const windowBeingResized = openedFileDimensions[event.target.dataset.uniqueid];
     this.resizedItem = event.target.parentNode; // todo: Change how parent node is retrieved.
 
     this.setState({ resizingFileWindowInProgress: true, resizeStartX: event.clientX, resizeStartY: event.clientY,
-    itemResized: event.target.dataset.index, resizeStartHeight: event.target.parentNode.clientHeight,
+    itemResized: event.target.dataset.uniqueid, resizeStartHeight: event.target.parentNode.clientHeight,
       resizeSideClicked: event.target.dataset.side, resizeStartLeft: windowBeingResized.xPosition,
       resizeStartTop: windowBeingResized.yPosition, resizeStartWidth: event.target.parentNode.clientWidth });
     this.desktop.addEventListener('mousemove', this.fileWindowResizing);
@@ -248,6 +192,7 @@ class Desktop extends Component {
     const deltaY = event.clientY - this.state.resizeStartY;
     this.resizeDeltaX = event.clientX - this.state.resizeStartX;
     this.resizeDeltaY = event.clientY - this.state.resizeStartY;
+
     resizeWindow(this.resizedItem, resizeSideClicked, deltaX, deltaY, resizeStartWidth, resizeStartHeight,
      resizeStartLeft, resizeStartTop);
   }
@@ -374,9 +319,10 @@ class Desktop extends Component {
   }
   render() {
     const { desktopItems, contextMenuX, contextMenuY, contextMenuActive, contextMenuClickClass, contextMenuIndexClicked,
-      errorWindows, closeErrorWindow, connectDropTarget, moveFile, moveFiles, desktopNodeIndex,
+      connectDropTarget, moveFile, moveFiles, desktopNodeIndex, usedSpace, diskSpace, deleteFiles,
+      showSpaceIndicator, uploads,
       selectedDesktopIcons, createFolder, openErrorWindow, openFile, openedFiles, fileSystem } = this.props;
-    const selectedIds = selectedDesktopIcons.map(id => {return parseInt(id, 10)});
+
     return (connectDropTarget(
       <div id="desktop"
            data-clickClass={windowsClickables.desktop}
@@ -384,27 +330,20 @@ class Desktop extends Component {
            className={styles.root}
            onContextMenu={this.desktopContextMenu}
       >
-        {/*<Dropzone className={styles.dropzone} disableClick onDrop={()=>{console.log('dropzone onDrop method');}} ref="dropzone" accept="*" /> */}
         {
-          desktopItems.map((desktopitem) => {
-            return <DesktopItem selected={selectedIds.includes(desktopitem.index)} className='desktopIcon'
-                                key={desktopitem.index}
+          desktopItems.map((desktopitem, index) => {
+            return <DesktopItem selected={selectedDesktopIcons.includes(desktopitem.index)} className='desktopIcon'
+                                key={desktopitem.index} uploads={uploads} clickClass='desktopItem'
                                 index={desktopitem.index} moveFiles={moveFiles} parentIndex={desktopNodeIndex}
                                 moveFile={moveFile}  openFile={openFile} item={desktopitem} />
           })
         }
         {
-          openedFiles.map((openedFile, index) => {
-            const openedFileNode = fileSystem[openedFile];
+          Object.keys(openedFiles).map((uniqueId) => {
+            const openedFileNode = fileSystem[openedFiles[uniqueId]];
             const fileType = openedFileNode.hasOwnProperty('children') ? 'Folder' : openedFileNode.extension;
-            return React.createElement(windowsFileRegistry(fileType, openedFileNode), { key: index, openedFile,
-              filename: fileSystem[openedFile].name,
-              index, ...this.props});
-          })
-        }
-        {
-          errorWindows.map((errorObject, index) => {
-            return <ErrorWindow errorObject={errorObject} index={index} closeErrorWindow={closeErrorWindow} key={index} />;
+            return React.createElement(windowsFileRegistry(fileType, openedFileNode), { key: uniqueId, openedFile: openedFileNode,
+              uniqueId, filename: openedFileNode.name, ...this.props});
           })
         }
         {
@@ -413,8 +352,12 @@ class Desktop extends Component {
                 contextMenuClickClass={contextMenuClickClass}
                 contextMenuIndexClicked={contextMenuIndexClicked}
                 createFolder={createFolder}
+                deleteFiles={deleteFiles}
                 contextMenuY={contextMenuY}
                 contextMenuX={contextMenuX}/> : null
+        }
+        {
+            showSpaceIndicator ?  <SpaceAvailabilityIndicator className={styles.showIndicator} usedSpace={usedSpace} diskSpace={diskSpace} /> : null
         }
       </div>
     ));
@@ -424,7 +367,7 @@ class Desktop extends Component {
 
 const desktopTarget = {
   drop(props, monitor) {
-    if (monitor.didDrop()) {
+    if (monitor.didDrop()) { // dropped on child. 
       return;
     }
     return { index: props.desktopNodeIndex, canDrop: true };
@@ -440,5 +383,5 @@ function collectTarget(connect, monitor) {
   };
 }
 
-export default withStyles(styles)(dragDropContext(HTML5Backend)(dropTarget(['fileIcon', 'fileIconGroup'], desktopTarget, collectTarget)(Desktop)));
+export default withStyles(styles)(dragDropContext(HTML5Backend)(dropTarget(['fileIcon', 'fileIconGroup'], desktopTarget, collectTarget)(DropzoneAWSEvaporate(Desktop, 'desktop'))));
 

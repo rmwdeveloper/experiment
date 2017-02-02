@@ -6,7 +6,7 @@ import styles from './MobileTaskbar.css'; //eslint-disable-line
 class MobileTaskbar extends Component {
   static propTypes = {
     toggleStartMenu: PropTypes.func,
-    openedFiles: PropTypes.array,
+    openedFiles: PropTypes.object,
     entities: PropTypes.object
   };
 

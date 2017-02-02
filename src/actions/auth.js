@@ -1,7 +1,8 @@
 import fetch from '../core/fetch';
 import {
   TOGGLE_REGISTER_MODE,
-  LOGIN
+  LOGIN,
+  CLOSE_FILE_WINDOW
 } from '../constants';
 
 export function toggleRegisterMode() {
@@ -11,20 +12,21 @@ export function toggleRegisterMode() {
 }
 
 export function login(user) {
-  return dispatch => {
+  return (dispatch, getState) => {
+    const { windows: { authenticatorIndex, openedFiles } } = getState();
     dispatch({ type: LOGIN, user });
+    dispatch({ type: CLOSE_FILE_WINDOW, openedFileIndex: openedFiles.indexOf(authenticatorIndex) });
   };
 }
 
 export function initializeAuth(){
   return dispatch => {
-    // const response = fetch('/get_user', {
-    //   method: 'get', credentials: 'include'
-    // }).then(response => {
-    //   response.json().then(userData => {
-    //     const { User, UserId, IndexIndicatorGroups, fileSystem, diskSpace } = userData;
-    //     dispatch({type: LOGIN, user: User, UserId, IndexIndicatorGroups, fileSystem: JSON.parse(fileSystem), diskSpace});
-    //   });
-    // });
+    const response = fetch('/get_user', {
+      method: 'get', credentials: 'include'
+    }).then(response => {
+      response.json().then(userData => {
+        dispatch({type: LOGIN, user: userData});
+      });
+    });
   };
 }

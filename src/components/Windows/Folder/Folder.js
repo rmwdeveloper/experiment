@@ -6,23 +6,28 @@ import FolderSidebar from '../FolderSidebar';
 import FolderNavigation from '../FolderNavigation';
 import FolderContents from '../FolderContents';
 
-
-function Folder({openedFile, openedFileDimensions, selectedDesktopIcons, clearActives, fileSystem, selectIcons, openFile, moveFile, moveFiles}) {
-  const selectedIds = selectedDesktopIcons.map(id => {return parseInt(id, 10)});
-  const folderContents = fileSystem[openedFile].children ? fileSystem[openedFile].children.map((nodeIndex, index) => {
+// todo: convert to component and just pass all props through. Clunky func = bad.
+function Folder({openedFile, user, checkAvailableSpace, uploadStart, uploadProgress, uploadComplete,
+  uploads,
+  isAnonymousUser, uniqueId, openedFileDimensions, selectedDesktopIcons, clearActives, fileSystem, selectIcons,
+  openFile, moveFile, moveFiles}) {
+  const folderContents = fileSystem[openedFile.index].children ? fileSystem[openedFile.index].children.map((nodeIndex, index) => {
     fileSystem[nodeIndex].index = nodeIndex;
-    return <FolderItem moveFile={moveFile} moveFiles={moveFiles} className="folderIcon" parentIndex={openedFile} selected={selectedIds.includes(nodeIndex)}
-                       key={index} index={index} openFile={openFile} item={fileSystem[nodeIndex]} />;
+    return <FolderItem moveFile={moveFile} clickClass='folderItem' moveFiles={moveFiles} className="folderIcon" parentIndex={openedFile.index} selected={selectedDesktopIcons.includes(nodeIndex)}
+                       key={nodeIndex} index={index} openFile={openFile} item={fileSystem[nodeIndex]} />;
   }) : null;
-  const windowHeight = openedFileDimensions[openedFile].height - 30;
-
+  const windowHeight = openedFileDimensions[uniqueId].height - 30;
   return (
     <div style={{minHeight: windowHeight}} className={styles.root}>
       <FolderNavigation />
       <div className={styles.sidebarAndFolderContents}>
         <FolderSidebar />
-        <FolderContents clearActives={clearActives} selectIcons={selectIcons}
-          moveFile={moveFile} moveFile={moveFiles} folderContents={folderContents} index={openedFile} />
+        <FolderContents clearActives={clearActives} user={user} isAnonymousUser={isAnonymousUser}
+                        checkAvailableSpace={checkAvailableSpace} uploadStart={uploadStart}
+                        uploadProgress={uploadProgress} uploadComplete={uploadComplete}
+                        fileSystem={fileSystem} uploads={uploads}
+                        selectIcons={selectIcons} children={fileSystem[openedFile.index].children}
+          moveFile={moveFile} moveFile={moveFiles} folderContents={folderContents} index={openedFile.index} />
       </div>
     </div>
   );
