@@ -84,7 +84,7 @@ export default function layout(state = initialState, action) {
         nodeIndex: nextNodeIndex,  permissions: 'rwxp',
         metadata: { icon: 'placeholder.png',
           iconOpacity: 0.25, loading: true, progress: 0, temporaryUploadId: action.temporaryUploadId } };
-      newFileSystem[state.desktopNodeIndex].children.push(nextNodeIndex);
+      newFileSystem[action.parentIndex].children.push(nextNodeIndex);
       newUploads[action.temporaryUploadId] = nextNodeIndex;
       return { ...state, fileSystem: newFileSystem, uploads: newUploads };
     case UPLOAD_PROGRESS:

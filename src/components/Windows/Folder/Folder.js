@@ -6,22 +6,27 @@ import FolderSidebar from '../FolderSidebar';
 import FolderNavigation from '../FolderNavigation';
 import FolderContents from '../FolderContents';
 
-
-function Folder({openedFile, index, uniqueId, openedFileDimensions, selectedDesktopIcons, clearActives, fileSystem, selectIcons, openFile, moveFile, moveFiles}) {
+// todo: convert to component and just pass all props through. Clunky func = bad.
+function Folder({openedFile, user, checkAvailableSpace, uploadStart, uploadProgress, uploadComplete,
+  uploads,
+  isAnonymousUser, uniqueId, openedFileDimensions, selectedDesktopIcons, clearActives, fileSystem, selectIcons,
+  openFile, moveFile, moveFiles}) {
   const folderContents = fileSystem[openedFile.index].children ? fileSystem[openedFile.index].children.map((nodeIndex, index) => {
     fileSystem[nodeIndex].index = nodeIndex;
     return <FolderItem moveFile={moveFile} moveFiles={moveFiles} className="folderIcon" parentIndex={openedFile.index} selected={selectedDesktopIcons.includes(nodeIndex)}
                        key={nodeIndex} index={index} openFile={openFile} item={fileSystem[nodeIndex]} />;
   }) : null;
   const windowHeight = openedFileDimensions[uniqueId].height - 30;
-
-
   return (
     <div style={{minHeight: windowHeight}} className={styles.root}>
       <FolderNavigation />
       <div className={styles.sidebarAndFolderContents}>
         <FolderSidebar />
-        <FolderContents clearActives={clearActives} selectIcons={selectIcons} children={fileSystem[openedFile.index].children}
+        <FolderContents clearActives={clearActives} user={user} isAnonymousUser={isAnonymousUser}
+                        checkAvailableSpace={checkAvailableSpace} uploadStart={uploadStart}
+                        uploadProgress={uploadProgress} uploadComplete={uploadComplete}
+                        fileSystem={fileSystem} uploads={uploads}
+                        selectIcons={selectIcons} children={fileSystem[openedFile.index].children}
           moveFile={moveFile} moveFile={moveFiles} folderContents={folderContents} index={openedFile.index} />
       </div>
     </div>

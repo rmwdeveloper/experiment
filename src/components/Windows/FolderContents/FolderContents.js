@@ -3,6 +3,7 @@ import { DropTarget as dropTarget } from 'react-dnd';
 import styles from './FolderContents.css'; //eslint-disable-line
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { windowsClickables } from '../../../constants/windows';
+import DropzoneAWSEvaporate from '../DropzoneAWSEvaporate';
 
 class FolderContents extends Component {
   static propTypes = {
@@ -29,28 +30,15 @@ class FolderContents extends Component {
       headerHeight: null
     };
   }
+  shouldComponentUpdate() {
+    return true;
+  }
   componentDidMount() {
     const { index } = this.props;
     this.icons = document.getElementsByClassName('folderIcon');
     this.folderContents = document.getElementById(`folderContents${this.props.index}`);
     this.header = document.getElementById('primaryHeader');
     
-    // START dropzone stuff. todo: abstract this crap away to a HOC
-    // todo : dropzone script is in index.jade. Should be packed with webpack
-    this.dropzone = new Dropzone(`#folderContents${index}`, {url: '/upload', autoProcessQueue:false, clickable: false, createImageThumbnails: false,
-      previewsContainer: null,
-      // drop: event => {
-      //   console.log('drop event folder contents');
-      // },
-      addedfile: file => {
-        const { name, size, type } = file;
-        console.log('dropped in folder');
-      }
-    });
-
-
-    // END DROPZONE STUFF
-
 
     this.folderContents.onmousedown = this.folderContentsMouseDown;
     this.folderContents.onmouseup = this.folderContentsMouseUp;
@@ -155,7 +143,7 @@ class FolderContents extends Component {
     }
   }
   render(){
-    const { folderContents, connectDropTarget, index } = this.props;
+    const { folderContents, connectDropTarget, index, uploads } = this.props;
     return connectDropTarget(
       <div id={`folderContents${index}`} data-clickClass={windowsClickables.folderContents} data-topClickable data-index={index} className={styles.root}>
         {folderContents}
@@ -180,4 +168,4 @@ function collectTarget(connect, monitor) {
   };
 }
 
-export default withStyles(styles)(dropTarget(['fileIcon', 'fileIconGroup'], folderTarget, collectTarget)(FolderContents));
+export default withStyles(styles)(dropTarget(['fileIcon', 'fileIconGroup'], folderTarget, collectTarget)(DropzoneAWSEvaporate(FolderContents)));

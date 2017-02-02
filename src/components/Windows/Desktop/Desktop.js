@@ -3,17 +3,19 @@ import { DropTarget as dropTarget, DragDropContext as dragDropContext, DragSourc
 import HTML5Backend from 'react-dnd-html5-backend';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Desktop.css'; //eslint-disable-line
-import uuidV4 from 'uuid/v4';
 
-import { evap_config } from '../../../config';
+
+
 import windowsFileRegistry from '../windowsFileRegistry';
 import { windowsClickables } from '../../../constants/windows';
+import DropzoneAWSEvaporate from '../DropzoneAWSEvaporate';
 import DesktopItem from '../FileIcon';
 import ContextMenu from '../ContextMenu';
-import ErrorWindow from '../ErrorWindow';
+
 import SpaceAvailabilityIndicator from '../SpaceAvailabilityIndicator';
-import Evaporate from 'evaporate';
-import { resizeWindow } from '../../../core/layout'
+
+import { resizeWindow } from '../../../core/layout';
+
 
 // todo: desktopwidth / desktopheight still neceessary?
 class Desktop extends Component {
@@ -49,8 +51,7 @@ class Desktop extends Component {
     this.stopResizeFileWindow = this.stopResizeFileWindow.bind(this);
     this.fileWindowResizing = this.fileWindowResizing.bind(this);
     this.findAncestorWithClickClass = this.findAncestorWithClickClass.bind(this);
-    this.getUploadId = this.getUploadId.bind(this);
-    this.uploadComplete = this.uploadComplete.bind(this);
+    
     this.dragbox = null;
     this.draggedItem = null;
     this.resizedItem = null;
@@ -77,104 +78,12 @@ class Desktop extends Component {
       headerHeight: null
     };
   }
-  getUploadId() {
-    const { user, isAnonymousUser } = this.props;
-    return isAnonymousUser ? 0 : user.id;
-  }
-  uploadComplete(awsKey, temporaryUploadId, extension, size) {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    const { fileSystem, uploads, uploadComplete, desktopNodeIndex } = this.props;
-    const newNode = fileSystem[uploads[temporaryUploadId]];
-    delete newNode.metadata.temporaryUploadId; //todo: refactor.
-    delete newNode.metadata.loading;
-    delete newNode.metadata.iconOpacity;
-    delete newNode.metadata.progress;
-
-    fetch('/upload_complete', {method: 'post', headers,
-      body: JSON.stringify({newNode, awsKey, parentIndex: desktopNodeIndex, extension, size }),
-      credentials: 'include'})
-      .then(response => {
-        return response.json().then(responseObject => {
-          uploadComplete(temporaryUploadId);
-          // todo: persist in uploads and filesystem.
-
-        });
-      }).catch(err => {
-      return err;
-    })
-  }
+  
   componentDidMount() {
-    const { diskSpace } = this.props;
     this.icons = document.getElementsByClassName('desktopIcon');
     this.desktop = document.getElementById('desktop');
     this.header = document.getElementById('primaryHeader');
-    const { checkAvailableSpace, uploadComplete, uploadStart, uploadProgress, uploadError, fileSystem, uploads } = this.props;
-    // START dropzone stuff. todo: abstract this crap away to a HOC
-    // todo : dropzone script is in index.jade. Should be packed with webpack
-    // todo: convert fetch to isomorphic fetch ?
-
-    this.dropzone = new Dropzone('div#desktop', {url: '/upload', autoProcessQueue:false, clickable: false, createImageThumbnails: false,
-      previewsContainer: null,
-    addedfile: file => {
-
-      const { name, size, type } = file;
-      const [fileName, extension] = name.split('.');
-      const fileSizeMb = (size / 1000 / 1000).toFixed(2);
-      const userId = this.getUploadId(); // todo : chagne this to getUserId
-      const temporaryUploadId = uuidV4();
-
-      checkAvailableSpace(fileName, extension, temporaryUploadId);
-
-      fetch('/upload_start', {method: 'get', credentials: 'include'})
-        .then(response => {
-          response.json().then( responseObject => { // size in bytes
-            const { usedSpace, date: { year, month, day, hours, minutes, seconds, milliseconds } } = responseObject;
-            const mbUsed = (usedSpace / 1000 / 1000).toFixed(2); // usedSpace from server, not state.
-
-            if ( diskSpace - mbUsed - fileSizeMb < 0) {
-              uploadError();
-              return null;
-            }
-            //todo: upload start action
-            //todo: Some sort of auth here, prevent unauth uploads. Dont trust client.
-            uploadStart(parseFloat(fileSizeMb, 10) + parseFloat(mbUsed, 10), temporaryUploadId);
-
-            Evaporate.create(evap_config)
-              .then(
-                evaporate => {
-                  evaporate.add({
-                    name: `${userId}/${year}/${month}/${day}/${hours}${minutes}${seconds}${milliseconds}/${name}`,
-                    file,
-                    xAmzHeadersAtInitiate : {
-                      'x-amz-acl': 'public-read'
-                    },
-                    progress: progressVal => {
-                      uploadProgress(progressVal, temporaryUploadId);
-                    },
-                    info: info => {},
-                    error: error => {},
-                    warn: warn => {},
-                    complete: (xhr, awsObjectKey, stats) => {
-                      this.uploadComplete(awsObjectKey, temporaryUploadId, extension, size);
-                    }
-                  })
-                    .then(
-                      awsKey => { },
-                      reason => { }
-                    ).catch(error=>{console.log(error);})
-                },
-                reason => {});
-          });
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
-    });
-
-
-    // END DROPZONE STUFF
+    
     this.desktop.onmousedown = this.desktopMouseDown;
     this.desktop.onmouseup = this.desktopMouseUp;
 
@@ -474,5 +383,5 @@ function collectTarget(connect, monitor) {
   };
 }
 
-export default withStyles(styles)(dragDropContext(HTML5Backend)(dropTarget(['fileIcon', 'fileIconGroup'], desktopTarget, collectTarget)(Desktop)));
+export default withStyles(styles)(dragDropContext(HTML5Backend)(dropTarget(['fileIcon', 'fileIconGroup'], desktopTarget, collectTarget)(DropzoneAWSEvaporate(Desktop, 'desktop'))));
 
