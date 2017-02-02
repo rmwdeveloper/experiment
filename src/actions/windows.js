@@ -211,8 +211,7 @@ export function moveFile(fromNodeIndex, toNodeIndex) {
 export function moveFiles(fromParentIndex, toNodeIndex) {
   return (dispatch, getState) => {
     const { windows: { selectedDesktopIcons, desktopWidth, desktopHeight } } = getState();
-    const selectedIds = selectedDesktopIcons.map(id => {return parseInt(id, 10)});
-    if (selectedIds.includes(toNodeIndex)) {
+    if (selectedDesktopIcons.includes(toNodeIndex)) {
       dispatch({ type: OPEN_ERROR_WINDOW, errorMessage: "Cant move a folder inside itself.", desktopWidth, desktopHeight});
       return null;
     }
