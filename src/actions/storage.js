@@ -46,9 +46,33 @@ export function uploadProgress(progress, temporaryUploadId) {
 }
 
 
-export function uploadComplete(temporaryUploadId) {
-  return dispatch => {
+export function uploadComplete(temporaryUploadId, parentIndex, awsKey, extension, size) {
+
+  return (dispatch, getState) => {
     dispatch({ type: UPLOAD_COMPLETE, temporaryUploadId });
+    
+    const { windows: { fileSystem, uploads } } = getState();
+
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    const newNode = fileSystem[uploads[temporaryUploadId]];
+
+    delete newNode.metadata.temporaryUploadId; //todo: refactor.
+    delete newNode.metadata.loading;
+    delete newNode.metadata.iconOpacity;
+    delete newNode.metadata.progress;
+
+    fetch('/upload_complete', {method: 'post', headers,
+      body: JSON.stringify({newNode, awsKey, parentIndex, extension, size }),
+      credentials: 'include'})
+      .then(response => {
+        return response.json().then(responseObject => {
+
+        });
+      }).catch(err => {
+      return err;
+    });
+
   };
 }
 

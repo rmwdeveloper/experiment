@@ -17,30 +17,8 @@ export default function DropzoneAWSEvaporate(WrappedComponent, mode) {
     }
     uploadComplete(awsKey, temporaryUploadId, extension, size) {
       const parentIndex = mode === 'desktop' ? this.props.desktopNodeIndex : this.props.index;
+      this.props.uploadComplete(temporaryUploadId, parentIndex, awsKey, extension, size);
 
-      const headers = new Headers();
-      headers.append('Content-Type', 'application/json');
-      const { fileSystem, uploads, uploadComplete } = this.props;
-      console.log(uploads);
-      const newNode = fileSystem[uploads[temporaryUploadId]];
-
-      delete newNode.metadata.temporaryUploadId; //todo: refactor.
-      delete newNode.metadata.loading;
-      delete newNode.metadata.iconOpacity;
-      delete newNode.metadata.progress;
-
-      fetch('/upload_complete', {method: 'post', headers,
-        body: JSON.stringify({newNode, awsKey, parentIndex, extension, size }),
-        credentials: 'include'})
-        .then(response => {
-          return response.json().then(responseObject => {
-            uploadComplete(temporaryUploadId);
-            // todo: persist in uploads and filesystem.
-
-          });
-        }).catch(err => {
-        return err;
-      })
     }
     componentDidMount() {
       const { checkAvailableSpace, diskSpace, uploadStart, uploadProgress, uploadError,  index } = this.props;
