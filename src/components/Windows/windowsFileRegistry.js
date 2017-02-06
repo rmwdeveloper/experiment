@@ -1,6 +1,7 @@
 import FileWindow from './FileWindow/FileWindow';
 import Folder from './Folder/Folder';
 import Word from '../Word/Word/Word';
+import TextDocument from './TextDocument/TextDocument';
 import EmptyProgram from './EmptyProgram/EmptyProgram';
 import Authenticator from './Authenticator/Authenticator';
 import DiskManager from './DiskManager/DiskManager';
@@ -10,6 +11,8 @@ export default function windowsRegistry(fileType, openedFileNode) {
   switch (fileType) {
     case 'Folder':
       return FileWindow(Folder);
+    case 'txt':
+      return FileWindow(TextDocument);
     case 'shct':
     case 'exe':
       switch (openedFileNode.name) {

@@ -1,0 +1,6 @@
+{
+  "name": "TextDocument",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./TextDocument.js"
+}
