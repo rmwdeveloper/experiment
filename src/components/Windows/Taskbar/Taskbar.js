@@ -12,16 +12,17 @@ class Taskbar extends Component {
   };
 
   render() {
-    const { toggleStartMenu, openedFiles, entities, clickTaskbarItem } = this.props;
+    const { toggleStartMenu, openedFiles, fileSystem, clickTaskbarItem } = this.props;
     console.log(openedFiles);
+    console.log(this.props);
     return (
       <div className={styles.root}>
         <StartButton toggleStartMenu={toggleStartMenu} />
-        { /*
-          openedFiles.map((openedFile, index) => {
-            const { icon, name } = entities[openedFile.entityId];
-            return <img key={index} onClick={() => { clickTaskbarItem(openedFile.entityId)}}  className={styles.icon} src={icon} alt={`${name} icon`} />;
-          }) */
+        {
+          Object.keys(openedFiles).map((openedFile, index) => {
+            const { metadata: {icon}, name } = fileSystem[openedFiles[openedFile]];
+            return <img key={openedFile} onClick={() => { clickTaskbarItem(openedFile.entityId)}} className={styles.icon} src={icon} alt={`${name} icon`} />;
+          })
         }
         <InfoHub />
       </div>
