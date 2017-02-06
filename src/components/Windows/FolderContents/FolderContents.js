@@ -34,9 +34,9 @@ class FolderContents extends Component {
     return true;
   }
   componentDidMount() {
-    const { index } = this.props;
+    const { uniqueId } = this.props;
     this.icons = document.getElementsByClassName('folderIcon');
-    this.folderContents = document.getElementById(`folderContents${this.props.index}`);
+    this.folderContents = document.getElementById(`folderContents${this.props.uniqueId}`);
     this.header = document.getElementById('primaryHeader');
     
 
@@ -143,9 +143,9 @@ class FolderContents extends Component {
     }
   }
   render(){
-    const { folderContents, connectDropTarget, index, uploads } = this.props;
+    const { folderContents, connectDropTarget, index, uploads, uniqueId } = this.props;
     return connectDropTarget(
-      <div id={`folderContents${index}`} data-clickClass={windowsClickables.folderContents} data-topClickable data-index={index} className={styles.root}>
+      <div id={`folderContents${uniqueId}`} data-clickClass={windowsClickables.folderContents} data-topClickable data-index={index} className={styles.root}>
         {folderContents}
       </div>
     );

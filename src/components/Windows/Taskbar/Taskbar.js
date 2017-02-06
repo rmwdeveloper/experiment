@@ -13,6 +13,7 @@ class Taskbar extends Component {
 
   render() {
     const { toggleStartMenu, openedFiles, entities, clickTaskbarItem } = this.props;
+    console.log(openedFiles);
     return (
       <div className={styles.root}>
         <StartButton toggleStartMenu={toggleStartMenu} />
