@@ -3,7 +3,7 @@ import path from 'path';
 import express from 'express';
 import session from 'express-session';
 
-import sequelize_fixtures from 'sequelize-fixtures';
+
 
 import multer from 'multer';
 import crypto from 'crypto';
@@ -406,12 +406,4 @@ models.sync().catch(err => console.error(err.stack)).then(() => {
 });
 
 
-// models.sync().catch(err => console.error(err.stack)).then(() => {
-//   app.listen(port, () => {
-//     sequelize_fixtures.loadFile(path.join(__dirname, '..', 'src', 'data', 'fixtures', 'initial_data.js'), {User,
-//       FileSystem, FileNode, FileNodeMetadata}).then(function(){
-//       console.log(`The server is running at http://localhost:${port}/`);
-//     }).catch(err => { console.log(err)});
-//   });
-// });
 /* eslint-enable no-console */
