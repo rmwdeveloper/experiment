@@ -24,9 +24,10 @@ module.exports = { // Indices are always unique and static. A node only ever has
   22: { name: 'test', permissions: 'rwx-', extension: 'txt', metadata: { icon: 'RunXSmall.png' } },
   23: { name: 'Error Displayer', permissions: 'rwx-', extension: 'exe' },
   24: { name: 'Mailr', permissions: 'rwx-', extension: 'txt', metadata: { sprite: true, icon: 'iconsSprite.gif', backgroundPosition: '200px 210px' } },
-  25: { name: 'some text', permissions: 'rwx-', extension: 'txt', metadata: { sprite: true, icon: 'iconsSprite.gif', backgroundPosition: '200px 100px' } },
+  25: { name: 'FAQ', permissions: 'rwx-', extension: 'txt', metadata: { sprite: true, icon: 'iconsSprite.gif', backgroundPosition: '200px 100px' } },
   26: { name: 'anothjer image', permissions: 'rwx-', extension: 'jpg', metadata: { sprite: true, icon: 'iconsSprite.gif', backgroundPosition: '53px 42px' } },
   27: { name: 'printer settings', permissions: 'rwx-', extension: 'txt', metadata: { sprite: true, icon: 'iconsSprite.gif', backgroundPosition: '200px 50px' } },
-  28: { name: 'A really really really really really long filename', permissions: 'rwx-', extension: 'txt', metadata: { sprite: true, icon: 'iconsSprite.gif', backgroundPosition: '200px 100px' } },
+  28: { name: 'Todo List', permissions: 'rwx-', extension: 'txt', metadata: { sprite: true, icon: 'iconsSprite.gif', backgroundPosition: '200px 100px' } },
   29: { name: 'Authenticator', permissions: 'rwxp', extension: 'exe' },
+  30: { name: 'Resume', permissions: 'rwxp', extension: 'txt' },
 };
