@@ -23,9 +23,8 @@ class MoveableResizeableWindow extends Component {
       if (maximized) {
         windowStyle = { height: '100%', width: '100%', left: 0, top: 0 };
       }
-      console.log(minimized);
       if (minimized) {
-        windowStyle = { height: 0, width: 0, left: 0, top: 0 };
+        windowStyle = { display: 'none'};
       }
       windowStyle.zIndex = 2;
       return (<div className={styles.root}  style={windowStyle}>
