@@ -152,17 +152,17 @@ export default function layout(state = initialState, action) {
       return { ...state, errorWindows: [...state.errorWindows.slice(0, action.errorIndex),
         ...state.errorWindows.slice(action.errorIndex + 1)] };
     case MAXIMIZE_FILE_WINDOW:
-      newOpenedFiles[action.openedFileIndex].maximized = true;
-      return { ...state, openedFiles: newOpenedFiles };
+      newOpenedFileDimensions[action.openedFileIndex].maximized = true;
+      return { ...state, openedFileDimensions: newOpenedFileDimensions };
     case UNMAXIMIZE_FILE_WINDOW:
-      newOpenedFiles[action.openedFileIndex].maximized = false;
-      return { ...state, openedFiles: newOpenedFiles };
+      newOpenedFileDimensions[action.openedFileIndex].maximized = false;
+      return { ...state, openedFileDimensions: newOpenedFileDimensions };
     case MINIMIZE_FILE_WINDOW:
-      newOpenedFiles[action.openedFileIndex].minimized = true;
-      return { ...state, openedFiles: newOpenedFiles };
+      newOpenedFileDimensions[action.openedFileIndex].minimized = true;
+      return { ...state, openedFileDimensions: newOpenedFileDimensions };
     case UNMINIMIZE_FILE_WINDOW:
-      newOpenedFiles[action.openedFileIndex].minimized = false;
-      return { ...state, openedFiles: newOpenedFiles };
+      newOpenedFileDimensions[action.openedFileIndex].minimized = false;
+      return { ...state, openedFileDimensions: newOpenedFileDimensions };
     case DRAG_FILE_WINDOW:
       if (action.index) { // todo : after close index is undefined: fix this bug.
         newOpenedFileDimensions[action.index].xPosition = action.deltaX;
@@ -273,11 +273,8 @@ export default function layout(state = initialState, action) {
       }
       return { ...state, openedFileDimensions: newOpenedFileDimensions };
     case CLICK_TASKBAR_ITEM:
-      const openedFileIndex = state.openedFiles.findIndex( element => {
-        return element.entityId === action.index;
-      });
-      newOpenedFiles[openedFileIndex].minimized = !newOpenedFiles[openedFileIndex].minimized;
-      return { ...state, openedFiles: newOpenedFiles };
+      newOpenedFileDimensions[action.index].minimized = !newOpenedFileDimensions[action.index].minimized;
+      return { ...state, openedFileDimensions: newOpenedFileDimensions };
     case LOGIN:
       const newState = {...state};
       newState.fileSystem = {};
