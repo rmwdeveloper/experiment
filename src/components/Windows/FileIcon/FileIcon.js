@@ -11,7 +11,7 @@ function FileIcon({ item, openFile, connectDragSource, connectDropTarget, classN
   const loadingBorder = (<svg className={styles.iconSVG} width="110" height="110">]
     <rect width="100%" height="100%" fill="transparent"
           stroke="black"/>
-    <path style={{strokeDasharray: 440, strokeDashoffset: 440 * (1 - item.metadata.progress) }} d="M0 0 H 110 V 110 H 110 0 V 110 0" stroke="green" strokeWidth="5" fill="transparent" />
+    <path id={`progress${item.nodeIndex}`} style={{strokeDasharray: 440, strokeDashoffset: 440 * (1 - item.metadata.progress) }} d="M0 0 H 110 V 110 H 110 0 V 110 0" stroke="green" strokeWidth="5" fill="transparent" />
   </svg>);
   if (item.metadata.sprite) {
     style.backgroundSize = '425px';

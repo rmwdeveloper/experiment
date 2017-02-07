@@ -65,7 +65,11 @@ export default function DropzoneAWSEvaporate(WrappedComponent, mode) {
                           'x-amz-acl': 'public-read'
                         },
                         progress: progressVal => {
-                          console.log('progress!', progressVal);
+                          const progressBar = document.getElementById(`progress${temporaryUploadId}`);
+                          if (progressBar) {
+                            progressBar.style.strokeDashoffset = 440 * (1 - progressVal);
+                          }
+
                           // uploadProgress(progressVal, temporaryUploadId);
                         },
                         info: info => {},
