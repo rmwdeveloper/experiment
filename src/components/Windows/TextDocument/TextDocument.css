@@ -6,7 +6,7 @@
   font-family: monospace;
   height: calc(100% - 27px);
   width: 100%;
-  padding: 30px;
+  overflow: auto;
 }
 
 

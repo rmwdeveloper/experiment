@@ -9,7 +9,7 @@ class TextDocument extends Component {
   }
   render() {
     return (<div className={styles.root}>
-      <ul>
+      <ul style={{padding: '20px'}}>
         <li>Add order attribute to FileNodes. Allow reordering/sorting by date, name, size.</li>
         <li> Add cancel / pause functionality for uploads.</li>
         <li> Convert Folder from function to Component</li>
