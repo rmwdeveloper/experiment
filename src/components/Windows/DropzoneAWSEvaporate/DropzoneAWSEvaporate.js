@@ -65,7 +65,8 @@ export default function DropzoneAWSEvaporate(WrappedComponent, mode) {
                           'x-amz-acl': 'public-read'
                         },
                         progress: progressVal => {
-                          uploadProgress(progressVal, temporaryUploadId);
+                          console.log('progress!', progressVal);
+                          // uploadProgress(progressVal, temporaryUploadId);
                         },
                         info: info => {},
                         error: error => {},
