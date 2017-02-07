@@ -83,7 +83,7 @@ export default function layout(state = initialState, action) {
     case CHECK_AVAILABLE_SPACE: // create new file based on the newly uploaded file. todo: make this work for desktop, or for a folder.
       newFileSystem[action.temporaryUploadId] = { name: action.newFileName, extension: action.newFileExtension,
         nodeIndex: action.temporaryUploadId,  permissions: 'rwxp',
-        metadata: { icon: 'placeholder.png',
+        metadata: { icon: 'placeholder.png', isUpload: true,
           iconOpacity: 0.25, loading: true, progress: 0, temporaryUploadId: action.temporaryUploadId } };
       newFileSystem[action.parentIndex].children.push(action.temporaryUploadId);
       newUploads[action.temporaryUploadId] = action.temporaryUploadId;
