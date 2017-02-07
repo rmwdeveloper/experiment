@@ -61,4 +61,4 @@ function sync(...args) {
 }
 
 export default { sync };
-export { User, UserLogin, UserProfile, FileSystem, Upload, FileNode, FileNodeMetadata};
+export { User, UserLogin, UserProfile, FileSystem, Upload, FileNode, FileNodeMetadata, TextDocument};

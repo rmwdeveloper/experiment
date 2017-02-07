@@ -9,7 +9,7 @@
 
 import path from 'path';
 import sequelize_fixtures from 'sequelize-fixtures';
-import models,  { User, FileSystem, FileNode, FileNodeMetadata } from '../src/data/models';
+import models,  { User, FileSystem, FileNode, FileNodeMetadata, TextDocument } from '../src/data/models';
 import { port } from '../src/config';
 /**
  * Creates application bundles from the source files.
@@ -18,7 +18,7 @@ function fixtures() {
   return new Promise((resolve, reject) => {
     models.sync().catch(err => { return reject(err.stack)}).then(() => {
       sequelize_fixtures.loadFile(path.join(__dirname, '..', 'src', 'data', 'fixtures', 'initial_data.js'), {User,
-        FileSystem, FileNode, FileNodeMetadata}).then(() => {
+        FileSystem, FileNode, FileNodeMetadata, TextDocument}).then(() => {
         console.log(' Fixtures loaded successfully');
         return resolve();
       }).catch(err => { return reject(err);});
