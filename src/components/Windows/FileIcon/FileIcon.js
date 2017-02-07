@@ -34,11 +34,11 @@ function FileIcon({ item, openFile, connectDragSource, connectDropTarget, classN
   }
   return connectDragSource(connectDropTarget(
     React.createElement(elementType, {style: selectedStyle, download: Boolean(item.metadata.isUpload),
-      href: Boolean(item.metadata.awsKey) ? href : null,
+      href: Boolean(item.metadata.awsKey) ? href : null, key: item.nodeIndex,
     'data-clickClass':windowsClickables[clickClass], 'data-topClickable': true, 'data-index': item.index,
   onDoubleClick:  () => {openFile(item.index)}, className: cx(className, styles.root) }, [
-      <div style={style} data-clickClass={windowsClickables.desktopItemIcon} data-index={item.index} className={cx(styles.icon)} />,
-      <span data-clickClass={windowsClickables.desktopItemName} data-index={item.index} className={styles.directoryName}> {item.name}</span>])
+      <div key={0} style={style} data-clickClass={windowsClickables.desktopItemIcon} data-index={item.index} className={cx(styles.icon)} />,
+      <span key={1} data-clickClass={windowsClickables.desktopItemName} data-index={item.index} className={styles.directoryName}> {item.name}</span>])
   ));
 
   // return connectDragSource(connectDropTarget(
