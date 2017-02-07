@@ -8,6 +8,7 @@ import { constructDownloadURL } from '../../../core/aws';
 import flow from 'lodash.flow';
 
 function FileIcon({ item, openFile, connectDragSource, connectDropTarget, className, clickClass, selected }) {
+  let href = '';
   const style = {background: `url(${item.metadata.icon})`};
   const elementType = Boolean(item.metadata.isUpload) ? 'a' : 'div';
 
@@ -28,13 +29,12 @@ function FileIcon({ item, openFile, connectDragSource, connectDropTarget, classN
     selectedStyle.backgroundColor = 'rgba(66,85,101,0.25)';
     selectedStyle.outline = '2px solid rgb(115, 128, 140)';
   }
-
   if (item.metadata.awsKey) {
-    console.log(constructDownloadURL(item.metadata.awsKey));
+    href = constructDownloadURL(item.metadata.awsKey);
   }
   return connectDragSource(connectDropTarget(
     React.createElement(elementType, {style: selectedStyle, download: Boolean(item.metadata.isUpload),
-      href: Boolean(item.metadata.isUpload) ? '' : null,
+      href: Boolean(item.metadata.awsKey) ? href : null,
     'data-clickClass':windowsClickables[clickClass], 'data-topClickable': true, 'data-index': item.index,
   onDoubleClick:  () => {openFile(item.index)}, className: cx(className, styles.root) }, [
       <div style={style} data-clickClass={windowsClickables.desktopItemIcon} data-index={item.index} className={cx(styles.icon)} />,
