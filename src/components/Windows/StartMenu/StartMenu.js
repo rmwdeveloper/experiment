@@ -9,9 +9,7 @@ class StartMenu extends Component {
   static propTypes = {
     installedPrograms: PropTypes.object
   };
-  shouldComponentUpdate() {
-    return false;
-  }
+ 
 
   render() {
     const { installedPrograms, fileSystem, userIndex, openFile, authenticator, closeStartMenu, initializeAuth } = this.props;

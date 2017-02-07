@@ -14,10 +14,10 @@ class StartMenuBody extends Component {
     return (
       <div className={styles.root}>
         <div className={styles.left}>
-          <StartMenuProgramsListing installedPrograms={installedPrograms} />
+          <StartMenuProgramsListing {...this.props} />
         </div>
         <div className={styles.right}>
-          <StartMenuQuickAccess computerSettings={computerSettings} userDirectories={userDirectories} utilityControls={utilityControls}/>
+          <StartMenuQuickAccess {...this.props} computerSettings={computerSettings} userDirectories={userDirectories} utilityControls={utilityControls}/>
         </div>
       </div>
     );
