@@ -2,9 +2,9 @@ import AWS from 'aws-sdk';
 import { aws_bucket_name, aws_key, aws_region, aws_secret_key } from '../config';
 const s3 = new AWS.S3();
 
-const exec = require('child_process').exec;
-
-const baseCommand = `aws s3 ls --summarize --recursive s3://${aws_bucket_name}/`;
+// const exec = require('child_process').exec;
+//
+// const baseCommand = `aws s3 ls --summarize --recursive s3://${aws_bucket_name}/`;
 
 export function doesObjectExist(keyName) {
   return new Promise((resolve, reject) => {
@@ -40,4 +40,8 @@ export function deleteFiles(instance, options, cb) {
       err ? reject(err) : resolve(data);
     });
   });
+}
+
+export function constructDownloadURL(awsKey) {
+  return `https://s3-${aws_region}.amazonaws.com/${aws_bucket_name}/${awsKey}`;
 }

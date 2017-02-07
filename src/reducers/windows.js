@@ -92,6 +92,7 @@ export default function layout(state = initialState, action) {
       newFileSystem[state.uploads[action.temporaryUploadId]].metadata.progress = action.progress;
       return { ...state, fileSystem: newFileSystem};
     case UPLOAD_COMPLETE:
+      newFileSystem[state.uploads[action.temporaryUploadId]].metadata.awsKey = action.awsKey;
       delete newFileSystem[state.uploads[action.temporaryUploadId]].metadata.progress;
       delete newFileSystem[state.uploads[action.temporaryUploadId]].metadata.loading;
       return { ...state, fileSystem: newFileSystem};

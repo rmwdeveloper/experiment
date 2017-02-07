@@ -4,6 +4,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './FileIcon.css'; //eslint-disable-line
 import cx from 'classnames';
 import { windowsClickables } from '../../../constants/windows';
+import { constructDownloadURL } from '../../../core/aws';
 import flow from 'lodash.flow';
 
 function FileIcon({ item, openFile, connectDragSource, connectDropTarget, className, clickClass, selected }) {
@@ -28,6 +29,9 @@ function FileIcon({ item, openFile, connectDragSource, connectDropTarget, classN
     selectedStyle.outline = '2px solid rgb(115, 128, 140)';
   }
 
+  if (item.metadata.awsKey) {
+    console.log(constructDownloadURL(item.metadata.awsKey));
+  }
   return connectDragSource(connectDropTarget(
     React.createElement(elementType, {style: selectedStyle, download: Boolean(item.metadata.isUpload),
       href: Boolean(item.metadata.isUpload) ? '' : null,
