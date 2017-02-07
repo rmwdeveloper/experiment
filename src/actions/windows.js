@@ -95,8 +95,8 @@ export function closeErrorWindow(errorIndex) {
 }
 export function toggleWindowMaximize(openedFileIndex) {
   return (dispatch, getState) => {
-    const { windows: { openedFiles } } = getState();
-    const { maximized } = openedFiles[openedFileIndex];
+    const { windows: { openedFileDimensions } } = getState();
+    const { maximized } = openedFileDimensions[openedFileIndex];
     if (maximized) {
       dispatch({ type: UNMAXIMIZE_FILE_WINDOW, openedFileIndex });
     } else {
@@ -107,9 +107,9 @@ export function toggleWindowMaximize(openedFileIndex) {
 
 export function toggleWindowMinimize(openedFileIndex) {
   return (dispatch, getState) => {
-    const { windows: { openedFiles } } = getState();
-    const { minimizedToTaskbar } = openedFiles[openedFileIndex];
-    if (minimizedToTaskbar) {
+    const { windows: { openedFileDimensions } } = getState();
+    const { minimized } = openedFileDimensions[openedFileIndex];
+    if (minimized) {
       dispatch({ type: UNMINIMIZE_FILE_WINDOW, openedFileIndex });
     } else {
       dispatch({ type: MINIMIZE_FILE_WINDOW, openedFileIndex });

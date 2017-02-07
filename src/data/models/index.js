@@ -8,6 +8,7 @@ import FileSystem from './FileSystem';
 import FileNode from './FileNode';
 import FileNodeMetadata from './FileNodeMetadata';
 import Upload from './Upload';
+import TextDocument from './TextDocument';
 
 import { fileSystem, fileNodesFixture, fileNodesMetadataFixture } from  '../fixtures';
 User.hasMany(UserLogin, {
@@ -42,7 +43,9 @@ FileNode.hasMany(FileNode, { onUpdate: 'cascade', onDelete: 'cascade' });
 FileNode.hasMany(FileNodeMetadata, { onUpdate: 'cascade', onDelete: 'cascade' });
 
 FileNode.hasOne(Upload, {onDelete: 'cascade', hooks: true});
+
 Upload.belongsTo(FileNode, { hooks: true });
+TextDocument.belongsTo(FileNode);
 
 User.hasMany(Upload, {
   onUpdate: 'cascade',
@@ -58,4 +61,4 @@ function sync(...args) {
 }
 
 export default { sync };
-export { User, UserLogin, UserProfile, FileSystem, Upload, FileNode, FileNodeMetadata};
+export { User, UserLogin, UserProfile, FileSystem, Upload, FileNode, FileNodeMetadata, TextDocument};

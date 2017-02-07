@@ -49,7 +49,7 @@ export function uploadProgress(progress, temporaryUploadId) {
 export function uploadComplete(temporaryUploadId, parentIndex, awsKey, extension, size) {
 
   return (dispatch, getState) => {
-    dispatch({ type: UPLOAD_COMPLETE, temporaryUploadId });
+    dispatch({ type: UPLOAD_COMPLETE, temporaryUploadId, awsKey });
     
     const { windows: { fileSystem, uploads } } = getState();
 

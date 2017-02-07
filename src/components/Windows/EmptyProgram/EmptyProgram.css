@@ -3,7 +3,7 @@
 .root {
   background-color: #0000AA;
   color: #FFF;
-  font-family: monospace;
+  font-family: VT323, monospace;
   height: calc(100% - 27px);
   display: flex;
   justify-content: space-around;

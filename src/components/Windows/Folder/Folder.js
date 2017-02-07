@@ -25,7 +25,7 @@ function Folder({openedFile, user, checkAvailableSpace, uploadStart, uploadProgr
         <FolderContents clearActives={clearActives} user={user} isAnonymousUser={isAnonymousUser}
                         checkAvailableSpace={checkAvailableSpace} uploadStart={uploadStart}
                         uploadProgress={uploadProgress} uploadComplete={uploadComplete}
-                        fileSystem={fileSystem} uploads={uploads}
+                        fileSystem={fileSystem} uploads={uploads} uniqueId={uniqueId}
                         selectIcons={selectIcons} children={fileSystem[openedFile.index].children}
           moveFile={moveFile} moveFile={moveFiles} folderContents={folderContents} index={openedFile.index} />
       </div>

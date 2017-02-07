@@ -21,8 +21,9 @@ export default function DropzoneAWSEvaporate(WrappedComponent, mode) {
 
     }
     componentDidMount() {
-      const { checkAvailableSpace, diskSpace, uploadStart, uploadProgress, uploadError,  index } = this.props;
-      const selector = mode === 'desktop' ? 'div#desktop' : `#folderContents${index}`;
+      const { checkAvailableSpace, diskSpace, uploadStart, uploadProgress, uploadError,  index, uniqueId } = this.props;
+
+      const selector = mode === 'desktop' ? 'div#desktop' : `#folderContents${uniqueId}`;
       const parentIndex = mode === 'desktop' ? this.props.desktopNodeIndex : index;
       // START dropzone stuff. todo: abstract this crap away to a HOC
       // todo : dropzone script is in index.jade. Should be packed with webpack
@@ -64,7 +65,12 @@ export default function DropzoneAWSEvaporate(WrappedComponent, mode) {
                           'x-amz-acl': 'public-read'
                         },
                         progress: progressVal => {
-                          uploadProgress(progressVal, temporaryUploadId);
+                          const progressBar = document.getElementById(`progress${temporaryUploadId}`);
+                          if (progressBar) {
+                            progressBar.style.strokeDashoffset = 440 * (1 - progressVal);
+                          }
+
+                          // uploadProgress(progressVal, temporaryUploadId);
                         },
                         info: info => {},
                         error: error => {},

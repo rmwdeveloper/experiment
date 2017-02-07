@@ -59,7 +59,8 @@ const initialState = {
   errorMessages: {},
   diskSpace: 50000, // MB
   usedSpace: 0, // MB
-  uploads: {} // uploads[<temporary upload id> = nodeIndex
+  uploads: {}, // uploads[<temporary upload id> = nodeIndex
+  textDocumentMarkup: {} // { nodeIndex: 'markupString' }
 };
 export default function layout(state = initialState, action) {
   const nextNodeIndex = uuid.v4();
@@ -80,17 +81,18 @@ export default function layout(state = initialState, action) {
     case CLOSE_START_MENU:
       return { ...state, startMenuOpened: false };
     case CHECK_AVAILABLE_SPACE: // create new file based on the newly uploaded file. todo: make this work for desktop, or for a folder.
-      newFileSystem[nextNodeIndex] = { name: action.newFileName, extension: action.newFileExtension,
-        nodeIndex: nextNodeIndex,  permissions: 'rwxp',
-        metadata: { icon: 'placeholder.png',
+      newFileSystem[action.temporaryUploadId] = { name: action.newFileName, extension: action.newFileExtension,
+        nodeIndex: action.temporaryUploadId,  permissions: 'rwxp',
+        metadata: { icon: 'placeholder.png', isUpload: true,
           iconOpacity: 0.25, loading: true, progress: 0, temporaryUploadId: action.temporaryUploadId } };
-      newFileSystem[action.parentIndex].children.push(nextNodeIndex);
-      newUploads[action.temporaryUploadId] = nextNodeIndex;
+      newFileSystem[action.parentIndex].children.push(action.temporaryUploadId);
+      newUploads[action.temporaryUploadId] = action.temporaryUploadId;
       return { ...state, fileSystem: newFileSystem, uploads: newUploads };
     case UPLOAD_PROGRESS:
       newFileSystem[state.uploads[action.temporaryUploadId]].metadata.progress = action.progress;
       return { ...state, fileSystem: newFileSystem};
     case UPLOAD_COMPLETE:
+      newFileSystem[state.uploads[action.temporaryUploadId]].metadata.awsKey = action.awsKey;
       delete newFileSystem[state.uploads[action.temporaryUploadId]].metadata.progress;
       delete newFileSystem[state.uploads[action.temporaryUploadId]].metadata.loading;
       return { ...state, fileSystem: newFileSystem};
@@ -152,17 +154,17 @@ export default function layout(state = initialState, action) {
       return { ...state, errorWindows: [...state.errorWindows.slice(0, action.errorIndex),
         ...state.errorWindows.slice(action.errorIndex + 1)] };
     case MAXIMIZE_FILE_WINDOW:
-      newOpenedFiles[action.openedFileIndex].maximized = true;
-      return { ...state, openedFiles: newOpenedFiles };
+      newOpenedFileDimensions[action.openedFileIndex].maximized = true;
+      return { ...state, openedFileDimensions: newOpenedFileDimensions };
     case UNMAXIMIZE_FILE_WINDOW:
-      newOpenedFiles[action.openedFileIndex].maximized = false;
-      return { ...state, openedFiles: newOpenedFiles };
+      newOpenedFileDimensions[action.openedFileIndex].maximized = false;
+      return { ...state, openedFileDimensions: newOpenedFileDimensions };
     case MINIMIZE_FILE_WINDOW:
-      newOpenedFiles[action.openedFileIndex].minimized = true;
-      return { ...state, openedFiles: newOpenedFiles };
+      newOpenedFileDimensions[action.openedFileIndex].minimized = true;
+      return { ...state, openedFileDimensions: newOpenedFileDimensions };
     case UNMINIMIZE_FILE_WINDOW:
-      newOpenedFiles[action.openedFileIndex].minimized = false;
-      return { ...state, openedFiles: newOpenedFiles };
+      newOpenedFileDimensions[action.openedFileIndex].minimized = false;
+      return { ...state, openedFileDimensions: newOpenedFileDimensions };
     case DRAG_FILE_WINDOW:
       if (action.index) { // todo : after close index is undefined: fix this bug.
         newOpenedFileDimensions[action.index].xPosition = action.deltaX;
@@ -273,11 +275,8 @@ export default function layout(state = initialState, action) {
       }
       return { ...state, openedFileDimensions: newOpenedFileDimensions };
     case CLICK_TASKBAR_ITEM:
-      const openedFileIndex = state.openedFiles.findIndex( element => {
-        return element.entityId === action.index;
-      });
-      newOpenedFiles[openedFileIndex].minimized = !newOpenedFiles[openedFileIndex].minimized;
-      return { ...state, openedFiles: newOpenedFiles };
+      newOpenedFileDimensions[action.index].minimized = !newOpenedFileDimensions[action.index].minimized;
+      return { ...state, openedFileDimensions: newOpenedFileDimensions };
     case LOGIN:
       const newState = {...state};
       newState.fileSystem = {};

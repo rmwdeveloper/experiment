@@ -4,14 +4,18 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './FileIcon.css'; //eslint-disable-line
 import cx from 'classnames';
 import { windowsClickables } from '../../../constants/windows';
+import { constructDownloadURL } from '../../../core/aws';
 import flow from 'lodash.flow';
 
 function FileIcon({ item, openFile, connectDragSource, connectDropTarget, className, clickClass, selected }) {
+  let href = '';
   const style = {background: `url(${item.metadata.icon})`};
-  const loadingBorder = (<svg className={styles.iconSVG} width="110" height="110">]
+  const elementType = Boolean(item.metadata.isUpload) ? 'a' : 'div';
+
+  const loadingBorder = (<svg className={styles.iconSVG} width="110" height="110" key={3}>]
     <rect width="100%" height="100%" fill="transparent"
           stroke="black"/>
-    <path style={{strokeDasharray: 440, strokeDashoffset: 440 * (1 - item.metadata.progress) }} d="M0 0 H 110 V 110 H 110 0 V 110 0" stroke="green" strokeWidth="5" fill="transparent" />
+    <path id={`progress${item.nodeIndex}`} style={{strokeDasharray: 440, strokeDashoffset: 440 * (1 - item.metadata.progress) }} d="M0 0 H 110 V 110 H 110 0 V 110 0" stroke="green" strokeWidth="5" fill="transparent" />
   </svg>);
   if (item.metadata.sprite) {
     style.backgroundSize = '425px';
@@ -25,15 +29,32 @@ function FileIcon({ item, openFile, connectDragSource, connectDropTarget, classN
     selectedStyle.backgroundColor = 'rgba(66,85,101,0.25)';
     selectedStyle.outline = '2px solid rgb(115, 128, 140)';
   }
+  if (item.metadata.awsKey) {
+    href = constructDownloadURL(item.metadata.awsKey);
+  }
+  const children = [
+    <div key={0} style={style} data-clickClass={windowsClickables.desktopItemIcon} data-index={item.index} className={cx(styles.icon)} />,
+    <span key={1} data-clickClass={windowsClickables.desktopItemName} data-index={item.index} className={styles.directoryName}> {item.name}</span>
+  ];
+  if ( item.metadata.loading) {
+    children.push(loadingBorder);
+  }
   return connectDragSource(connectDropTarget(
-    <div style={selectedStyle} data-clickClass={windowsClickables[clickClass]} data-topClickable data-index={item.index} onDoubleClick={() => { openFile(item.index); }}
-         className={cx(className, styles.root)}>
-      { item.metadata.loading ? loadingBorder : null}
-      <div style={style} data-clickClass={windowsClickables.desktopItemIcon} data-index={item.index} className={cx(styles.icon)}></div>
-
-      <span data-clickClass={windowsClickables.desktopItemName} data-index={item.index} className={styles.directoryName}> {item.name}</span>
-    </div>
+    React.createElement(elementType, {style: selectedStyle, download: Boolean(item.metadata.isUpload),
+      href: Boolean(item.metadata.awsKey) ? href : null, key: item.nodeIndex,
+    'data-clickClass':windowsClickables[clickClass], 'data-topClickable': true, 'data-index': item.index,
+  onDoubleClick:  () => {openFile(item.index)}, className: cx(className, styles.root) }, children)
   ));
+
+  // return connectDragSource(connectDropTarget(
+  //   <div style={selectedStyle} data-clickClass={windowsClickables[clickClass]} data-topClickable data-index={item.index} onDoubleClick={() => { openFile(item.index); }}
+  //        className={cx(className, styles.root)}>
+  //     { item.metadata.loading ? loadingBorder : null}
+  //     <div style={style} data-clickClass={windowsClickables.desktopItemIcon} data-index={item.index} className={cx(styles.icon)}></div>
+  //
+  //     <span data-clickClass={windowsClickables.desktopItemName} data-index={item.index} className={styles.directoryName}> {item.name}</span>
+  //   </div>
+  // ));
 }
 
 FileIcon.propTypes = {

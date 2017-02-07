@@ -17,7 +17,7 @@ import PrettyError from 'pretty-error';
 import passport from './core/passport';
 
 import ReactDOM from 'react-dom/server';
-import models, { User, FileSystem, FileNode, FileNodeMetadata, Upload } from './data/models';
+import models, { User, FileSystem, FileNode, FileNodeMetadata, Upload, TextDocument } from './data/models';
 // todo : better way to import these fixtures?
 
 import { fileNodesFixture, fileNodesMetadataFixture } from './data/fixtures';
