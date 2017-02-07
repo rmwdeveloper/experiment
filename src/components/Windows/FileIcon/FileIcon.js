@@ -12,7 +12,7 @@ function FileIcon({ item, openFile, connectDragSource, connectDropTarget, classN
   const style = {background: `url(${item.metadata.icon})`};
   const elementType = Boolean(item.metadata.isUpload) ? 'a' : 'div';
 
-  const loadingBorder = (<svg className={styles.iconSVG} width="110" height="110">]
+  const loadingBorder = (<svg className={styles.iconSVG} width="110" height="110" key={3}>]
     <rect width="100%" height="100%" fill="transparent"
           stroke="black"/>
     <path id={`progress${item.nodeIndex}`} style={{strokeDasharray: 440, strokeDashoffset: 440 * (1 - item.metadata.progress) }} d="M0 0 H 110 V 110 H 110 0 V 110 0" stroke="green" strokeWidth="5" fill="transparent" />
@@ -32,13 +32,18 @@ function FileIcon({ item, openFile, connectDragSource, connectDropTarget, classN
   if (item.metadata.awsKey) {
     href = constructDownloadURL(item.metadata.awsKey);
   }
+  const children = [
+    <div key={0} style={style} data-clickClass={windowsClickables.desktopItemIcon} data-index={item.index} className={cx(styles.icon)} />,
+    <span key={1} data-clickClass={windowsClickables.desktopItemName} data-index={item.index} className={styles.directoryName}> {item.name}</span>
+  ];
+  if ( item.metadata.loading) {
+    children.push(loadingBorder);
+  }
   return connectDragSource(connectDropTarget(
     React.createElement(elementType, {style: selectedStyle, download: Boolean(item.metadata.isUpload),
       href: Boolean(item.metadata.awsKey) ? href : null, key: item.nodeIndex,
     'data-clickClass':windowsClickables[clickClass], 'data-topClickable': true, 'data-index': item.index,
-  onDoubleClick:  () => {openFile(item.index)}, className: cx(className, styles.root) }, [
-      <div key={0} style={style} data-clickClass={windowsClickables.desktopItemIcon} data-index={item.index} className={cx(styles.icon)} />,
-      <span key={1} data-clickClass={windowsClickables.desktopItemName} data-index={item.index} className={styles.directoryName}> {item.name}</span>])
+  onDoubleClick:  () => {openFile(item.index)}, className: cx(className, styles.root) }, children)
   ));
 
   // return connectDragSource(connectDropTarget(
