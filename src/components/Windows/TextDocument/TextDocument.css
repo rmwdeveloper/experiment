@@ -1,7 +1,11 @@
 @import '../../variables.css';
 
 .root {
-
+  background-color: #FFFFFF;
+  color: black;
+  font-family: monospace;
+  height: calc(100% - 27px);
+  width: 100%;
 }
 
 
