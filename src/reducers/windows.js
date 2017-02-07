@@ -59,7 +59,8 @@ const initialState = {
   errorMessages: {},
   diskSpace: 50000, // MB
   usedSpace: 0, // MB
-  uploads: {} // uploads[<temporary upload id> = nodeIndex
+  uploads: {}, // uploads[<temporary upload id> = nodeIndex
+  textDocumentMarkup: {} // { nodeIndex: 'markupString' }
 };
 export default function layout(state = initialState, action) {
   const nextNodeIndex = uuid.v4();

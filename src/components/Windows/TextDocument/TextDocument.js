@@ -8,6 +8,9 @@ class TextDocument extends Component {
     super();
   }
   render() {
+    console.log(this.props);
+    const { fileSystem, uniqueId, openedFiles } = this.props;
+    console.log( fileSystem[openedFiles[uniqueId]]);
     return (<div className={styles.root}>
       <ul style={{padding: '20px'}}>
         <li>Add order attribute to FileNodes. Allow reordering/sorting by date, name, size.</li>
