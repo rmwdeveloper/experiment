@@ -34,7 +34,9 @@ export default function DropzoneAWSEvaporate(WrappedComponent, mode) {
         addedfile: file => {
 
           const { name, size, type } = file;
-          const [fileName, extension] = name.split('.');
+          const fileName = name.split('.').slice(0, -1).join('.');
+          const extension = name.split('.').pop();
+
           const fileSizeMb = (size / 1000 / 1000).toFixed(2);
           const userId = this.getUploadId(); // todo : chagne this to getUserId
           const temporaryUploadId = uuidV4();

@@ -164,7 +164,6 @@ app.post('/delete_files', (req, res) => {
   const { toDelete } = req.body;
   getUser(username).then(userObj => {
     const { FileSystem: {id} } = userObj.get({plain: true});
-
     // todo: Batch delete possible? For some reason association hook not being called
     // todo: when doing bulk destroy.
     toDelete.forEach( nodeToDelete => { // todo: convert to sequelize transaction.

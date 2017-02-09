@@ -109,7 +109,7 @@ export default function layout(state = initialState, action) {
       action.toDelete.forEach( nodeIndex => {
         delete newFileSystem[nodeIndex];
       });
-      return { ...state, fileSystem: newFileSystem};
+      return { ...state, fileSystem: newFileSystem, selectedDesktopIcons: []};
     case OPEN_CONTEXT_MENU:
       return { ...state, contextMenuX: action.mouseX, contextMenuY: action.mouseY, contextMenuActive: true,
         contextMenuClickClass: action.clickclass, contextMenuIndexClicked: action.index };

@@ -1,5 +1,5 @@
 import sequelize from '../sequelize';
-import { deleteFiles } from '../../core/aws';
+import { deleteFile } from '../../core/aws';
 
 import User from './User';
 import UserLogin from './UserLogin';
@@ -54,7 +54,8 @@ User.hasMany(Upload, {
 });
 
 
-Upload.hook('afterDestroy', deleteFiles);
+Upload.hook('afterDestroy', instance => {deleteFile(instance.get({plain: true}).location);});
+// Upload.hook('afterDestroy', deleteFiles);
 
 function sync(...args) {
   return sequelize.sync(...args);

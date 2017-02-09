@@ -230,6 +230,9 @@ export function moveFiles(fromParentIndex, toNodeIndex) {
 export function deleteFiles(indexClicked, clickClass) {
   return (dispatch, getState) => {
     const { windows: { selectedDesktopIcons, desktopNodeIndex, fileSystem } } = getState();
+    if ( selectedDesktopIcons.length === 0 && indexClicked === undefined) {
+      return null;
+    }
     let toDelete = selectedDesktopIcons;
     let parentIndex = desktopNodeIndex;
     if ( selectedDesktopIcons.length === 0 ) { // deleting single item
