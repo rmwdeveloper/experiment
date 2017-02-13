@@ -2,9 +2,7 @@ import 'babel-polyfill';
 import path from 'path';
 import express from 'express';
 import session from 'express-session';
-
-
-
+import winston from 'winston';
 import multer from 'multer';
 import crypto from 'crypto';
 import bcrypt from 'bcrypt';
@@ -15,23 +13,25 @@ import bodyParser from 'body-parser';
 import expressJwt from 'express-jwt';
 import PrettyError from 'pretty-error';
 import passport from './core/passport';
-
 import ReactDOM from 'react-dom/server';
 import models, { User, FileSystem, FileNode, FileNodeMetadata, Upload, TextDocument } from './data/models';
-// todo : better way to import these fixtures?
-
 import { fileNodesFixture, fileNodesMetadataFixture } from './data/fixtures';
 import sequelize from './data/sequelize';
 import routes from './routes';
 import { resolve } from 'universal-router';
 import { port, analytics, auth, aws_secret_key, session_secret } from './config';
-
 import { getDirectorySize, doesObjectExist, createDirectory } from './core/aws';
 import { getUser } from './core/auth';
-
 import assets from './assets';
 import configureStore from './store/configureStore';
 import { setRuntimeVariable } from './actions/runtime';
+
+
+winston.configure({
+  transports: [
+    new (winston.transports.File)({ filename: 'server.log' })
+  ]
+});
 
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 // todo: Make configuration handle both http (local development) and https (production)
@@ -102,11 +102,28 @@ app.post('/register', (req, res) => {
                 if (fileNode.nodeIndex === 4) {
                   fileNode.name = req.body.username; //   TODO : refactor
                 }
-                fileNode.FileSystemId = fileSystem.get({ plain: true }).id; return fileNode;
+                fileNode.FileSystemId = fileSystem.get({ plain: true }).id;
+                return fileNode;
               });
               return FileNode.bulkCreate(fileNodes, { transaction, individualHooks: true }).then(fileNodeRows => {
                 const promises = [];
-                const fileNodesRows = fileNodeRows.map( rowData => { return rowData.get({ plain: true }); });
+                const fileNodesRows = fileNodeRows.map( rowData => {
+                  return rowData.get({ plain: true });
+                });
+
+                for (let iterator = 0; iterator < fileNodeRows.length; iterator++) {
+                  const rowData = fileNodeRows[iterator].get({plain: true});
+                  const fixtureData = fileNodesFixture[rowData.nodeIndex - 1];
+                  if ( !fixtureData.parentNodeIndex !== undefined ){
+                    FileNode.findOne({where: {FileSystemId: rowData.FileSystemId, nodeIndex: fixtureData.parentNodeIndex }}).then( parentRow => {
+                      if (parentRow){
+                        promises.push( FileNode.findById(rowData.id).then( row => {
+                          row.update({FileNodeId: parentRow.id})
+                        }) );
+                      }
+                    });
+                  }
+                }
 
                 for (let iterator = 0; iterator < fileNodesMetadataFixture.length; iterator++) {
                   const nodeThatHasMetadata = fileNodesRows.find(element => {
@@ -123,6 +140,7 @@ app.post('/register', (req, res) => {
                   return results;
                 });
               });
+
             });
           });
         })
