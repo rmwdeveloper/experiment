@@ -18,9 +18,10 @@ class Authenticator extends Component {
   }
   loginCallback(event) {
     const response = event.target;
+    const { login, uniqueId } = this.props;
     if(response.readyState == XMLHttpRequest.DONE) {
       if (response.status === 200) {
-        this.props.login(JSON.parse(response.response));
+        login(JSON.parse(response.response), uniqueId);
       } else {
         this.setState({loginError: 'Bzzt! Invalid Authentication Errors!'});
       }
@@ -28,10 +29,11 @@ class Authenticator extends Component {
   }
   registrationCallback() {
     const response = event.target;
+    const { login, uniqueId } = this.props;
     if(response.readyState == XMLHttpRequest.DONE) {
       if (response.status === 200) {
         this.setState({registrationErrors: []});
-        this.props.login(JSON.parse(response.response));
+        login(JSON.parse(response.response), uniqueId);
       } else {
         const registrationErrors = JSON.parse(response.response);
         this.setState({registrationErrors});

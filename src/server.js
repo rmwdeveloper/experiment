@@ -107,26 +107,20 @@ app.post('/register', (req, res) => {
               });
               return FileNode.bulkCreate(fileNodes, { transaction, individualHooks: true }).then(fileNodeRows => {
                 const promises = [];
-                const fileNodesRows = fileNodeRows.map( rowData => {
+                const plainFileNodeData = fileNodeRows.map( rowData => {
                   return rowData.get({ plain: true });
                 });
-
                 for (let iterator = 0; iterator < fileNodeRows.length; iterator++) {
                   const rowData = fileNodeRows[iterator].get({plain: true});
                   const fixtureData = fileNodesFixture[rowData.nodeIndex - 1];
-                  if ( !fixtureData.parentNodeIndex !== undefined ){
-                    FileNode.findOne({where: {FileSystemId: rowData.FileSystemId, nodeIndex: fixtureData.parentNodeIndex }}).then( parentRow => {
-                      if (parentRow){
-                        promises.push( FileNode.findById(rowData.id).then( row => {
-                          row.update({FileNodeId: parentRow.id})
-                        }) );
-                      }
-                    });
+                  if ( fixtureData.parentNodeIndex !== undefined ){
+                    const parentNodeRow = plainFileNodeData.find( element => { return element.nodeIndex === fixtureData.parentNodeIndex });
+                    promises.push(FileNode.update({FileNodeId: parentNodeRow.id}, {where: {id: rowData.id}, transaction }));
                   }
                 }
 
                 for (let iterator = 0; iterator < fileNodesMetadataFixture.length; iterator++) {
-                  const nodeThatHasMetadata = fileNodesRows.find(element => {
+                  const nodeThatHasMetadata = plainFileNodeData.find(element => {
                     return parseInt(fileNodesMetadataFixture[iterator].nodeIndex, 10) === parseInt(element.nodeIndex, 10);
                   });
                   if (nodeThatHasMetadata) {
@@ -136,6 +130,7 @@ app.post('/register', (req, res) => {
                   const newPromise = FileNodeMetadata.create({ name, value, FileNodeId }, { transaction });
                   promises.push(newPromise);
                 }
+
                 return Promise.all(promises).then( (results) => {
                   return results;
                 });
