@@ -85,7 +85,10 @@ class Desktop extends Component {
     this.header = document.getElementById('primaryHeader');
     
     this.desktop.onmousedown = this.desktopMouseDown;
+    this.desktop.touchstart = this.desktopMouseDown;
+
     this.desktop.onmouseup = this.desktopMouseUp;
+    this.desktop.touchend = this.desktopMouseUp;
 
 
     // todo rmw: desktopWidth and Height is both in the redux store and in component State. Should have it it only 1.
