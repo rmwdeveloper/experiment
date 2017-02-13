@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "name": "aws",
+  "main": "./aws.server.js",
+  "browser": "./aws.client.js"
+}

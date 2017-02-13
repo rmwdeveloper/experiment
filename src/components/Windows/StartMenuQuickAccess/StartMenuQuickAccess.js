@@ -4,13 +4,14 @@ import styles from './StartMenuQuickAccess.css'; //eslint-disable-line
 
 import QuickAccessDirectoryItem from '../QuickAccessDirectoryItem';
 
-function StartMenuQuickAccess({ userDirectories, utilityControls, computerSettings }) {
+function StartMenuQuickAccess({ userDirectories, utilityControls, computerSettings, desktopWidth, desktopHeight }) {
   return (
     <div className={styles.root}>
       <div className={styles.userDirectories}>
         {
           Object.keys(userDirectories).map(directoryName => {
           return (<QuickAccessDirectoryItem
+            desktopWidth={desktopWidth} desktopHeight={desktopHeight}
             key={directoryName}
             className={styles.userDirectoryItem}
             data={userDirectories[directoryName]}
@@ -20,12 +21,14 @@ function StartMenuQuickAccess({ userDirectories, utilityControls, computerSettin
       </div>
       <div className={styles.computerSettings}>
         {  Object.keys(computerSettings).map(directoryName => {
-          return <QuickAccessDirectoryItem key={directoryName} data={computerSettings[directoryName]} />
+          return <QuickAccessDirectoryItem
+            desktopWidth={desktopWidth} desktopHeight={desktopHeight} key={directoryName} data={computerSettings[directoryName]} />
         }) }
       </div>
       <div className={styles.utilityControls}>
         {Object.keys(utilityControls).map(directoryName => {
-          return <QuickAccessDirectoryItem key={directoryName} data={utilityControls[directoryName]}/>
+          return <QuickAccessDirectoryItem
+            desktopWidth={desktopWidth} desktopHeight={desktopHeight} key={directoryName} data={utilityControls[directoryName]}/>
         })}
       </div>
     </div>

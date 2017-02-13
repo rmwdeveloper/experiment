@@ -2,9 +2,7 @@ import 'babel-polyfill';
 import path from 'path';
 import express from 'express';
 import session from 'express-session';
-
-
-
+import winston from 'winston';
 import multer from 'multer';
 import crypto from 'crypto';
 import bcrypt from 'bcrypt';
@@ -15,23 +13,25 @@ import bodyParser from 'body-parser';
 import expressJwt from 'express-jwt';
 import PrettyError from 'pretty-error';
 import passport from './core/passport';
-
 import ReactDOM from 'react-dom/server';
 import models, { User, FileSystem, FileNode, FileNodeMetadata, Upload, TextDocument } from './data/models';
-// todo : better way to import these fixtures?
-
 import { fileNodesFixture, fileNodesMetadataFixture } from './data/fixtures';
 import sequelize from './data/sequelize';
 import routes from './routes';
 import { resolve } from 'universal-router';
 import { port, analytics, auth, aws_secret_key, session_secret } from './config';
-
 import { getDirectorySize, doesObjectExist, createDirectory } from './core/aws';
 import { getUser } from './core/auth';
-
 import assets from './assets';
 import configureStore from './store/configureStore';
 import { setRuntimeVariable } from './actions/runtime';
+
+
+winston.configure({
+  transports: [
+    new (winston.transports.File)({ filename: 'server.log' })
+  ]
+});
 
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 // todo: Make configuration handle both http (local development) and https (production)
@@ -102,14 +102,25 @@ app.post('/register', (req, res) => {
                 if (fileNode.nodeIndex === 4) {
                   fileNode.name = req.body.username; //   TODO : refactor
                 }
-                fileNode.FileSystemId = fileSystem.get({ plain: true }).id; return fileNode;
+                fileNode.FileSystemId = fileSystem.get({ plain: true }).id;
+                return fileNode;
               });
               return FileNode.bulkCreate(fileNodes, { transaction, individualHooks: true }).then(fileNodeRows => {
                 const promises = [];
-                const fileNodesRows = fileNodeRows.map( rowData => { return rowData.get({ plain: true }); });
+                const plainFileNodeData = fileNodeRows.map( rowData => {
+                  return rowData.get({ plain: true });
+                });
+                for (let iterator = 0; iterator < fileNodeRows.length; iterator++) {
+                  const rowData = fileNodeRows[iterator].get({plain: true});
+                  const fixtureData = fileNodesFixture[rowData.nodeIndex - 1];
+                  if ( fixtureData.parentNodeIndex !== undefined ){
+                    const parentNodeRow = plainFileNodeData.find( element => { return element.nodeIndex === fixtureData.parentNodeIndex });
+                    promises.push(FileNode.update({FileNodeId: parentNodeRow.id}, {where: {id: rowData.id}, transaction }));
+                  }
+                }
 
                 for (let iterator = 0; iterator < fileNodesMetadataFixture.length; iterator++) {
-                  const nodeThatHasMetadata = fileNodesRows.find(element => {
+                  const nodeThatHasMetadata = plainFileNodeData.find(element => {
                     return parseInt(fileNodesMetadataFixture[iterator].nodeIndex, 10) === parseInt(element.nodeIndex, 10);
                   });
                   if (nodeThatHasMetadata) {
@@ -119,10 +130,12 @@ app.post('/register', (req, res) => {
                   const newPromise = FileNodeMetadata.create({ name, value, FileNodeId }, { transaction });
                   promises.push(newPromise);
                 }
+
                 return Promise.all(promises).then( (results) => {
                   return results;
                 });
               });
+
             });
           });
         })
@@ -164,7 +177,6 @@ app.post('/delete_files', (req, res) => {
   const { toDelete } = req.body;
   getUser(username).then(userObj => {
     const { FileSystem: {id} } = userObj.get({plain: true});
-
     // todo: Batch delete possible? For some reason association hook not being called
     // todo: when doing bulk destroy.
     toDelete.forEach( nodeToDelete => { // todo: convert to sequelize transaction.

@@ -11,11 +11,10 @@ export function toggleRegisterMode() {
   };
 }
 
-export function login(user) {
-  return (dispatch, getState) => {
-    const { windows: { authenticatorIndex, openedFiles } } = getState();
+export function login(user, uniqueId) {
+  return (dispatch) => {
     dispatch({ type: LOGIN, user });
-    dispatch({ type: CLOSE_FILE_WINDOW, openedFileIndex: openedFiles.indexOf(authenticatorIndex) });
+    dispatch({ type: CLOSE_FILE_WINDOW, uniqueId });
   };
 }
 
