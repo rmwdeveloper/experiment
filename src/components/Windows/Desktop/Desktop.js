@@ -16,6 +16,7 @@ import SpaceAvailabilityIndicator from '../SpaceAvailabilityIndicator';
 
 import { resizeWindow } from '../../../core/layout';
 
+//todo: Abstract away mobile / desktop event differences ( client / offset x y values )
 
 // todo: desktopwidth / desktopheight still neceessary?
 class Desktop extends Component {
@@ -146,6 +147,7 @@ class Desktop extends Component {
       case windowsClickables.desktop:
         this.startDragSelect(event);
         break;
+      case windowsClickables.fileTaskbarFilename:
       case windowsClickables.fileTaskbar:
         this.startDragWindow(event, 'file');
         break;
@@ -314,24 +316,35 @@ class Desktop extends Component {
     this.checkForOverlap();
   }
   startDragWindow(event, type) {
+    const rectDimensions = event.target.getBoundingClientRect();
+    const offsetX = event.touches[0].pageX - rectDimensions.left || event.offsetX;
+    const offsetY = event.touches[0].pageY - rectDimensions.top || event.offsetY;
+
+
     this.desktop.dragType = type;
     this.desktop.addEventListener('mousemove', this.dragWindow);
     this.desktop.addEventListener('touchmove', this.dragWindow);
-    this.clickedLocationX = event.offsetX;
-    this.clickedLocationY = event.offsetY;
+    this.clickedLocationX = offsetX;
+    this.clickedLocationY = offsetY;
     this.draggedItem = event.target.parentNode;
     this.setState({draggingWindow: true, itemDragged: event.target.dataset.index });
   }
   dragWindow(event) {
-    const { itemDragged, headerHeight } = this.state;
-    this.draggedItem.style.left = `${event.clientX - this.clickedLocationX}px`;
-    this.draggedItem.style.top = `${event.clientY - this.clickedLocationY - headerHeight}px`;
+    const clientX = event.touches[0].clientX || event.clientX;
+    const clientY = event.touches[0].clientY || event.clientY;
+
+    const { headerHeight } = this.state;
+    this.draggedItem.style.left = `${clientX - this.clickedLocationX}px`;
+    this.draggedItem.style.top = `${clientY - this.clickedLocationY - headerHeight}px`;
   }
   stopDragWindow() {
+    const clientX = event.touches[0].clientX || event.clientX;
+    const clientY = event.touches[0].clientY || event.clientY;
+
     const { itemDragged, headerHeight } = this.state;
     this.desktop.removeEventListener('mousemove', this.dragWindow);
     this.desktop.removeEventListener('touchmove', this.dragWindow);
-    this.props.dragWindow(itemDragged, this.desktop.dragType, event.clientX - this.clickedLocationX, event.clientY - headerHeight - this.clickedLocationY);
+    this.props.dragWindow(itemDragged, this.desktop.dragType, clientX - this.clickedLocationX, clientY - headerHeight - this.clickedLocationY);
     this.setState({draggingWindow: false});
   }
   render() {

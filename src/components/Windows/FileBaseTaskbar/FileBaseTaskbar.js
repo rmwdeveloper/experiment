@@ -8,8 +8,8 @@ function FileBaseTaskbar({filename,
   toggleWindowMinimize, toggleWindowMaximize,
   uniqueId, closeFile, maximized}) {
   return (
-    <div data-clickclass={windowsClickables.fileTaskbar} data-topClickable data-index={uniqueId} className={styles.root}>
-      <span className={styles.fileName}>{filename}</span>
+    <div data-clickclass={windowsClickables.fileTaskbar} data-topclickable data-index={uniqueId} className={styles.root}>
+      <span data-clickclass={windowsClickables.fileTaskbarFilename} className={styles.fileName}>{filename}</span>
       <div className={styles.fileControls}>
         <i onClick={() => { toggleWindowMinimize(uniqueId); }} className={cx(styles.minimizeWindowIcon, 'fa fa-minus')} />
         <div onClick={() => { toggleWindowMaximize(uniqueId); }} className={styles.resizeWindowIcon}>
