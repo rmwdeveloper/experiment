@@ -32,7 +32,7 @@ class FileIcon extends Component {
     this.mylatesttap = new Date().getTime();
   }
   render() {
-    const { item, connectDragSource, connectDropTarget, className, clickClass, selected } = this.props;
+    const { item, connectDragSource, connectDropTarget, className, clickClass, selected, openFile } = this.props;
     let href = '';
     const style = {background: `url(${item.metadata.icon})`};
     const elementType = Boolean(item.metadata.isUpload) ? 'a' : 'div';
@@ -68,7 +68,7 @@ class FileIcon extends Component {
       React.createElement(elementType, {style: selectedStyle, download: Boolean(item.metadata.isUpload),
         href: Boolean(item.metadata.awsKey) ? href : null, key: item.nodeIndex,
         'data-clickClass':windowsClickables[clickClass], 'data-topClickable': true, 'data-index': item.index,
-        onClick: this.doubleTap, className: cx(className, styles.root) }, children)
+        onDoubleClick: () => {openFile(item.index);} , onTouchStart: this.doubleTap, className: cx(className, styles.root) }, children)
     ));
   }
 }
