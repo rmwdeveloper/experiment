@@ -183,11 +183,15 @@ class Desktop extends Component {
     }
   }
   startResizeFileWindow(event) {
-    const { openedFiles, openedFileDimensions } = this.props;
+    const clientX = event.touches[0].clientX || event.clientX;
+    const clientY = event.touches[0].clientY || event.clientY;
+
+    console.log(clientX, clientY);
+    const { openedFileDimensions } = this.props;
     const windowBeingResized = openedFileDimensions[event.target.dataset.uniqueid];
     this.resizedItem = event.target.parentNode; // todo: Change how parent node is retrieved.
 
-    this.setState({ resizingFileWindowInProgress: true, resizeStartX: event.clientX, resizeStartY: event.clientY,
+    this.setState({ resizingFileWindowInProgress: true, resizeStartX: clientX, resizeStartY: clientY,
     itemResized: event.target.dataset.uniqueid, resizeStartHeight: event.target.parentNode.clientHeight,
       resizeSideClicked: event.target.dataset.side, resizeStartLeft: windowBeingResized.xPosition,
       resizeStartTop: windowBeingResized.yPosition, resizeStartWidth: event.target.parentNode.clientWidth });
@@ -195,13 +199,14 @@ class Desktop extends Component {
     this.desktop.addEventListener('touchmove', this.fileWindowResizing);
   }
   fileWindowResizing(event) {
-    const { itemResized, resizeStartHeight, resizeStartWidth, resizeSideClicked, resizeStartLeft, resizeStartTop } = this.state;
-    const deltaX = event.clientX - this.state.resizeStartX;
-    const deltaY = event.clientY - this.state.resizeStartY;
-    this.resizeDeltaX = event.clientX - this.state.resizeStartX;
-    this.resizeDeltaY = event.clientY - this.state.resizeStartY;
+    const { resizeStartHeight, resizeStartWidth, resizeSideClicked, resizeStartLeft, resizeStartTop } = this.state;
+    const clientX = event.touches[0].clientX || event.clientX;
+    const clientY = event.touches[0].clientY || event.clientY;
+    console.log(clientX, clientY);
+    this.resizeDeltaX = clientX - this.state.resizeStartX;
+    this.resizeDeltaY = clientY - this.state.resizeStartY;
 
-    resizeWindow(this.resizedItem, resizeSideClicked, deltaX, deltaY, resizeStartWidth, resizeStartHeight,
+    resizeWindow(this.resizedItem, resizeSideClicked, this.resizeDeltaX, this.resizeDeltaY, resizeStartWidth, resizeStartHeight,
      resizeStartLeft, resizeStartTop);
   }
   stopResizeFileWindow(event) {
@@ -327,7 +332,7 @@ class Desktop extends Component {
     this.clickedLocationX = offsetX;
     this.clickedLocationY = offsetY;
     this.draggedItem = this.findAncestorWithClickClass(event.target).parentNode;
-    
+
     this.setState({draggingWindow: true, itemDragged: event.target.dataset.index });
   }
   dragWindow(event) {
