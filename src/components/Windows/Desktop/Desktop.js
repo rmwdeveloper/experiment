@@ -218,6 +218,7 @@ class Desktop extends Component {
     resizeStartHeight: null, resizeStartWidth: null, resizeSideClicked: null, resizeStartTop: null, resizeStartLeft: null});
   }
   startDragSelect(event) {
+    event.preventDefault();
     const { headerHeight } = this.state;
 
     const clientX = event.touches[0].clientX || event.clientX;
@@ -250,7 +251,8 @@ class Desktop extends Component {
     });
     this.checkForOverlap();
   }
-  stopDragSelect() {
+  stopDragSelect(event) {
+    event.preventDefault();
     const { selectIcons } = this.props;
     this.desktop.removeEventListener('mousemove', this.dragSelecting);
     this.desktop.removeEventListener('touchmove', this.dragSelecting);
@@ -302,6 +304,8 @@ class Desktop extends Component {
     this.props.resizeBrowserWindow(window.innerWidth, window.innerHeight, this.desktop.offsetWidth, this.desktop.offsetHeight)
   }
   dragSelecting(event) {
+    event.preventDefault();
+
     const clientX = event.touches[0].clientX || event.clientX;
     const clientY = event.touches[0].clientY || event.clientY;
     const deltaX = clientX - this.state.dragStartX;
