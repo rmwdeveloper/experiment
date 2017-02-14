@@ -16,6 +16,7 @@ import SpaceAvailabilityIndicator from '../SpaceAvailabilityIndicator';
 
 import { resizeWindow } from '../../../core/layout';
 
+//todo: Abstract away mobile / desktop event differences ( client / offset x y values )
 
 // todo: desktopwidth / desktopheight still neceessary?
 class Desktop extends Component {
@@ -85,10 +86,10 @@ class Desktop extends Component {
     this.header = document.getElementById('primaryHeader');
     
     this.desktop.onmousedown = this.desktopMouseDown;
-    this.desktop.touchstart = this.desktopMouseDown;
+    this.desktop.addEventListener('touchstart', this.desktopMouseDown);
 
     this.desktop.onmouseup = this.desktopMouseUp;
-    this.desktop.touchend = this.desktopMouseUp;
+    this.desktop.addEventListener('touchend', this.desktopMouseUp);
 
 
     // todo rmw: desktopWidth and Height is both in the redux store and in component State. Should have it it only 1.
@@ -146,6 +147,7 @@ class Desktop extends Component {
       case windowsClickables.desktop:
         this.startDragSelect(event);
         break;
+      case windowsClickables.fileTaskbarFilename:
       case windowsClickables.fileTaskbar:
         this.startDragWindow(event, 'file');
         break;
@@ -181,24 +183,29 @@ class Desktop extends Component {
     }
   }
   startResizeFileWindow(event) {
-    const { openedFiles, openedFileDimensions } = this.props;
+    const clientX = event.touches[0].clientX || event.clientX;
+    const clientY = event.touches[0].clientY || event.clientY;
+
+    const { openedFileDimensions } = this.props;
     const windowBeingResized = openedFileDimensions[event.target.dataset.uniqueid];
     this.resizedItem = event.target.parentNode; // todo: Change how parent node is retrieved.
 
-    this.setState({ resizingFileWindowInProgress: true, resizeStartX: event.clientX, resizeStartY: event.clientY,
+    this.setState({ resizingFileWindowInProgress: true, resizeStartX: clientX, resizeStartY: clientY,
     itemResized: event.target.dataset.uniqueid, resizeStartHeight: event.target.parentNode.clientHeight,
       resizeSideClicked: event.target.dataset.side, resizeStartLeft: windowBeingResized.xPosition,
       resizeStartTop: windowBeingResized.yPosition, resizeStartWidth: event.target.parentNode.clientWidth });
     this.desktop.addEventListener('mousemove', this.fileWindowResizing);
+    this.desktop.addEventListener('touchmove', this.fileWindowResizing);
   }
   fileWindowResizing(event) {
-    const { itemResized, resizeStartHeight, resizeStartWidth, resizeSideClicked, resizeStartLeft, resizeStartTop } = this.state;
-    const deltaX = event.clientX - this.state.resizeStartX;
-    const deltaY = event.clientY - this.state.resizeStartY;
-    this.resizeDeltaX = event.clientX - this.state.resizeStartX;
-    this.resizeDeltaY = event.clientY - this.state.resizeStartY;
+    const { resizeStartHeight, resizeStartWidth, resizeSideClicked, resizeStartLeft, resizeStartTop } = this.state;
+    const clientX = event.touches[0].clientX || event.clientX;
+    const clientY = event.touches[0].clientY || event.clientY;
 
-    resizeWindow(this.resizedItem, resizeSideClicked, deltaX, deltaY, resizeStartWidth, resizeStartHeight,
+    this.resizeDeltaX = clientX - this.state.resizeStartX;
+    this.resizeDeltaY = clientY - this.state.resizeStartY;
+
+    resizeWindow(this.resizedItem, resizeSideClicked, this.resizeDeltaX, this.resizeDeltaY, resizeStartWidth, resizeStartHeight,
      resizeStartLeft, resizeStartTop);
   }
   stopResizeFileWindow(event) {
@@ -206,11 +213,16 @@ class Desktop extends Component {
     this.props.resizeFileWindow(itemResized, resizeSideClicked, this.resizeDeltaX, this.resizeDeltaY, resizeStartWidth, resizeStartHeight,
       resizeStartLeft, resizeStartTop);
     this.desktop.removeEventListener('mousemove', this.fileWindowResizing);
+    this.desktop.removeEventListener('touchmove', this.fileWindowResizing);
     this.setState({ resizingFileWindowInProgress: false, resizeStartX: null, resizeStartY: null, itemResized: null,
     resizeStartHeight: null, resizeStartWidth: null, resizeSideClicked: null, resizeStartTop: null, resizeStartLeft: null});
   }
   startDragSelect(event) {
     const { headerHeight } = this.state;
+
+    const clientX = event.touches[0].clientX || event.clientX;
+    const clientY = event.touches[0].clientY || event.clientY;
+
     this.props.clearActives();
     this.props.closeStartMenu();
     this.dragbox = document.getElementById('dragbox');
@@ -224,15 +236,16 @@ class Desktop extends Component {
     }
 
 
-    this.dragbox.style.top = `${event.clientY - headerHeight}px`;
-    this.dragbox.style.left = `${event.clientX}px`;
+    this.dragbox.style.top = `${clientY - headerHeight}px`;
+    this.dragbox.style.left = `${clientX}px`;
     this.dragbox.style.width = '10px';
     this.dragbox.style.height = '10px';
     this.desktop.addEventListener('mousemove', this.dragSelecting);
+    this.desktop.addEventListener('touchmove', this.dragSelecting);
 
     this.setState({
-      dragStartX: event.clientX,
-      dragStartY: event.clientY,
+      dragStartX: clientX,
+      dragStartY: clientY,
       dragSelecting: true
     });
     this.checkForOverlap();
@@ -240,6 +253,7 @@ class Desktop extends Component {
   stopDragSelect() {
     const { selectIcons } = this.props;
     this.desktop.removeEventListener('mousemove', this.dragSelecting);
+    this.desktop.removeEventListener('touchmove', this.dragSelecting);
 
     if (this.dragbox) {
       this.setState({
@@ -288,8 +302,10 @@ class Desktop extends Component {
     this.props.resizeBrowserWindow(window.innerWidth, window.innerHeight, this.desktop.offsetWidth, this.desktop.offsetHeight)
   }
   dragSelecting(event) {
-    const deltaX = event.clientX - this.state.dragStartX;
-    const deltaY = event.clientY - this.state.dragStartY;
+    const clientX = event.touches[0].clientX || event.clientX;
+    const clientY = event.touches[0].clientY || event.clientY;
+    const deltaX = clientX - this.state.dragStartX;
+    const deltaY = clientY - this.state.dragStartY;
 
     if ( deltaY < 0 && deltaX < 0 ) {
       this.dragbox.style.transform = `rotateX(180deg) rotateY(180deg) translateY(${Math.abs(deltaY)}px) translateX(${Math.abs(deltaX)}px)`;
@@ -304,22 +320,40 @@ class Desktop extends Component {
     this.checkForOverlap();
   }
   startDragWindow(event, type) {
+    const rectDimensions = event.target.getBoundingClientRect();
+    const offsetX = event.touches[0].pageX - rectDimensions.left || event.offsetX;
+    const offsetY = event.touches[0].pageY - rectDimensions.top || event.offsetY;
+
+
     this.desktop.dragType = type;
     this.desktop.addEventListener('mousemove', this.dragWindow);
-    this.clickedLocationX = event.offsetX;
-    this.clickedLocationY = event.offsetY;
-    this.draggedItem = event.target.parentNode;
+    this.desktop.addEventListener('touchmove', this.dragWindow);
+    this.clickedLocationX = offsetX;
+    this.clickedLocationY = offsetY;
+    this.draggedItem = this.findAncestorWithClickClass(event.target).parentNode;
+
     this.setState({draggingWindow: true, itemDragged: event.target.dataset.index });
   }
   dragWindow(event) {
-    const { itemDragged, headerHeight } = this.state;
-    this.draggedItem.style.left = `${event.clientX - this.clickedLocationX}px`;
-    this.draggedItem.style.top = `${event.clientY - this.clickedLocationY - headerHeight}px`;
+    const clientX = event.touches[0].clientX || event.clientX;
+    const clientY = event.touches[0].clientY || event.clientY;
+
+
+    const { headerHeight } = this.state;
+    this.draggedItem.style.left = `${clientX - this.clickedLocationX}px`;
+    this.draggedItem.style.top = `${clientY - this.clickedLocationY - headerHeight}px`;
+
+    console.log(this.draggedItem.style.left, this.draggedItem.style.top);
   }
   stopDragWindow() {
+    console.log(event);
+    const clientX = event.changedTouches[0].clientX || event.clientX;
+    const clientY = event.changedTouches[0].clientY || event.clientY;
+
     const { itemDragged, headerHeight } = this.state;
     this.desktop.removeEventListener('mousemove', this.dragWindow);
-    this.props.dragWindow(itemDragged, this.desktop.dragType, event.clientX - this.clickedLocationX, event.clientY - headerHeight - this.clickedLocationY);
+    this.desktop.removeEventListener('touchmove', this.dragWindow);
+    this.props.dragWindow(itemDragged, this.desktop.dragType, clientX - this.clickedLocationX, clientY - headerHeight - this.clickedLocationY);
     this.setState({draggingWindow: false});
   }
   render() {
