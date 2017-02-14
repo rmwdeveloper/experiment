@@ -200,8 +200,8 @@ class Desktop extends Component {
   fileWindowResizing(event) {
     event.preventDefault();
     const { resizeStartHeight, resizeStartWidth, resizeSideClicked, resizeStartLeft, resizeStartTop } = this.state;
-    const clientX = event.type === 'touchstart' ? event.touches[0].clientX : event.clientX;
-    const clientY = event.type === 'touchstart' ? event.touches[0].clientY : event.clientY;
+    const clientX = event.type === 'touchmove' ? event.touches[0].clientX : event.clientX;
+    const clientY = event.type === 'touchmove' ? event.touches[0].clientY : event.clientY;
 
     this.resizeDeltaX = clientX - this.state.resizeStartX;
     this.resizeDeltaY = clientY - this.state.resizeStartY;
@@ -308,8 +308,8 @@ class Desktop extends Component {
   dragSelecting(event) {
     event.preventDefault();
 
-    const clientX = event.type === 'touchstart' ? event.touches[0].clientX : event.clientX;
-    const clientY = event.type === 'touchstart' ? event.touches[0].clientY : event.clientY;
+    const clientX = event.type === 'touchmove' ? event.touches[0].clientX : event.clientX;
+    const clientY = event.type === 'touchmove' ? event.touches[0].clientY : event.clientY;
     const deltaX = clientX - this.state.dragStartX;
     const deltaY = clientY - this.state.dragStartY;
 
@@ -327,11 +327,9 @@ class Desktop extends Component {
   }
   startDragWindow(event, type) {
     event.preventDefault();
-
     const rectDimensions = event.target.getBoundingClientRect();
     const offsetX = event.type === 'touchstart' ? event.touches[0].pageX - rectDimensions.left : event.offsetX;
     const offsetY = event.type === 'touchstart' ? event.touches[0].pageY - rectDimensions.top : event.offsetY;
-
 
     this.desktop.dragType = type;
     this.desktop.addEventListener('mousemove', this.dragWindow);
@@ -344,20 +342,16 @@ class Desktop extends Component {
   }
   dragWindow(event) {
     event.preventDefault();
-    const clientX = event.type === 'touchstart' ? event.touches[0].clientX : event.clientX;
-    const clientY = event.type === 'touchstart' ? event.touches[0].clientY : event.clientY;
-
+    const clientX = event.type === 'touchmove' ? event.touches[0].clientX : event.clientX;
+    const clientY = event.type === 'touchmove' ? event.touches[0].clientY : event.clientY;
     const { headerHeight } = this.state;
     this.draggedItem.style.left = `${clientX - this.clickedLocationX}px`;
     this.draggedItem.style.top = `${clientY - this.clickedLocationY - headerHeight}px`;
-
-    console.log(this.draggedItem.style.left, this.draggedItem.style.top);
   }
   stopDragWindow() {
     event.preventDefault();
-    const clientX = event.type === 'touchstart' ? event.changedTouches[0].clientX : event.clientX;
-    const clientY = event.type === 'touchstart' ? event.changedTouches[0].clientY : event.clientY;
-
+    const clientX = event.type === 'touchend' ? event.changedTouches[0].clientX : event.clientX;
+    const clientY = event.type === 'touchend' ? event.changedTouches[0].clientY : event.clientY;
     const { itemDragged, headerHeight } = this.state;
     this.desktop.removeEventListener('mousemove', this.dragWindow);
     this.desktop.removeEventListener('touchmove', this.dragWindow);
