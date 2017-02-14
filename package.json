@@ -65,6 +65,7 @@
     "graphql": "^0.6.1",
     "highcharts": "^4.2.5",
     "highcharts-more": "^0.1.2",
+    "interactjs": "^1.2.8",
     "isomorphic-style-loader": "^1.0.0",
     "jade": "^1.11.0",
     "jsonp": "^0.2.0",
