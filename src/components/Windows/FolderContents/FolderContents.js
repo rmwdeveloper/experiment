@@ -41,13 +41,21 @@ class FolderContents extends Component {
     
 
     this.folderContents.onmousedown = this.folderContentsMouseDown;
+    this.folderContents.addEventListener('touchstart', this.folderContentsMouseDown);
     this.folderContents.onmouseup = this.folderContentsMouseUp;
+    this.folderContents.addEventListener('touchend', this.folderContentsMouseUp);
     this.setState({// todo have a workaround for this
       headerHeight: this.header.offsetHeight});
   }
   startDragSelect(event) {
-    const { headerHeight } = this.state;
+    event.preventDefault();
+    const rectDimensions = event.target.getBoundingClientRect();
+    const clientX = event.type === 'touchstart' ?  event.touches[0].clientX : event.clientX;
+    const clientY = event.type === 'touchstart' ?  event.touches[0].clientY : event.clientY;
+    const offsetX = event.type === 'touchstart' ? event.touches[0].pageX - rectDimensions.left : event.offsetX;
+    const offsetY = event.type === 'touchstart' ? event.touches[0].pageY - rectDimensions.top : event.offsetY;
     this.props.clearActives();
+
     this.dragbox = document.getElementById('dragbox');
     if (!this.dragbox) {
       this.dragbox = document.createElement('div');
@@ -59,15 +67,16 @@ class FolderContents extends Component {
     }
 
 
-    this.dragbox.style.top = `${event.offsetY}px`;
-    this.dragbox.style.left = `${event.offsetX}px`;
+    this.dragbox.style.top = `${offsetY}px`;
+    this.dragbox.style.left = `${offsetX}px`;
     this.dragbox.style.width = '10px';
     this.dragbox.style.height = '10px';
     this.folderContents.addEventListener('mousemove', this.dragSelecting);
+    this.folderContents.addEventListener('touchmove', this.dragSelecting);
 
     this.setState({
-      dragStartX: event.clientX,
-      dragStartY: event.clientY,
+      dragStartX: clientX,
+      dragStartY: clientY,
       dragSelecting: true
     });
     this.checkForOverlap();
@@ -93,8 +102,10 @@ class FolderContents extends Component {
     }
   }
   dragSelecting(event) {
-    const deltaX = event.clientX - this.state.dragStartX;
-    const deltaY = event.clientY - this.state.dragStartY;
+    const clientX = event.type === 'touchmove' ?  event.touches[0].clientX : event.clientX;
+    const clientY = event.type === 'touchmove' ?  event.touches[0].clientY : event.clientY;
+    const deltaX = clientX - this.state.dragStartX;
+    const deltaY = clientY - this.state.dragStartY;
 
     if ( deltaY < 0 && deltaX < 0 ) {
       this.dragbox.style.transform = `rotateX(180deg) rotateY(180deg) translateY(${Math.abs(deltaY)}px) translateX(${Math.abs(deltaX)}px)`;
