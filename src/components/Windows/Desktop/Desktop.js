@@ -96,7 +96,6 @@ class Desktop extends Component {
     this.props.initializeDesktopDimensions(this.desktop.offsetWidth, this.desktop.offsetHeight);
     window.addEventListener('resize', this.desktopResize.bind(this));
 
-
     this.setState({desktopWidth: this.desktop.offsetWidth, // todo have a workaround for this
       desktopHeight: this.desktop.offsetHeight,
       headerHeight: this.header.offsetHeight});
@@ -183,6 +182,7 @@ class Desktop extends Component {
     }
   }
   startResizeFileWindow(event) {
+    event.preventDefault();
     const clientX = event.touches[0].clientX || event.clientX;
     const clientY = event.touches[0].clientY || event.clientY;
 
@@ -198,6 +198,7 @@ class Desktop extends Component {
     this.desktop.addEventListener('touchmove', this.fileWindowResizing);
   }
   fileWindowResizing(event) {
+    event.preventDefault();
     const { resizeStartHeight, resizeStartWidth, resizeSideClicked, resizeStartLeft, resizeStartTop } = this.state;
     const clientX = event.touches[0].clientX || event.clientX;
     const clientY = event.touches[0].clientY || event.clientY;
@@ -209,6 +210,7 @@ class Desktop extends Component {
      resizeStartLeft, resizeStartTop);
   }
   stopResizeFileWindow(event) {
+    event.preventDefault();
     const { itemResized, resizeStartHeight, resizeStartWidth, resizeSideClicked, resizeStartLeft, resizeStartTop } = this.state;
     this.props.resizeFileWindow(itemResized, resizeSideClicked, this.resizeDeltaX, this.resizeDeltaY, resizeStartWidth, resizeStartHeight,
       resizeStartLeft, resizeStartTop);
@@ -324,6 +326,7 @@ class Desktop extends Component {
     this.checkForOverlap();
   }
   startDragWindow(event, type) {
+    event.preventDefault();
     const rectDimensions = event.target.getBoundingClientRect();
     const offsetX = event.touches[0].pageX - rectDimensions.left || event.offsetX;
     const offsetY = event.touches[0].pageY - rectDimensions.top || event.offsetY;
@@ -339,6 +342,7 @@ class Desktop extends Component {
     this.setState({draggingWindow: true, itemDragged: event.target.dataset.index });
   }
   dragWindow(event) {
+    event.preventDefault();
     const clientX = event.touches[0].clientX || event.clientX;
     const clientY = event.touches[0].clientY || event.clientY;
 
@@ -350,7 +354,7 @@ class Desktop extends Component {
     console.log(this.draggedItem.style.left, this.draggedItem.style.top);
   }
   stopDragWindow() {
-    console.log(event);
+    event.preventDefault();
     const clientX = event.changedTouches[0].clientX || event.clientX;
     const clientY = event.changedTouches[0].clientY || event.clientY;
 
