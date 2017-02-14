@@ -120,8 +120,8 @@ export default function layout(state = initialState, action) {
     case OPEN_FILE_WINDOW: // todo: consolidate with below statement (OPEN_ERROR_WINDOW)
       // todo: a better way to do this?
       newOpenedFiles[uniqueId] = action.nodeIndex;
-      newOpenedFileDimensions[uniqueId] = { height: 300, width: 400,
-        xPosition: ((action.desktopWidth / 2.4) + Object.keys(state.openedFiles).length * 5), index: uniqueId,
+      newOpenedFileDimensions[uniqueId] = { height: action.desktopHeight / 2, width: action.desktopWidth / 2,
+        xPosition: ((action.desktopWidth / 3) + Object.keys(state.openedFiles).length * 5), index: uniqueId,
         yPosition: ((action.desktopHeight / 4) + Object.keys(state.openedFiles).length * 5), maximized: false, minimized: false };
 
       return { ...state, openedFiles: newOpenedFiles, openedFileDimensions: newOpenedFileDimensions };
