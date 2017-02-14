@@ -326,20 +326,25 @@ class Desktop extends Component {
     this.desktop.addEventListener('touchmove', this.dragWindow);
     this.clickedLocationX = offsetX;
     this.clickedLocationY = offsetY;
-    this.draggedItem = event.target.parentNode;
+    this.draggedItem = this.findAncestorWithClickClass(event.target).parentNode;
+    
     this.setState({draggingWindow: true, itemDragged: event.target.dataset.index });
   }
   dragWindow(event) {
     const clientX = event.touches[0].clientX || event.clientX;
     const clientY = event.touches[0].clientY || event.clientY;
 
+
     const { headerHeight } = this.state;
     this.draggedItem.style.left = `${clientX - this.clickedLocationX}px`;
     this.draggedItem.style.top = `${clientY - this.clickedLocationY - headerHeight}px`;
+
+    console.log(this.draggedItem.style.left, this.draggedItem.style.top);
   }
   stopDragWindow() {
-    const clientX = event.touches[0].clientX || event.clientX;
-    const clientY = event.touches[0].clientY || event.clientY;
+    console.log(event);
+    const clientX = event.changedTouches[0].clientX || event.clientX;
+    const clientY = event.changedTouches[0].clientY || event.clientY;
 
     const { itemDragged, headerHeight } = this.state;
     this.desktop.removeEventListener('mousemove', this.dragWindow);
