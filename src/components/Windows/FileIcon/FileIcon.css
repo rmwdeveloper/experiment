@@ -3,8 +3,8 @@
 .root {
   width: 100px;
   height: 100px;
+  margin: 4px;
   /*overflow: hidden;*/
-  margin: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -36,6 +36,9 @@
 }
 
 @media (--tablet) {
+  .root {
+    margin: 10px;
+  }
   .startText {
     display: block;
   }
