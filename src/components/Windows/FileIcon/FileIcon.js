@@ -46,15 +46,6 @@ function FileIcon({ item, openFile, connectDragSource, connectDropTarget, classN
   onDoubleClick:  () => {openFile(item.index)}, className: cx(className, styles.root) }, children)
   ));
 
-  // return connectDragSource(connectDropTarget(
-  //   <div style={selectedStyle} data-clickClass={windowsClickables[clickClass]} data-topClickable data-index={item.index} onDoubleClick={() => { openFile(item.index); }}
-  //        className={cx(className, styles.root)}>
-  //     { item.metadata.loading ? loadingBorder : null}
-  //     <div style={style} data-clickClass={windowsClickables.desktopItemIcon} data-index={item.index} className={cx(styles.icon)}></div>
-  //
-  //     <span data-clickClass={windowsClickables.desktopItemName} data-index={item.index} className={styles.directoryName}> {item.name}</span>
-  //   </div>
-  // ));
 }
 
 FileIcon.propTypes = {
