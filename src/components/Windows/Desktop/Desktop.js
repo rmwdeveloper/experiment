@@ -186,7 +186,6 @@ class Desktop extends Component {
     const clientX = event.touches[0].clientX || event.clientX;
     const clientY = event.touches[0].clientY || event.clientY;
 
-    console.log(clientX, clientY);
     const { openedFileDimensions } = this.props;
     const windowBeingResized = openedFileDimensions[event.target.dataset.uniqueid];
     this.resizedItem = event.target.parentNode; // todo: Change how parent node is retrieved.
@@ -202,7 +201,7 @@ class Desktop extends Component {
     const { resizeStartHeight, resizeStartWidth, resizeSideClicked, resizeStartLeft, resizeStartTop } = this.state;
     const clientX = event.touches[0].clientX || event.clientX;
     const clientY = event.touches[0].clientY || event.clientY;
-    console.log(clientX, clientY);
+
     this.resizeDeltaX = clientX - this.state.resizeStartX;
     this.resizeDeltaY = clientY - this.state.resizeStartY;
 
