@@ -39,7 +39,11 @@ class FileIcon extends Component {
     this.mylatesttap = new Date().getTime();
   }
   startMoveListener(event){
+    const { target } = event;
     const {selected, item: {index}, parentIndex} = this.props;
+    target.setAttribute('data-index', index);
+    target.setAttribute('data-selected', selected);
+    target.setAttribute('data-parentIndex', parentIndex);
   }
   moveListener(event) {
     const target = event.target,
