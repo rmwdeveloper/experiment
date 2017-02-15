@@ -17,10 +17,13 @@ class FileIcon extends Component {
   };
   constructor() {
     super();
+    this.x = 0;
+    this.y = 0;
     this.latestTap = null;
     this.doubleTap = this.doubleTap.bind(this);
     this.moveListener = this.moveListener.bind(this);
     this.startMoveListener = this.startMoveListener.bind(this);
+    this.endMoveListener = this.endMoveListener.bind(this);
   }
   doubleTap() {
     const { openFile, item } = this.props;
@@ -37,35 +40,36 @@ class FileIcon extends Component {
   }
   startMoveListener(event){
     const {selected, item: {index}, parentIndex} = this.props;
-    console.log(selected, index, parentIndex);
   }
   moveListener(event) {
-    let icons = [event.target];
-    if (this.props.selected){
-      icons = document.getElementsByClassName('desktopIcon selected');
-    }
-
     const target = event.target,
     // keep the dragged position in the data-x/data-y attributes
-      x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
-      y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+      x = (parseFloat(this.x || 0) + event.dx),
+      y = (parseFloat(this.y || 0) + event.dy);
 
     // translate the element
-    for (let iterator = 0; iterator < icons.length; iterator++){
-      icons[iterator].style.webkitTransform =
-      icons[iterator].style.transform = 'translate(' + x + 'px, ' + y + 'px)';
-    }
-
-
+    target.style.webkitTransform =
+      target.style.transform =
+        'translate(' + x + 'px, ' + y + 'px)';
+    target.style.opacity = 0.25;
     // update the posiion attributes
-    target.setAttribute('data-x', x);
-    target.setAttribute('data-y', y);
+    this.x = x;
+    this.y = y;
+  }
+  endMoveListener(event) {
+    const target = event.target;
+    target.style.webkitTransform =
+      target.style.transform = 'none';
+    target.style.opacity = 1;
+    this.x = 0;
+    this.y = 0;
   }
   componentDidMount() {
     interact('.desktopIcon').draggable({
-      inertia: true,
+      inertia: false,
       onmove: this.moveListener,
-      onstart: this.startMoveListener
+      onstart: this.startMoveListener,
+      onend: this.endMoveListener
     });
   }
   render() {
