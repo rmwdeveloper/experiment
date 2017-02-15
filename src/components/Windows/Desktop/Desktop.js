@@ -376,7 +376,7 @@ class Desktop extends Component {
             return <DesktopItem selected={selectedDesktopIcons.includes(desktopitem.index)} className='desktopIcon'
                                 key={desktopitem.index} uploads={uploads} clickClass='desktopItem'
                                 index={desktopitem.index} moveFiles={moveFiles} parentIndex={desktopNodeIndex}
-                                moveFile={moveFile}  openFile={openFile} item={desktopitem} />
+                                moveFile={moveFile}  openFile={openFile} item={desktopitem} {...this.props} />
           })
         }
         {

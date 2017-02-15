@@ -1,11 +1,13 @@
 import React, { PropTypes, Component } from 'react';
-import { DragSource as dragSource, DropTarget as dropTarget } from 'react-dnd';
+// import { DragSource as dragSource, DropTarget as dropTarget } from 'react-dnd';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './FileIcon.css'; //eslint-disable-line
 import cx from 'classnames';
 import { windowsClickables } from '../../../constants/windows';
 import { constructDownloadURL } from '../../../core/aws';
 import flow from 'lodash.flow';
+import interact from 'interactjs';
+
 
 
 class FileIcon extends Component {
@@ -17,6 +19,8 @@ class FileIcon extends Component {
     super();
     this.latestTap = null;
     this.doubleTap = this.doubleTap.bind(this);
+    this.moveListener = this.moveListener.bind(this);
+    this.startMoveListener = this.startMoveListener.bind(this);
   }
   doubleTap() {
     const { openFile, item } = this.props;
@@ -30,6 +34,32 @@ class FileIcon extends Component {
     }
 
     this.mylatesttap = new Date().getTime();
+  }
+  startMoveListener(event){
+    const {selected, item: {index}, parentIndex} = this.props;
+    console.log(selected, index, parentIndex);
+  }
+  moveListener(event) {
+    const target = event.target,
+    // keep the dragged position in the data-x/data-y attributes
+      x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
+      y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
+    // translate the element
+    target.style.webkitTransform =
+      target.style.transform =
+        'translate(' + x + 'px, ' + y + 'px)';
+
+    // update the posiion attributes
+    target.setAttribute('data-x', x);
+    target.setAttribute('data-y', y);
+  }
+  componentDidMount() {
+    interact('.desktopIcon').draggable({
+      inertia: true,
+      onmove: this.moveListener,
+      onstart: this.startMoveListener
+    });
   }
   render() {
     const { item, connectDragSource, connectDropTarget, className, clickClass, selected, openFile } = this.props;
@@ -64,12 +94,12 @@ class FileIcon extends Component {
     if ( item.metadata.loading) {
       children.push(loadingBorder);
     }
-    return connectDragSource(connectDropTarget(
+    return (
       React.createElement(elementType, {style: selectedStyle, download: Boolean(item.metadata.isUpload),
         href: Boolean(item.metadata.awsKey) ? href : null, key: item.nodeIndex,
         'data-clickClass':windowsClickables[clickClass], 'data-topClickable': true, 'data-index': item.index,
         onDoubleClick: () => {openFile(item.index);} , onTouchStart: this.doubleTap, className: cx(className, styles.root) }, children)
-    ));
+    );
   }
 }
 
@@ -129,6 +159,5 @@ function collectTarget(connect, monitor) {
   };
 }
 
-export default withStyles(styles)(flow(dragSource('fileIcon', fileIconSource, collectSource),
-  dropTarget(['fileIcon', 'fileIconGroup'], fileIconTarget, collectTarget))(FileIcon));
+export default withStyles(styles)(FileIcon);
 
