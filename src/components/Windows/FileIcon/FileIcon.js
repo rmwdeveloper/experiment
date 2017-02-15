@@ -94,14 +94,14 @@ class FileIcon extends Component {
   }
   componentDidMount() {
 
-    interact('.desktopIcon').dropzone({
-      accept: '.desktopIcon',
+    interact('.fileIcon').dropzone({
+      accept: '.fileIcon',
       overlap: 0.50,
       ondrop: this.onDrop
     });
 
 
-    interact('.desktopIcon').draggable({
+    interact('.fileIcon').draggable({
       inertia: false,
       onmove: this.moveListener,
       onstart: this.startMoveListener,
@@ -145,7 +145,7 @@ class FileIcon extends Component {
       React.createElement(elementType, {style: selectedStyle, download: Boolean(item.metadata.isUpload),
         href: Boolean(item.metadata.awsKey) ? href : null, key: item.nodeIndex,
         'data-clickClass':windowsClickables[clickClass], 'data-topClickable': true, 'data-index': item.index,
-        onDoubleClick: () => {openFile(item.index);} , onTouchStart: this.doubleTap, className: cx(className, styles.root, {selected}) }, children)
+        onDoubleClick: () => {openFile(item.index);} , onTouchStart: this.doubleTap, className: cx(className, styles.root, 'fileIcon', {selected}) }, children)
     );
   }
 }
