@@ -40,15 +40,22 @@ class FileIcon extends Component {
     console.log(selected, index, parentIndex);
   }
   moveListener(event) {
+    let icons = [event.target];
+    if (this.props.selected){
+      icons = document.getElementsByClassName('desktopIcon selected');
+    }
+
     const target = event.target,
     // keep the dragged position in the data-x/data-y attributes
       x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
       y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
 
     // translate the element
-    target.style.webkitTransform =
-      target.style.transform =
-        'translate(' + x + 'px, ' + y + 'px)';
+    for (let iterator = 0; iterator < icons.length; iterator++){
+      icons[iterator].style.webkitTransform =
+      icons[iterator].style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+    }
+
 
     // update the posiion attributes
     target.setAttribute('data-x', x);
@@ -98,7 +105,7 @@ class FileIcon extends Component {
       React.createElement(elementType, {style: selectedStyle, download: Boolean(item.metadata.isUpload),
         href: Boolean(item.metadata.awsKey) ? href : null, key: item.nodeIndex,
         'data-clickClass':windowsClickables[clickClass], 'data-topClickable': true, 'data-index': item.index,
-        onDoubleClick: () => {openFile(item.index);} , onTouchStart: this.doubleTap, className: cx(className, styles.root) }, children)
+        onDoubleClick: () => {openFile(item.index);} , onTouchStart: this.doubleTap, className: cx(className, styles.root, {selected}) }, children)
     );
   }
 }
