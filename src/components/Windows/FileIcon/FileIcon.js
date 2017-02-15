@@ -24,6 +24,23 @@ class FileIcon extends Component {
     this.moveListener = this.moveListener.bind(this);
     this.startMoveListener = this.startMoveListener.bind(this);
     this.endMoveListener = this.endMoveListener.bind(this);
+    this.onDrop = this.onDrop.bind(this);
+  }
+  onDrop(event){
+    const {moveFiles, moveFile, item} = this.props;
+    console.log('dropped on fileicon');
+    const index = event.relatedTarget.getAttribute('data-index');
+    const name = event.relatedTarget.getAttribute('data-name');
+    const selected = event.relatedTarget.getAttribute('data-selected');
+    const parentIndex = event.relatedTarget.getAttribute('data-parentIndex');
+
+    console.log(event.relatedTarget, event.target);
+    if(selected === 'true') { //set attribute true sets it to 'true'...
+      moveFiles(parentIndex, event.target.getAttribute('data-index'));
+    } else{
+      moveFile(event.relatedTarget.getAttribute('data-index'), event.target.getAttribute('data-index'));
+    }
+
   }
   doubleTap() {
     const { openFile, item } = this.props;
@@ -39,11 +56,13 @@ class FileIcon extends Component {
     this.mylatesttap = new Date().getTime();
   }
   startMoveListener(event){
-    const { target } = event;
-    const {selected, item: {index}, parentIndex} = this.props;
-    target.setAttribute('data-index', index);
-    target.setAttribute('data-selected', selected);
-    target.setAttribute('data-parentIndex', parentIndex);
+    // const { target } = event;
+    // const {selected, item: {index, name}, parentIndex} = this.props;
+    //
+    // target.setAttribute('data-index', index);
+    // target.setAttribute('data-name', name);
+    // target.setAttribute('data-selected', selected);
+    // target.setAttribute('data-parentIndex', parentIndex);
   }
   moveListener(event) {
     const target = event.target,
@@ -74,6 +93,14 @@ class FileIcon extends Component {
 
   }
   componentDidMount() {
+
+    interact('.desktopIcon').dropzone({
+      accept: '.desktopIcon',
+      overlap: 0.50,
+      ondrop: this.onDrop
+    });
+
+
     interact('.desktopIcon').draggable({
       inertia: false,
       onmove: this.moveListener,

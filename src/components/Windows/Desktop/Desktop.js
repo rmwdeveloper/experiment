@@ -84,7 +84,7 @@ class Desktop extends Component {
 
   onDrop(event){
     const {moveFiles, moveFile, desktopNodeIndex} = this.props;
-    console.log(this.props);
+    console.log('dropped on desktop');
     const index = event.relatedTarget.getAttribute('data-index');
     const selected = event.relatedTarget.getAttribute('data-selected');
     const parentIndex = event.relatedTarget.getAttribute('data-parentIndex');
