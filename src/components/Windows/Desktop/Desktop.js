@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import { DropTarget as dropTarget, DragDropContext as dragDropContext, DragSource as dragSource  } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import interact from 'interactjs';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Desktop.css'; //eslint-disable-line
 
@@ -52,7 +53,8 @@ class Desktop extends Component {
     this.stopResizeFileWindow = this.stopResizeFileWindow.bind(this);
     this.fileWindowResizing = this.fileWindowResizing.bind(this);
     this.findAncestorWithClickClass = this.findAncestorWithClickClass.bind(this);
-    
+    this.onDrop = this.onDrop.bind(this);
+
     this.dragbox = null;
     this.draggedItem = null;
     this.resizedItem = null;
@@ -79,7 +81,21 @@ class Desktop extends Component {
       headerHeight: null
     };
   }
-  
+
+  onDrop(event){
+    const {moveFiles, moveFile, desktopNodeIndex} = this.props;
+    console.log(this.props);
+    const index = event.relatedTarget.getAttribute('data-index');
+    const selected = event.relatedTarget.getAttribute('data-selected');
+    const parentIndex = event.relatedTarget.getAttribute('data-parentIndex');
+    
+    if(selected === 'true') { //set attribute true sets it to 'true'...
+      moveFiles(parentIndex, desktopNodeIndex);
+    } else{
+      moveFile(index, desktopNodeIndex);
+    }
+
+  }
   componentDidMount() {
     this.icons = document.getElementsByClassName('desktopIcon');
     this.desktop = document.getElementById('desktop');
@@ -91,6 +107,11 @@ class Desktop extends Component {
     this.desktop.onmouseup = this.desktopMouseUp;
     this.desktop.addEventListener('touchend', this.desktopMouseUp);
 
+    interact('#desktop').dropzone({
+      accept: '.desktopIcon',
+      overlap: 0.50,
+      ondrop: this.onDrop
+    });
 
     // todo rmw: desktopWidth and Height is both in the redux store and in component State. Should have it it only 1.
     this.props.initializeDesktopDimensions(this.desktop.offsetWidth, this.desktop.offsetHeight);
@@ -364,7 +385,7 @@ class Desktop extends Component {
       showSpaceIndicator, uploads,
       selectedDesktopIcons, createFolder, openErrorWindow, openFile, openedFiles, fileSystem } = this.props;
 
-    return (connectDropTarget(
+    return (
       <div id="desktop"
            data-clickClass={windowsClickables.desktop}
            data-topClickable
@@ -401,7 +422,7 @@ class Desktop extends Component {
             showSpaceIndicator ?  <SpaceAvailabilityIndicator className={styles.showIndicator} usedSpace={usedSpace} diskSpace={diskSpace} /> : null
         }
       </div>
-    ));
+    );
   }
 }
 
@@ -424,5 +445,6 @@ function collectTarget(connect, monitor) {
   };
 }
 
-export default withStyles(styles)(dragDropContext(HTML5Backend)(dropTarget(['fileIcon', 'fileIconGroup'], desktopTarget, collectTarget)(DropzoneAWSEvaporate(Desktop, 'desktop'))));
+export default withStyles(styles)(DropzoneAWSEvaporate(Desktop, 'desktop'));
+// export default withStyles(styles)(dragDropContext(HTML5Backend)(dropTarget(['fileIcon', 'fileIconGroup'], desktopTarget, collectTarget)(DropzoneAWSEvaporate(Desktop, 'desktop'))));
 

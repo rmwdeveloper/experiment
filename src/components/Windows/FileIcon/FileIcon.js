@@ -67,6 +67,11 @@ class FileIcon extends Component {
     target.style.opacity = 1;
     this.x = 0;
     this.y = 0;
+
+    // target.setAttribute('data-index', index);
+    // target.setAttribute('data-selected', false);
+    // target.setAttribute('data-parentIndex', parentIndex);
+
   }
   componentDidMount() {
     interact('.desktopIcon').draggable({
