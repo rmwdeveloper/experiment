@@ -1,5 +1,4 @@
 import React, { PropTypes, Component } from 'react';
-import { DropTarget as dropTarget } from 'react-dnd';
 import styles from './FolderContents.css'; //eslint-disable-line
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { windowsClickables } from '../../../constants/windows';
@@ -154,8 +153,8 @@ class FolderContents extends Component {
     }
   }
   render(){
-    const { folderContents, connectDropTarget, index, uploads, uniqueId } = this.props;
-    return connectDropTarget(
+    const { folderContents, index, uploads, uniqueId } = this.props;
+    return (
       <div id={`folderContents${uniqueId}`} data-clickClass={windowsClickables.folderContents} data-topClickable data-index={index} className={styles.root}>
         {folderContents}
       </div>
@@ -179,4 +178,4 @@ function collectTarget(connect, monitor) {
   };
 }
 
-export default withStyles(styles)(dropTarget(['fileIcon', 'fileIconGroup'], folderTarget, collectTarget)(DropzoneAWSEvaporate(FolderContents)));
+export default withStyles(styles)(DropzoneAWSEvaporate(FolderContents));
