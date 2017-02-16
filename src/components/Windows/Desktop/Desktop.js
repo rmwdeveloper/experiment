@@ -88,11 +88,11 @@ class Desktop extends Component {
     const index = event.relatedTarget.getAttribute('data-index');
     const selected = event.relatedTarget.getAttribute('data-selected');
     const parentIndex = event.relatedTarget.getAttribute('data-parentIndex');
-    
-    if(selected === 'true') { //set attribute true sets it to 'true'...
-      moveFiles(parentIndex, desktopNodeIndex);
+
+    if(event.relatedTarget.classList.contains('selected')) { //set attribute true sets it to 'true'...
+      moveFiles(event.relatedTarget.getAttribute('data-index'), desktopNodeIndex);
     } else{
-      moveFile(index, desktopNodeIndex);
+      moveFile(event.relatedTarget.getAttribute('data-index'), desktopNodeIndex);
     }
 
   }

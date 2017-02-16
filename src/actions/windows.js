@@ -209,13 +209,18 @@ export function moveFile(fromNodeIndex, toNodeIndex) {
 
 
 
-export function moveFiles(fromParentIndex, toNodeIndex) {
+export function moveFiles(fromNodeIndex, toNodeIndex) {
   return (dispatch, getState) => {
-    const { windows: { selectedDesktopIcons, desktopWidth, desktopHeight } } = getState();
+    const { windows: { selectedDesktopIcons, desktopWidth, desktopHeight, fileSystem } } = getState();
     if (selectedDesktopIcons.includes(toNodeIndex)) {
       dispatch({ type: OPEN_ERROR_WINDOW, errorMessage: "Cant move a folder inside itself.", desktopWidth, desktopHeight});
       return null;
     }
+    const fromParentIndex = Object.keys(fileSystem).find( key => {
+      if (fileSystem[key].hasOwnProperty('children')) {
+        return fileSystem[key].children.includes(fromNodeIndex);
+      }
+    });
 
     const headers = new Headers(); // todo: abstract headers away
     headers.append('Content-Type', 'application/json');
@@ -224,6 +229,7 @@ export function moveFiles(fromParentIndex, toNodeIndex) {
       method: 'post', credentials: 'include', headers,
       body: JSON.stringify({ fromIndices: selectedDesktopIcons, fromParentIndex, toNodeIndex })
     });
+
   }
 }
 

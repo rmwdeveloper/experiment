@@ -27,15 +27,13 @@ class FileIcon extends Component {
     this.onDrop = this.onDrop.bind(this);
   }
   onDrop(event){
-    console.log('dropped on fileicon');
-    const {moveFiles, moveFile, item} = this.props;
+    const {moveFiles, moveFile, item, selected} = this.props;
     const index = event.relatedTarget.getAttribute('data-index');
     const name = event.relatedTarget.getAttribute('data-name');
-    const selected = event.relatedTarget.getAttribute('data-selected');
     const parentIndex = event.relatedTarget.getAttribute('data-parentIndex');
     
-    if(selected === 'true') { //set attribute true sets it to 'true'...
-      moveFiles(parentIndex, event.target.getAttribute('data-index'));
+    if(event.relatedTarget.classList.contains('selected')) { //set attribute true sets it to 'true'...
+      moveFiles(event.relatedTarget.getAttribute('data-index'), event.target.getAttribute('data-index'));
     } else{
       moveFile(event.relatedTarget.getAttribute('data-index'), event.target.getAttribute('data-index'));
     }

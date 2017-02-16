@@ -41,11 +41,10 @@ class FolderContents extends Component {
     const selected = event.relatedTarget.getAttribute('data-selected');
     const parentIndex = event.relatedTarget.getAttribute('data-parentIndex');
 
-    if(selected === 'true') { //set attribute true sets it to 'true'...
-      // moveFiles(parentIndex, event.target.getAttribute('data-index'));
+    if(event.relatedTarget.classList.contains('selected')) { //set attribute true sets it to 'true'...
+      moveFiles(event.relatedTarget.getAttribute('data-index'), event.target.getAttribute('data-index'));
     } else{
-      console.log('triggering moveFile');
-      moveFile(event.relatedTarget.getAttribute('data-index'), index);
+      moveFile(event.relatedTarget.getAttribute('data-index'), event.target.getAttribute('data-index'));
     }
   }
   componentDidMount() {
