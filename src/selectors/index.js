@@ -58,9 +58,7 @@ export const utilityControlsSelector = createSelector(
 export const desktopItemsSelector = createSelector(
   [fileSystemObject, desktopNodeIndex],
   (fileSystemObject, desktopNodeIndex) => {
-    console.log(desktopNodeIndex);
     const desktopNode = fileSystemObject[desktopNodeIndex];
-    console.log(desktopNode);
     return desktopNode.children.map(childIndex => {
       const obj = fileSystemObject[childIndex];
       obj.index = childIndex;

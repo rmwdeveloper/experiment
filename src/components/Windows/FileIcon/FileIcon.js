@@ -1,11 +1,13 @@
 import React, { PropTypes, Component } from 'react';
-import { DragSource as dragSource, DropTarget as dropTarget } from 'react-dnd';
+// import { DragSource as dragSource, DropTarget as dropTarget } from 'react-dnd';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './FileIcon.css'; //eslint-disable-line
 import cx from 'classnames';
 import { windowsClickables } from '../../../constants/windows';
 import { constructDownloadURL } from '../../../core/aws';
 import flow from 'lodash.flow';
+import interact from 'interactjs';
+
 
 
 class FileIcon extends Component {
@@ -15,8 +17,27 @@ class FileIcon extends Component {
   };
   constructor() {
     super();
+    this.x = 0;
+    this.y = 0;
     this.latestTap = null;
     this.doubleTap = this.doubleTap.bind(this);
+    this.moveListener = this.moveListener.bind(this);
+    this.startMoveListener = this.startMoveListener.bind(this);
+    this.endMoveListener = this.endMoveListener.bind(this);
+    this.onDrop = this.onDrop.bind(this);
+  }
+  onDrop(event){
+    const {moveFiles, moveFile, item, selected} = this.props;
+    const index = event.relatedTarget.getAttribute('data-index');
+    const name = event.relatedTarget.getAttribute('data-name');
+    const parentIndex = event.relatedTarget.getAttribute('data-parentIndex');
+    
+    if(event.relatedTarget.classList.contains('selected')) { //set attribute true sets it to 'true'...
+      moveFiles(event.relatedTarget.getAttribute('data-index'), event.target.getAttribute('data-index'));
+    } else{
+      moveFile(event.relatedTarget.getAttribute('data-index'), event.target.getAttribute('data-index'));
+    }
+
   }
   doubleTap() {
     const { openFile, item } = this.props;
@@ -30,6 +51,59 @@ class FileIcon extends Component {
     }
 
     this.mylatesttap = new Date().getTime();
+  }
+  startMoveListener(event){
+    const { target } = event;
+    target.style.zIndex = 100;
+    // const {selected, item: {index, name}, parentIndex} = this.props;
+    // target.setAttribute('data-index', index);
+    // target.setAttribute('data-name', name);
+    // target.setAttribute('data-selected', selected);
+    // target.setAttribute('data-parentIndex', parentIndex);
+  }
+  moveListener(event) {
+    const target = event.target,
+    // keep the dragged position in the data-x/data-y attributes
+      x = (parseFloat(this.x || 0) + event.dx),
+      y = (parseFloat(this.y || 0) + event.dy);
+
+    // translate the element
+    target.style.webkitTransform =
+      target.style.transform =
+        'translate(' + x + 'px, ' + y + 'px)';
+    target.style.opacity = 0.25;
+    // update the posiion attributes
+    this.x = x;
+    this.y = y;
+  }
+  endMoveListener(event) {
+    const target = event.target;
+    target.style.webkitTransform =
+      target.style.transform = 'none';
+    target.style.opacity = 1;
+    target.style.zIndex = 1;
+    this.x = 0;
+    this.y = 0;
+
+    // target.setAttribute('data-index', index);
+    // target.setAttribute('data-selected', false);
+    // target.setAttribute('data-parentIndex', parentIndex);
+
+  }
+  componentDidMount() {
+    interact('.fileIcon').dropzone({
+      accept: '.fileIcon',
+      overlap: 0.50,
+      ondrop: this.onDrop
+    });
+
+
+    interact('.fileIcon').draggable({
+      inertia: false,
+      onmove: this.moveListener,
+      onstart: this.startMoveListener,
+      onend: this.endMoveListener
+    });
   }
   render() {
     const { item, connectDragSource, connectDropTarget, className, clickClass, selected, openFile } = this.props;
@@ -64,12 +138,12 @@ class FileIcon extends Component {
     if ( item.metadata.loading) {
       children.push(loadingBorder);
     }
-    return connectDragSource(connectDropTarget(
+    return (
       React.createElement(elementType, {style: selectedStyle, download: Boolean(item.metadata.isUpload),
         href: Boolean(item.metadata.awsKey) ? href : null, key: item.nodeIndex,
         'data-clickClass':windowsClickables[clickClass], 'data-topClickable': true, 'data-index': item.index,
-        onDoubleClick: () => {openFile(item.index);} , onTouchStart: this.doubleTap, className: cx(className, styles.root) }, children)
-    ));
+        onDoubleClick: () => {openFile(item.index);} , onTouchStart: this.doubleTap, className: cx(className, styles.root, 'fileIcon', {selected}) }, children)
+    );
   }
 }
 
@@ -129,6 +203,5 @@ function collectTarget(connect, monitor) {
   };
 }
 
-export default withStyles(styles)(flow(dragSource('fileIcon', fileIconSource, collectSource),
-  dropTarget(['fileIcon', 'fileIconGroup'], fileIconTarget, collectTarget))(FileIcon));
+export default withStyles(styles)(FileIcon);
 

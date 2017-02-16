@@ -1,9 +1,10 @@
 import React, { PropTypes, Component } from 'react';
-import { DropTarget as dropTarget } from 'react-dnd';
 import styles from './FolderContents.css'; //eslint-disable-line
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { windowsClickables } from '../../../constants/windows';
 import DropzoneAWSEvaporate from '../DropzoneAWSEvaporate';
+import interact from 'interactjs';
+
 
 class FolderContents extends Component {
   static propTypes = {
@@ -18,6 +19,8 @@ class FolderContents extends Component {
     this.checkForOverlap = this.checkForOverlap.bind(this);
     this.folderContentsMouseUp = this.folderContentsMouseUp.bind(this);
     this.folderContentsMouseDown = this.folderContentsMouseDown.bind(this);
+    this.onDrop = this.onDrop.bind(this);
+
     this.dragbox = null;
     this.icons = [];
     this.selectedIcons = [];
@@ -30,15 +33,31 @@ class FolderContents extends Component {
       headerHeight: null
     };
   }
-  shouldComponentUpdate() {
-    return true;
+  onDrop(event) {
+    // console.log(' dropped on folderContents');
+    const {moveFiles, moveFile, index} = this.props;
+    const t0 = 'test';
+    const name = event.relatedTarget.getAttribute('data-name');
+    const selected = event.relatedTarget.getAttribute('data-selected');
+    const parentIndex = event.relatedTarget.getAttribute('data-parentIndex');
+
+    if(event.relatedTarget.classList.contains('selected')) { //set attribute true sets it to 'true'...
+      moveFiles(event.relatedTarget.getAttribute('data-index'), event.target.getAttribute('data-index'));
+    } else{
+      moveFile(event.relatedTarget.getAttribute('data-index'), event.target.getAttribute('data-index'));
+    }
   }
   componentDidMount() {
     const { uniqueId } = this.props;
     this.icons = document.getElementsByClassName('folderIcon');
-    this.folderContents = document.getElementById(`folderContents${this.props.uniqueId}`);
+    this.folderContents = document.getElementById(`folderContents${uniqueId}`);
     this.header = document.getElementById('primaryHeader');
-    
+    // console.log(document.getElementById(`folderContents${uniqueId}`));
+    interact(`#folderContents${uniqueId}`).dropzone({
+      accept: '.fileIcon',
+      overlap: 0.75,
+      ondrop: this.onDrop
+    });
 
     this.folderContents.onmousedown = this.folderContentsMouseDown;
     this.folderContents.addEventListener('touchstart', this.folderContentsMouseDown);
@@ -154,8 +173,9 @@ class FolderContents extends Component {
     }
   }
   render(){
-    const { folderContents, connectDropTarget, index, uploads, uniqueId } = this.props;
-    return connectDropTarget(
+    const { folderContents, 
+      index, uploads, uniqueId } = this.props;
+    return (
       <div id={`folderContents${uniqueId}`} data-clickClass={windowsClickables.folderContents} data-topClickable data-index={index} className={styles.root}>
         {folderContents}
       </div>
@@ -179,4 +199,4 @@ function collectTarget(connect, monitor) {
   };
 }
 
-export default withStyles(styles)(dropTarget(['fileIcon', 'fileIconGroup'], folderTarget, collectTarget)(DropzoneAWSEvaporate(FolderContents)));
+export default withStyles(styles)(DropzoneAWSEvaporate(FolderContents));
