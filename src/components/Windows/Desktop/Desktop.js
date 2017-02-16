@@ -1,12 +1,7 @@
 import React, { PropTypes, Component } from 'react';
-import { DropTarget as dropTarget, DragDropContext as dragDropContext, DragSource as dragSource  } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
 import interact from 'interactjs';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Desktop.css'; //eslint-disable-line
-
-
-
 import windowsFileRegistry from '../windowsFileRegistry';
 import { windowsClickables } from '../../../constants/windows';
 import DropzoneAWSEvaporate from '../DropzoneAWSEvaporate';
