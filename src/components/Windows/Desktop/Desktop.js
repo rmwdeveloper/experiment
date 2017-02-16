@@ -108,7 +108,7 @@ class Desktop extends Component {
     this.desktop.addEventListener('touchend', this.desktopMouseUp);
 
     interact('#desktop').dropzone({
-      accept: '.desktopIcon',
+      accept: '.fileIcon',
       overlap: 0.50,
       ondrop: this.onDrop
     });

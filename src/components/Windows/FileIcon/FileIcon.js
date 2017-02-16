@@ -93,7 +93,6 @@ class FileIcon extends Component {
 
   }
   componentDidMount() {
-
     interact('.fileIcon').dropzone({
       accept: '.fileIcon',
       overlap: 0.50,
