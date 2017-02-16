@@ -3,6 +3,8 @@ import styles from './FolderContents.css'; //eslint-disable-line
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { windowsClickables } from '../../../constants/windows';
 import DropzoneAWSEvaporate from '../DropzoneAWSEvaporate';
+import interact from 'interactjs';
+
 
 class FolderContents extends Component {
   static propTypes = {
@@ -17,6 +19,8 @@ class FolderContents extends Component {
     this.checkForOverlap = this.checkForOverlap.bind(this);
     this.folderContentsMouseUp = this.folderContentsMouseUp.bind(this);
     this.folderContentsMouseDown = this.folderContentsMouseDown.bind(this);
+    this.onDrop = this.onDrop.bind(this);
+
     this.dragbox = null;
     this.icons = [];
     this.selectedIcons = [];
@@ -29,15 +33,31 @@ class FolderContents extends Component {
       headerHeight: null
     };
   }
-  shouldComponentUpdate() {
-    return true;
+  onDrop() {
+    console.log('dropped on folder contents');
+    const {moveFiles, moveFile, item} = this.props;
+    const index = event.relatedTarget.getAttribute('data-index');
+    const name = event.relatedTarget.getAttribute('data-name');
+    const selected = event.relatedTarget.getAttribute('data-selected');
+    const parentIndex = event.relatedTarget.getAttribute('data-parentIndex');
+
+    if(selected === 'true') { //set attribute true sets it to 'true'...
+      moveFiles(parentIndex, event.target.getAttribute('data-index'));
+    } else{
+      moveFile(event.relatedTarget.getAttribute('data-index'), event.target.getAttribute('data-index'));
+    }
   }
   componentDidMount() {
     const { uniqueId } = this.props;
     this.icons = document.getElementsByClassName('folderIcon');
-    this.folderContents = document.getElementById(`folderContents${this.props.uniqueId}`);
+    this.folderContents = document.getElementById(`folderContents${uniqueId}`);
     this.header = document.getElementById('primaryHeader');
-    
+    // console.log(document.getElementById(`folderContents${uniqueId}`));
+    interact(`#folderContents${uniqueId}`).dropzone({
+      accept: '.fileIcon',
+      overlap: 0.75,
+      ondrop: this.onDrop
+    });
 
     this.folderContents.onmousedown = this.folderContentsMouseDown;
     this.folderContents.addEventListener('touchstart', this.folderContentsMouseDown);

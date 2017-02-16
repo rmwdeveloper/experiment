@@ -83,8 +83,8 @@ class Desktop extends Component {
   }
 
   onDrop(event){
+    console.log(event.target, event.relatedTarget);
     const {moveFiles, moveFile, desktopNodeIndex} = this.props;
-    console.log('dropped on desktop');
     const index = event.relatedTarget.getAttribute('data-index');
     const selected = event.relatedTarget.getAttribute('data-selected');
     const parentIndex = event.relatedTarget.getAttribute('data-parentIndex');
@@ -109,7 +109,7 @@ class Desktop extends Component {
 
     interact('#desktop').dropzone({
       accept: '.fileIcon',
-      overlap: 0.50,
+      overlap: 0.75,
       ondrop: this.onDrop
     });
 
