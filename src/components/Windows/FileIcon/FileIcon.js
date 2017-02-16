@@ -53,9 +53,9 @@ class FileIcon extends Component {
     this.mylatesttap = new Date().getTime();
   }
   startMoveListener(event){
-    // const { target } = event;
+    const { target } = event;
+    target.style.zIndex = 100;
     // const {selected, item: {index, name}, parentIndex} = this.props;
-    //
     // target.setAttribute('data-index', index);
     // target.setAttribute('data-name', name);
     // target.setAttribute('data-selected', selected);
@@ -81,6 +81,7 @@ class FileIcon extends Component {
     target.style.webkitTransform =
       target.style.transform = 'none';
     target.style.opacity = 1;
+    target.style.zIndex = 1;
     this.x = 0;
     this.y = 0;
 
