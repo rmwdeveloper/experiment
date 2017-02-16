@@ -186,7 +186,8 @@ export function moveFile(fromNodeIndex, toNodeIndex) {
       dispatch({ type: OPEN_ERROR_WINDOW, errorMessage: "Cant move a folder inside itself.", desktopWidth, desktopHeight});
       return null;
     }
-    // console.log(fileSystem[fromNodeIndex], fileSystem[toNodeIndex]);
+
+    console.log(fileSystem[fromNodeIndex], fileSystem[toNodeIndex]);
     const originsParentIndex = Object.keys(fileSystem).find(key=> {
       if (fileSystem.hasOwnProperty(key)) {
         if (fileSystem[key].hasOwnProperty('children')) {

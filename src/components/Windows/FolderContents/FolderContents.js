@@ -33,18 +33,19 @@ class FolderContents extends Component {
       headerHeight: null
     };
   }
-  onDrop() {
-    console.log('dropped on folder contents');
-    const {moveFiles, moveFile, item} = this.props;
-    const index = event.relatedTarget.getAttribute('data-index');
+  onDrop(event) {
+    // console.log(' dropped on folderContents');
+    const {moveFiles, moveFile, index} = this.props;
+    const t0 = 'test';
     const name = event.relatedTarget.getAttribute('data-name');
     const selected = event.relatedTarget.getAttribute('data-selected');
     const parentIndex = event.relatedTarget.getAttribute('data-parentIndex');
 
     if(selected === 'true') { //set attribute true sets it to 'true'...
-      moveFiles(parentIndex, event.target.getAttribute('data-index'));
+      // moveFiles(parentIndex, event.target.getAttribute('data-index'));
     } else{
-      moveFile(event.relatedTarget.getAttribute('data-index'), event.target.getAttribute('data-index'));
+      console.log('triggering moveFile');
+      moveFile(event.relatedTarget.getAttribute('data-index'), index);
     }
   }
   componentDidMount() {

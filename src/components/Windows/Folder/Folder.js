@@ -27,7 +27,7 @@ function Folder({openedFile, user, checkAvailableSpace, uploadStart, uploadProgr
                         uploadProgress={uploadProgress} uploadComplete={uploadComplete}
                         fileSystem={fileSystem} uploads={uploads} uniqueId={uniqueId}
                         selectIcons={selectIcons} children={fileSystem[openedFile.index].children}
-          moveFile={moveFile} moveFile={moveFiles} folderContents={folderContents} index={openedFile.index} />
+          moveFile={moveFile} moveFiles={moveFiles} folderContents={folderContents} index={openedFile.index} />
       </div>
     </div>
   );
