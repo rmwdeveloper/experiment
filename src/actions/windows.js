@@ -97,11 +97,8 @@ export function toggleWindowMaximize(openedFileIndex) {
   return (dispatch, getState) => {
     const { windows: { openedFileDimensions } } = getState();
     const { maximized } = openedFileDimensions[openedFileIndex];
-    if (maximized) {
-      dispatch({ type: UNMAXIMIZE_FILE_WINDOW, openedFileIndex });
-    } else {
+    maximized ? dispatch({ type: UNMAXIMIZE_FILE_WINDOW, openedFileIndex }) :
       dispatch({ type: MAXIMIZE_FILE_WINDOW, openedFileIndex });
-    }
   };
 }
 
@@ -109,23 +106,20 @@ export function toggleWindowMinimize(openedFileIndex) {
   return (dispatch, getState) => {
     const { windows: { openedFileDimensions } } = getState();
     const { minimized } = openedFileDimensions[openedFileIndex];
-    if (minimized) {
-      dispatch({ type: UNMINIMIZE_FILE_WINDOW, openedFileIndex });
-    } else {
-      dispatch({ type: MINIMIZE_FILE_WINDOW, openedFileIndex });
-    }
+    minimized ? dispatch({ type: UNMINIMIZE_FILE_WINDOW, openedFileIndex }) :
+      dispatch({ type: MINIMIZE_FILE_WINDOW, openedFileIndex })
   };
 }
 
-export function dragWindow(index, dragType, deltaX, deltaY) { // todo change this name? Same as method in windows/Desktop. (Change to dragWindow)
+export function dragFileWindow() {
   return dispatch => {
-    if (dragType === 'file') {
-      dispatch({ type: DRAG_FILE_WINDOW, dragType, index, deltaX, deltaY });
-    }
-    if (dragType === 'error') {
-      dispatch({ type: DRAG_ERROR_WINDOW, dragType, index, deltaX, deltaY });
-    }
-  };
+    dispatch({ type: DRAG_FILE_WINDOW, dragType, index, deltaX, deltaY });
+  }
+}
+export function dragErrorWindow() {
+  return dispatch => {
+    dispatch({ type: DRAG_ERROR_WINDOW, dragType, index, deltaX, deltaY });
+  }
 }
 
 export function resizeFileWindow(index, resizeSideClicked, deltaX, deltaY, resizeStartWidth, resizeStartHeight, resizeStartLeft, resizeStartTop) {
@@ -164,20 +158,6 @@ export function openErrorWindow(errorMessage) {
 }
 
 
-// // todo : move this util function (getParent) to a helpers file
-// const originsParentIndex = Object.keys(state.fileSystem).find(key=> {
-//   if (state.fileSystem.hasOwnProperty(key)) {
-//     if (state.fileSystem[key].hasOwnProperty('children')) {
-//       return state.fileSystem[key].children.includes(action.fromNodeIndex);
-//     }
-//   }
-// });
-// const parentalIndex = newFileSystem[originsParentIndex].children.indexOf(action.fromNodeIndex);
-// newFileSystem[originsParentIndex].children = [...newFileSystem[originsParentIndex].children.slice(0, parentalIndex),
-//   ...newFileSystem[originsParentIndex].children.slice(parentalIndex + 1)];
-// newFileSystem[action.toNodeIndex].children.push(action.fromNodeIndex);
-// return {...state, fileSystem: newFileSystem};
-
 //todo: put in <ACTION>, <ACTION_COMPLETE>, <ACTION_ERROR> for all persistent operations.
 export function moveFile(fromNodeIndex, toNodeIndex) {
   return (dispatch, getState) => {
@@ -187,7 +167,6 @@ export function moveFile(fromNodeIndex, toNodeIndex) {
       return null;
     }
 
-    console.log(fileSystem[fromNodeIndex], fileSystem[toNodeIndex]);
     const originsParentIndex = Object.keys(fileSystem).find(key=> {
       if (fileSystem.hasOwnProperty(key)) {
         if (fileSystem[key].hasOwnProperty('children')) {
