@@ -3,6 +3,7 @@ import React from 'react';
 import home from './home';
 import console from './console';
 import stockDashboard from './stockDashboard';
+import pricingAndLogin from './pricingAndLogin';
 import windows from './windows';
 import login from './login';
 import register from './register';
@@ -19,7 +20,8 @@ const routes = {
     stockDashboard,
     login,
     register,
-    windows
+    windows,
+    pricingAndLogin
   ],
 
   async action({ next, render, context }) {

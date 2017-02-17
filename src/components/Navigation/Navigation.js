@@ -22,7 +22,10 @@ function Navigation() {
           <span className={styles.desktop}>Windows</span>
           <span className={styles.mobile}><i className="fa fa-windows" /></span>
         </Link>
-
+        <Link className={styles.link} to="/pricingAndLogin">
+          <span className={styles.desktop}>Pricing And Login</span>
+          <span className={styles.mobile}><i className="fa fa-id-card" /></span>
+        </Link>
 
         {__DEV__ ? <ReactPerfButton className={cx(styles.link, styles.devOnly)} /> : null}
         {__DEV__ ? <DisplayEditingMode className={cx(styles.link, styles.devOnly)} /> : null}

@@ -1,0 +1,7 @@
+@import '../../components/variables.css';
+
+.root {
+  height: calc(100% - 40px);
+  position: relative;
+  min-width: 200px;
+}
