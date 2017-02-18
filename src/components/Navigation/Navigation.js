@@ -14,7 +14,11 @@ function Navigation() {
           <span className={cx(styles.desktop, styles.name)}>Robert Westenberger</span>
           <span className={styles.mobile}>RMW</span>
         </Link>
-        <Link className={styles.link} to="/console">
+        <Link className={styles.link} to="/projects">
+          <span className={styles.desktop}>Projects</span>
+          <span className={styles.mobile}><i className="fa fa-folder" /></span>
+        </Link>
+        { /* <Link className={styles.link} to="/console">
           <span className={styles.desktop}>Console</span>
           <span className={styles.mobile}><i className="fa fa-code" /></span>
         </Link>
@@ -22,6 +26,7 @@ function Navigation() {
           <span className={styles.desktop}>Windows</span>
           <span className={styles.mobile}><i className="fa fa-windows" /></span>
         </Link>
+        */ }
 
 
         {__DEV__ ? <ReactPerfButton className={cx(styles.link, styles.devOnly)} /> : null}

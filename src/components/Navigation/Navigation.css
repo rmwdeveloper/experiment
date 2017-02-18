@@ -5,6 +5,7 @@
   overflow: hidden;
   font-family: 'Josefin Sans', monospace;
   font-weight: bold;
+  height: 55px;
 }
 .name{
   font-size: 32px;
@@ -17,8 +18,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50px;
-  line-height: 1px;
+  height: 55px;
+  line-height: 55px;
+  position: relative;
+  top: 2px;
 }
 .linkContainer .link {
   /*margin: 15px 0;*/
