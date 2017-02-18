@@ -11,7 +11,7 @@ function Navigation() {
     <header id="primaryHeader" className={`${styles.root} row start-lg center-md center-xs`} role="navigation">
       <div className={`${styles.linkContainer} col-lg-12 around-lg`}>
         <Link className={styles.link} to="/">
-          <span className={styles.desktop}>Robert Westenberger</span>
+          <span className={cx(styles.desktop, styles.name)}>Robert Westenberger</span>
           <span className={styles.mobile}>RMW</span>
         </Link>
         <Link className={styles.link} to="/console">

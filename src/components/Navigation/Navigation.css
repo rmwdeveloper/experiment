@@ -2,17 +2,26 @@
 
 .root {
   margin: 0;
-  height: 5%;
-  min-height: 50px;
   overflow: hidden;
+  font-family: 'Josefin Sans', monospace;
+  font-weight: bold;
 }
-
+.name{
+  font-size: 32px;
+}
 .desktop {
   display: none;
 }
 
+.linkContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  line-height: 1px;
+}
 .linkContainer .link {
-  margin: 15px 0;
+  /*margin: 15px 0;*/
 }
 
 .link {
