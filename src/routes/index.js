@@ -6,6 +6,8 @@ import stockDashboard from './stockDashboard';
 import windows from './windows';
 import login from './login';
 import register from './register';
+import projects from './projects';
+import pagemaker from './pagemaker';
 import App from '../components/App';
 
 
@@ -19,7 +21,9 @@ const routes = {
     stockDashboard,
     login,
     register,
-    windows
+    windows,
+    projects,
+    pagemaker
   ],
 
   async action({ next, render, context }) {

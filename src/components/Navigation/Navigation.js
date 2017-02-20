@@ -11,10 +11,18 @@ function Navigation() {
     <header id="primaryHeader" className={`${styles.root} row start-lg center-md center-xs`} role="navigation">
       <div className={`${styles.linkContainer} col-lg-12 around-lg`}>
         <Link className={styles.link} to="/">
-          <span className={styles.desktop}>Robert Westenberger</span>
+          <span className={cx(styles.desktop, styles.name)}>Robert Westenberger</span>
           <span className={styles.mobile}>RMW</span>
         </Link>
-        <Link className={styles.link} to="/console">
+        { /*<Link className={styles.link} to="/projects">
+          <span className={styles.desktop}>Portfolio</span>
+          <span className={styles.mobile}><i className="fa fa-folder" /></span>
+        </Link> */ }
+        <Link className={styles.link} to="/pagemaker">
+          <span className={styles.desktop}>Pagemaker</span>
+          <span className={styles.mobile}><i className="fa fa-folder" /></span>
+        </Link>
+        { /* <Link className={styles.link} to="/console">
           <span className={styles.desktop}>Console</span>
           <span className={styles.mobile}><i className="fa fa-code" /></span>
         </Link>
@@ -22,6 +30,7 @@ function Navigation() {
           <span className={styles.desktop}>Windows</span>
           <span className={styles.mobile}><i className="fa fa-windows" /></span>
         </Link>
+        */ }
 
 
         {__DEV__ ? <ReactPerfButton className={cx(styles.link, styles.devOnly)} /> : null}

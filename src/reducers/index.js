@@ -6,6 +6,7 @@ import layout from './layout';
 import modal from './modal';
 import windows from './windows';
 import storage from './storage';
+import projects from './projects';
 
 export default combineReducers({
   runtime,
@@ -14,5 +15,6 @@ export default combineReducers({
   layout,
   modal,
   windows,
-  storage
+  storage,
+  projects
 });
