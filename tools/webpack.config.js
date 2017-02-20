@@ -125,6 +125,14 @@ const config = {
         test: /\.jade$/,
         loader: 'jade-loader',
       },
+      {
+        test: /\.less$/,
+        include: [
+          path.resolve(__dirname, '../src/components/Pagemaker'),
+          path.resolve(__dirname, '../src/routes/pagemaker'),
+        ],
+        loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap'
+      },
     ],
   },
 
