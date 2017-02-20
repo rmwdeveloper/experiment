@@ -15,7 +15,7 @@ function Navigation() {
           <span className={styles.mobile}>RMW</span>
         </Link>
         <Link className={styles.link} to="/projects">
-          <span className={styles.desktop}>Projects</span>
+          <span className={styles.desktop}>Portfolio</span>
           <span className={styles.mobile}><i className="fa fa-folder" /></span>
         </Link>
         { /* <Link className={styles.link} to="/console">
