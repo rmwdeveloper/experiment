@@ -51,3 +51,5 @@ secret.js
 /src/components/Pagemaker/
 /src/actions/pagemaker/
 /src/reducers/pagemaker/
+/src/routes/pagemaker/Pagemaker.css
+/src/routes/pagemaker/Pagemaker.js
