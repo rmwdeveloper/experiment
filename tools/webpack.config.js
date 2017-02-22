@@ -109,11 +109,12 @@ const config = {
           `css-loader?${JSON.stringify({
             sourceMap: DEBUG,
             // CSS Modules https://github.com/css-modules/css-modules
-            // localIdentName: DEBUG ? '[name]_[local]_[hash:base64:3]' : '[hash:base64:4]',
+            modules: true,
+            localIdentName: DEBUG ? '[name]' : '[hash:base64:4]',
             // CSS Nano http://cssnano.co/options/
             minimize: !DEBUG,
           })}`,
-          'postcss-loader?pack=sass',
+          'postcss-loader?pack=default',
           'less-loader'
         ],
         // loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap'

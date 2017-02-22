@@ -3,7 +3,7 @@ import emptyFunction from 'fbjs/lib/emptyFunction';
 import styles from './App.css'; //eslint-disable-line
 import { Provider } from 'react-redux';
 import Navigation from '../Navigation';
-
+import load from 'load-script';
 
 export default class App extends Component {
 
@@ -37,7 +37,40 @@ export default class App extends Component {
     const { insertCss } = this.props.context;
     this.removeCss = insertCss(styles);
   }
-
+  componentDidMount() {
+    load('scripts/jquery.min.js', (err, script) => {
+      if (err) {
+        console.log(err);
+        // print useful message
+      }
+      else {
+        load('scripts/bootstrap.min.js', (err, script) => {
+          if (err) {
+            // console.log(err);
+            // print useful message
+          }
+          else {
+            // console.log(script.src);// Prints 'foo'.js'
+            // use script
+            // note that in IE8 and below loading error wouldn't be reported
+          }
+        });
+        load('scripts/summernote.min.js', (err, script) => {
+          if (err) {
+            // console.log(err);
+            // print useful message
+          }
+          else {
+            // console.log(script.src);// Prints 'foo'.js'
+            // use script
+            // note that in IE8 and below loading error wouldn't be reported
+          }
+        });
+        // use script
+        // note that in IE8 and below loading error wouldn't be reported
+      }
+    });
+  }
   componentWillUnmount() {
     this.removeCss();
   }
