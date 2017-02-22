@@ -2,7 +2,7 @@
 @import '../variables.css';
 
 #app {
-  overflow: hidden;
+  /*overflow: hidden;*/
   height: 100%;
 }
 * {
@@ -21,7 +21,7 @@ html, body, #app, .root {
   height: 100%;
 }
 .root {
-  overflow: hidden;
+  /*overflow: hidden;*/
 }
 a {
   text-decoration: none;
