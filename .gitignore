@@ -52,3 +52,5 @@ secret.js
 /src/actions/pagemaker/
 /src/reducers/pagemaker/
 /src/routes/pagemaker/
+
+/tools/pagemaker
