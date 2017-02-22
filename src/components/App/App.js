@@ -3,7 +3,7 @@ import emptyFunction from 'fbjs/lib/emptyFunction';
 import styles from './App.css'; //eslint-disable-line
 import { Provider } from 'react-redux';
 import Navigation from '../Navigation';
-
+import load from 'load-script';
 
 export default class App extends Component {
 

@@ -99,6 +99,27 @@ const config = {
         ],
       },
       {
+        test: /\.less$/,
+        include: [
+          path.resolve(__dirname, '../src/components/Pagemaker'),
+          path.resolve(__dirname, '../src/routes/pagemaker'),
+        ],
+        loaders: [
+          'isomorphic-style-loader',
+          `css-loader?${JSON.stringify({
+            sourceMap: DEBUG,
+            // CSS Modules https://github.com/css-modules/css-modules
+            modules: true,
+            localIdentName: DEBUG ? '[local]' : '[hash:base64:4]',
+            // CSS Nano http://cssnano.co/options/
+            minimize: !DEBUG,
+          })}`,
+          'postcss-loader?pack=default',
+          'less-loader'
+        ],
+        // loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap'
+      },
+      {
         test: /\.json$/,
         loader: 'json-loader',
       },
@@ -112,20 +133,20 @@ const config = {
         query: {
           name: DEBUG ? '[path][name].[ext]?[hash]' : '[hash].[ext]',
           limit: 10000,
-        },
+        }
       },
       {
         test: /\.(eot|ttf|wav|mp3)$/,
         loader: 'file-loader',
         query: {
           name: DEBUG ? '[path][name].[ext]?[hash]' : '[hash].[ext]',
-        },
+        }
       },
       {
         test: /\.jade$/,
         loader: 'jade-loader',
-      },
-    ],
+      }
+    ]
   },
 
   resolve: {
