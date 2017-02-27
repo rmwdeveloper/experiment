@@ -83,6 +83,7 @@ const config = {
             // CSS Modules https://github.com/css-modules/css-modules
             modules: true,
             localIdentName: DEBUG ? '[name]_[local]_[hash:base64:3]' : '[hash:base64:4]',
+            // localIdentName: DEBUG ? '[name]_[local]_[hash:base64:3]' : '[hash:base64:4]',
             // CSS Nano http://cssnano.co/options/
             minimize: !DEBUG,
           })}`,
@@ -110,7 +111,7 @@ const config = {
             sourceMap: DEBUG,
             // CSS Modules https://github.com/css-modules/css-modules
             modules: true,
-            localIdentName: DEBUG ? '[local]' : '[hash:base64:4]',
+            localIdentName: '[local]',
             // CSS Nano http://cssnano.co/options/
             minimize: !DEBUG,
           })}`,
