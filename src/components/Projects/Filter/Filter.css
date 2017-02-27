@@ -15,7 +15,7 @@
   padding: 5px;
 }
 
-.button:hover {
+.button:hover, .selected {
   background: #000;
   color: #FFF;
 }
