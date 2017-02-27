@@ -17,14 +17,13 @@ export const stackList = createSelector(
   [professionalProjects, personalProjects],
   (professionalProjects, personalProjects) => {
     const uniqueTechnologies = [];
-    const technologiesUsed = professionalProjects.concat(personalProjects).forEach(item => {
+    professionalProjects.concat(personalProjects).forEach(item => {
       item.technologies.forEach( technology => {
         if (!uniqueTechnologies.includes(technology)) {
           uniqueTechnologies.push(technology);
         }
       });
     });
-    console.log(uniqueTechnologies);
     return uniqueTechnologies;
   }
 );

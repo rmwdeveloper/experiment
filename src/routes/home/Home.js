@@ -17,16 +17,17 @@ class Home extends Component { //eslint-disable-line
   static propTypes = {
     professionalProjects: PropTypes.array,
     personalProjects: PropTypes.array,
+    stackList: PropTypes.array
   };
   static contextTypes = {
     setTitle: PropTypes.func.isRequired
   };
 
   render() {
-    const { professionalProjects, personalProjects } = this.props;
+    const { professionalProjects, personalProjects, stackList } = this.props;
 
     return (<div className={styles.root}>
-      <Filter />
+      <Filter stackList={stackList} />
       {
         professionalProjects.map((professionalProject, index) => {
           return <ProjectGridItem  key={index} project={professionalProject} />;
