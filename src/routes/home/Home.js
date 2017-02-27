@@ -4,8 +4,9 @@ import styles from './Home.css'; //eslint-disable-line
 import { connect } from 'react-redux';
 
 import ProjectGridItem from '../../components/Projects/ProjectGridItem';
+import Filter from '../../components/Projects/Filter';
 
-const title = 'Robert Westenberger Portfolio';
+
 
 @connect(state => ({
   professionalProjects: state.projects.professionalProjects,
@@ -24,6 +25,7 @@ class Home extends Component { //eslint-disable-line
     const { professionalProjects, personalProjects } = this.props;
 
     return (<div className={styles.root}>
+      <Filter />
       {
         professionalProjects.map((professionalProject, index) => {
           return <ProjectGridItem  key={index} project={professionalProject} />;
