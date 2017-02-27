@@ -1,9 +1,9 @@
 import {
-
+  SELECT_FILTER
 } from '../constants';
 
-// export function toggleRegisterMode() {
-//   return dispatch => {
-//     dispatch({ type: TOGGLE_REGISTER_MODE });
-//   };
-// }
+export function selectFilter(filter) {
+  return dispatch => {
+    dispatch({ type: SELECT_FILTER, filter });
+  };
+}

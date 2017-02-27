@@ -6,8 +6,8 @@ function Filter({stackList, selectFilter}) {
 
   return <div className={styles.root}>
     <h4 className={styles.title} >Filters:</h4>
-    { stackList ? stackList.map( stack => {
-      return <button className={styles.button} onClick={selectFilter} >{stack}</button>;
+    { stackList ? stackList.map( (stack, index) => {
+      return <button key={index} className={styles.button} onClick={() => {selectFilter(stack);}} >{stack}</button>;
     }): null}
   </div>;
 }

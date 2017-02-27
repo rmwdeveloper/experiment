@@ -1,5 +1,5 @@
 import {
-
+  SELECT_FILTER
 } from '../constants';
 
 const initialState = {
@@ -37,6 +37,8 @@ const initialState = {
 
 export default function projects(state = initialState, action) {
   switch (action.type) {
+    case SELECT_FILTER:
+      return state;
     default:
       return state;
   }

@@ -16,7 +16,7 @@ const personalProjects = state => state.projects.personalProjects;
 export const stackList = createSelector(
   [professionalProjects, personalProjects],
   (professionalProjects, personalProjects) => {
-    const uniqueTechnologies = [];
+    const uniqueTechnologies = ['All'];
     professionalProjects.concat(personalProjects).forEach(item => {
       item.technologies.forEach( technology => {
         if (!uniqueTechnologies.includes(technology)) {
