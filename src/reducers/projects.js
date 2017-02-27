@@ -32,7 +32,8 @@ const initialState = {
         'Javascript', 'React', 'PostgreSQL' ],
       description: '',
     },
-  ]
+  ],
+  selected: ['All']
 };
 
 export default function projects(state = initialState, action) {

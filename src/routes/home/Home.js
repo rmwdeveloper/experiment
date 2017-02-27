@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Home.css'; //eslint-disable-line
 import { connect } from 'react-redux';
-import * as projectActions from '../../actions/project';
+import * as projectsActions from '../../actions/projects';
 import ProjectGridItem from '../../components/Projects/ProjectGridItem';
 import Filter from '../../components/Projects/Filter';
 import { stackList } from '../../selectors';
@@ -11,13 +11,15 @@ import { stackList } from '../../selectors';
 @connect(state => ({
   professionalProjects: state.projects.professionalProjects,
   personalProjects: state.projects.personalProjects,
-  stackList: stackList(state)
-}), { ...projectActions })
+  stackList: stackList(state),
+  selected: state.projects.selected
+}), { ...projectsActions })
 class Home extends Component { //eslint-disable-line
   static propTypes = {
     professionalProjects: PropTypes.array,
     personalProjects: PropTypes.array,
     stackList: PropTypes.array,
+    selected: PropTypes.array,
     selectFilter: PropTypes.func
   };
   static contextTypes = {
@@ -25,10 +27,10 @@ class Home extends Component { //eslint-disable-line
   };
 
   render() {
-    const { professionalProjects, personalProjects, stackList, selectFilter } = this.props;
+    const { professionalProjects, personalProjects, stackList, selectFilter, selected } = this.props;
 
     return (<div className={styles.root}>
-      <Filter stackList={stackList} selectFilter={selectFilter} />
+      <Filter stackList={stackList} selectFilter={selectFilter} selected={selected} />
       {
         professionalProjects.map((professionalProject, index) => {
           return <ProjectGridItem  key={index} project={professionalProject} />;
