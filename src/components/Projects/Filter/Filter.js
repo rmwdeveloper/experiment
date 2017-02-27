@@ -4,7 +4,11 @@ import styles from './Filter.css'; //eslint-disable-line
 
 function Filter({}) {
 
-  return <div>Filter</div>;
+  return <div className={styles.root}>
+    // { return [].map(filter => {
+    //
+    // })}
+  </div>;
 }
 
 export default withStyles(styles)(Filter);
