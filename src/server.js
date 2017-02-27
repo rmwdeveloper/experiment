@@ -207,7 +207,6 @@ app.post('/create_folder', (req, res) => {
 app.post('/move_file', (req, res) => {
   const username = req.user ? req.user.username : 'Guest';
   const { fromNodeIndex, toNodeIndex, originsParentIndex, parentalIndex } = req.body;
-  console.log(fromNodeIndex, toNodeIndex, originsParentIndex, parentalIndex);
   getUser(username).then(userObj => {
     const { FileSystem: {id} } = userObj.get({ plain: true });
     FileNode.findOne({ where: { nodeIndex: toNodeIndex, FileSystemId: id } }).then(toNode => {
