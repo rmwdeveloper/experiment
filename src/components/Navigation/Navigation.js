@@ -18,6 +18,7 @@ function Navigation() {
           <span className={styles.desktop}>Portfolio</span>
           <span className={styles.mobile}><i className="fa fa-folder" /></span>
         </Link> */ }
+        { /*
         <Link className={styles.link} to="/pagemaker">
           <span className={styles.desktop}>Pagemaker</span>
           <span className={styles.mobile}><i className="fa fa-folder" /></span>
@@ -26,14 +27,13 @@ function Navigation() {
           <span className={styles.desktop}>Console</span>
           <span className={styles.mobile}><i className="fa fa-code" /></span>
         </Link>
-         */ }
 
         <Link className={styles.link} to="/windows">
           <span className={styles.desktop}>Windows</span>
           <span className={styles.mobile}><i className="fa fa-windows" /></span>
         </Link>
 
-
+         */ }
         {__DEV__ ? <ReactPerfButton className={cx(styles.link, styles.devOnly)} /> : null}
         {__DEV__ ? <DisplayEditingMode className={cx(styles.link, styles.devOnly)} /> : null}
       </div>
