@@ -5,7 +5,7 @@ import styles from './ProjectGridItem.css'; //eslint-disable-line
 function ProjectGridItem({ project: {name, technologies, role, description, link}}) {
 
   return (
-    <div>
+    <div className={styles.root}>
       {name}
       {technologies}
       {role}

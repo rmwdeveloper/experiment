@@ -1,6 +1,13 @@
 @import '../../components/variables.css';
 
+
+.root {
+  height: calc(100% - 52px);
+  display: block;
+  margin: 25px;
+  text-align: center;
+}
 .root .container {
-  height: 95vh;
+  /*height: calc(100% - 51px);*/
   /*background-color: var(--primary-color);*/
 }
