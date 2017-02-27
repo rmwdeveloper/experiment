@@ -5,9 +5,7 @@ import styles from './Filter.css'; //eslint-disable-line
 function Filter({}) {
 
   return <div className={styles.root}>
-    // { return [].map(filter => {
-    //
-    // })}
+   
   </div>;
 }
 

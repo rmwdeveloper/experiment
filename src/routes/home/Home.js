@@ -5,12 +5,13 @@ import { connect } from 'react-redux';
 
 import ProjectGridItem from '../../components/Projects/ProjectGridItem';
 import Filter from '../../components/Projects/Filter';
-
+import { stackList } from '../../selectors';
 
 
 @connect(state => ({
   professionalProjects: state.projects.professionalProjects,
   personalProjects: state.projects.personalProjects,
+  stackList: stackList(state)
 }), { })
 class Home extends Component { //eslint-disable-line
   static propTypes = {

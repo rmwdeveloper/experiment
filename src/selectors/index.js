@@ -14,9 +14,10 @@ const professionalProjects = state => state.projects.professionalProjects;
 const personalProjects = state => state.projects.personalProjects;
 
 export const stackList = createSelector(
-  [userObject],
-  (userObject) => {
-    return Object.keys(userObject).length === 0 && userObject.constructor === Object;
+  [professionalProjects, personalProjects],
+  (professionalProjects, personalProjects) => {
+    console.log( 'stackList', professionalProjects, personalProjects);
+    return [];
   }
 );
 
