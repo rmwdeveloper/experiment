@@ -8,7 +8,7 @@ function Filter({stackList, selectFilter, selected}) {
   return <div className={styles.root}>
     <h4 className={styles.title} >Filters:</h4>
     { stackList ? stackList.map( (stack, index) => {
-      return <button key={index} className={cx(styles.button, {[`${styles.selected}`] : selected.includes(stack) } )}
+      return <button key={index} className={cx(styles.button, {[`${styles.selected}`] : selected === stack } )}
                      onClick={() => {selectFilter(stack);}} >{stack}</button>;
     }): null}
   </div>;

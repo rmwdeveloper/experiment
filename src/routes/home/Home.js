@@ -19,7 +19,7 @@ class Home extends Component { //eslint-disable-line
     professionalProjects: PropTypes.array,
     personalProjects: PropTypes.array,
     stackList: PropTypes.array,
-    selected: PropTypes.array,
+    selected: PropTypes.string,
     selectFilter: PropTypes.func
   };
   static contextTypes = {

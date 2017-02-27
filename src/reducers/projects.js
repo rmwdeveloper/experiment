@@ -33,13 +33,13 @@ const initialState = {
       description: '',
     },
   ],
-  selected: ['All']
+  selected: 'All'
 };
 
 export default function projects(state = initialState, action) {
   switch (action.type) {
     case SELECT_FILTER:
-      return state;
+      return { ...state, selected: action.filter };
     default:
       return state;
   }
