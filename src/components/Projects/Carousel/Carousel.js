@@ -26,26 +26,32 @@ class Carousel extends Component {
   }
   applyProps(props) {
     const { slide, tweenProps: {y} } = props;
-    slide.style.transform = `rotateY( ${y}deg ) translateZ(288px)`;
+    slide.style.transform = `rotateX( ${y}deg ) translateZ(288px)`;
   }
   onPress(event) {
-    this.x = event.x;
+    this.y = event.y;
   }
   onDrag(event) {
-    const deltaX = event.x - this.x; // positive = right, negative = left
+    const deltaY = event.y - this.y; // positive = right, negative = left
 
-    if ( deltaX >= -25 && deltaX <= 25 ) {
-      event.target.style.transform = `rotateY( ${deltaX / 4}deg ) translateZ(288px)`;
-    } else if (deltaX < -25) {
-      event.target.style.transform = `rotateY( ${-25 / 4}deg ) translateZ(288px)`;
-    } else if (deltaX > 25) {
-      event.target.style.transform = `rotateY( ${25 / 4}deg ) translateZ(288px)`;
+    if ( deltaY >= -25 && deltaY <= 25 ) {
+      console.log(Math.abs(deltaY / 4));
+      if (deltaY > 0 ) {
+        event.target.style.transform = `rotateX( -${Math.abs(deltaY / 4)}deg ) translateZ(288px)`;
+      }
+      else {
+        event.target.style.transform = `rotateX( ${Math.abs(deltaY / 4)}deg ) translateZ(288px)`;
+      }
+    } else if (deltaY < 25) {
+      event.target.style.transform = `rotateX( ${Math.floor(25 / 4)}deg ) translateZ(288px)`;
+    } else if (deltaY > -25) {
+      event.target.style.transform = `rotateX( -${Math.floor(25 / 4)}deg ) translateZ(288px)`;
     }
 
   }
   endDrag(event) {
-    const deltaX = event.x - this.x;
-    deltaX > 0 ? this.prev() : this.next();
+    const deltaY = event.y - this.y;
+    deltaY < 0 ? this.prev() : this.next();
   }
   prev() {
     const slides = document.querySelectorAll(`.${styles.slide}`);
@@ -76,7 +82,8 @@ class Carousel extends Component {
       const slide = slides[iterator];
       // TweenLite.set(slide, {transformOrigin: 'center'});
       Draggable.create(slide, {onPress: this.onPress, onDrag: this.onDrag, onDragEnd: this.endDrag,
-        bounds: styles.root, type: 'x',
+        bounds: styles.slidesContainer,
+        type: 'y',
         lockAxis: true, force3D: true });
       TweenLite.to(slide, 1, {transform: `rotateX(  ${iterator * rotation}deg ) translateZ( 288px)`});
     }
