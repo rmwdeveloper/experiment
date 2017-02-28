@@ -22,10 +22,9 @@ class Carousel extends Component {
   }
   onDrag(event) {
     const deltaX = event.x - this.x; // positive = right, negative = left
-    console.log('deltaX', deltaX);
+
     if ( deltaX >= -25 && deltaX <= 25 ) {
       event.target.style.transform = `rotateY( ${deltaX / 4}deg ) translateZ(288px)`;
-      console.log(event.target);
     } else if (deltaX < -25) {
       event.target.style.transform = `rotateY( ${-25 / 4}deg ) translateZ(288px)`;
     } else if (deltaX > 25) {
@@ -34,7 +33,8 @@ class Carousel extends Component {
 
   }
   endDrag(event) {
-    console.log('end drag');
+    const deltaX = event.x - this.x;
+    deltaX > 0 ? this.prev() : this.next();
   }
   prev() {
     const slides = document.querySelectorAll(`.${styles.slide}`);
@@ -64,7 +64,7 @@ class Carousel extends Component {
     for ( let iterator = 0; iterator < slides.length; iterator++){
       const slide = slides[iterator];
       // TweenLite.set(slide, {transformOrigin: 'center'});
-      Draggable.create(slide, {onPress: this.onPress, onDrag: this.onDrag, endDrag: this.endDrag,
+      Draggable.create(slide, {onPress: this.onPress, onDrag: this.onDrag, onDragEnd: this.endDrag,
         bounds: styles.root, type: 'x',
         lockAxis: true, force3D: true });
       TweenLite.to(slide, 1, {transform: `rotateY(  ${iterator * rotation}deg ) translateZ( 288px)`});
