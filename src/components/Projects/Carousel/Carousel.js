@@ -39,6 +39,16 @@ class Carousel extends Component {
       slide.setAttribute('y', parseInt(y, 10) - 90);
     }
   }
+  componentDidMount() {
+    const { allProjects } = this.props;
+    const rotation = 360 / allProjects.length;
+
+    const slides = document.querySelectorAll(`.${styles.slide}`);
+    for ( let iterator = 0; iterator < slides.length; iterator++){
+      const slide = slides[iterator];
+      TweenLite.to(slide, 1, {transform: `rotateY(  ${iterator * rotation}deg ) translateZ( 288px)`});
+    }
+  }
   render() {
     const { allProjects } = this.props;
 
@@ -48,7 +58,7 @@ class Carousel extends Component {
         <div id={styles.slidesContainer}>
           {allProjects ? allProjects.map( (project, index) => {
             const style = {};
-            style.transform = `rotateY(  ${index * rotation}deg ) translateZ( 288px)`;
+            style.transform = `translateZ(200px)`;
             return <div y={index * rotation} style={style} key={index} className={styles.slide}>{index}</div>;
           } ): null}
         </div>
