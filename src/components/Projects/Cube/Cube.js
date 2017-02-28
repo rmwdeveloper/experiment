@@ -11,7 +11,7 @@ class Cube extends Component {
   renderSides() {
     const sides = ['front', 'back', 'right', 'left', 'top', 'bottom'];
     return sides.map((side, index) => {
-      return <div className={cx(styles[side], styles.side)}> {index} </div>
+      return <div key={index} className={cx(styles[side], styles.side)}> {index} </div>
     });
   }
   render() {
