@@ -2,8 +2,6 @@ import React, { PropTypes, Component} from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Carousel.css'; //eslint-disable-line
 import cx from 'classnames';
-import { TweenLite } from 'gsap';
-
 
 class Carousel extends Component {
   constructor() {
