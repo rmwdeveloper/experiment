@@ -12,6 +12,17 @@ class Carousel extends Component {
     this.onPress = this.onPress.bind(this);
     this.onDrag = this.onDrag.bind(this);
     this.endDrag = this.endDrag.bind(this);
+    this.random = this.random.bind(this);
+    this.randomColor = this.randomColor.bind(this);
+  }
+  random(min, max) {
+    return min + Math.random() * (max - min);
+  }
+  randomColor() {
+    const h = this.random(1, 360);
+    const s = this.random(0, 100);
+    const l = this.random(0, 100);
+    return `hsla(${h}, ${s}%, ${l}%, 0.40)`;
   }
   applyProps(props) {
     const { slide, tweenProps: {y} } = props;
@@ -80,12 +91,13 @@ class Carousel extends Component {
           {allProjects ? allProjects.map( (project, index) => {
             const style = {};
             style.transform = `translateZ(200px)`;
+            style.backgroundColor = 'hsla(204, 65%, 61%, 0.40)';
             return <div y={index * rotation} style={style} key={index} className={styles.slide}>{index}</div>;
           } ): null}
         </div>
       </div>
-      <i onClick={this.prev} className={cx(styles.control, styles.left, 'fa fa-chevron-left')} />
-      <i onClick={this.next} className={cx(styles.control, styles.right, 'fa fa-chevron-right')} />
+      { /* <i onClick={this.prev} className={cx(styles.control, styles.left, 'fa fa-chevron-left')} />
+      <i onClick={this.next} className={cx(styles.control, styles.right, 'fa fa-chevron-right')} /> */ }
     </div>);
   }
 }
