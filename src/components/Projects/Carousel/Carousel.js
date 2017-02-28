@@ -9,13 +9,32 @@ class Carousel extends Component {
     this.prev = this.prev.bind(this);
     this.next = this.next.bind(this);
     this.applyProps = this.applyProps.bind(this);
+    this.onPress = this.onPress.bind(this);
+    this.onDrag = this.onDrag.bind(this);
+    this.endDrag = this.endDrag.bind(this);
   }
   applyProps(props) {
     const { slide, tweenProps: {y} } = props;
+    slide.style.transform = `rotateY( ${y}deg ) translateZ(288px)`;
+  }
+  onPress(event) {
+    this.x = event.x;
+  }
+  onDrag(event) {
+    const deltaX = event.x - this.x; // positive = right, negative = left
+    console.log('deltaX', deltaX);
+    if ( deltaX >= -25 && deltaX <= 25 ) {
+      event.target.style.transform = `rotateY( ${deltaX / 4}deg ) translateZ(288px)`;
+      console.log(event.target);
+    } else if (deltaX < -25) {
+      event.target.style.transform = `rotateY( ${-25 / 4}deg ) translateZ(288px)`;
+    } else if (deltaX > 25) {
+      event.target.style.transform = `rotateY( ${25 / 4}deg ) translateZ(288px)`;
+    }
 
-     slide.style.transform = `rotateY( ${y}deg ) translateZ(288px)`;
-
-    // console.log(slide.style.transform);
+  }
+  endDrag(event) {
+    console.log('end drag');
   }
   prev() {
     const slides = document.querySelectorAll(`.${styles.slide}`);
@@ -44,6 +63,10 @@ class Carousel extends Component {
     const slides = document.querySelectorAll(`.${styles.slide}`);
     for ( let iterator = 0; iterator < slides.length; iterator++){
       const slide = slides[iterator];
+      // TweenLite.set(slide, {transformOrigin: 'center'});
+      Draggable.create(slide, {onPress: this.onPress, onDrag: this.onDrag, endDrag: this.endDrag,
+        bounds: styles.root, type: 'x',
+        lockAxis: true, force3D: true });
       TweenLite.to(slide, 1, {transform: `rotateY(  ${iterator * rotation}deg ) translateZ( 288px)`});
     }
   }
