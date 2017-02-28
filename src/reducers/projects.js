@@ -10,7 +10,7 @@ const initialState = {
       role: 'Full Stack Web Developer',
       description: '',
       link: '',
-      image: 'tru/dashboard.png'
+      image: 'projects/tru/dashboard.png'
     },
     { name: 'Pagemaker',
       technologies: ['HTML', 'LESS', 'Django REST Framework', 'React', 'Webpack',
@@ -18,7 +18,7 @@ const initialState = {
       role: 'Full Stack Web Developer',
       description: '',
       link: '',
-      image: 'pm/pm.png'
+      image: 'projects/pm/pm.png'
     },
     { name: 'Lecture Editor',
       technologies: ['HTML', 'LESS', 'Django REST Framework', 'React', 'Webpack',
@@ -33,7 +33,7 @@ const initialState = {
       technologies: ['HTML', 'CSS', 'PostCSS', 'Django REST Framework', 'React', 'Webpack',
         'Javascript', 'React', 'PostgreSQL' ],
       description: '',
-      image: 'onlineDesktop/main.png'
+      image: 'projects/onlineDesktop/main.png'
     },
   ],
   selected: 'All'

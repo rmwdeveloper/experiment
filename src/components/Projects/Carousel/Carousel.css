@@ -10,10 +10,10 @@
   overflow: hidden;
 }
 #container {
-  width: 25%;
-  height: 15%;
+  width: 200px;
+  height: 150px;
   position: relative;
-  perspective: 400px;
+  perspective: 1000px;
 }
 
 #slidesContainer {
@@ -21,19 +21,25 @@
   height: 100%;
   position: absolute;
   transform-style: preserve-3d;
-  left: 3%;
+  max-height: 65%;
 }
 
 .slide{
   margin: 0;
   display: block;
   position: absolute;
-  width: 90%;
-  height: 90%;
+  width: 100%;
+  height: 100%;
   border: 1px solid black;
   /*background-color: rgba(150, 150, 150, .15);*/
 }
 
+.slide img {
+  max-height: 100%;
+}
+.slide h3 {
+  color: #FFF;
+}
 .control {
   position: absolute;
   font-size: 30px;
@@ -46,9 +52,35 @@
   right: 0;
 }
 
+@media (--phone) {
+  #container {
+    width: 300px;
+    height: 240px;
+  }
+}
+
+@media (--tablet) {
+  #container {
+    width: 500px;
+    height: 340px;
+  }
+}
+
 @media (--desktop) {
-  #slide {
-    width: 210px;
-    height: 140px;
+  #container {
+    width: 665px;
+    height: 440px;
+  }
+}
+@media (--tabletLandscape) {
+  #container {
+    width: 800px;
+    height: 440px;
+  }
+}
+@media (--widescreen) {
+  #container {
+    width: 1000px;
+    height: 440px;
   }
 }
