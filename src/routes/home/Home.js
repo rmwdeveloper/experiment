@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import * as projectsActions from '../../actions/projects';
 import ProjectGridItem from '../../components/Projects/ProjectGridItem';
 import Filter from '../../components/Projects/Filter';
+import Carousel from '../../components/Projects/Carousel';
 import { stackList } from '../../selectors';
 
 
@@ -25,24 +26,28 @@ class Home extends Component { //eslint-disable-line
   static contextTypes = {
     setTitle: PropTypes.func.isRequired
   };
-
   render() {
-    const { professionalProjects, personalProjects, stackList, selectFilter, selected } = this.props;
-
-    return (<div className={styles.root}>
-      <Filter stackList={stackList} selectFilter={selectFilter} selected={selected} />
-      {
-        professionalProjects.map((professionalProject, index) => {
-          return <ProjectGridItem  key={index} project={professionalProject} />;
-        })
-      }
-      {
-        personalProjects.map((professionalProject, index) => {
-          return <ProjectGridItem key={index} project={professionalProject} />;
-        })
-      }
-    </div>);
+    const { personalProjects, professionalProjects } = this.props;
+    const allProjects = professionalProjects.concat(personalProjects);
+    return <Carousel allProjects={allProjects} {...this.props} />;
   }
+  // render() {
+  //   const { professionalProjects, personalProjects, stackList, selectFilter, selected } = this.props;
+  //
+  //   return (<div className={styles.root}>
+  //     <Filter stackList={stackList} selectFilter={selectFilter} selected={selected} />
+  //     {
+  //       professionalProjects.map((professionalProject, index) => {
+  //         return <ProjectGridItem  key={index} project={professionalProject} />;
+  //       })
+  //     }
+  //     {
+  //       personalProjects.map((professionalProject, index) => {
+  //         return <ProjectGridItem key={index} project={professionalProject} />;
+  //       })
+  //     }
+  //   </div>);
+  // }
 }
 
 export default withStyles(styles)(Home);
