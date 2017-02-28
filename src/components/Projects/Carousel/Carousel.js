@@ -78,7 +78,7 @@ class Carousel extends Component {
       Draggable.create(slide, {onPress: this.onPress, onDrag: this.onDrag, onDragEnd: this.endDrag,
         bounds: styles.root, type: 'x',
         lockAxis: true, force3D: true });
-      TweenLite.to(slide, 1, {transform: `rotateY(  ${iterator * rotation}deg ) translateZ( 288px)`});
+      TweenLite.to(slide, 1, {transform: `rotateX(  ${iterator * rotation}deg ) translateZ( 288px)`});
     }
   }
   render() {

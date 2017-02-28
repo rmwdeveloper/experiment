@@ -3,13 +3,14 @@
 
 #root {
   height: calc(100% - 52px);
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 #container {
-  width: 210px;
-  height: 140px;
+  width: 25%;
+  height: 15%;
   position: relative;
   perspective: 400px;
 }
@@ -25,8 +26,8 @@
   margin: 0;
   display: block;
   position: absolute;
-  width: 186px;
-  height: 116px;
+  width: 90%;
+  height: 90%;
   left: 10px;
   top: 10px;
   border: 1px solid black;
@@ -43,4 +44,11 @@
 }
 .right {
   right: 0;
+}
+
+@media (--desktop) {
+  #slide {
+    width: 210px;
+    height: 140px;
+  }
 }
