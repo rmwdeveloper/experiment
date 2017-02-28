@@ -9,14 +9,16 @@ const initialState = {
       'gulp.js', 'Javascript', 'React', 'PostgreSQL', 'jQuery'],
       role: 'Full Stack Web Developer',
       description: '',
-      link: ''
+      link: '',
+      image: 'tru/dashboard.png'
     },
     { name: 'Pagemaker',
       technologies: ['HTML', 'LESS', 'Django REST Framework', 'React', 'Webpack',
          'Javascript', 'React', 'PostgreSQL' ],
       role: 'Full Stack Web Developer',
       description: '',
-      link: ''
+      link: '',
+      image: 'pm/pm.png'
     },
     { name: 'Lecture Editor',
       technologies: ['HTML', 'LESS', 'Django REST Framework', 'React', 'Webpack',
@@ -31,6 +33,7 @@ const initialState = {
       technologies: ['HTML', 'CSS', 'PostCSS', 'Django REST Framework', 'React', 'Webpack',
         'Javascript', 'React', 'PostgreSQL' ],
       description: '',
+      image: 'onlineDesktop/main.png'
     },
   ],
   selected: 'All'
