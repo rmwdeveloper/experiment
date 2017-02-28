@@ -86,7 +86,8 @@ class Carousel extends Component {
         type: 'y',
         lockAxis: true, force3D: true });
       TweenLite.to(slide, 1, {transform: `rotateX(  ${iterator * rotation}deg ) translateZ( 288px)`,
-                              backgroundColor: 'hsla(204, 65%, 61%, 0.60)'});
+                              backgroundColor: 'rgba(0, 0,0 , 0.40)',
+                              border: '1px solid black'});
     }
   }
   render() {
@@ -99,7 +100,8 @@ class Carousel extends Component {
           {allProjects ? allProjects.map( (project, index) => {
             const style = {};
             style.transform = `translateZ(200px)`;
-            style.backgroundColor = 'hsla(204, 65%, 61%, 1)';
+            style.backgroundColor = 'rgba(255, 255, 255, 1)';
+            style.border = 'none'
             return <div y={index * rotation} style={style} key={index} className={styles.slide}>
              <h3>{project.name}</h3>
             </div>;
