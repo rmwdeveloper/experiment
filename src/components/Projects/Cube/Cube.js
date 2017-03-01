@@ -42,10 +42,6 @@ class Cube extends Component {
       default:
         return null;
     }
-
-
-
-
   }
   buttonLeave() {
     this.randomRotation(this.cube);
@@ -74,6 +70,12 @@ class Cube extends Component {
     this.randomRotation(this.cube);
     // this.rotate.to(this.cube, 16, {transform: 'rotate3d(8, 1, 1, 180deg)', repeatDelay: 0, repeat: -1, yoyo: true});
 
+  }
+  componentWillUnmount() {
+    for (let iterator = 0; iterator < this.menuButtons.length; iterator++) {
+      this.menuButtons[iterator].removeEventListener('mouseenter', this.buttonEnter);
+      this.menuButtons[iterator].removeEventListener('mouseleave', this.buttonLeave);
+    }
   }
   render() {
     const { allProjects } = this.props;
