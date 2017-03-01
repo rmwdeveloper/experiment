@@ -55,12 +55,11 @@ class Cube extends Component {
   renderSides() {
     const sides = ['front', 'back', 'right', 'left', 'top', 'bottom'];
     return sides.map((side, index) => {
-      return <div  key={index} className={cx(styles[side], styles.side)}> {side} </div>
+      return <div key={index} className={cx(styles[side], styles.side)}> {side} </div>
     });
   }
   componentDidMount() {
     this.menuButtons = document.querySelectorAll(`#${styles.menu} button`);
-
     for (let iterator = 0; iterator < this.menuButtons.length; iterator++) {
       this.menuButtons[iterator].addEventListener('mouseenter', this.buttonEnter);
       this.menuButtons[iterator].addEventListener('mouseleave', this.buttonLeave);

@@ -9,6 +9,7 @@
   align-items: center;
   overflow: hidden;
   position: relative;
+  
 }
 
 #menu {
@@ -16,6 +17,7 @@
   top: 0;
   left: 0;
   list-style-type: none;
+  color: #FFF
 }
 #menu li {
   margin: 5px;
