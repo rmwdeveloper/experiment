@@ -16,10 +16,13 @@ class Cube extends Component {
     return Math.random() * (max - min) + min;
   }
   buttonEnter() {
+    this.rotateToFace = TweenMax.to(this.cube, 1, {transform: `rotateY(0deg)`});
+
     this.rotateAnimation.pause();
+
   }
   buttonLeave() {
-    this.rotateAnimation.resume();
+    this.rotateAnimation.restart();
   }
   randomRotation(node) {
     this.rotateAnimation = TweenMax.to(node, this.randRange(5, 10), {
