@@ -60,6 +60,71 @@
   transform: translateZ(100px);
 }
 
+@media (--phone) {
+  #container {
+    width: 250px;
+    height: 250px;
+    perspective-origin: 50% 100px;
+  }
+  #sidesContainer {
+    width: 250px;
+    transform-origin: 100px 100px;
+  }
+  .side {
+    width: 250px;
+    height: 250px;
+  }
+  .back {
+    transform: translateZ(-125px) rotateY(180deg);
+  }
+  .right {
+    transform: rotateY(-270deg) translateX(125px);
+  }
+  .left {
+    transform: rotateY(270deg) translateX(-125px);
+  }
+  .top {
+    transform: rotateX(-90deg) translateY(-125px);
+  }
+  .bottom {
+    transform: rotateX(90deg) translateY(125px);
+  }
+  .front {
+    transform: translateZ(125px);
+  }
+}
+
+@media (--tablet) {
+
+}
+
+@media (--desktop) {
+
+}
+@media (--tabletLandscape) {
+
+}
+@media (--widescreen) {
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*.side {*/
   /*margin: 0;*/
   /*width: 196px;*/
