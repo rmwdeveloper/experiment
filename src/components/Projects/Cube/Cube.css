@@ -8,9 +8,18 @@
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  position: relative;
 }
 
-
+#menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#menu button {
+  background-color: rgba(0,0,0,0);
+  border: none;
+}
 #container {
   width: 200px;
   height: 200px;

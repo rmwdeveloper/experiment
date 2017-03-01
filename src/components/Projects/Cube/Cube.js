@@ -37,6 +37,10 @@ class Cube extends Component {
     const sides = this.renderSides();
     const rotation = 360 / allProjects.length;
     return (<div id={styles.root}>
+      <ul id={styles.menu}>
+        <li><button>Front</button></li>
+        <li><button>Back</button></li>
+      </ul>
       <div id={styles.container}>
         <div id={styles.sidesContainer}>
           {sides}
