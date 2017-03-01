@@ -22,22 +22,22 @@ class Cube extends Component {
 
     switch (side) {
       case 'front':
-        this.rotateToFace = TweenMax.to(this.cube, 1, {transform: `rotateY(0deg)`});
+        this.rotateToFace = TweenMax.to(this.cube, 1, {transform: `translateZ(50px) rotateY(0deg)`});
         break;
       case 'back':
-        this.rotateToFace = TweenMax.to(this.cube, 1, {transform: `translateZ(100px) rotateY(180deg)`});
+        this.rotateToFace = TweenMax.to(this.cube, 1, {transform: `translateZ(50px) rotateY(180deg)`});
         break;
       case 'left':
-        this.rotateToFace = TweenMax.to(this.cube, 1, {transform: `rotateY(-270deg) translateZ(100px)`});
+        this.rotateToFace = TweenMax.to(this.cube, 1, {transform: `translateZ(50px) rotateY(-270deg)`});
         break;
       case 'right':
-        this.rotateToFace = TweenMax.to(this.cube, 1, {transform: `rotateY(270deg) translateZ(-100px)`});
+        this.rotateToFace = TweenMax.to(this.cube, 1, {transform: `translateZ(50px) rotateY(270deg)`});
         break;
       case 'top':
-        this.rotateToFace = TweenMax.to(this.cube, 1, {transform: `rotateX(-90deg) translateY(-100px)`});
+        this.rotateToFace = TweenMax.to(this.cube, 1, {transform: `translateZ(50px) rotateX(-90deg)`});
         break;
       case 'bottom':
-        this.rotateToFace = TweenMax.to(this.cube, 1, {transform: `rotateX(90deg) translateY(100px)`});
+        this.rotateToFace = TweenMax.to(this.cube, 1, {transform: `translateZ(50px) rotateX(90deg)`});
         break;
       default:
         return null;
@@ -48,7 +48,7 @@ class Cube extends Component {
 
   }
   buttonLeave() {
-    // this.rotateAnimation.restart();
+    this.randomRotation(this.cube);
   }
   randomRotation(node) {
     this.rotateAnimation = TweenMax.to(node, this.randRange(5, 10), {
