@@ -94,28 +94,74 @@
   }
 }
 
+@media (--phoneLandscape) {
+  #container {
+    width: 300px;
+    height: 360px;
+    perspective-origin: 50% 100px;
+  }
+  #sidesContainer {
+    width: 300px;
+    transform-origin: 100px 100px;
+  }
+  .side {
+    width: 300px;
+    height: 300px;
+  }
+  .back {
+    transform: translateZ(-150px) rotateY(180deg);
+  }
+  .right {
+    transform: rotateY(-270deg) translateX(150px);
+  }
+  .left {
+    transform: rotateY(270deg) translateX(-150px);
+  }
+  .top {
+    transform: rotateX(-90deg) translateY(-150px);
+  }
+  .bottom {
+    transform: rotateX(90deg) translateY(150px);
+  }
+  .front {
+    transform: translateZ(150px);
+  }
+}
+
+
 @media (--tablet) {
-
+  #container {
+    width: 400px;
+    height: 540px;
+    perspective-origin: 50% 100px;
+  }
+  #sidesContainer {
+    width: 400px;
+    transform-origin: 100px 100px;
+  }
+  .side {
+    width: 400px;
+    height: 400px;
+  }
+  .back {
+    transform: translateZ(-200px) rotateY(180deg);
+  }
+  .right {
+    transform: rotateY(-270deg) translateX(200px);
+  }
+  .left {
+    transform: rotateY(270deg) translateX(-200px);
+  }
+  .top {
+    transform: rotateX(-90deg) translateY(-200px);
+  }
+  .bottom {
+    transform: rotateX(90deg) translateY(200px);
+  }
+  .front {
+    transform: translateZ(200px);
+  }
 }
-
-@media (--desktop) {
-
-}
-@media (--tabletLandscape) {
-
-}
-@media (--widescreen) {
-
-}
-
-
-
-
-
-
-
-
-
 
 
 
