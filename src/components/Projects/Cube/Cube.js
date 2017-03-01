@@ -7,6 +7,17 @@ class Cube extends Component {
   constructor() {
     super();
     this.renderSides = this.renderSides.bind(this);
+    this.randomRotation = this.randomRotation.bind(this);
+    this.randRange = this.randRange.bind(this);
+  }
+  randRange(min, max){
+    return Math.random() * (max - min) + min;
+  }
+  randomRotation(node) {
+    TweenMax.to(node, this.randRange(10, 20), {
+      transform: `rotate3d(${this.randRange(1, 8)}, ${this.randRange(1, 8)}, ${this.randRange(1, 8)}, ${this.randRange(1, 360)}deg)`,
+      onComplete: this.randomRotation,
+      onCompleteParams: [node] });
   }
   renderSides() {
     const sides = ['front', 'back', 'right', 'left', 'top', 'bottom'];
@@ -16,16 +27,10 @@ class Cube extends Component {
   }
   componentDidMount() {
     this.cube = document.getElementById(styles.sidesContainer);
-    this.rotate = new TimelineMax();
-    // this.horizontalRotate = new TimelineMax();
-    // this.verticalRotate = new TimelineMax();
+    // this.rotate = new TimelineMax();
+    this.randomRotation(this.cube);
+    // this.rotate.to(this.cube, 16, {transform: 'rotate3d(8, 1, 1, 180deg)', repeatDelay: 0, repeat: -1, yoyo: true});
 
-    this.rotate.to(this.cube, 16, {transform: 'rotate3d(8, 1, 1, 180deg)', repeatDelay: 0, repeat: -1, yoyo: true});
-    // this.horizontalRotate.to(this.cube, 4, {transform: 'rotateY(180deg)', repeatDelay: 0, repeat: -1, yoyo: true});
-    // this.verticalRotate.to(this.cube, 4, {transform: 'rotateX(180deg)', repeatDelay: 0, repeat: -1, yoyo: true});
-    // this.rotate.play();
-    // this.horizontalRotate.play();
-    // this.verticalRotate.play();
   }
   render() {
     const { allProjects } = this.props;
