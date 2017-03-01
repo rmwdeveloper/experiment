@@ -15,7 +15,34 @@
   position: absolute;
   top: 0;
   left: 0;
+  list-style-type: none;
 }
+#menu li {
+  margin: 5px;
+  height: 60px;
+  line-height: 60px;
+  padding-left: 5px;
+}
+
+#menu li.front {
+  border-left: 5px solid rgba(142, 227, 239, 1);
+}
+#menu li.back {
+  border-left: 5px solid rgba(250, 201, 184, 1);
+}
+#menu li.left {
+  border-left: 5px solid rgba(120, 128, 181, 1);
+}
+#menu li.right {
+  border-left: 5px solid rgba(32, 42, 37, 1);
+}
+#menu li.top {
+  border-left: 5px solid rgba(216, 210, 225, 1);
+}
+#menu li.bottom {
+  border-left: 5px solid rgba(219, 34, 42, 1);
+}
+
 #menu button {
   background-color: rgba(0,0,0,0);
   border: none;
@@ -47,33 +74,43 @@
   align-items: center;
 }
 
-.back {
+div.back {
   transform: translateZ(-100px) rotateY(180deg);
   background-color: rgba(250, 201, 184, .80);
 }
-.right {
+div.right {
   transform: rotateY(-270deg) translateX(100px);
   transform-origin: top right;
   background-color: rgba(32, 42, 37, .80);
 }
-.left {
+div.left {
   transform: rotateY(270deg) translateX(-100px);
   transform-origin: center left;
   background-color: rgba(120, 128, 181, .80);
 }
-.top {
+div.top {
   transform: rotateX(90deg) translateY(-100px) scale(1, 1);
   transform-origin: top center;
   background-color: rgba(216, 210, 225, .80);
 }
-.bottom {
+div.bottom {
   transform: rotateX(-90deg) translateY(100px) scale(1, 1);
   transform-origin: bottom center;
   background-color: rgba(219, 34, 42, .80);
 }
-.front {
+div.front {
   transform: translateZ(100px);
   background-color: rgba(142, 227, 239, .80);
+
+}
+.buttonFront:before {
+  content: ' ';
+  width: 5px;
+  height: 100%;
+  background-color: rgba(142, 227, 239, 1);
+  position: absolute;
+  left: 0;
+  top: 0p;
 }
 
 @media (--phone) {
@@ -90,22 +127,22 @@
     width: 250px;
     height: 250px;
   }
-  .back {
+  div.back {
     transform: translateZ(-125px) rotateY(180deg);
   }
-  .right {
+  div.right {
     transform: rotateY(-270deg) translateX(125px);
   }
-  .left {
+  div.left {
     transform: rotateY(270deg) translateX(-125px);
   }
-  .top {
+  div.top {
     transform: rotateX(90deg) translateY(-125px) scale(1, 1);
   }
-  .bottom {
+  div.bottom {
     transform: rotateX(-90deg) translateY(125px) scale(1, 1);
   }
-  .front {
+  div.front {
     transform: translateZ(125px);
   }
 }
@@ -124,22 +161,22 @@
     width: 300px;
     height: 300px;
   }
-  .back {
+  div.back {
     transform: translateZ(-150px) rotateY(180deg);
   }
-  .right {
+  div.right {
     transform: rotateY(-270deg) translateX(150px);
   }
-  .left {
+  div.left {
     transform: rotateY(270deg) translateX(-150px);
   }
-  .top {
+  div.top {
     transform: rotateX(90deg) translateY(-150px) scale(1, 1);
   }
-  .bottom {
+  div.bottom {
     transform: rotateX(-90deg) translateY(150px) scale(1, 1);
   }
-  .front {
+  div.front {
     transform: translateZ(150px);
   }
 }
@@ -153,28 +190,28 @@
   }
   #sidesContainer {
     width: 400px;
-    transform-origin: 200px 200px;
+    transform-origin: div200px 200px;
   }
   .side {
     width: 400px;
     height: 400px;
   }
-  .back {
+  div.back {
     transform: translateZ(-200px) rotateY(180deg);
   }
-  .right {
+  div.right {
     transform: rotateY(-270deg) translateX(200px);
   }
-  .left {
+  div.left {
     transform: rotateY(270deg) translateX(-200px);
   }
-  .top {
+  div.top {
     transform: rotateX(90deg) translateY(-200px) scale(1, 1);
   }
-  .bottom {
+  div.bottom {
     transform: rotateX(-90deg) translateY(200px) scale(1, 1);
   }
-  .front {
+  div.front {
     transform: translateZ(200px);
   }
 }

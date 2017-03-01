@@ -83,12 +83,12 @@ class Cube extends Component {
     const rotation = 360 / allProjects.length;
     return (<div id={styles.root}>
       <ul id={styles.menu}>
-        <li><button data-side={'front'}>Front</button></li>
-        <li><button data-side={'back'}>Back</button></li>
-        <li><button data-side={'left'}>left</button></li>
-        <li><button data-side={'right'}>right</button></li>
-        <li><button data-side={'top'}>top</button></li>
-        <li><button data-side={'bottom'}>bottom</button></li>
+        <li className={cx(styles.front)}><button data-side={'front'}>Front</button></li>
+        <li className={cx(styles.back)}><button data-side={'back'}>Back</button></li>
+        <li className={cx(styles.left)}><button data-side={'left'}>left</button></li>
+        <li className={cx(styles.right)}><button data-side={'right'}>right</button></li>
+        <li className={cx(styles.top)}><button data-side={'top'}>top</button></li>
+        <li className={cx(styles.bottom)}><button data-side={'bottom'}>bottom</button></li>
       </ul>
       <div id={styles.container}>
         <div id={styles.sidesContainer}>
