@@ -9,12 +9,20 @@ class Cube extends Component {
     this.renderSides = this.renderSides.bind(this);
     this.randomRotation = this.randomRotation.bind(this);
     this.randRange = this.randRange.bind(this);
+    this.buttonEnter = this.buttonEnter.bind(this);
+    this.buttonLeave = this.buttonLeave.bind(this);
   }
   randRange(min, max){
     return Math.random() * (max - min) + min;
   }
+  buttonEnter() {
+    this.rotateAnimation.pause();
+  }
+  buttonLeave() {
+    this.rotateAnimation.resume();
+  }
   randomRotation(node) {
-    TweenMax.to(node, this.randRange(5, 10), {
+    this.rotateAnimation = TweenMax.to(node, this.randRange(5, 10), {
       transform: `rotate3d(${this.randRange(1, 8)}, ${this.randRange(1, 8)}, ${this.randRange(1, 8)}, ${this.randRange(1, 360)}deg)`,
       onComplete: this.randomRotation,
       onCompleteParams: [node] });
@@ -26,6 +34,12 @@ class Cube extends Component {
     });
   }
   componentDidMount() {
+    this.menuButtons = document.querySelectorAll(`#${styles.menu} button`);
+
+    for (let iterator = 0; iterator < this.menuButtons.length; iterator++) {
+      this.menuButtons[iterator].addEventListener('mouseenter', this.buttonEnter);
+      this.menuButtons[iterator].addEventListener('mouseleave', this.buttonLeave);
+    }
     this.cube = document.getElementById(styles.sidesContainer);
     // this.rotate = new TimelineMax();
     this.randomRotation(this.cube);
