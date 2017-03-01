@@ -15,14 +15,40 @@ class Cube extends Component {
   randRange(min, max){
     return Math.random() * (max - min) + min;
   }
-  buttonEnter() {
-    this.rotateToFace = TweenMax.to(this.cube, 1, {transform: `rotateY(0deg)`});
+  buttonEnter(event) {
+    const side = event.target.dataset['side'];
 
     this.rotateAnimation.pause();
 
+    switch (side) {
+      case 'front':
+        this.rotateToFace = TweenMax.to(this.cube, 1, {transform: `rotateY(0deg)`});
+        break;
+      case 'back':
+        this.rotateToFace = TweenMax.to(this.cube, 1, {transform: `translateZ(100px) rotateY(180deg)`});
+        break;
+      case 'left':
+        this.rotateToFace = TweenMax.to(this.cube, 1, {transform: `rotateY(-270deg) translateZ(100px)`});
+        break;
+      case 'right':
+        this.rotateToFace = TweenMax.to(this.cube, 1, {transform: `rotateY(270deg) translateZ(-100px)`});
+        break;
+      case 'top':
+        this.rotateToFace = TweenMax.to(this.cube, 1, {transform: `rotateX(-90deg) translateY(-100px)`});
+        break;
+      case 'bottom':
+        this.rotateToFace = TweenMax.to(this.cube, 1, {transform: `rotateX(90deg) translateY(100px)`});
+        break;
+      default:
+        return null;
+    }
+
+
+
+
   }
   buttonLeave() {
-    this.rotateAnimation.restart();
+    // this.rotateAnimation.restart();
   }
   randomRotation(node) {
     this.rotateAnimation = TweenMax.to(node, this.randRange(5, 10), {
@@ -33,7 +59,7 @@ class Cube extends Component {
   renderSides() {
     const sides = ['front', 'back', 'right', 'left', 'top', 'bottom'];
     return sides.map((side, index) => {
-      return <div key={index} className={cx(styles[side], styles.side)}> {side} </div>
+      return <div  key={index} className={cx(styles[side], styles.side)}> {side} </div>
     });
   }
   componentDidMount() {
@@ -55,8 +81,12 @@ class Cube extends Component {
     const rotation = 360 / allProjects.length;
     return (<div id={styles.root}>
       <ul id={styles.menu}>
-        <li><button>Front</button></li>
-        <li><button>Back</button></li>
+        <li><button data-side={'front'}>Front</button></li>
+        <li><button data-side={'back'}>Back</button></li>
+        <li><button data-side={'left'}>left</button></li>
+        <li><button data-side={'right'}>right</button></li>
+        <li><button data-side={'top'}>top</button></li>
+        <li><button data-side={'bottom'}>bottom</button></li>
       </ul>
       <div id={styles.container}>
         <div id={styles.sidesContainer}>
