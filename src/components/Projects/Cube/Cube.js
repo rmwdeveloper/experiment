@@ -14,7 +14,7 @@ class Cube extends Component {
     return Math.random() * (max - min) + min;
   }
   randomRotation(node) {
-    TweenMax.to(node, this.randRange(10, 20), {
+    TweenMax.to(node, this.randRange(5, 10), {
       transform: `rotate3d(${this.randRange(1, 8)}, ${this.randRange(1, 8)}, ${this.randRange(1, 8)}, ${this.randRange(1, 360)}deg)`,
       onComplete: this.randomRotation,
       onCompleteParams: [node] });

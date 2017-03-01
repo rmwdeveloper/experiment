@@ -27,6 +27,7 @@
 }
 
 .side {
+  color: #FFF;
   position: absolute;
   width: 200px;
   height: 200px;
@@ -39,25 +40,31 @@
 
 .back {
   transform: translateZ(-100px) rotateY(180deg);
+  background-color: rgba(250, 201, 184, .80);
 }
 .right {
   transform: rotateY(-270deg) translateX(100px);
   transform-origin: top right;
+  background-color: rgba(32, 42, 37, .80);
 }
 .left {
   transform: rotateY(270deg) translateX(-100px);
   transform-origin: center left;
+  background-color: rgba(120, 128, 181, .80);
 }
 .top {
   transform: rotateX(-90deg) translateY(-100px);
   transform-origin: top center;
+  background-color: rgba(216, 210, 225, .80);
 }
 .bottom {
   transform: rotateX(90deg) translateY(100px);
   transform-origin: bottom center;
+  background-color: rgba(219, 34, 42, .80);
 }
 .front {
   transform: translateZ(100px);
+  background-color: rgba(142, 227, 239, .80);
 }
 
 @media (--phone) {
