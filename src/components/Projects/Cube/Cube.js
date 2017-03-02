@@ -133,7 +133,7 @@ class Cube extends Component {
   renderSides() {
     this.sides = ['front', 'back', 'right', 'left', 'top', 'bottom'];
     return this.sides.map((side, index) => {
-      return <div style={{backgroundColor: this.colors[side], opacity: .60}} id={side} key={index} className={cx(styles[side], styles.side)}> {side} </div>
+      return <div style={{backgroundColor: this.colors[side], opacity: 0.80}} id={side} key={index} className={cx(styles[side], styles.side)}> {side} </div>
     });
   }
   componentDidMount() {
