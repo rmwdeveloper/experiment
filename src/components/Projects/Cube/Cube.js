@@ -25,21 +25,24 @@ class Cube extends Component {
   zoomOut() {
     this.props.zoomOut();
     this.randomRotation(this.cube);
-    TweenLite.to(this.container, 1, {perspective: `1000px`});
+    TweenLite.to(this.displayer, 0.1, { display: 'none'});
+    TweenLite.to(this.container, 1, { perspective: `1000px`, display: 'block'});
   }
   randRange(min, max){
     return Math.random() * (max - min) + min;
   }
   clickMenuItem(event) {
     const side = event.target.dataset['side'];
+    this.displayer = document.getElementById(styles.displayer);
+
     const element = document.getElementById(side);
     this.rotateAnimation.pause();
     this.props.zoomIn();
     // TweenLite.to(element, 1, {transform: `matrix3d(-1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,0,0,200,1)`});
-
+    TweenLite.to(this.displayer, 1, {display: 'block', delay: 1});
     switch (side) {
       case 'front':
-        this.zoomIn = TweenLite.to(this.container, 1, {perspective: `200px`});
+        this.zoomIn = TweenLite.to(this.container, 1, {perspective: `100px`, display: 'none'});
         this.rotateToFace = TweenLite.to(this.cube, 1, {transform: `translateZ(200px) rotateY(180deg) scale(1, -1)`});
         TweenLite.to(element, 0.01, {css: { scaleX: -1 }});
         break;
@@ -159,11 +162,12 @@ class Cube extends Component {
         <li className={cx(styles.top)}><button onClick={this.clickMenuItem} data-side={'top'}>top</button></li>
         <li className={cx(styles.bottom)}><button onClick={this.clickMenuItem} data-side={'bottom'}>bottom</button></li>
       </ul>
-      <div id={styles.container}>
+      <div id={cx(styles.container, styles.cube)}>
         <div id={styles.sidesContainer}>
           {sides}
         </div>
       </div>
+      <div id={styles.displayer}>  front </div>
       { /* <i onClick={this.prev} className={cx(styles.control, styles.left, 'fa fa-chevron-left')} />
       <i onClick={this.next} className={cx(styles.control, styles.right, 'fa fa-chevron-right')} /> */ }
     </div>);
