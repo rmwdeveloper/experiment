@@ -22,41 +22,41 @@ class Cube extends Component {
     const side = event.target.dataset['side'];
     const element = document.getElementById(side);
     this.rotateAnimation.pause();
-    // TweenMax.to(element, 1, {transform: `matrix3d(-1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,0,0,200,1)`});
+    // TweenLite.to(element, 1, {transform: `matrix3d(-1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,0,0,200,1)`});
 
     switch (side) {
       case 'front':
-        this.zoomIn = TweenMax.to(this.container, 1, {perspective: `200px`});
-        this.rotateToFace = TweenMax.to(this.cube, 1, {transform: `translateZ(200px) rotateY(180deg) scale(1, -1)`});
-        TweenMax.to(element, 0.01, {css: { scaleX: -1 }});
+        this.zoomIn = TweenLite.to(this.container, 1, {perspective: `200px`});
+        this.rotateToFace = TweenLite.to(this.cube, 1, {transform: `translateZ(200px) rotateY(180deg) scale(1, -1)`});
+        TweenLite.to(element, 0.01, {css: { scaleX: -1 }});
         break;
       case 'back':
-        this.zoomIn = TweenMax.to(this.container, 1, {perspective: `200px`});
-        this.rotateToFace = TweenMax.to(this.cube, 1, {transform: `translateZ(200px) rotateY(0deg) scale(1, -1)`});
-        TweenMax.to(element, 0.01, {css: {scaleX: -1, scaleY: -1 }});
+        this.zoomIn = TweenLite.to(this.container, 1, {perspective: `200px`});
+        this.rotateToFace = TweenLite.to(this.cube, 1, {transform: `translateZ(200px) rotateY(0deg) scale(1, -1)`});
+        TweenLite.to(element, 0.01, {css: {scaleX: -1, scaleY: -1 }});
         break;
       case 'left':
-        this.zoomIn = TweenMax.to(this.container, 1, {perspective: `200px`});
-        this.rotateToFace = TweenMax.to(this.cube, 1, {transform: `translateZ(200px) rotateY(-270deg) scale(-1, 1)`});
-        TweenMax.to(element, 0.01, {css: { scaleY: -1}});
+        this.zoomIn = TweenLite.to(this.container, 1, {perspective: `200px`});
+        this.rotateToFace = TweenLite.to(this.cube, 1, {transform: `translateZ(200px) rotateY(-270deg) scale(-1, 1)`});
+        TweenLite.to(element, 0.01, {css: { scaleY: -1}});
         break;
       case 'right':
-        this.zoomIn = TweenMax.to(this.container, 1, {perspective: `200px`});
-        this.rotateToFace = TweenMax.to(this.cube, 1, {transform: `translateZ(200px) rotateY(-90deg) scale(-1, 1)`});
-        // TweenMax.to(element, 1, {css: {transform: 'rotateY(-270deg) translateX(100px) scaleY(-1) scaleX(-1) translateY(-200px)'}});
-        TweenMax.to(element, 0.01, {css: {transform: 'rotateY(-270deg) translateX(100px) scaleY(-1) translateY(-200px)'}});
-        TweenMax.to(element, 0.01, {css: { scaleY: -1}});
+        this.zoomIn = TweenLite.to(this.container, 1, {perspective: `200px`});
+        this.rotateToFace = TweenLite.to(this.cube, 1, {transform: `translateZ(200px) rotateY(-90deg) scale(-1, 1)`});
+        // TweenLite.to(element, 1, {css: {transform: 'rotateY(-270deg) translateX(100px) scaleY(-1) scaleX(-1) translateY(-200px)'}});
+        TweenLite.to(element, 0.01, {css: {transform: 'rotateY(-270deg) translateX(100px) scaleY(-1) translateY(-200px)'}});
+        TweenLite.to(element, 0.01, {css: { scaleY: -1}});
         console.log(element);
         break;
       case 'top':
-        this.zoomIn = TweenMax.to(this.container, 1, {perspective: `200px`});
-        this.rotateToFace = TweenMax.to(this.cube, 1, {transform: `translateZ(200px) rotateX(90deg) scale(-1, 1)`});
-        TweenMax.to(element, 0.01, {transform: 'rotateX(90deg) translateY(-100px) scale(-1, 1)'});
+        this.zoomIn = TweenLite.to(this.container, 1, {perspective: `200px`});
+        this.rotateToFace = TweenLite.to(this.cube, 1, {transform: `translateZ(200px) rotateX(90deg) scale(-1, 1)`});
+        TweenLite.to(element, 0.01, {transform: 'rotateX(90deg) translateY(-100px) scale(-1, 1)'});
         break;
       case 'bottom':
-        this.zoomIn = TweenMax.to(this.container, 1, {perspective: `200px`});
-        this.rotateToFace = TweenMax.to(this.cube, 1, {transform: `translateZ(200px) rotateX(-90deg) scale(-1, 1)`});
-        TweenMax.to(element, 0.01, {transform: 'rotateX(-90deg) translateY(100px) scale(-1, 1)'});
+        this.zoomIn = TweenLite.to(this.container, 1, {perspective: `200px`});
+        this.rotateToFace = TweenLite.to(this.cube, 1, {transform: `translateZ(200px) rotateX(-90deg) scale(-1, 1)`});
+        TweenLite.to(element, 0.01, {transform: 'rotateX(-90deg) translateY(100px) scale(-1, 1)'});
         break;
       default:
         return null;
@@ -68,28 +68,28 @@ class Cube extends Component {
     // this.rotateAnimation.pause();
     // switch (side) {
     //   case 'front':
-    //     // this.zoomIn = TweenMax.to(this.container, 1, {perspective: `200px`});
-    //     this.rotateToFace = TweenMax.to(this.cube, 1, {transform: `translateZ(50px) rotateY(0deg)`});
+    //     // this.zoomIn = TweenLite.to(this.container, 1, {perspective: `200px`});
+    //     this.rotateToFace = TweenLite.to(this.cube, 1, {transform: `translateZ(50px) rotateY(0deg)`});
     //     break;
     //   case 'back':
-    //     // this.zoomIn = TweenMax.to(this.container, 1, {perspective: `200px`});
-    //     this.rotateToFace = TweenMax.to(this.cube, 1, {transform: `translateZ(50px) rotateY(180deg)`});
+    //     // this.zoomIn = TweenLite.to(this.container, 1, {perspective: `200px`});
+    //     this.rotateToFace = TweenLite.to(this.cube, 1, {transform: `translateZ(50px) rotateY(180deg)`});
     //     break;
     //   case 'left':
-    //     // this.zoomIn = TweenMax.to(this.container, 1, {perspective: `200px`});
-    //     this.rotateToFace = TweenMax.to(this.cube, 1, {transform: `translateZ(50px) rotateY(-270deg)`});
+    //     // this.zoomIn = TweenLite.to(this.container, 1, {perspective: `200px`});
+    //     this.rotateToFace = TweenLite.to(this.cube, 1, {transform: `translateZ(50px) rotateY(-270deg)`});
     //     break;
     //   case 'right':
-    //     // this.zoomIn = TweenMax.to(this.container, 1, {perspective: `200px`});
-    //     this.rotateToFace = TweenMax.to(this.cube, 1, {transform: `translateZ(50px) rotateY(270deg)`});
+    //     // this.zoomIn = TweenLite.to(this.container, 1, {perspective: `200px`});
+    //     this.rotateToFace = TweenLite.to(this.cube, 1, {transform: `translateZ(50px) rotateY(270deg)`});
     //     break;
     //   case 'top':
-    //     // this.zoomIn = TweenMax.to(this.container, 1, {perspective: `200px`});
-    //     this.rotateToFace = TweenMax.to(this.cube, 1, {transform: `translateZ(50px) rotateX(-90deg)`});
+    //     // this.zoomIn = TweenLite.to(this.container, 1, {perspective: `200px`});
+    //     this.rotateToFace = TweenLite.to(this.cube, 1, {transform: `translateZ(50px) rotateX(-90deg)`});
     //     break;
     //   case 'bottom':
-    //     // this.zoomIn = TweenMax.to(this.container, 1, {perspective: `200px`});
-    //     this.rotateToFace = TweenMax.to(this.cube, 1, {transform: `translateZ(50px) rotateX(90deg)`});
+    //     // this.zoomIn = TweenLite.to(this.container, 1, {perspective: `200px`});
+    //     this.rotateToFace = TweenLite.to(this.cube, 1, {transform: `translateZ(50px) rotateX(90deg)`});
     //     break;
     //   default:
     //     return null;
@@ -99,7 +99,7 @@ class Cube extends Component {
     // this.randomRotation(this.cube);
   }
   randomRotation(node) {
-    this.rotateAnimation = TweenMax.to(node, this.randRange(5, 10), {
+    this.rotateAnimation = TweenLite.to(node, this.randRange(5, 10), {
       transform: `rotate3d(${this.randRange(1, 8)}, ${this.randRange(1, 8)}, ${this.randRange(1, 8)}, ${this.randRange(1, 360)}deg)`,
       onComplete: this.randomRotation,
       onCompleteParams: [node] });
