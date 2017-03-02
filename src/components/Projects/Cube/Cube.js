@@ -24,12 +24,12 @@ class Cube extends Component {
     this.zoomOut = this.zoomOut.bind(this);
 
     this.colors = {
-      front: 'rgba(142, 227, 239, 1)',
-      back: 'rgba(250, 201, 184, 1)',
-      left: 'rgba(120, 128, 181, 1)',
-      right: 'rgba(32, 42, 37, 1)',
-      top: 'rgba(216, 210, 225, 1)',
-      bottom: 'rgba(219, 34, 42, 1)',
+      front: 'rgb(142, 227, 239)',
+      back: 'rgb(250, 201, 184)',
+      left: 'rgb(120, 128, 181)',
+      right: 'rgb(32, 42, 37)',
+      top: 'rgb(216, 210, 225)',
+      bottom: 'rgb(219, 34, 42)',
     };
 
   }
@@ -131,9 +131,9 @@ class Cube extends Component {
       onCompleteParams: [node] });
   }
   renderSides() {
-    const sides = ['front', 'back', 'right', 'left', 'top', 'bottom'];
-    return sides.map((side, index) => {
-      return <div id={side} key={index} className={cx(styles[side], styles.side)}> {side} </div>
+    this.sides = ['front', 'back', 'right', 'left', 'top', 'bottom'];
+    return this.sides.map((side, index) => {
+      return <div style={{backgroundColor: this.colors[side], opacity: .60}} id={side} key={index} className={cx(styles[side], styles.side)}> {side} </div>
     });
   }
   componentDidMount() {
@@ -158,12 +158,11 @@ class Cube extends Component {
     return (<div id={styles.root}>
       { zoomed ? <i onClick={this.zoomOut} className={cx('fa fa-close', 'fa-2x', styles.closeButton)} /> : null }
       <ul id={styles.menu}>
-        <li className={cx(styles.front)}><button onClick={this.clickMenuItem} data-side={'front'}>Front</button></li>
-        <li className={cx(styles.back)}><button onClick={this.clickMenuItem} data-side={'back'}>Back</button></li>
-        <li className={cx(styles.left)}><button onClick={this.clickMenuItem} data-side={'left'}>left</button></li>
-        <li className={cx(styles.right)}><button onClick={this.clickMenuItem} data-side={'right'}>right</button></li>
-        <li className={cx(styles.top)}><button onClick={this.clickMenuItem} data-side={'top'}>top</button></li>
-        <li className={cx(styles.bottom)}><button onClick={this.clickMenuItem} data-side={'bottom'}>bottom</button></li>
+        { this.sides.map( (side, index) => {
+          return <li style={{borderLeft: `5px solid ${this.colors[side]}`}} key={index} className={styles[side]}>
+            <button onClick={this.clickMenuItem} data-side={side}>{side}</button>
+          </li>;
+        })}
       </ul>
       <div id={cx(styles.container, styles.cube)}>
         <div id={styles.sidesContainer}>

@@ -36,24 +36,8 @@
   color: #FFF
 }
 
-
-#menu li.front {
-  border-left: 5px solid rgba(142, 227, 239, 1);
-}
-#menu li.back {
-  border-left: 5px solid rgba(250, 201, 184, 1);
-}
-#menu li.left {
-  border-left: 5px solid rgba(120, 128, 181, 1);
-}
-#menu li.right {
-  border-left: 5px solid rgba(32, 42, 37, 1);
-}
-#menu li.top {
-  border-left: 5px solid rgba(216, 210, 225, 1);
-}
-#menu li.bottom {
-  border-left: 5px solid rgba(219, 34, 42, 1);
+#menu li button {
+  text-transform: capitalize;
 }
 
 #menu button {
