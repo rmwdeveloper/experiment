@@ -32,23 +32,6 @@ class Home extends Component { //eslint-disable-line
     const allProjects = professionalProjects.concat(personalProjects);
     return <Cube allProjects={allProjects} {...this.props} />;
   }
-  // render() {
-  //   const { professionalProjects, personalProjects, stackList, selectFilter, selected } = this.props;
-  //
-  //   return (<div className={styles.root}>
-  //     <Filter stackList={stackList} selectFilter={selectFilter} selected={selected} />
-  //     {
-  //       professionalProjects.map((professionalProject, index) => {
-  //         return <ProjectGridItem  key={index} project={professionalProject} />;
-  //       })
-  //     }
-  //     {
-  //       personalProjects.map((professionalProject, index) => {
-  //         return <ProjectGridItem key={index} project={professionalProject} />;
-  //       })
-  //     }
-  //   </div>);
-  // }
 }
 
 export default withStyles(styles)(Home);

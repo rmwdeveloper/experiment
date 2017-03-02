@@ -153,13 +153,13 @@ class Cube extends Component {
     }
   }
   render() {
-    const { allProjects, zoomed, faceShown } = this.props;
+    const { zoomed, faceShown } = this.props;
     const sides = this.renderSides();
     return (<div id={styles.root}>
       { zoomed ? <i onClick={this.zoomOut} className={cx('fa fa-close', 'fa-2x', styles.closeButton)} /> : null }
       <ul id={styles.menu}>
         { this.sides.map( (side, index) => {
-          return <li style={{borderLeft: `5px solid ${this.colors[side]}`}} key={index} className={styles[side]}>
+          return <li style={{borderColor: `${this.colors[side]}`}} key={index} className={styles[side]}>
             <button onClick={this.clickMenuItem} data-side={side}>{side}</button>
           </li>;
         })}
