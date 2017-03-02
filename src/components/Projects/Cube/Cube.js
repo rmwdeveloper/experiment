@@ -31,6 +31,7 @@ class Cube extends Component {
       top: 'rgba(216, 210, 225, 1)',
       bottom: 'rgba(219, 34, 42, 1)',
     };
+
   }
   zoomOut() {
     this.props.zoomOut();
@@ -48,9 +49,10 @@ class Cube extends Component {
     const element = document.getElementById(side);
     this.rotateAnimation.pause();
     this.props.zoomIn(side);
-    // TweenLite.to(element, 1, {transform: `matrix3d(-1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,0,0,200,1)`});
+
     TweenLite.to(this.displayer, 1, {display: 'flex', delay: 1});
     TweenLite.to(this.container, 1, {perspective: `100px`, display: 'none'});
+
     switch (side) {
       case 'front':
         this.rotateToFace = TweenLite.to(this.cube, 1, {transform: `translateZ(200px) rotateY(180deg) scale(1, -1)`});
@@ -119,7 +121,7 @@ class Cube extends Component {
   }
   buttonLeave() {
     if (!this.props.zoomed){
-      // this.randomRotation(this.cube);
+      this.randomRotation(this.cube);
     }
   }
   randomRotation(node) {
