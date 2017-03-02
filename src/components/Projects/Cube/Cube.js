@@ -1,10 +1,16 @@
 import React, { PropTypes, Component} from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import { connect } from 'react-redux';
+
+import * as cubeActions from '../../../actions/cube';
 import styles from './Cube.css'; //eslint-disable-line
 import cx from 'classnames';
 
 
 // todo: refactor
+@connect(state => ({
+  zoomed: state.cube.zoomed
+}), { ...cubeActions})
 class Cube extends Component {
   constructor() {
     super();
@@ -14,6 +20,12 @@ class Cube extends Component {
     this.buttonEnter = this.buttonEnter.bind(this);
     this.buttonLeave = this.buttonLeave.bind(this);
     this.clickMenuItem = this.clickMenuItem.bind(this);
+    this.zoomOut = this.zoomOut.bind(this);
+  }
+  zoomOut() {
+    this.props.zoomOut();
+    this.randomRotation(this.cube);
+    TweenLite.to(this.container, 1, {perspective: `1000px`});
   }
   randRange(min, max){
     return Math.random() * (max - min) + min;
@@ -22,6 +34,7 @@ class Cube extends Component {
     const side = event.target.dataset['side'];
     const element = document.getElementById(side);
     this.rotateAnimation.pause();
+    this.props.zoomIn();
     // TweenLite.to(element, 1, {transform: `matrix3d(-1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,0,0,200,1)`});
 
     switch (side) {
@@ -65,6 +78,7 @@ class Cube extends Component {
   }
   buttonEnter(event) {
     const side = event.target.dataset['side'];
+    if (this.props.zoomed) { return null; }
     this.rotateAnimation.pause();
     this.zoomIn = TweenLite.to(this.container, 1, {perspective: `1000px`});
     switch (side) {
@@ -91,7 +105,9 @@ class Cube extends Component {
     }
   }
   buttonLeave() {
-    // this.randomRotation(this.cube);
+    if (!this.props.zoomed){
+      this.randomRotation(this.cube);
+    }
   }
   randomRotation(node) {
     this.rotateAnimation = TweenLite.to(node, this.randRange(5, 10), {
@@ -125,10 +141,11 @@ class Cube extends Component {
     }
   }
   render() {
-    const { allProjects } = this.props;
+    const { allProjects, zoomed } = this.props;
     const sides = this.renderSides();
     const rotation = 360 / allProjects.length;
     return (<div id={styles.root}>
+      { zoomed ? <i onClick={this.zoomOut} className={cx('fa fa-close', 'fa-2x', styles.closeButton)} /> : null }
       <ul id={styles.menu}>
         <li className={cx(styles.front)}><button onClick={this.clickMenuItem} data-side={'front'}>Front</button></li>
         <li className={cx(styles.back)}><button onClick={this.clickMenuItem} data-side={'back'}>Back</button></li>

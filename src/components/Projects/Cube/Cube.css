@@ -116,7 +116,14 @@ div.front {
   left: 0;
   top: 0;
 }
-
+.closeButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #FFF;
+  z-index: 5;
+  cursor: pointer;
+}
 /*@media (--phone) {*/
   /*#container {*/
     /*width: 250px;*/

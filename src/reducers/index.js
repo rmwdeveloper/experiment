@@ -8,6 +8,7 @@ import modal from './modal';
 import windows from './windows';
 import storage from './storage';
 import projects from './projects';
+import cube from './cube';
 
 /* Start Pagemaker reducers (Proprietary / hidden */
 import widgets from '../components/Pagemaker/redux/modules/widgets';
@@ -35,6 +36,7 @@ export default combineReducers({
   windows,
   storage,
   projects,
+  cube,
   widgets,
   carousel,
   courses,
