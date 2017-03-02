@@ -9,7 +9,8 @@ import cx from 'classnames';
 
 // todo: refactor
 @connect(state => ({
-  zoomed: state.cube.zoomed
+  zoomed: state.cube.zoomed,
+  faceShown: state.cube.faceShown
 }), { ...cubeActions})
 class Cube extends Component {
   constructor() {
@@ -21,6 +22,15 @@ class Cube extends Component {
     this.buttonLeave = this.buttonLeave.bind(this);
     this.clickMenuItem = this.clickMenuItem.bind(this);
     this.zoomOut = this.zoomOut.bind(this);
+
+    this.colors = {
+      front: 'rgba(142, 227, 239, 1)',
+      back: 'rgba(250, 201, 184, 1)',
+      left: 'rgba(120, 128, 181, 1)',
+      right: 'rgba(32, 42, 37, 1)',
+      top: 'rgba(216, 210, 225, 1)',
+      bottom: 'rgba(219, 34, 42, 1)',
+    };
   }
   zoomOut() {
     this.props.zoomOut();
@@ -37,38 +47,33 @@ class Cube extends Component {
 
     const element = document.getElementById(side);
     this.rotateAnimation.pause();
-    this.props.zoomIn();
+    this.props.zoomIn(side);
     // TweenLite.to(element, 1, {transform: `matrix3d(-1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,0,0,200,1)`});
-    TweenLite.to(this.displayer, 1, {display: 'block', delay: 1});
+    TweenLite.to(this.displayer, 1, {display: 'flex', delay: 1});
+    TweenLite.to(this.container, 1, {perspective: `100px`, display: 'none'});
     switch (side) {
       case 'front':
-        this.zoomIn = TweenLite.to(this.container, 1, {perspective: `100px`, display: 'none'});
         this.rotateToFace = TweenLite.to(this.cube, 1, {transform: `translateZ(200px) rotateY(180deg) scale(1, -1)`});
         TweenLite.to(element, 0.01, {css: { scaleX: -1 }});
         break;
       case 'back':
-        this.zoomIn = TweenLite.to(this.container, 1, {perspective: `200px`});
         this.rotateToFace = TweenLite.to(this.cube, 1, {transform: `translateZ(200px) rotateY(0deg) scale(1, -1)`});
         TweenLite.to(element, 0.01, {css: {scaleX: -1, scaleY: -1 }});
         break;
       case 'left':
-        this.zoomIn = TweenLite.to(this.container, 1, {perspective: `200px`});
         this.rotateToFace = TweenLite.to(this.cube, 1, {transform: `translateZ(200px) rotateY(-270deg) scale(-1, 1)`});
         TweenLite.to(element, 0.01, {css: { scaleY: -1}});
         break;
       case 'right':
-        this.zoomIn = TweenLite.to(this.container, 1, {perspective: `200px`});
         this.rotateToFace = TweenLite.to(this.cube, 1, {transform: `translateZ(200px) rotateY(-90deg) scale(-1, 1)`});
         TweenLite.to(element, 0.01, {css: {transform: 'rotateY(-270deg) translateX(100px) scaleY(-1) translateY(-200px)'}});
         TweenLite.to(element, 0.01, {css: { scaleY: -1}});
         break;
       case 'top':
-        this.zoomIn = TweenLite.to(this.container, 1, {perspective: `200px`});
         this.rotateToFace = TweenLite.to(this.cube, 1, {transform: `translateZ(200px) rotateX(90deg) scale(-1, 1)`});
         TweenLite.to(element, 0.01, {transform: 'rotateX(90deg) translateY(-100px) scale(-1, 1)'});
         break;
       case 'bottom':
-        this.zoomIn = TweenLite.to(this.container, 1, {perspective: `200px`});
         this.rotateToFace = TweenLite.to(this.cube, 1, {transform: `translateZ(200px) rotateX(-90deg) scale(-1, 1)`});
         TweenLite.to(element, 0.01, {transform: 'rotateX(-90deg) translateY(100px) scale(-1, 1)'});
         break;
@@ -149,9 +154,8 @@ class Cube extends Component {
     }
   }
   render() {
-    const { allProjects, zoomed } = this.props;
+    const { allProjects, zoomed, faceShown } = this.props;
     const sides = this.renderSides();
-    const rotation = 360 / allProjects.length;
     return (<div id={styles.root}>
       { zoomed ? <i onClick={this.zoomOut} className={cx('fa fa-close', 'fa-2x', styles.closeButton)} /> : null }
       <ul id={styles.menu}>
@@ -167,7 +171,7 @@ class Cube extends Component {
           {sides}
         </div>
       </div>
-      <div id={styles.displayer}>  front </div>
+      <div style={{backgroundColor: this.colors[faceShown]}} id={styles.displayer}> {faceShown} </div>
       { /* <i onClick={this.prev} className={cx(styles.control, styles.left, 'fa fa-chevron-left')} />
       <i onClick={this.next} className={cx(styles.control, styles.right, 'fa fa-chevron-right')} /> */ }
     </div>);

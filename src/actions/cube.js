@@ -3,9 +3,9 @@ import {
   ZOOM_OUT
 } from '../constants';
 
-export function zoomIn() {
+export function zoomIn(side) {
   return dispatch => {
-    dispatch({ type: ZOOM_IN });
+    dispatch({ type: ZOOM_IN, side });
   };
 }
 
