@@ -10,7 +10,6 @@
   overflow: hidden;
   position: relative;
   background-color: black;
-
 }
 
 #menu {
@@ -74,42 +73,28 @@
 
 div.back {
   transform: translateZ(-100px) rotateY(180deg);
-  background-color: rgba(250, 201, 184, .80);
 }
 div.right {
   transform: rotateY(-270deg) translateX(100px);
   transform-origin: top right;
-  background-color: rgba(32, 42, 37, .80);
 }
 div.left {
   transform: rotateY(270deg) translateX(-100px);
   transform-origin: center left;
-  background-color: rgba(120, 128, 181, .80);
 }
 div.top {
   transform: rotateX(90deg) translateY(-100px) scale(1, 1);
   transform-origin: top center;
-  background-color: rgba(216, 210, 225, .80);
 }
 div.bottom {
   transform: rotateX(-90deg) translateY(100px) scale(1, 1);
   transform-origin: bottom center;
-  background-color: rgba(219, 34, 42, .80);
 }
 div.front {
   transform: translateZ(100px);
-  background-color: rgba(142, 227, 239, .80);
 
 }
-.buttonFront:before {
-  content: ' ';
-  width: 5px;
-  height: 100%;
-  background-color: rgba(142, 227, 239, 1);
-  position: absolute;
-  left: 0;
-  top: 0;
-}
+
 .closeButton {
   position: absolute;
   top: 0;
