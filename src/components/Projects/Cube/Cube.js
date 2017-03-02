@@ -144,10 +144,7 @@ class Cube extends Component {
       this.menuButtons[iterator].addEventListener('mouseleave', this.buttonLeave);
     }
     this.cube = document.getElementById(styles.sidesContainer);
-    // this.rotate = new TimelineMax();
     this.randomRotation(this.cube);
-    // this.rotate.to(this.cube, 16, {transform: 'rotate3d(8, 1, 1, 180deg)', repeatDelay: 0, repeat: -1, yoyo: true});
-
   }
   componentWillUnmount() {
     for (let iterator = 0; iterator < this.menuButtons.length; iterator++) {
@@ -174,8 +171,6 @@ class Cube extends Component {
         </div>
       </div>
       <div style={{backgroundColor: this.colors[faceShown]}} id={styles.displayer}> {faceShown} </div>
-      { /* <i onClick={this.prev} className={cx(styles.control, styles.left, 'fa fa-chevron-left')} />
-      <i onClick={this.next} className={cx(styles.control, styles.right, 'fa fa-chevron-right')} /> */ }
     </div>);
   }
 }
