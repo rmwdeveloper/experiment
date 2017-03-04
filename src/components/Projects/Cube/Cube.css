@@ -9,7 +9,7 @@
   align-items: center;
   overflow: hidden;
   position: relative;
-  background-color: black;
+  background: linear-gradient(#000, #111, #222);
 }
 
 #menu {
