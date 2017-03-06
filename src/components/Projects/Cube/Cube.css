@@ -19,7 +19,7 @@
   /*right: -5px;*/
   /*background-color: green;*/
 /*}*/
-.menuWrapper {
+#menuWrapper {
   background-color: #FFF;
   color: #000;
   position: absolute;
@@ -36,7 +36,7 @@
   cursor: pointer;
 }
 
-.contactList {
+#contactList {
   /*height: 25%;*/
   position: absolute;
   bottom: 0;

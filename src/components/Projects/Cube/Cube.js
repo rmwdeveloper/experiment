@@ -170,7 +170,8 @@ class Cube extends Component {
 
     return (<div id={styles.root}>
       { zoomed ? <i onClick={this.zoomOut} className={cx('fa fa-close', 'fa-2x', styles.closeButton)} /> : null }
-      <div className={styles.menuWrapper}>
+
+      <div id={styles.menuWrapper}>
         <div onClick={this.zoomOut} className={styles.brandIcon}>R</div>
         <ul id={styles.menu}>
           { this.sides.map( (side, index) => {
@@ -186,7 +187,7 @@ class Cube extends Component {
             </li>;
           })}
         </ul>
-        <ul className={styles.contactList}>
+        <ul id={styles.contactList}>
           <li><a href="https://linkedin.com/in/robert-westenberger"><i className="fa fa-linkedin" /></a></li>
           <li><a href="https://github.com/rmwdeveloper"><i className="fa fa-github-alt" /></a></li>
           <li><a href="mailto:rmwdeveloper@gmail.com"><i className="fa fa-envelope-o" /></a></li>
