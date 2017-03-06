@@ -165,6 +165,7 @@ class Cube extends Component {
     TweenLite.to(this.menu, 0.01, {display: 'none'});
     TweenLite.to(this.menuWrapper, 1, {height: '60px', minHeight: '60px', width: '60px'});
     TweenLite.to(this.brandIcon, 1, {fontSize: '42px'});
+    TweenLite.to(this.menuWrapper, 1, {delay: 1, top: '-50px'});
 
 
   }
