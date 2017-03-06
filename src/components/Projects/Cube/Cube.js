@@ -145,8 +145,8 @@ class Cube extends Component {
     });
   }
   componentDidMount() {
-
     this.container = document.getElementById(styles.container);
+    this.brandIcon = document.getElementById(styles.brandIcon);
     this.menuWrapper = document.getElementById(styles.menuWrapper);
     this.contactList = document.getElementById(styles.contactList);
     this.menuButtons = document.querySelectorAll(`#${styles.menu} button`);
@@ -161,7 +161,8 @@ class Cube extends Component {
 
     // minimize menu
     TweenLite.to(this.contactList, 0.01, {display: 'none'});
-    TweenLite.to(this.menuWrapper, 1, {height: '100px', minHeight: '100px'});
+    TweenLite.to(this.menuWrapper, 1, {height: '60px', minHeight: '60px', width: '60px'});
+    TweenLite.to(this.brandIcon, 1, {fontSize: '50px'});
 
 
   }
@@ -179,7 +180,7 @@ class Cube extends Component {
       { zoomed ? <i onClick={this.zoomOut} className={cx('fa fa-close', 'fa-2x', styles.closeButton)} /> : null }
 
       <div id={styles.menuWrapper}>
-        <div onClick={this.zoomOut} className={styles.brandIcon}>R</div>
+        <div onClick={this.zoomOut} id={styles.brandIcon}>R</div>
         <ul id={styles.menu}>
           { this.sides.map( (side, index) => {
             const menuItemStyles = {borderColor: this.colors[side]};
