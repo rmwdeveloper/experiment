@@ -11,7 +11,9 @@ import CubeFaceDetail from '../CubeFaceDetail';
 @connect(state => ({
   zoomed: state.cube.zoomed,
   faceShown: state.cube.faceShown,
-  menuOpened: state.cube.menuOpened
+  menuOpened: state.cube.menuOpened,
+  professionalProjects: state.projects.professionalProjects,
+  personalProjects: state.projects.personalProjects,
 }), { ...cubeActions})
 class Cube extends Component {
   constructor() {
@@ -68,7 +70,7 @@ class Cube extends Component {
     const sides = document.getElementsByClassName(styles.side);
     this.props.zoomOut();
     this.randomRotation(this.cube);
-    this.showDisplayerAnimation.pause();
+    this.showDisplayerAnimation.kill();
     TweenLite.to(this.displayer, 0.1, { display: 'none'});
     // TweenLite.to(this.container, 1, { perspective: `1000px`, display: 'block'});
 
@@ -83,7 +85,6 @@ class Cube extends Component {
   clickMenuItem(event) {
     if (this.cubeTween) {
       this.cubeTween.pause();
-      this.faceTween.pause();
       this.faceTween.pause();
     }
     const side = event.target.dataset['side'];
@@ -208,7 +209,7 @@ class Cube extends Component {
     }
   }
   render() {
-    const { zoomed, faceShown, menuOpened } = this.props;
+    const { zoomed, faceShown, menuOpened, personalProjects, professionalProjects } = this.props;
     const sides = this.renderSides();
 
     return (<div id={styles.root}>
@@ -247,7 +248,8 @@ class Cube extends Component {
             {sides}
           </div>
         </div>
-        <CubeFaceDetail backgroundColor={this.colors[faceShown]} id={styles.displayer} section={this.sections[faceShown]} />
+        <CubeFaceDetail professionalProjects={professionalProjects} personalProjects={personalProjects}
+          backgroundColor={this.colors[faceShown]} id={styles.displayer} section={this.sections[faceShown]} />
         </div>
     </div>);
   }
