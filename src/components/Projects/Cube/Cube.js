@@ -171,7 +171,6 @@ class Cube extends Component {
     return (<div id={styles.root}>
       { zoomed ? <i onClick={this.zoomOut} className={cx('fa fa-close', 'fa-2x', styles.closeButton)} /> : null }
       <div className={styles.menuWrapper}>
-        <div className={styles.minimizeButton}></div>
         <div onClick={this.zoomOut} className={styles.brandIcon}>R</div>
         <ul id={styles.menu}>
           { this.sides.map( (side, index) => {
