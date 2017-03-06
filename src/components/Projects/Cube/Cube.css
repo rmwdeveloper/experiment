@@ -29,6 +29,7 @@
   height: 100%;
   min-height: 500px;
   z-index: 4;
+  overflow: hidden;
 }
 .brandIcon {
   font-size: 72px;
@@ -38,6 +39,7 @@
 
 #contactList {
   /*height: 25%;*/
+  margin: 0;
   position: absolute;
   bottom: 0;
   width: 100%;

@@ -147,6 +147,8 @@ class Cube extends Component {
   componentDidMount() {
 
     this.container = document.getElementById(styles.container);
+    this.menuWrapper = document.getElementById(styles.menuWrapper);
+    this.contactList = document.getElementById(styles.contactList);
     this.menuButtons = document.querySelectorAll(`#${styles.menu} button`);
     for (let iterator = 0; iterator < this.menuButtons.length; iterator++) {
       this.menuButtons[iterator].addEventListener('mouseenter', this.buttonEnter);
@@ -156,7 +158,12 @@ class Cube extends Component {
     this.randomRotation(this.cube);
 
     TweenLite.to(document.getElementById(styles.root), 5, {backgroundImage: 'linear-gradient(#444, #555, #666)'});
-    // TweenLite.to(document.getElementById(styles.root), 20, {background: 'linear-gradient(#444, #555, #666)'});
+
+    // minimize menu
+    TweenLite.to(this.contactList, 0.01, {display: 'none'});
+    TweenLite.to(this.menuWrapper, 1, {height: '100px', minHeight: '100px'});
+
+
   }
   componentWillUnmount() {
     for (let iterator = 0; iterator < this.menuButtons.length; iterator++) {
