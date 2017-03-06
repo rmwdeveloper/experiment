@@ -19,10 +19,9 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 6%;
-  min-width: 115px;
-  max-width: 200px;
+  width: 100px;
   height: 100%;
+  min-height: 500px;
   z-index: 4;
 }
 .brandIcon {
@@ -32,7 +31,10 @@
 }
 
 .contactList {
-  height: 25%;
+  /*height: 25%;*/
+  position: absolute;
+  bottom: 0;
+  width: 100%;
   list-style-type: none;
   display: flex;
   justify-content: space-around;
@@ -42,7 +44,7 @@
   display: inline-block;
 }
 #menu {
-  height: 75%;
+  /*height: 75%;*/
   width: 100%;
   list-style-type: none;
   display: block;
@@ -53,8 +55,9 @@
 #menu li {
   /*margin: 5px;*/
   /*height: 60px;*/
-  height: 15%;
-  max-height: 60px;
+  /*height: 15%;*/
+  /*max-height: 60px;*/
+  height: 60px;
   width: 100%;
   /*line-height: 60px;*/
   padding-left: 5px;
