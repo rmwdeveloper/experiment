@@ -137,6 +137,7 @@ class Cube extends Component {
     });
   }
   componentDidMount() {
+
     this.container = document.getElementById(styles.container);
     this.menuButtons = document.querySelectorAll(`#${styles.menu} button`);
     for (let iterator = 0; iterator < this.menuButtons.length; iterator++) {
@@ -145,6 +146,9 @@ class Cube extends Component {
     }
     this.cube = document.getElementById(styles.sidesContainer);
     this.randomRotation(this.cube);
+
+    TweenLite.to(document.getElementById(styles.root), 5, {backgroundImage: 'linear-gradient(#444, #555, #666)'});
+    // TweenLite.to(document.getElementById(styles.root), 20, {background: 'linear-gradient(#444, #555, #666)'});
   }
   componentWillUnmount() {
     for (let iterator = 0; iterator < this.menuButtons.length; iterator++) {
