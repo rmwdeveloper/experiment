@@ -13,7 +13,7 @@ export default function auth(state = initialState, action) {
     case ZOOM_IN:
       return {...state, zoomed: true, faceShown: action.side };
     case ZOOM_OUT:
-      return {...state, zoomed: false};
+      return {...state, zoomed: false, faceShown: ''};
     default:
       return state;
   }

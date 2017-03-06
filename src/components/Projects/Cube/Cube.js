@@ -167,16 +167,31 @@ class Cube extends Component {
   render() {
     const { zoomed, faceShown } = this.props;
     const sides = this.renderSides();
+
     return (<div id={styles.root}>
       { zoomed ? <i onClick={this.zoomOut} className={cx('fa fa-close', 'fa-2x', styles.closeButton)} /> : null }
+      <div className={styles.menuWrapper}>
+        <div onClick={this.zoomOut} className={styles.brandIcon}>R</div>
+        <ul id={styles.menu}>
+          { this.sides.map( (side, index) => {
+            const menuItemStyles = {borderColor: this.colors[side]};
 
-      <ul id={styles.menu}>
-        { this.sides.map( (side, index) => {
-          return <li key={index} className={styles[side]}>
-            <button onClick={this.clickMenuItem} data-side={side}>{this.sections[side]}</button>
-          </li>;
-        })}
-      </ul>
+            if (side === faceShown) {
+              menuItemStyles.backgroundColor = this.colors[side];
+              menuItemStyles.color = '#FFF';
+            }
+            return <li style={menuItemStyles} key={index} className={styles[side]}>
+              <button onClick={this.clickMenuItem} data-side={side}>{this.sections[side]}</button>
+            </li>;
+          })}
+        </ul>
+        <ul className={styles.contactList}>
+          <li><a href="https://linkedin.com/in/robert-westenberger"><i className="fa fa-linkedin" /></a></li>
+          <li><a href="https://github.com/rmwdeveloper"><i className="fa fa-github-alt" /></a></li>
+          <li><a href="mailto:rmwdeveloper@gmail.com"><i className="fa fa-envelope-o" /></a></li>
+          <li><a href="tel:+9734761264"><i className="fa fa-mobile-phone" /></a></li>
+        </ul>
+      </div>
 
       <div id={cx(styles.container, styles.cube)}>
         <div id={styles.sidesContainer}>
