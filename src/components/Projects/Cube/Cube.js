@@ -63,15 +63,28 @@ class Cube extends Component {
     TweenLite.to(this.toggleButton, 0.5, {delay: 0.1, bottom: '0'});
   }
   zoomOut() {
+    // todo: God, refactor this garbage
+    const sides = document.getElementsByClassName(styles.side);
     this.props.zoomOut();
     this.randomRotation(this.cube);
+    this.showDisplayerAnimation.pause();
     TweenLite.to(this.displayer, 0.1, { display: 'none'});
+    // TweenLite.to(this.container, 1, { perspective: `1000px`, display: 'block'});
+
     TweenLite.to(this.container, 1, { perspective: `1000px`, display: 'block'});
+    for (let iterator = 0; iterator < sides.length; iterator++){
+      sides[iterator].style.transform = '';
+    }
   }
   randRange(min, max){
     return Math.random() * (max - min) + min;
   }
   clickMenuItem(event) {
+    if (this.cubeTween) {
+      this.cubeTween.pause();
+      this.faceTween.pause();
+      this.faceTween.pause();
+    }
     const side = event.target.dataset['side'];
     this.displayer = document.getElementById(styles.displayer);
 
@@ -79,34 +92,34 @@ class Cube extends Component {
     this.rotateAnimation.pause();
     this.props.zoomIn(side);
 
-    TweenLite.to(this.displayer, 1, {display: 'flex', delay: 1});
+    this.showDisplayerAnimation = TweenLite.to(this.displayer, 1, {display: 'flex', delay: 1});
     TweenLite.to(this.container, 1, {perspective: `100px`, display: 'none'});
 
     switch (side) {
       case 'front':
-        TweenLite.to(this.cube, 1, {transform: `translateZ(200px) rotateY(180deg) scale(1, -1)`});
-        TweenLite.to(element, 0.01, {css: { scaleX: -1 }});
+        this.cubeTween = TweenLite.to(this.cube, 1, {transform: `translateZ(200px) rotateY(180deg) scale(1, -1)`});
+        this.faceTween = TweenLite.to(element, 0.01, {css: { scaleX: -1 }});
         break;
       case 'back':
-        TweenLite.to(this.cube, 1, {transform: `translateZ(200px) rotateY(0deg) scale(1, -1)`});
-        TweenLite.to(element, 0.01, {css: {scaleX: -1, scaleY: -1 }});
+        this.cubeTween = TweenLite.to(this.cube, 1, {transform: `translateZ(200px) rotateY(0deg) scale(1, -1)`});
+        this.faceTween = TweenLite.to(element, 0.01, {css: {scaleX: -1, scaleY: -1 }});
         break;
       case 'left':
-        TweenLite.to(this.cube, 1, {transform: `translateZ(200px) rotateY(-270deg) scale(-1, 1)`});
-        TweenLite.to(element, 0.01, {css: { scaleY: -1}});
+        this.cubeTween = TweenLite.to(this.cube, 1, {transform: `translateZ(200px) rotateY(-270deg) scale(-1, 1)`});
+        this.faceTween = TweenLite.to(element, 0.01, {css: { scaleY: -1}});
         break;
       case 'right':
-        TweenLite.to(this.cube, 1, {transform: `translateZ(200px) rotateY(-90deg) scale(-1, 1)`});
-        TweenLite.to(element, 0.01, {css: {transform: 'rotateY(-270deg) translateX(100px) scaleY(-1) translateY(-200px)'}});
+        this.cubeTween = TweenLite.to(this.cube, 1, {transform: `translateZ(200px) rotateY(-90deg) scale(-1, 1)`});
+        this.faceTween = TweenLite.to(element, 0.01, {css: {transform: 'rotateY(-270deg) translateX(100px) scaleY(-1) translateY(-200px)'}});
         TweenLite.to(element, 0.01, {css: { scaleY: -1}});
         break;
       case 'top':
-        TweenLite.to(this.cube, 1, {transform: `translateZ(200px) rotateX(90deg) scale(-1, 1)`});
-        TweenLite.to(element, 0.01, {transform: 'rotateX(90deg) translateY(-100px) scale(-1, 1)'});
+        this.cubeTween = TweenLite.to(this.cube, 1, {transform: `translateZ(200px) rotateX(90deg) scale(-1, 1)`});
+        this.faceTween = TweenLite.to(element, 0.01, {transform: 'rotateX(90deg) translateY(-100px) scale(-1, 1)'});
         break;
       case 'bottom':
-        TweenLite.to(this.cube, 1, {transform: `translateZ(200px) rotateX(-90deg) scale(-1, 1)`});
-        TweenLite.to(element, 0.01, {transform: 'rotateX(-90deg) translateY(100px) scale(-1, 1)'});
+        this.cubeTween = TweenLite.to(this.cube, 1, {transform: `translateZ(200px) rotateX(-90deg) scale(-1, 1)`});
+        this.faceTween = TweenLite.to(element, 0.01, {transform: 'rotateX(-90deg) translateY(100px) scale(-1, 1)'});
         break;
       default:
         return null;
@@ -120,28 +133,28 @@ class Cube extends Component {
     this.zoomIn = TweenLite.to(this.container, 1, {perspective: `1000px`});
     switch (side) {
       case 'front':
-        TweenLite.to(this.cube, 1, {transform: `translateZ(50px) rotateY(0deg)`});
+        TweenLite.to(this.cube, 1, {transform: `translateZ(50px) rotateY(0deg) scale(1, 1)`});
         TweenLite.to(element, 0.01, {css: {scaleX: 1}});
         break;
       case 'back':
-        TweenLite.to(this.cube, 1, {transform: `translateZ(50px) rotateY(180deg)`});
+        TweenLite.to(this.cube, 1, {transform: `translateZ(50px) rotateY(180deg) scale(1, 1)`});
         TweenLite.to(element, 0.01, {css: {scaleY: 1, scaleX: 1}});
         break;
       case 'left':
-        TweenLite.to(this.cube, 1, {transform: `translateZ(50px) rotateY(-270deg)`});
-        TweenLite.to(this.cube, 1, {transform: `translateZ(50px) rotateY(-270deg)`});
+        TweenLite.to(this.cube, 1, {transform: `translateZ(50px) rotateY(-270deg) scale(1, 1)`});
+        TweenLite.to(this.cube, 1, {transform: `translateZ(50px) rotateY(-270deg) scale(1, 1)`});
         TweenLite.to(element, 0.01, {css: {scaleY: 1, scaleX: 1}});
         break;
       case 'right':
-        TweenLite.to(this.cube, 1, {transform: `translateZ(50px) rotateY(270deg)`});
+        TweenLite.to(this.cube, 1, {transform: `translateZ(50px) rotateY(270deg) scale(1, 1)`});
         TweenLite.to(element, 0.01, {css: {transform: 'rotateY(-270deg) translateX(100px)'}});
         break;
       case 'top':
-        TweenLite.to(this.cube, 1, {transform: `translateZ(50px) rotateX(-90deg)`});
+        TweenLite.to(this.cube, 1, {transform: `translateZ(50px) rotateX(-90deg) scale(1, 1)`});
         TweenLite.to(element, 0.01, {css: {transform: 'rotateX(90deg) translateY(-100px) scale(1, 1)'}});
         break;
       case 'bottom':
-        TweenLite.to(this.cube, 1, {transform: `translateZ(50px) rotateX(90deg)`});
+        TweenLite.to(this.cube, 1, {transform: `translateZ(50px) rotateX(90deg) scale(1, 1)`});
         TweenLite.to(element, 0.01, {css: {transform: 'rotateX(-90deg) translateY(100px) scale(1, 1)'}});
         break;
       default:
@@ -233,7 +246,6 @@ class Cube extends Component {
         </div>
       </div>
       <CubeFaceDetail backgroundColor={this.colors[faceShown]} id={styles.displayer} section={this.sections[faceShown]} />
-      <div id={styles.displayer}> {faceShown} </div>
     </div>);
   }
 }
