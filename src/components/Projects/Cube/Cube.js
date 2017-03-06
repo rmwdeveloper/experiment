@@ -147,6 +147,7 @@ class Cube extends Component {
   componentDidMount() {
     this.container = document.getElementById(styles.container);
     this.brandIcon = document.getElementById(styles.brandIcon);
+    this.menu = document.getElementById(styles.menu);
     this.menuWrapper = document.getElementById(styles.menuWrapper);
     this.contactList = document.getElementById(styles.contactList);
     this.menuButtons = document.querySelectorAll(`#${styles.menu} button`);
@@ -161,6 +162,7 @@ class Cube extends Component {
 
     // minimize menu
     TweenLite.to(this.contactList, 0.01, {display: 'none'});
+    TweenLite.to(this.menu, 0.01, {display: 'none'});
     TweenLite.to(this.menuWrapper, 1, {height: '60px', minHeight: '60px', width: '60px'});
     TweenLite.to(this.brandIcon, 1, {fontSize: '42px'});
 
@@ -181,6 +183,7 @@ class Cube extends Component {
 
       <div id={styles.menuWrapper}>
         <div onClick={this.zoomOut} id={styles.brandIcon}>R</div>
+        <div id={styles.toggleButton}>< i className="fa fa-chevron-down" /></div>
         <ul id={styles.menu}>
           { this.sides.map( (side, index) => {
             const menuItemStyles = {borderColor: this.colors[side]};
