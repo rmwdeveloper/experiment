@@ -48,19 +48,20 @@ class Cube extends Component {
     this.props.closeMenu();
     TweenLite.to(this.contactList, 0.01, {display: 'none'});
     TweenLite.to(this.menu, 0.01, {display: 'none'});
-    TweenLite.to(this.menuWrapper, 1, {height: '60px', minHeight: '60px', width: '60px'});
+    TweenLite.to(this.menuWrapper, 1, {position: 'absolute', height: '60px', minHeight: '60px', width: '60px'});
     TweenLite.to(this.brandIcon, 1, {fontSize: '42px'});
     TweenLite.to(this.menuWrapper, 1, {delay: 1, top: '-50px'});
     TweenLite.to(this.toggleButton, 0.5, {delay: 0.1, bottom: '-10px'});
   }
   openMenu() {
     this.props.openMenu();
-    TweenLite.to(this.contactList, 0.01, {delay: 0.1, display: 'flex', bottom: '25px'});
-    TweenLite.to(this.menu, 0.01, {delay: 0.1, display: 'block'});
-    TweenLite.to(this.menuWrapper, 0.5, {height: '100%', minHeight: '500px', width: '100px'});
-    TweenLite.to(this.brandIcon, 0.5, {fontSize: '72px'});
-    TweenLite.to(this.menuWrapper, 0.5, {delay: 0.1, top: '0'});
-    TweenLite.to(this.toggleButton, 0.5, {delay: 0.1, bottom: '0'});
+    TweenLite.to(this.menuWrapper, 0.1, { top: '0'});
+    TweenLite.to(this.menuWrapper, 0.1, { delay: 0.1, height: '100%', minHeight: '500px', width: '100px'});
+    TweenLite.to(this.brandIcon, 0.1, {delay: 0.1, fontSize: '72px'});
+    TweenLite.to(this.menuWrapper, 0.1, { delay: 0.2, position: 'relative'});
+    TweenLite.to(this.contactList, 0.1, {delay: 0.2, display: 'flex', bottom: '25px'});
+    TweenLite.to(this.menu, 0.1, {delay: 0.2, display: 'block'});
+    TweenLite.to(this.toggleButton, 0.1, {delay: 0.2, bottom: '0'});
   }
   zoomOut() {
     // todo: God, refactor this garbage
@@ -239,13 +240,15 @@ class Cube extends Component {
           <li><a href="tel:+9734761264"><i className="fa fa-mobile-phone" /></a></li>
         </ul>
       </div>
+      <div className={styles.cubeAndDisplay}>
 
-      <div id={cx(styles.container, styles.cube)}>
-        <div id={styles.sidesContainer}>
-          {sides}
+        <div id={cx(styles.container, styles.cube)}>
+          <div id={styles.sidesContainer}>
+            {sides}
+          </div>
         </div>
-      </div>
-      <CubeFaceDetail backgroundColor={this.colors[faceShown]} id={styles.displayer} section={this.sections[faceShown]} />
+        <CubeFaceDetail backgroundColor={this.colors[faceShown]} id={styles.displayer} section={this.sections[faceShown]} />
+        </div>
     </div>);
   }
 }
