@@ -50,7 +50,7 @@ export default class App extends Component {
     return (
       <Provider store={store}>
         <div className={styles.root}>
-          <Navigation />
+          { /* <Navigation /> */ }
           {this.props.children}
         </div>
       </Provider>

@@ -169,13 +169,15 @@ class Cube extends Component {
     const sides = this.renderSides();
     return (<div id={styles.root}>
       { zoomed ? <i onClick={this.zoomOut} className={cx('fa fa-close', 'fa-2x', styles.closeButton)} /> : null }
+
       <ul id={styles.menu}>
         { this.sides.map( (side, index) => {
-          return <li style={{borderColor: `${this.colors[side]}`}} key={index} className={styles[side]}>
+          return <li key={index} className={styles[side]}>
             <button onClick={this.clickMenuItem} data-side={side}>{this.sections[side]}</button>
           </li>;
         })}
       </ul>
+
       <div id={cx(styles.container, styles.cube)}>
         <div id={styles.sidesContainer}>
           {sides}
