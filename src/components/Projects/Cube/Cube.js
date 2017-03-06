@@ -22,6 +22,8 @@ class Cube extends Component {
     this.buttonLeave = this.buttonLeave.bind(this);
     this.clickMenuItem = this.clickMenuItem.bind(this);
     this.zoomOut = this.zoomOut.bind(this);
+    this.closeMenu = this.closeMenu.bind(this);
+    this.openMenu = this.openMenu.bind(this);
 
     this.sections = {
       front: 'Projects - Professional',
@@ -40,6 +42,20 @@ class Cube extends Component {
       bottom: 'rgb(219, 34, 42)',
     };
 
+  }
+  closeMenu() {
+    TweenLite.to(this.contactList, 0.01, {display: 'none'});
+    TweenLite.to(this.menu, 0.01, {display: 'none'});
+    TweenLite.to(this.menuWrapper, 1, {height: '60px', minHeight: '60px', width: '60px'});
+    TweenLite.to(this.brandIcon, 1, {fontSize: '42px'});
+    TweenLite.to(this.menuWrapper, 1, {delay: 1, top: '-50px'});
+  }
+  openMenu() {
+    TweenLite.to(this.contactList, 0.01, {delay: 0.1, display: 'flex'});
+    TweenLite.to(this.menu, 0.01, {delay: 0.1, display: 'block'});
+    TweenLite.to(this.menuWrapper, .5, {height: '100%', minHeight: '500px', width: '100px'});
+    TweenLite.to(this.brandIcon, .5, {fontSize: '72px'});
+    TweenLite.to(this.menuWrapper, .5, {delay: 0.1, top: '0'});
   }
   zoomOut() {
     this.props.zoomOut();
@@ -160,12 +176,8 @@ class Cube extends Component {
 
     TweenLite.to(document.getElementById(styles.root), 5, {backgroundImage: 'linear-gradient(#444, #555, #666)'});
 
-    // minimize menu
-    TweenLite.to(this.contactList, 0.01, {display: 'none'});
-    TweenLite.to(this.menu, 0.01, {display: 'none'});
-    TweenLite.to(this.menuWrapper, 1, {height: '60px', minHeight: '60px', width: '60px'});
-    TweenLite.to(this.brandIcon, 1, {fontSize: '42px'});
-    TweenLite.to(this.menuWrapper, 1, {delay: 1, top: '-50px'});
+    this.closeMenu();
+
 
 
   }
@@ -184,7 +196,7 @@ class Cube extends Component {
 
       <div id={styles.menuWrapper}>
         <div onClick={this.zoomOut} id={styles.brandIcon}>R</div>
-        <div id={styles.toggleButton}>< i className="fa fa-chevron-down" /></div>
+        <div onClick={this.openMenu} id={styles.toggleButton}>< i className="fa fa-chevron-down" /></div>
         <ul id={styles.menu}>
           { this.sides.map( (side, index) => {
             const menuItemStyles = {borderColor: this.colors[side]};
