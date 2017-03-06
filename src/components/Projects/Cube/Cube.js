@@ -129,6 +129,7 @@ class Cube extends Component {
         break;
       case 'left':
         TweenLite.to(this.cube, 1, {transform: `translateZ(50px) rotateY(-270deg)`});
+        TweenLite.to(this.cube, 1, {transform: `translateZ(50px) rotateY(-270deg)`});
         TweenLite.to(element, 0.01, {css: {scaleY: 1, scaleX: 1}});
         break;
       case 'right':
@@ -181,7 +182,7 @@ class Cube extends Component {
 
     TweenLite.to(document.getElementById(styles.root), 5, {backgroundImage: 'linear-gradient(#444, #555, #666)'});
 
-    this.closeMenu();
+    // this.closeMenu();
 
 
 
