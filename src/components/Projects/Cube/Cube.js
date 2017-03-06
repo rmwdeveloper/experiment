@@ -67,6 +67,10 @@ class Cube extends Component {
   }
   zoomOut() {
     // todo: God, refactor this garbage
+    if (this.cubeTween) {
+      this.cubeTween.kill();
+      this.faceTween.kill();
+    }
     const sides = document.getElementsByClassName(styles.side);
     this.props.zoomOut();
     this.randomRotation(this.cube);
@@ -84,8 +88,8 @@ class Cube extends Component {
   }
   clickMenuItem(event) {
     if (this.cubeTween) {
-      this.cubeTween.pause();
-      this.faceTween.pause();
+      this.cubeTween.kill();
+      this.faceTween.kill();
     }
     const side = event.target.dataset['side'];
     this.displayer = document.getElementById(styles.displayer);
@@ -130,6 +134,10 @@ class Cube extends Component {
   buttonEnter(event) {
     const side = event.target.dataset['side'];
     const element = document.getElementById(side);
+    if (this.cubeTween) {
+      this.cubeTween.kill();
+      this.faceTween.kill();
+    }
     if (this.props.zoomed) { return null; }
     this.rotateAnimation.pause();
     this.zoomIn = TweenLite.to(this.container, 1, {perspective: `1000px`});
@@ -249,7 +257,8 @@ class Cube extends Component {
           </div>
         </div>
         <CubeFaceDetail professionalProjects={professionalProjects} personalProjects={personalProjects}
-          backgroundColor={this.colors[faceShown]} id={styles.displayer} section={this.sections[faceShown]} />
+          faceShown={faceShown} backgroundColor={this.colors[faceShown]} id={styles.displayer}
+          section={this.sections[faceShown]} />
         </div>
     </div>);
   }
