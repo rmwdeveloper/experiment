@@ -162,7 +162,7 @@ class Cube extends Component {
     // minimize menu
     TweenLite.to(this.contactList, 0.01, {display: 'none'});
     TweenLite.to(this.menuWrapper, 1, {height: '60px', minHeight: '60px', width: '60px'});
-    TweenLite.to(this.brandIcon, 1, {fontSize: '50px'});
+    TweenLite.to(this.brandIcon, 1, {fontSize: '42px'});
 
 
   }
