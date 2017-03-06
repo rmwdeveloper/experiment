@@ -10,7 +10,8 @@ import CubeFaceDetail from '../CubeFaceDetail';
 // todo: refactor
 @connect(state => ({
   zoomed: state.cube.zoomed,
-  faceShown: state.cube.faceShown
+  faceShown: state.cube.faceShown,
+  menuOpened: state.cube.menuOpened
 }), { ...cubeActions})
 class Cube extends Component {
   constructor() {
@@ -44,6 +45,7 @@ class Cube extends Component {
 
   }
   closeMenu() {
+    this.props.closeMenu();
     TweenLite.to(this.contactList, 0.01, {display: 'none'});
     TweenLite.to(this.menu, 0.01, {display: 'none'});
     TweenLite.to(this.menuWrapper, 1, {height: '60px', minHeight: '60px', width: '60px'});
@@ -51,11 +53,14 @@ class Cube extends Component {
     TweenLite.to(this.menuWrapper, 1, {delay: 1, top: '-50px'});
   }
   openMenu() {
+    this.props.openMenu();
     TweenLite.to(this.contactList, 0.01, {delay: 0.1, display: 'flex'});
     TweenLite.to(this.menu, 0.01, {delay: 0.1, display: 'block'});
-    TweenLite.to(this.menuWrapper, .5, {height: '100%', minHeight: '500px', width: '100px'});
-    TweenLite.to(this.brandIcon, .5, {fontSize: '72px'});
-    TweenLite.to(this.menuWrapper, .5, {delay: 0.1, top: '0'});
+    TweenLite.to(this.menuWrapper, 0.5, {height: '100%', minHeight: '500px', width: '100px'});
+    TweenLite.to(this.brandIcon, 0.5, {fontSize: '72px'});
+    TweenLite.to(this.menuWrapper, 0.5, {delay: 0.1, top: '0'});
+    // TweenLite.to(this.toggleButton, 0.5, {delay: 0.1, top: '0'});
+
   }
   zoomOut() {
     this.props.zoomOut();
@@ -106,7 +111,6 @@ class Cube extends Component {
       default:
         return null;
     }
-
   }
   buttonEnter(event) {
     const side = event.target.dataset['side'];
@@ -167,6 +171,7 @@ class Cube extends Component {
     this.menuWrapper = document.getElementById(styles.menuWrapper);
     this.contactList = document.getElementById(styles.contactList);
     this.menuButtons = document.querySelectorAll(`#${styles.menu} button`);
+    this.toggleButton = document.getElementById(styles.toggleButton);
     for (let iterator = 0; iterator < this.menuButtons.length; iterator++) {
       this.menuButtons[iterator].addEventListener('mouseenter', this.buttonEnter);
       this.menuButtons[iterator].addEventListener('mouseleave', this.buttonLeave);
@@ -188,7 +193,7 @@ class Cube extends Component {
     }
   }
   render() {
-    const { zoomed, faceShown } = this.props;
+    const { zoomed, faceShown, menuOpened } = this.props;
     const sides = this.renderSides();
 
     return (<div id={styles.root}>
@@ -196,7 +201,9 @@ class Cube extends Component {
 
       <div id={styles.menuWrapper}>
         <div onClick={this.zoomOut} id={styles.brandIcon}>R</div>
-        <div onClick={this.openMenu} id={styles.toggleButton}>< i className="fa fa-chevron-down" /></div>
+        { menuOpened ? <div onClick={this.closeMenu} id={styles.toggleButton}>< i className="fa fa-chevron-up" /></div> :
+          <div onClick={this.openMenu} id={styles.toggleButton}>< i className="fa fa-chevron-down" /></div>}
+
         <ul id={styles.menu}>
           { this.sides.map( (side, index) => {
             const menuItemStyles = {borderColor: this.colors[side]};

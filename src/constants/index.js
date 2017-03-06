@@ -62,6 +62,10 @@ export const SELECT_FILTER = 'projects/SELECT_FILTER';
 
 export const ZOOM_IN = 'cube/ZOOM_IN';
 export const ZOOM_OUT = 'cube/ZOOM_OUT';
+export const OPEN_MENU = 'cube/OPEN_MENU';
+export const CLOSE_MENU = 'cube/CLOSE_MENU';
+
+
 // export const MARK_AS_OVERLAPPED = 'layout/MARK_AS_OVERLAPPED';
 // export const START_RESIZE = 'layout/START_RESIZE';
 // export const RESIZING_CELL = 'layout/RESIZING_CELL';
