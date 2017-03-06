@@ -51,16 +51,16 @@ class Cube extends Component {
     TweenLite.to(this.menuWrapper, 1, {height: '60px', minHeight: '60px', width: '60px'});
     TweenLite.to(this.brandIcon, 1, {fontSize: '42px'});
     TweenLite.to(this.menuWrapper, 1, {delay: 1, top: '-50px'});
+    TweenLite.to(this.toggleButton, 0.5, {delay: 0.1, bottom: '-10px'});
   }
   openMenu() {
     this.props.openMenu();
-    TweenLite.to(this.contactList, 0.01, {delay: 0.1, display: 'flex'});
+    TweenLite.to(this.contactList, 0.01, {delay: 0.1, display: 'flex', bottom: '25px'});
     TweenLite.to(this.menu, 0.01, {delay: 0.1, display: 'block'});
     TweenLite.to(this.menuWrapper, 0.5, {height: '100%', minHeight: '500px', width: '100px'});
     TweenLite.to(this.brandIcon, 0.5, {fontSize: '72px'});
     TweenLite.to(this.menuWrapper, 0.5, {delay: 0.1, top: '0'});
-    // TweenLite.to(this.toggleButton, 0.5, {delay: 0.1, top: '0'});
-
+    TweenLite.to(this.toggleButton, 0.5, {delay: 0.1, bottom: '0'});
   }
   zoomOut() {
     this.props.zoomOut();
