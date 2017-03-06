@@ -1,11 +1,11 @@
 import React, { PropTypes, Component} from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { connect } from 'react-redux';
-
 import * as cubeActions from '../../../actions/cube';
 import styles from './Cube.css'; //eslint-disable-line
 import cx from 'classnames';
 
+import CubeFaceDetail from '../CubeFaceDetail';
 
 // todo: refactor
 @connect(state => ({
@@ -23,6 +23,14 @@ class Cube extends Component {
     this.clickMenuItem = this.clickMenuItem.bind(this);
     this.zoomOut = this.zoomOut.bind(this);
 
+    this.sections = {
+      front: 'Projects - Professional',
+      back: 'Projects - Personal',
+      left: 'About',
+      right: 'Contact',
+      top: 'Foo',
+      bottom: 'Bar',
+    };
     this.colors = {
       front: 'rgb(142, 227, 239)',
       back: 'rgb(250, 201, 184)',
@@ -133,7 +141,7 @@ class Cube extends Component {
   renderSides() {
     this.sides = ['front', 'back', 'right', 'left', 'top', 'bottom'];
     return this.sides.map((side, index) => {
-      return <div style={{backgroundColor: this.colors[side], opacity: 0.80}} id={side} key={index} className={cx(styles[side], styles.side)}> {side} </div>
+      return <div style={{backgroundColor: this.colors[side], opacity: 0.80}} id={side} key={index} className={cx(styles[side], styles.side)}> {this.sections[side]} </div>;
     });
   }
   componentDidMount() {
@@ -164,7 +172,7 @@ class Cube extends Component {
       <ul id={styles.menu}>
         { this.sides.map( (side, index) => {
           return <li style={{borderColor: `${this.colors[side]}`}} key={index} className={styles[side]}>
-            <button onClick={this.clickMenuItem} data-side={side}>{side}</button>
+            <button onClick={this.clickMenuItem} data-side={side}>{this.sections[side]}</button>
           </li>;
         })}
       </ul>
@@ -173,7 +181,8 @@ class Cube extends Component {
           {sides}
         </div>
       </div>
-      <div style={{backgroundColor: this.colors[faceShown]}} id={styles.displayer}> {faceShown} </div>
+      <CubeFaceDetail backgroundColor={this.colors[faceShown]} id={styles.displayer} section={this.sections[faceShown]} />
+      <div id={styles.displayer}> {faceShown} </div>
     </div>);
   }
 }
