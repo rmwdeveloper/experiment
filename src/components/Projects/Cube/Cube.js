@@ -49,7 +49,7 @@ class Cube extends Component {
 
   }
   windowResize() {
-    // console.log(window.innerWidth, this.width);
+    // todo: consolidate tweens with those found in openMenu
 
     if (window.innerWidth >= 768 && this.width < 768 ) {
       console.log('desktop');
