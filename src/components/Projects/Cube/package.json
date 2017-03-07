@@ -1,0 +1,6 @@
+{
+  "name": "Cube",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./Cube.js"
+}

@@ -1,0 +1,221 @@
+@import '../../variables.css';
+
+
+#root {
+  /*height: calc(100% - 52px);*/
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  background-image: linear-gradient(#000, #111, #222);
+  flex-direction: column;
+  min-width: 300px;
+}
+/*.minimizeButton {*/
+  /*position: absolute;*/
+  /*width: 5px;*/
+  /*height: 100%;*/
+  /*right: -5px;*/
+  /*background-color: green;*/
+/*}*/
+#menuWrapper {
+  background-color: #FFF;
+  color: #000;
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 155px;
+  z-index: 4;
+  box-shadow: 2px 2px 20px black;
+}
+.cubeAndDisplay{
+  position: relative;
+  height: 100%;
+  width: 100%;
+  /*width: calc(100% - 100px);*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#brandIcon {
+  /*font-size: 16px;*/
+  text-align: center;
+  cursor: pointer;
+}
+
+#brandIcon .desktop {
+  display: none;
+  font-size: 72px;
+}
+#brandIcon .mobile {
+  display: block;
+  font-size: 30px;
+}
+#toggleButton {
+  position: absolute;
+  text-align: center;
+  bottom: 0px;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  background-color: #FFF;
+  cursor: pointer;
+}
+#contactList {
+  /*height: 25%;*/
+  margin: 0;
+  position: relative;
+  width: 100%;
+  list-style-type: none;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.contactList li {
+  display: inline-block;
+}
+#menu {
+  /*height: 75%;*/
+  text-align: center;
+  width: 100%;
+  list-style-type: none;
+  display: flex;
+  font-family: 'Josefin Sans', sans-serif;
+  align-items: center;
+  justify-content: space-around;
+}
+#menu li {
+  height: 55px;
+  width: 30%;
+  max-width: 90px;
+  border-bottom-width: 10px;
+  border-bottom-style: solid;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#displayer{
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  color: #FFF
+}
+
+#menu li button {
+  text-transform: capitalize;
+}
+
+#menu button {
+  background-color: rgba(0,0,0,0);
+  border: none;
+}
+#container {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  perspective: 1000px;
+  perspective-origin: 50% 100px;
+}
+
+#sidesContainer {
+  position: relative;
+  width: 200px;
+  transform-style: preserve-3d;
+  transform-origin: 100px 100px;
+}
+
+.side {
+  color: #FFF;
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 0 30px rgba(125, 125, 125, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+div.back {
+  transform: translateZ(-100px) rotateY(180deg);
+}
+div.right {
+  transform: rotateY(-270deg) translateX(100px);
+  transform-origin: top right;
+}
+div.left {
+  transform: rotateY(270deg) translateX(-100px);
+  transform-origin: center left;
+}
+div.top {
+  transform: rotateX(90deg) translateY(-100px) scale(1, 1);
+  transform-origin: top center;
+}
+div.bottom {
+  transform: rotateX(-90deg) translateY(100px) scale(1, 1);
+  transform-origin: bottom center;
+}
+div.front {
+  transform: translateZ(100px);
+
+}
+
+.closeButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #FFF;
+  z-index: 5;
+  cursor: pointer;
+}
+
+
+@media (--phoneRetina) {
+  #brandIcon {
+    font-style: 32px;
+  }
+}
+@media (--tablet) {
+  #root {
+    flex-direction: row;
+  }
+  #contactList {
+    position: absolute;
+    bottom: 25px;
+  }
+  #menu {
+    display: block;
+  }
+  #menu li {
+    height: 60px;
+    max-width: none;
+    width: 100%;
+    border-bottom-width: 0;
+    border-bottom-style: none;
+    border-right-width: 10px;
+    border-right-style: solid;
+    padding-left: 5px;
+  }
+  #menuWrapper {
+    width: 100px;
+    height: 100%;
+    min-height: 500px;
+  }
+  #brandIcon {
+    font-style: 42px;;
+  }
+  #brandIcon .desktop {
+    display: block;
+  }
+  #brandIcon .mobile {
+    display: none;
+  }
+}

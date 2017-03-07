@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect';
-import path from 'path';
 
 const startMenuProgramsIndices = state => state.windows.startMenuProgramsIndices;
 const userDirectoriesIndices = state => state.windows.userDirectoriesIndices;
@@ -11,6 +10,24 @@ const fileSystemObject = state => state.windows.fileSystem;
 const desktopNodeIndex = state => state.windows.desktopNodeIndex;
 
 const userObject = state => state.auth.user;
+const professionalProjects = state => state.projects.professionalProjects;
+const personalProjects = state => state.projects.personalProjects;
+
+export const stackList = createSelector(
+  [professionalProjects, personalProjects],
+  (professionalProjects, personalProjects) => {
+    const uniqueTechnologies = ['All'];
+    professionalProjects.concat(personalProjects).forEach(item => {
+      item.technologies.forEach( technology => {
+        if (!uniqueTechnologies.includes(technology)) {
+          uniqueTechnologies.push(technology);
+        }
+      });
+    });
+    return uniqueTechnologies;
+  }
+);
+
 
 export const isAnonymousUserSelector = createSelector(
   [userObject],

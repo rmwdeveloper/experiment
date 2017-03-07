@@ -58,6 +58,13 @@ export const GET_CHART_SUCCESS = 'stock/GET_CHART_SUCCESS';
 export const GET_CHART_FAILURE = 'stock/GET_CHART_FAILURE';
 export const CHANGE_DISPLAYED_CHART = 'stock/CHANGE_DISPLAYED_CHART';
 
+export const SELECT_FILTER = 'projects/SELECT_FILTER';
+
+export const ZOOM_IN = 'cube/ZOOM_IN';
+export const ZOOM_OUT = 'cube/ZOOM_OUT';
+export const OPEN_MENU = 'cube/OPEN_MENU';
+export const CLOSE_MENU = 'cube/CLOSE_MENU';
+
 
 // export const MARK_AS_OVERLAPPED = 'layout/MARK_AS_OVERLAPPED';
 // export const START_RESIZE = 'layout/START_RESIZE';

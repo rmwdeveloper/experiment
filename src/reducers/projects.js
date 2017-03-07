@@ -1,5 +1,5 @@
 import {
-
+  SELECT_FILTER
 } from '../constants';
 
 const initialState = {
@@ -9,14 +9,16 @@ const initialState = {
       'gulp.js', 'Javascript', 'React', 'PostgreSQL', 'jQuery'],
       role: 'Full Stack Web Developer',
       description: '',
-      link: ''
+      link: '',
+      images: ['projects/tru/dashboard.png']
     },
     { name: 'Pagemaker',
       technologies: ['HTML', 'LESS', 'Django REST Framework', 'React', 'Webpack',
          'Javascript', 'React', 'PostgreSQL' ],
       role: 'Full Stack Web Developer',
       description: '',
-      link: ''
+      link: '',
+      images: ['projects/pm/pm.png']
     },
     { name: 'Lecture Editor',
       technologies: ['HTML', 'LESS', 'Django REST Framework', 'React', 'Webpack',
@@ -31,12 +33,16 @@ const initialState = {
       technologies: ['HTML', 'CSS', 'PostCSS', 'Django REST Framework', 'React', 'Webpack',
         'Javascript', 'React', 'PostgreSQL' ],
       description: '',
+      images: ['projects/onlineDesktop/main.png']
     },
-  ]
+  ],
+  selected: 'All'
 };
 
 export default function projects(state = initialState, action) {
   switch (action.type) {
+    case SELECT_FILTER:
+      return { ...state, selected: action.filter };
     default:
       return state;
   }

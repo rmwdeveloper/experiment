@@ -1,5 +1,19 @@
 @import '../../variables.css';
 
 .root {
+  /*outline: 1px solid black;*/
+  width: 30%;
+  height: 250px;
+  display: inline-block;
+  margin: 10px;
+  overflow: hidden;
+}
 
+@media (--tablet) {
+  .root {
+    /*width: 150px;*/
+  }
+  .startText {
+    display: block;
+  }
 }

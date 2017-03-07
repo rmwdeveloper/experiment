@@ -1,0 +1,6 @@
+@import '../../variables.css';
+
+.root {
+  padding-left: 15px;
+  font-family: 'Josefin Sans', sans-serif;
+}
