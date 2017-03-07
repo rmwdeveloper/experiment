@@ -13,7 +13,7 @@ class CubeFaceDetail extends Component {
        face = React.createElement(sideMarkupRegistry[faceShown], {...this.props});
     }
 
-    return (<div id={id} style={{backgroundColor}}>{faceShown ? face : null}</div>);
+    return (<div className={styles.root} id={id} style={{backgroundColor}}>{faceShown ? face : null}</div>);
   }
 
 }
