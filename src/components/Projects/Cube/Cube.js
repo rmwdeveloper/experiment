@@ -28,13 +28,13 @@ class Cube extends Component {
     this.closeMenu = this.closeMenu.bind(this);
     this.openMenu = this.openMenu.bind(this);
 
+    this.sides = ['front', 'back', 'right', 'left', 'top', 'bottom'];
+
     this.sections = {
       front: 'Projects - Professional',
       back: 'Projects - Personal',
       left: 'About',
-      right: 'Contact',
-      top: 'Foo',
-      bottom: 'Bar',
+      right: 'Contact'
     };
     this.colors = {
       front: 'rgb(142, 227, 239)',
@@ -183,7 +183,7 @@ class Cube extends Component {
       onCompleteParams: [node] });
   }
   renderSides() {
-    this.sides = ['front', 'back', 'right', 'left', 'top', 'bottom'];
+
     return this.sides.map((side, index) => {
       return <div style={{backgroundColor: this.colors[side], opacity: 0.80}} id={side} key={index} className={cx(styles[side], styles.side)}> {this.sections[side]} </div>;
     });
@@ -204,9 +204,6 @@ class Cube extends Component {
     this.randomRotation(this.cube);
 
     TweenLite.to(document.getElementById(styles.root), 5, {backgroundImage: 'linear-gradient(#444, #555, #666)'});
-
-    // this.closeMenu();
-
 
 
   }
@@ -229,18 +226,21 @@ class Cube extends Component {
           <div onClick={this.openMenu} id={styles.toggleButton}>< i className="fa fa-chevron-down" /></div>}
 
         <ul id={styles.menu}>
-          { this.sides.map( (side, index) => {
-            const menuItemStyles = {borderColor: this.colors[side]};
 
-            if (side === faceShown) {
-              menuItemStyles.backgroundColor = this.colors[side];
+          { Object.keys(this.sections).map( (key, index) => {
+
+            const menuItemStyles = {borderColor: this.colors[key]};
+
+            if (key === faceShown) {
+              menuItemStyles.backgroundColor = this.colors[key];
               menuItemStyles.color = '#FFF';
             }
 
-            return <li style={menuItemStyles} key={index} className={styles[side]}>
-              <button onClick={this.clickMenuItem} data-side={side}>{this.sections[side]}</button>
+            return <li style={menuItemStyles} key={index} className={styles[key]}>
+              <button onClick={this.clickMenuItem} data-side={key}>{this.sections[key]}</button>
             </li>;
           })}
+
         </ul>
         <ul id={styles.contactList}>
           <li><a href="https://linkedin.com/in/robert-westenberger"><i className="fa fa-linkedin" /></a></li>
