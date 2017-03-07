@@ -221,10 +221,18 @@ class Cube extends Component {
       { zoomed ? <i onClick={this.zoomOut} className={cx('fa fa-close', 'fa-2x', styles.closeButton)} /> : null }
 
       <div id={styles.menuWrapper}>
-        <div onClick={this.zoomOut} id={styles.brandIcon}>R</div>
+        <div onClick={this.zoomOut} id={styles.brandIcon}>
+          <span className={styles.desktop}>R</span>
+          <span className={styles.mobile}>Robert Westenberger</span>
+        </div>
         { menuOpened ? <div onClick={this.closeMenu} id={styles.toggleButton}>< i className="fa fa-chevron-up" /></div> :
           <div onClick={this.openMenu} id={styles.toggleButton}>< i className="fa fa-chevron-down" /></div>}
-
+        <ul id={styles.contactList}>
+          <li><a href="https://linkedin.com/in/robert-westenberger"><i className="fa fa-linkedin" /></a></li>
+          <li><a href="https://github.com/rmwdeveloper"><i className="fa fa-github-alt" /></a></li>
+          <li><a href="mailto:rmwdeveloper@gmail.com"><i className="fa fa-envelope-o" /></a></li>
+          <li><a href="tel:+9734761264"><i className="fa fa-mobile-phone" /></a></li>
+        </ul>
         <ul id={styles.menu}>
 
           { Object.keys(this.sections).map( (key, index) => {
@@ -242,12 +250,7 @@ class Cube extends Component {
           })}
 
         </ul>
-        <ul id={styles.contactList}>
-          <li><a href="https://linkedin.com/in/robert-westenberger"><i className="fa fa-linkedin" /></a></li>
-          <li><a href="https://github.com/rmwdeveloper"><i className="fa fa-github-alt" /></a></li>
-          <li><a href="mailto:rmwdeveloper@gmail.com"><i className="fa fa-envelope-o" /></a></li>
-          <li><a href="tel:+9734761264"><i className="fa fa-mobile-phone" /></a></li>
-        </ul>
+
       </div>
       <div className={styles.cubeAndDisplay}>
 
