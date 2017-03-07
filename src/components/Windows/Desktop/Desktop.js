@@ -111,13 +111,14 @@ class Desktop extends Component {
       ondrop: this.onDrop
     });
 
+    console.log('this desktop..', this.desktop);
     // todo rmw: desktopWidth and Height is both in the redux store and in component State. Should have it it only 1.
     this.props.initializeDesktopDimensions(this.desktop.offsetWidth, this.desktop.offsetHeight);
     window.addEventListener('resize', this.desktopResize.bind(this));
 
     this.setState({desktopWidth: this.desktop.offsetWidth, // todo have a workaround for this
       desktopHeight: this.desktop.offsetHeight,
-      headerHeight: this.header.offsetHeight});
+      headerHeight: 0});
   }
   shouldComponentUpdate(nextProps, nextState) {
     return (this.state.selectedIcons !== nextState.selectedIcons) ||

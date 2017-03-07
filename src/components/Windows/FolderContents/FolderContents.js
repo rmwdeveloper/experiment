@@ -64,7 +64,7 @@ class FolderContents extends Component {
     this.folderContents.onmouseup = this.folderContentsMouseUp;
     this.folderContents.addEventListener('touchend', this.folderContentsMouseUp);
     this.setState({// todo have a workaround for this
-      headerHeight: this.header.offsetHeight});
+      headerHeight: 0});
   }
   startDragSelect(event) {
     event.preventDefault();
