@@ -6,6 +6,7 @@ import { TweenLite } from 'gsap';
 
 
 function ProjectGridItem({ project: {name, technologies, role, description, link}}) {
+  
   return (
     <div className={styles.root}>
       {name}
@@ -15,6 +16,7 @@ function ProjectGridItem({ project: {name, technologies, role, description, link
       {link}
     </div>
   );
+  
 }
 
 export default withStyles(styles)(ProjectGridItem);

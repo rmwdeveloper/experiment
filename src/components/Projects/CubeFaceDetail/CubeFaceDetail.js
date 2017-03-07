@@ -10,6 +10,8 @@ class CubeFaceDetail extends Component {
     const { id, backgroundColor, section, faceShown } = this.props;
     let face = '';
     if (faceShown) {
+      // console.log(sideMarkupRegistry[faceShown]);
+      //  face = React.createElement('div', {...this.props});
        face = React.createElement(sideMarkupRegistry[faceShown], {...this.props});
     }
 
