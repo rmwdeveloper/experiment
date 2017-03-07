@@ -196,7 +196,6 @@ class Cube extends Component {
       onCompleteParams: [node] });
   }
   renderSides() {
-
     return this.sides.map((side, index) => {
       return <div style={{backgroundColor: this.colors[side], opacity: 0.80}} id={side} key={index} className={cx(styles[side], styles.side)}> {this.sections[side]} </div>;
     });
