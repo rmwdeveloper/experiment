@@ -8,7 +8,7 @@ const initialState = {
       technologies: ['HTML', 'CSS', 'LESS', 'Python', 'Django', 'React', 'Webpack',
       'gulp.js', 'Javascript', 'React', 'PostgreSQL', 'jQuery'],
       role: 'Full Stack Web Developer',
-      description: '',
+      description: 'Online education white-label platform.',
       link: 'https://truacademy.com',
       images: ['projects/tru/dashboard.png']
     },
