@@ -17,7 +17,7 @@ export default function projectRows(type) {
           { projects.map(project => {
             const { description, images, link, name, role, technologies } = project;
             return (<div className={styles.projectRow}>
-              <a href={link}><h3 className={styles.projectName}>{name}</h3></a>
+              <a href={link} target="_blank"><h3 className={styles.projectName}>{name}</h3></a>
               <div className={styles.contentBlock}>
                 <div className={styles.imageBlock}>
                   {images ? images.map(image => {
