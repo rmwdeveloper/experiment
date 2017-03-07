@@ -34,7 +34,7 @@ class Cube extends Component {
       front: 'Projects - Professional',
       back: 'Projects - Personal',
       left: 'About',
-      right: 'Contact'
+      // right: 'Contact'
     };
     this.colors = {
       front: 'rgb(142, 227, 239)',
