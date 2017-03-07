@@ -21,9 +21,11 @@ function Front({professionalProjects}) {
             <div className={styles.detailBlock}>
               <p>{role}</p>
               <p>{description}</p>
-              {technologies.map(technology => {
+              <div className={styles.technologiesBlock}>
+                {technologies.map(technology => {
                 return <span> {technology} </span>;
               })}
+              </div>
             </div>
           </div>
         </div>);
