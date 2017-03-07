@@ -57,13 +57,26 @@ class Cube extends Component {
   }
   openMenu() {
     this.props.openMenu();
-    TweenLite.to(this.menuWrapper, 0.1, { top: '0'});
-    TweenLite.to(this.menuWrapper, 0.1, { delay: 0.1, height: '100%', minHeight: '500px', width: '100px'});
-    TweenLite.to(this.brandIcon, 0.1, {delay: 0.1, fontSize: '72px'});
-    TweenLite.to(this.menuWrapper, 0.1, { delay: 0.2, position: 'relative'});
-    TweenLite.to(this.contactList, 0.1, {delay: 0.2, display: 'flex', bottom: '25px'});
-    TweenLite.to(this.menu, 0.1, {delay: 0.2, display: 'block'});
-    TweenLite.to(this.toggleButton, 0.1, {delay: 0.2, bottom: '0'});
+
+    if (window.innerWidth >= 768) {
+      TweenLite.to(this.menuWrapper, 0.1, { top: '0'});
+      TweenLite.to(this.menuWrapper, 0.1, { delay: 0.1, height: '100%', minHeight: '500px', width: '100px'});
+      TweenLite.to(this.brandIcon, 0.1, {delay: 0.1, fontSize: '72px'});
+      TweenLite.to(this.menuWrapper, 0.1, { delay: 0.2, position: 'relative'});
+      TweenLite.to(this.contactList, 0.1, {delay: 0.2, display: 'flex', bottom: '25px'});
+      TweenLite.to(this.menu, 0.1, {delay: 0.2, display: 'block'});
+      TweenLite.to(this.toggleButton, 0.1, {delay: 0.2, bottom: '0'});
+    } else {
+      TweenLite.to(this.menuWrapper, 0.1, { top: '0'});
+      TweenLite.to(this.menuWrapper, 0.1, { delay: 0.1, height: '155px', width: '100%'});
+      TweenLite.to(this.brandIcon, 0.1, {delay: 0.1, fontSize: '30px'});
+      TweenLite.to(this.menuWrapper, 0.1, { delay: 0.2, position: 'relative'});
+      TweenLite.to(this.contactList, 0.1, {delay: 0.2, display: 'flex', bottom: '0'});
+      TweenLite.to(this.menu, 0.1, {delay: 0.2, display: 'flex'});
+      TweenLite.to(this.toggleButton, 0.1, {delay: 0.2, bottom: '0'});
+    }
+
+
   }
   zoomOut() {
     // todo: God, refactor this garbage
