@@ -164,6 +164,7 @@ app.post('/login',
 app.get('/get_user', (req, res) => {
   const username = req.user ? req.user.username : 'Guest'; // Either logged in user, or guest ID ( 1 )
   getUser(username).then(userObj => {
+    
     res.status(200).send(userObj);
     return null;
   });

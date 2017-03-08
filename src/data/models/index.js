@@ -43,9 +43,12 @@ FileNode.hasMany(FileNode, { onUpdate: 'cascade', onDelete: 'cascade' });
 FileNode.hasMany(FileNodeMetadata, { onUpdate: 'cascade', onDelete: 'cascade' });
 
 FileNode.hasOne(Upload, {onDelete: 'cascade', hooks: true});
+FileNode.hasOne(TextDocument, { onUpdate: 'cascade', onDelete: 'cascade'});
 
 Upload.belongsTo(FileNode, { hooks: true });
-TextDocument.belongsTo(FileNode);
+
+
+// TextDocument.belongsTo(FileNode, { onUpdate: 'cascade', onDelete: 'cascade'});
 
 User.hasMany(Upload, {
   onUpdate: 'cascade',
