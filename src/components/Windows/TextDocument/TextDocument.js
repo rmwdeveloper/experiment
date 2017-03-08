@@ -19,10 +19,8 @@ class TextDocument extends Component {
     return {__html: textDocumentMarkup[index].markup};
   }
   render() {
-    const { fileSystem, uniqueId, openedFiles, textDocumentMarkup } = this.props;
-    console.log('text', this.props);
     return (<div className={styles.root}>
-
+        <div dangerouslySetInnerHTML={this.renderTextMarkup()} />
     </div>);
   }
 }
