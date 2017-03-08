@@ -24,7 +24,6 @@ export function initializeAuth(){
       method: 'get', credentials: 'include'
     }).then(response => {
       response.json().then(userData => {
-        console.log('userData..', userData);
         dispatch({type: LOGIN, user: userData});
       });
     });

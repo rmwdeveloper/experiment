@@ -81,7 +81,6 @@ class Desktop extends Component {
   }
 
   onDrop(event){
-    console.log('dropped on desktop');
     const {moveFiles, moveFile, desktopNodeIndex} = this.props;
     const index = event.relatedTarget.getAttribute('data-index');
     const selected = event.relatedTarget.getAttribute('data-selected');
@@ -111,7 +110,6 @@ class Desktop extends Component {
       ondrop: this.onDrop
     });
 
-    console.log('this desktop..', this.desktop);
     // todo rmw: desktopWidth and Height is both in the redux store and in component State. Should have it it only 1.
     this.props.initializeDesktopDimensions(this.desktop.offsetWidth, this.desktop.offsetHeight);
     window.addEventListener('resize', this.desktopResize.bind(this));
@@ -120,6 +118,7 @@ class Desktop extends Component {
       desktopHeight: this.desktop.offsetHeight,
       headerHeight: 0});
   }
+
   shouldComponentUpdate(nextProps, nextState) {
     return (this.state.selectedIcons !== nextState.selectedIcons) ||
       (this.props.registering !== nextProps.registering) ||
@@ -136,6 +135,7 @@ class Desktop extends Component {
       (this.props.errorMessages !== nextProps.errorMessages) ||
       (this.props.contextMenuY !== nextProps.contextMenuY);
   }
+
   diffNodeLists(firstNodeList, secondNodeList) {
     const iconsArray = [].slice.call(firstNodeList);
     const selectedArray = [].slice.call(secondNodeList);

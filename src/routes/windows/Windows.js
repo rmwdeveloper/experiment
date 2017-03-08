@@ -15,6 +15,7 @@ import WindowsTaskbar from '../../components/Windows/Taskbar';
 import WindowsStartMenu from '../../components/Windows/StartMenu';
 import MobileTaskbar from '../../components/Windows/MobileTaskbar';
 
+//TODO: Move this state down to components that need it.
 @connect(state => ({
   registering: state.auth.registering,
   user: state.auth.user,
