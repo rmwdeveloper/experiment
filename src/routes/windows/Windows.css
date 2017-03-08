@@ -4,6 +4,7 @@
   height: 100%;
   position: relative;
   min-width: 200px;
+  cursor: auto;
 }
 .root * {
   -webkit-user-select: none;
