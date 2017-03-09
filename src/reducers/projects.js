@@ -35,7 +35,8 @@ const initialState = {
         'Javascript' ],
       description: 'Upload, download, and organize files in an interface that looks like windows desktop. ',
       images: ['projects/onlineDesktop/main.png'],
-      link: '/windows'
+      link: '/windows',
+      codeLink: 'https://github.com/rmwdeveloper/experiment/blob/dev/src/components/Windows/Desktop/Desktop.js',
     },
     { name: 'Alternative Landing Page',
       technologies: ['HTML', 'CSS', 'PostCSS', 'React', 'Webpack',

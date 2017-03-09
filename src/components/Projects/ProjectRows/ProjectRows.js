@@ -15,7 +15,7 @@ export default function projectRows(type) {
         <h1 className={styles.title}>{ type === 'professional' ? 'Professional' : 'Personal'}</h1>
         <div className={styles.projectsGrid}>
           { projects.map(project => {
-            const { description, images, link, name, role, technologies } = project;
+            const { description, images, link, name, role, technologies, codeLink } = project;
             return (<div className={styles.projectRow}>
               <a href={link} target="_blank"><h3 className={styles.projectName}>{name}</h3></a>
               <div className={styles.contentBlock}>
