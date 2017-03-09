@@ -1,0 +1,20 @@
+@import '../variables.css';
+
+
+.root {
+  /*height: 25%;*/
+  margin: 0;
+  position: relative;
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+}
+.root li {
+  display: inline-block;
+}
+.root li a {
+  margin: 5px;
+  color: #FFF;
+}

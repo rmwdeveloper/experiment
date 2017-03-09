@@ -19,14 +19,25 @@
   margin: 0;
 }
 .bigHeader h1 {
-  font-size: 68px;
+  font-size: 47px;
 }
-.bigHeader h2 {
+.bigHeader h3 {
   font-size: 35px;
 }
 
+@media(--phone) {
+  .bigHeader h1 {
+    font-size: 60px;
+  }
+  .bigHeader h3 {
+    font-size: 40px;
+  }
+}
 @media (--phoneLandscape) {
   .bigHeader h1 {
     font-size: 78px;
+  }
+  .bigHeader h3 {
+    font-size: 52px;
   }
 }
