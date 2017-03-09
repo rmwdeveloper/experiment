@@ -25,6 +25,7 @@ export default function projectRows(type) {
                   }) : null }
                 </div>
                 <div className={styles.detailBlock}>
+                  {codeLink ? <a href={codeLink}>View Code</a> : null}
                   <p>{role}</p>
                   <p>{description}</p>
                   <div className={styles.technologiesBlock}>
