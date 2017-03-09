@@ -2,6 +2,7 @@ import React, { PropTypes, Component} from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { connect } from 'react-redux';
 import MyContactLinks from '../MyContactLinks';
+import ProjectRows from '../Projects/ProjectRows';
 import styles from './SimplePortfolioIndex.css'; //eslint-disable-line
 
 
@@ -14,12 +15,18 @@ class Cube extends Component {
   }
 
   render() {
+
+    const proProjects =  React.createElement(ProjectRows('professional'), {...this.props}); ;
+    const personalProjects =  React.createElement(ProjectRows('personal'), {...this.props}); ;
+
     return <div className={styles.root}>
       <div className={styles.bigHeader}>
         <h1> Robert Westenberger </h1>
         <h3> Full Stack Developer </h3>
         <MyContactLinks />
       </div>
+      {proProjects}
+      {personalProjects}
     </div>
   }
 }
