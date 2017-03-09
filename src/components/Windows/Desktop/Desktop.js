@@ -81,7 +81,6 @@ class Desktop extends Component {
   }
 
   onDrop(event){
-    console.log('dropped on desktop');
     const {moveFiles, moveFile, desktopNodeIndex} = this.props;
     const index = event.relatedTarget.getAttribute('data-index');
     const selected = event.relatedTarget.getAttribute('data-selected');
@@ -117,8 +116,9 @@ class Desktop extends Component {
 
     this.setState({desktopWidth: this.desktop.offsetWidth, // todo have a workaround for this
       desktopHeight: this.desktop.offsetHeight,
-      headerHeight: this.header.offsetHeight});
+      headerHeight: 0});
   }
+
   shouldComponentUpdate(nextProps, nextState) {
     return (this.state.selectedIcons !== nextState.selectedIcons) ||
       (this.props.registering !== nextProps.registering) ||
@@ -135,6 +135,7 @@ class Desktop extends Component {
       (this.props.errorMessages !== nextProps.errorMessages) ||
       (this.props.contextMenuY !== nextProps.contextMenuY);
   }
+
   diffNodeLists(firstNodeList, secondNodeList) {
     const iconsArray = [].slice.call(firstNodeList);
     const selectedArray = [].slice.call(secondNodeList);

@@ -187,7 +187,6 @@ export function moveFile(fromNodeIndex, toNodeIndex) {
       return null;
     }
 
-    console.log(fileSystem[fromNodeIndex], fileSystem[toNodeIndex]);
     const originsParentIndex = Object.keys(fileSystem).find(key=> {
       if (fileSystem.hasOwnProperty(key)) {
         if (fileSystem[key].hasOwnProperty('children')) {

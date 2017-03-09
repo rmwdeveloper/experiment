@@ -8,23 +8,23 @@ const initialState = {
       technologies: ['HTML', 'CSS', 'LESS', 'Python', 'Django', 'React', 'Webpack',
       'gulp.js', 'Javascript', 'React', 'PostgreSQL', 'jQuery'],
       role: 'Full Stack Web Developer',
-      description: '',
-      link: '',
+      description: 'Online education white-label platform.',
+      link: 'https://truacademy.com',
       images: ['projects/tru/dashboard.png']
     },
     { name: 'Pagemaker',
       technologies: ['HTML', 'LESS', 'Django REST Framework', 'React', 'Webpack',
          'Javascript', 'React', 'PostgreSQL' ],
       role: 'Full Stack Web Developer',
-      description: '',
-      link: '',
+      description: 'Create your own landing page using a drag and drop interface.',
+      link: '/pagemaker',
       images: ['projects/pm/pm.png']
     },
     { name: 'Lecture Editor',
       technologies: ['HTML', 'LESS', 'Django REST Framework', 'React', 'Webpack',
         'Javascript', 'PostgreSQL' ],
       role: 'Full Stack Web Developer',
-      description: '',
+      description: 'https://truacademy.com',
       link: ''
     },
   ],
@@ -32,8 +32,9 @@ const initialState = {
     { name: 'Online Desktop',
       technologies: ['HTML', 'CSS', 'PostCSS', 'Django REST Framework', 'React', 'Webpack',
         'Javascript', 'React', 'PostgreSQL' ],
-      description: '',
-      images: ['projects/onlineDesktop/main.png']
+      description: 'Upload, download, and organize files in an interface that looks like windows desktop. ',
+      images: ['projects/onlineDesktop/main.png'],
+      link: '/windows'
     },
   ],
   selected: 'All'

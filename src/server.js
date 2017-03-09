@@ -7,10 +7,8 @@ import multer from 'multer';
 import crypto from 'crypto';
 import bcrypt from 'bcrypt';
 import cookieParser from 'cookie-parser';
-import cookieSession from 'cookie-session';
 import compression from 'compression';
 import bodyParser from 'body-parser';
-import expressJwt from 'express-jwt';
 import PrettyError from 'pretty-error';
 import passport from './core/passport';
 import ReactDOM from 'react-dom/server';
@@ -166,6 +164,7 @@ app.post('/login',
 app.get('/get_user', (req, res) => {
   const username = req.user ? req.user.username : 'Guest'; // Either logged in user, or guest ID ( 1 )
   getUser(username).then(userObj => {
+    
     res.status(200).send(userObj);
     return null;
   });

@@ -18,9 +18,16 @@ class Taskbar extends Component {
       <div className={styles.root}>
         <StartButton toggleStartMenu={toggleStartMenu} />
         {
-          Object.keys(openedFiles).map((openedFile, index) => {
-            const { metadata: {icon}, name } = fileSystem[openedFiles[openedFile]];
-            return <img key={openedFile} onClick={() => { clickTaskbarItem(openedFile)}} className={styles.icon} src={icon} alt={`${name} icon`} />;
+          Object.keys(openedFiles).map((openedFile) => {
+            const { metadata: {icon, sprite, backgroundPosition}, name, index } = fileSystem[openedFiles[openedFile]];
+            const style = {background: `url(${icon})`};
+            if (sprite) {
+              style.backgroundSize = '425px';
+              style.backgroundPosition = backgroundPosition;
+            }
+
+            return <div style={style} key={index} data-index={index} className={styles.icon}> </div>;
+
           })
         }
         <InfoHub />

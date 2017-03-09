@@ -13,5 +13,6 @@ module.exports = "\
   <li> Abstract headers away for some fetch calls (handle JSON) </li>\
   <li> Abstract headers away for some fetch calls found in windows and auth actions (handle JSON) </li>\
   <li> Abstract headers away for some fetch calls found in windows and auth actions (handle JSON) </li>\
+  </ul>\
   </div>\
-</ul>";
+";

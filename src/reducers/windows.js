@@ -280,6 +280,7 @@ export default function layout(state = initialState, action) {
     case LOGIN:
       const newState = {...state};
       newState.fileSystem = {};
+      newState.textDocumentMarkup = {};
       const fileSystemWithNodeIndexedKeys = {};
       action.user.FileSystem.FileNodes.forEach(nodeObject => {
         fileSystemWithNodeIndexedKeys[nodeObject.nodeIndex] = nodeObject;
@@ -289,6 +290,10 @@ export default function layout(state = initialState, action) {
 
       nodeIndices.forEach(nodeIndex => { // todo: refactor this. fileSystem[fileNode] must exist before children can be appended. Error otherwise.
         const fileNode = fileSystemWithNodeIndexedKeys[nodeIndex];
+        if (fileNode.TextDocument) {
+          newState.textDocumentMarkup[fileNode.nodeIndex] = fileNode.TextDocument;
+        }
+
         const { permissions, name, extension, FileNodeMetadata } = fileNode;
         const metadata = {};
         if (FileNodeMetadata.length > 0 ) {
@@ -319,7 +324,8 @@ export default function layout(state = initialState, action) {
         }
       });
 
-      return { ...state, fileSystem: newState.fileSystem, diskSpace: action.user.FileSystem.diskSpace };
+      return { ...state, fileSystem: newState.fileSystem, diskSpace: action.user.FileSystem.diskSpace,
+        textDocumentMarkup: newState.textDocumentMarkup };
     default:
       return state;
   }

@@ -14,13 +14,7 @@
   flex-direction: column;
   min-width: 300px;
 }
-/*.minimizeButton {*/
-  /*position: absolute;*/
-  /*width: 5px;*/
-  /*height: 100%;*/
-  /*right: -5px;*/
-  /*background-color: green;*/
-/*}*/
+
 #menuWrapper {
   background-color: #FFF;
   color: #000;

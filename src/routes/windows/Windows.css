@@ -1,9 +1,10 @@
 @import '../../components/variables.css';
 
 .root {
-  height: calc(100% - 40px);
+  height: 100%;
   position: relative;
   min-width: 200px;
+  cursor: auto;
 }
 .root * {
   -webkit-user-select: none;

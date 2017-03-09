@@ -49,10 +49,9 @@ class Cube extends Component {
 
   }
   windowResize() {
-    // console.log(window.innerWidth, this.width);
+    // todo: consolidate tweens with those found in openMenu
 
     if (window.innerWidth >= 768 && this.width < 768 ) {
-      console.log('desktop');
       TweenLite.to(this.menuWrapper, 0.1, { top: '0'});
       TweenLite.to(this.menuWrapper, 0.1, { delay: 0.1, height: '100%', minHeight: '500px', width: '100px'});
       TweenLite.to(this.brandIcon, 0.1, {delay: 0.1, fontSize: '72px'});
@@ -61,7 +60,6 @@ class Cube extends Component {
       TweenLite.to(this.menu, 0.1, {delay: 0.2, display: 'block'});
       TweenLite.to(this.toggleButton, 0.1, {delay: 0.2, bottom: '0'});
     } else if (window.innerWidth <= 768 && this.width > 768) {
-      console.log('mobile');
       TweenLite.to(this.menuWrapper, 0.1, { top: '0'});
       TweenLite.to(this.menuWrapper, 0.1, { delay: 0.1, height: '155px', minHeight: '0', width: '100%'});
       TweenLite.to(this.brandIcon, 0.1, {delay: 0.1, fontSize: '30px'});
@@ -258,6 +256,9 @@ class Cube extends Component {
     const { zoomed, faceShown, menuOpened, personalProjects, professionalProjects } = this.props;
     const sides = this.renderSides();
 
+    // TODO: extract this into seperate components
+
+    
     return (<div id={styles.root}>
       { zoomed ? <i onClick={this.zoomOut} className={cx('fa fa-close', 'fa-2x', styles.closeButton)} /> : null }
 
@@ -295,11 +296,12 @@ class Cube extends Component {
       </div>
       <div className={styles.cubeAndDisplay}>
 
-        <div id={cx(styles.container, styles.cube)}>
+        <div id={styles.container}>
           <div id={styles.sidesContainer}>
             {sides}
           </div>
         </div>
+
         <CubeFaceDetail professionalProjects={professionalProjects} personalProjects={personalProjects}
           faceShown={faceShown} backgroundColor={this.colors[faceShown]} id={styles.displayer}
           section={this.sections[faceShown]} />
