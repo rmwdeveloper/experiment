@@ -1,5 +1,5 @@
 import React from 'react';
-import Home from './CubeHome';
+import CubeHome from './CubeHome';
 
 
 export default {

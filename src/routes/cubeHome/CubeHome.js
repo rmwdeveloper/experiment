@@ -3,8 +3,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './CubeHome.css'; //eslint-disable-line
 import { connect } from 'react-redux';
 import * as projectsActions from '../../actions/projects';
-// import Cube from '../../components/Projects/Cube';
-import SimplePortfolioIndex from '../../components/SimplePortfolioIndex';
+import Cube from '../../components/Projects/Cube';
 import { stackList } from '../../selectors';
 
 
@@ -28,7 +27,7 @@ class CubeHome extends Component { //eslint-disable-line
   render() {
     const { personalProjects, professionalProjects } = this.props;
     const allProjects = professionalProjects.concat(personalProjects);
-    return <SimplePortfolioIndex allProjects={allProjects} {...this.props} />;
+    return <Cube allProjects={allProjects} {...this.props} />;
   }
 }
 

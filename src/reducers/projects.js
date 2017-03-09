@@ -24,8 +24,9 @@ const initialState = {
       technologies: ['HTML', 'LESS', 'Django REST Framework', 'React', 'Webpack',
         'Javascript', 'PostgreSQL' ],
       role: 'Full Stack Web Developer',
-      description: 'https://truacademy.com',
-      link: ''
+      description: 'Allow user to upload lecture assets, videos, and write their own content. ',
+      link: 'https://truacademy.com',
+      images: ['http://placehold.it/250x250.png']
     },
   ],
   personalProjects: [
@@ -39,7 +40,8 @@ const initialState = {
     { name: 'Alternative Landing Page',
       technologies: ['HTML', 'CSS', 'PostCSS', 'React', 'Webpack',
         'Javascript' ],
-      description: 'Cool looking rotating cube to display my portfolio. Ditched it because  ',
+      description: "Cool looking rotating cube to display my portfolio. Ditched it because 3d transforms " +
+      " weren't working in IE10+ ",
       images: ['http://placehold.it/250x250.png'],
       link: '/cubehome'
     },
