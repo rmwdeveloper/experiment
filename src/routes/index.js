@@ -1,6 +1,7 @@
 // Child Routes
 import React from 'react';
 import home from './home';
+import cubeHome from './cubeHome';
 import console from './console';
 import stockDashboard from './stockDashboard';
 import windows from './windows';
@@ -23,7 +24,8 @@ const routes = {
     register,
     windows,
     projects,
-    pagemaker
+    pagemaker,
+    cubeHome
   ],
 
   async action({ next, render, context }) {

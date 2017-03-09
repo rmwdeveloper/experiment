@@ -30,11 +30,18 @@ const initialState = {
   ],
   personalProjects: [
     { name: 'Online Desktop',
-      technologies: ['HTML', 'CSS', 'PostCSS', 'Django REST Framework', 'React', 'Webpack',
-        'Javascript', 'React', 'PostgreSQL' ],
+      technologies: ['HTML', 'CSS', 'PostCSS', 'React', 'Webpack',
+        'Javascript' ],
       description: 'Upload, download, and organize files in an interface that looks like windows desktop. ',
       images: ['projects/onlineDesktop/main.png'],
       link: '/windows'
+    },
+    { name: 'Alternative Landing Page',
+      technologies: ['HTML', 'CSS', 'PostCSS', 'React', 'Webpack',
+        'Javascript' ],
+      description: 'Cool looking rotating cube to display my portfolio. Ditched it because  ',
+      images: ['http://placehold.it/250x250.png'],
+      link: '/cubehome'
     },
   ],
   selected: 'All'
