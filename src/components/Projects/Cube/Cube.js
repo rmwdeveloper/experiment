@@ -256,6 +256,9 @@ class Cube extends Component {
     const { zoomed, faceShown, menuOpened, personalProjects, professionalProjects } = this.props;
     const sides = this.renderSides();
 
+    // TODO: extract this into seperate components
+
+    
     return (<div id={styles.root}>
       { zoomed ? <i onClick={this.zoomOut} className={cx('fa fa-close', 'fa-2x', styles.closeButton)} /> : null }
 
