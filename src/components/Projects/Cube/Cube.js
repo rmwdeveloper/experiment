@@ -293,11 +293,12 @@ class Cube extends Component {
       </div>
       <div className={styles.cubeAndDisplay}>
 
-        <div id={cx(styles.container, styles.cube)}>
+        <div id={styles.container}>
           <div id={styles.sidesContainer}>
             {sides}
           </div>
         </div>
+
         <CubeFaceDetail professionalProjects={professionalProjects} personalProjects={personalProjects}
           faceShown={faceShown} backgroundColor={this.colors[faceShown]} id={styles.displayer}
           section={this.sections[faceShown]} />
