@@ -1,0 +1,32 @@
+@import '../variables.css';
+
+
+.root {
+  height: 100%;
+  font-family: 'Josefin Sans', sans-serif;
+}
+
+.bigHeader {
+  color: #FFF;
+  height: 400px;
+  background-color: var(--primary-color);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+.bigHeader h1, .bigHeader h3 {
+  margin: 0;
+}
+.bigHeader h1 {
+  font-size: 68px;
+}
+.bigHeader h2 {
+  font-size: 35px;
+}
+
+@media (--phoneLandscape) {
+  .bigHeader h1 {
+    font-size: 78px;
+  }
+}

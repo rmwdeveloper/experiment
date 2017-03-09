@@ -3,10 +3,8 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Home.css'; //eslint-disable-line
 import { connect } from 'react-redux';
 import * as projectsActions from '../../actions/projects';
-import ProjectGridItem from '../../components/Projects/ProjectGridItem';
-import Filter from '../../components/Projects/Filter';
-// import Carousel from '../../components/Projects/Carousel';
-import Cube from '../../components/Projects/Cube';
+// import Cube from '../../components/Projects/Cube';
+import SimplePortfolioIndex from '../../components/SimplePortfolioIndex';
 import { stackList } from '../../selectors';
 
 
@@ -30,7 +28,7 @@ class Home extends Component { //eslint-disable-line
   render() {
     const { personalProjects, professionalProjects } = this.props;
     const allProjects = professionalProjects.concat(personalProjects);
-    return <Cube allProjects={allProjects} {...this.props} />;
+    return <SimplePortfolioIndex allProjects={allProjects} {...this.props} />;
   }
 }
 
