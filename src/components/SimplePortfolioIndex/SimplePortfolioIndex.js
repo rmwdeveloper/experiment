@@ -2,7 +2,9 @@ import React, { PropTypes, Component} from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { connect } from 'react-redux';
 import MyContactLinks from '../MyContactLinks';
+import FloatingButton from '../FloatingButton';
 import ProjectRows from '../Projects/ProjectRows';
+
 import styles from './SimplePortfolioIndex.css'; //eslint-disable-line
 
 
@@ -24,6 +26,7 @@ class Cube extends Component {
         <h1> Robert Westenberger </h1>
         <h3> Full Stack Developer </h3>
         <MyContactLinks />
+        <FloatingButton />
       </div>
       {proProjects}
       {personalProjects}
