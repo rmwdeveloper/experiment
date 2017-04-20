@@ -26,7 +26,7 @@ class Cube extends Component {
         <h1> Robert Westenberger </h1>
         <h3> Full Stack Developer </h3>
         <MyContactLinks />
-        <FloatingButton />
+        { /* <FloatingButton /> */ }
       </div>
       {proProjects}
       {personalProjects}
