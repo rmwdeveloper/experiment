@@ -51,6 +51,7 @@ export default function DropzoneAWSEvaporate(WrappedComponent, mode) {
 
                 if ( diskSpace - mbUsed - fileSizeMb < 0) {
                   uploadError();
+                  console.log('upload error');
                   return null;
                 }
                 //todo: upload start action

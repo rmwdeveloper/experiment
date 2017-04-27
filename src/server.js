@@ -279,7 +279,7 @@ app.get('/upload_start', (req, res) => {
     seconds: now.getSeconds(),
     milliseconds: now.getMilliseconds()
   };
-
+  console.log('upload start..');
   doesObjectExist(`${id}/`).then(response => {
     getDirectorySize(`${id}/`).then(size => {
       res.status(200).send({ usedSpace: size, date });

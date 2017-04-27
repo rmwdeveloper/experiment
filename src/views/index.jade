@@ -23,10 +23,3 @@ html(class="no-js", lang="")
     body
         #app(style={height: '100%'})!= body
         script#source(src=entry, data-initial-state=state)
-        script.
-            window.ga = function () {
-                ga.q.push(arguments)
-            };ga.q = [];ga.l = +new Date;
-            if(trackingId)
-                ga('create', '#{trackingId}', 'auto');ga('send', 'pageview')
-                script(src = "https://www.google-analytics.com/analytics.js", async = true, defer = true)
